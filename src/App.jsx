@@ -388,8 +388,8 @@ const Styles = () => (
       .page section [style*="font-size: 13px"],
       .page section [style*="font-size: 14px"],
       .page section [style*="font-size: 15px"]{font-size:17px !important}
-      .page section [style*="font-size: 16px"]{font-size:18px !important}
-      .page section [style*="font-size: 17px"]{font-size:19px !important}
+      .page section [style*="font-size: 16px"]{font-size:17px !important}
+      .page section [style*="font-size: 17px"]{font-size:17px !important}
       .page section .slb,
       .page section .slb2,
       .page section [style*="letter-spacing: 0.25em"]{font-size:16px !important;line-height:1.7 !important}
@@ -397,6 +397,25 @@ const Styles = () => (
       .page section .bg,
       .page section .fsb,
       .page section .pb{font-size:16px !important;line-height:1.5 !important}
+      .page section :is(p,span,div,a){text-wrap:pretty}
+      .page section .CN,
+      .page section .C{max-width:100% !important}
+      .page section .CN>div[style*="padding: 52px 56px"],
+      .page section .CN>div[style*="padding:52px 56px"]{padding:40px 24px !important}
+      .page section .CN>div[style*="padding: 40px 56px"],
+      .page section .CN>div[style*="padding:40px 56px"]{padding:32px 24px !important}
+      .page section div[style*="display: flex"][style*="gap: 16px"],
+      .page section div[style*="display:flex"][style*="gap:\"16px\""]{gap:12px !important}
+      .page section div[style*="display: flex"][style*="gap: 28px"],
+      .page section div[style*="display:flex"][style*="gap:\"28px\""]{gap:14px !important}
+      .page section div[style*="display: flex"] > span:last-child,
+      .page section div[style*="display:flex"] > span:last-child{font-size:17px !important;line-height:1.85 !important;min-width:0;text-wrap:balance}
+      .page section div[style*="background: var(--forest)"] p,
+      .page section div[style*="background:var(--forest)"] p{text-wrap:balance}
+      footer .C>div:first-child{grid-template-columns:1fr !important;gap:34px !important;margin-bottom:44px !important}
+      footer a{font-size:16px !important;line-height:1.7 !important;display:block !important;width:max-content !important;max-width:100% !important}
+      footer p,
+      footer .C>div:last-child>div{font-size:15px !important;line-height:1.9 !important}
     }
     @media(max-width:390px){
       .htit{font-size:28px}.mh-t{font-size:26px}.ctab-t{font-size:24px}.apl-t{font-size:24px}
