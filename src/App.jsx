@@ -431,6 +431,19 @@ const Styles = () => (
       .aware-tool-card{border-left:3px solid var(--sandm) !important;border-top:none !important}
       .aware-tool-card p{margin-bottom:22px !important;text-wrap:pretty}
       .aware-tool-card .aware-tool-link{font-size:16px !important;letter-spacing:.08em !important}
+      .aware-next-step{padding:46px 24px !important}
+      .aware-next-step .aware-next-label{font-size:15px !important;color:rgba(250,247,242,.68) !important}
+      .aware-next-step p{color:#FFFFFF !important;font-size:18px !important;line-height:1.9 !important;text-wrap:pretty}
+      .site-footer{background:linear-gradient(155deg,#171412 0%,#25211D 42%,#2D3F35 100%) !important}
+      .site-footer::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 85% 60% at 100% 0%,rgba(184,168,130,.12),transparent 62%);pointer-events:none}
+      .site-footer>.C{position:relative;z-index:1}
+      .site-footer .footer-brand{color:#E8DFD0 !important}
+      .site-footer .footer-tagline{color:#B8A882 !important}
+      .site-footer .footer-copy{color:#C7BBAE !important}
+      .site-footer .footer-heading{color:#B8A882 !important}
+      .site-footer a{color:#D4C8B5 !important}
+      .site-footer .footer-bottom{border-top-color:rgba(250,247,242,.18) !important}
+      .site-footer .footer-bottom div{color:rgba(250,247,242,.5) !important}
     }
     @media(max-width:390px){
       .htit{font-size:28px}.mh-t{font-size:26px}.ctab-t{font-size:24px}.apl-t{font-size:24px}
@@ -947,8 +960,8 @@ function Aware({ go }) {
             </div>
           </div>
 
-          <div className="fi" style={{padding:"48px 52px",background:"var(--forest)",textAlign:"center"}}>
-            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"12px",letterSpacing:"0.28em",color:"rgba(232,223,208,.45)",marginBottom:"20px",textTransform:"uppercase"}}>Next Step</div>
+          <div className="aware-next-step fi" style={{padding:"48px 52px",background:"var(--forest)",textAlign:"center"}}>
+            <div className="aware-next-label" style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"12px",letterSpacing:"0.28em",color:"rgba(232,223,208,.45)",marginBottom:"20px",textTransform:"uppercase"}}>Next Step</div>
             <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"18px",fontWeight:300,color:"var(--sand)",lineHeight:1.8,marginBottom:"28px"}}>你現在看到的，只是你狀態的一部分。<br/>如果你想更清楚知道這些模式是怎麼影響你的選擇，可以從這裡開始。</p>
             <button className="bp" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>預約初次穩定體驗</button>
           </div>
@@ -1192,29 +1205,29 @@ function Apply() {
 function Footer({ go }) {
   const SL = { color:"var(--wg)", textDecoration:"none", fontSize:"13px", display:"block", marginBottom:"10px", cursor:"pointer", transition:"color .2s" };
   return (
-    <footer style={{background:"var(--text)",padding:"80px 0 40px"}}>
+    <footer className="site-footer" style={{background:"var(--text)",padding:"80px 0 40px",position:"relative",overflow:"hidden"}}>
       <div className="C">
         <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:"48px",marginBottom:"60px"}}>
           <div>
-            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"24px",color:"var(--sand)",marginBottom:"12px"}}>Sofia</div>
-            <div style={{fontSize:"12px",letterSpacing:"0.18em",color:"rgba(232,223,208,.4)",marginBottom:"20px"}}>情緒穩定 × 關係覺察 × 內在主導權</div>
-            <p style={{fontSize:"13px",color:"rgba(232,223,208,.45)",lineHeight:1.9}}>以陪伴取代建議，以覺察取代答案。</p>
+            <div className="footer-brand" style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"24px",color:"var(--sand)",marginBottom:"12px"}}>Sofia</div>
+            <div className="footer-tagline" style={{fontSize:"12px",letterSpacing:"0.18em",color:"rgba(232,223,208,.4)",marginBottom:"20px"}}>情緒穩定 × 關係覺察 × 內在主導權</div>
+            <p className="footer-copy" style={{fontSize:"13px",color:"rgba(232,223,208,.45)",lineHeight:1.9}}>以陪伴取代建議，以覺察取代答案。</p>
           </div>
           <div>
-            <div style={{fontSize:"12px",letterSpacing:"0.2em",color:"rgba(232,223,208,.35)",marginBottom:"20px",textTransform:"uppercase"}}>頁面</div>
+            <div className="footer-heading" style={{fontSize:"12px",letterSpacing:"0.2em",color:"rgba(232,223,208,.35)",marginBottom:"20px",textTransform:"uppercase"}}>頁面</div>
             {[{l:"首頁",p:"home"},{l:"開始這一步",p:"start"},{l:"陪跑計畫",p:"deep"},{l:"自我覺察",p:"aware"},{l:"關於 Sofia",p:"about"},{l:"預約",p:"apply"}].map(i => (
               <a key={i.p} style={SL} onClick={() => go(i.p)}>{i.l}</a>
             ))}
           </div>
           <div>
-            <div style={{fontSize:"12px",letterSpacing:"0.2em",color:"rgba(232,223,208,.35)",marginBottom:"20px",textTransform:"uppercase"}}>聯繫</div>
+            <div className="footer-heading" style={{fontSize:"12px",letterSpacing:"0.2em",color:"rgba(232,223,208,.35)",marginBottom:"20px",textTransform:"uppercase"}}>聯繫</div>
             <a href="mailto:sophibaby@gmail.com" style={SL}>sophibaby@gmail.com</a>
             <a href="https://www.instagram.com/sofia202219101/" target="_blank" rel="noopener" style={SL}>Instagram</a>
             <a href="https://line.me/R/ti/p/@567avtfh" target="_blank" rel="noopener" style={SL}>Line 官方帳號</a>
             <a href="https://www.facebook.com/BelovedSofia" target="_blank" rel="noopener" style={SL}>Facebook</a>
           </div>
         </div>
-        <div style={{borderTop:"1px solid rgba(232,223,208,.1)",paddingTop:"32px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"12px"}}>
+        <div className="footer-bottom" style={{borderTop:"1px solid rgba(232,223,208,.1)",paddingTop:"32px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"12px"}}>
           <div style={{fontSize:"12px",color:"rgba(232,223,208,.25)",letterSpacing:"0.08em"}}>© 2025 Sofia 蘇菲療癒轉化. All rights reserved.</div>
           <div style={{fontSize:"12px",color:"rgba(232,223,208,.25)",letterSpacing:"0.08em"}}>以陪伴取代建議，以覺察取代答案。</div>
         </div>
