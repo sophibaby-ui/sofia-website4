@@ -253,6 +253,14 @@ const Styles = () => (
     .chkd{color:var(--forest);font-size:14px;margin-top:2px;flex-shrink:0}
     .chkt{font-size:14px;color:var(--soft);line-height:1.9}
 
+    /* TESTIMONIALS */
+    .testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
+    .testi-card{background:var(--w);padding:40px 36px;border-top:2px solid var(--sandm)}
+    .testi-stars{color:var(--gold);font-size:14px;letter-spacing:3px;margin-bottom:18px}
+    .testi-text{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:300;color:var(--text);line-height:2;margin-bottom:24px}
+    .testi-name{font-size:13px;color:var(--soft);letter-spacing:.12em;margin-bottom:6px}
+    .testi-tag{font-size:11px;letter-spacing:.2em;color:var(--forest);border:1px solid var(--forest);display:inline-block;padding:3px 12px}
+
     /* TABLET */
     @media(max-width:1024px){
       nav,nav.sc{padding:0 32px}
@@ -266,6 +274,15 @@ const Styles = () => (
       .tier{padding:48px 36px}
     }
 
+    /* NAV DARK */
+    nav.dk .nl{color:rgba(250,247,242,.95)}
+    nav.dk .nl span{color:rgba(250,247,242,.65)}
+    nav.dk .nm li{color:rgba(250,247,242,.8)}
+    nav.dk .nm li::after{background:rgba(250,247,242,.8)}
+    nav.dk .nm li:hover,nav.dk .nm li.on{color:rgba(250,247,242,1)}
+    nav.dk .nc{border-color:rgba(250,247,242,.7);color:rgba(250,247,242,.9)}
+    nav.dk .nc:hover{background:rgba(250,247,242,.15);color:var(--w)}
+
     /* MOBILE */
     @media(max-width:768px){
       :root{--nav:60px}
@@ -276,6 +293,7 @@ const Styles = () => (
       .hb.op span:nth-child(1){transform:translateY(6px) rotate(45deg)}
       .hb.op span:nth-child(2){opacity:0}
       .hb.op span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+      nav.dk .hb span{background:rgba(250,247,242,.9)}
       .C{padding:0 18px}.CN{padding:0 18px}
       section{padding:64px 0}
       .hero{grid-template-columns:1fr;min-height:auto;display:flex;flex-direction:column}
@@ -320,6 +338,26 @@ const Styles = () => (
       .fb{flex-direction:column;align-items:flex-start}
       .slb::before{width:24px}
       .fs{grid-template-columns:60px 1fr;gap:20px}
+
+      /* HOME HERO */
+      .home-hero{flex-direction:column !important;align-items:stretch !important;min-height:auto !important}
+      .home-photo{position:relative !important;top:auto !important;right:auto !important;left:auto !important;width:100% !important;height:88vw !important;max-height:520px !important;margin-top:var(--nav) !important}
+      .home-photo img{object-position:center top !important}
+      .home-text{padding:36px 18px 56px !important}
+      .home-text>div{max-width:100% !important}
+      .home-compare{grid-template-columns:1fr !important}
+      .home-results{grid-template-columns:1fr !important}
+      .home-tools{grid-template-columns:1fr !important}
+      .testi-grid{grid-template-columns:1fr !important}
+
+      /* ABOUT HERO */
+      .about-hero{min-height:auto !important}
+      .about-hero-photo{position:relative !important;inset:auto !important;width:100% !important;height:88vw !important;max-height:480px !important;margin-top:var(--nav) !important}
+      .about-hero-photo img{object-position:center top !important;transform:none !important}
+      .about-text{position:relative !important;padding:36px 18px 48px !important;background:var(--text) !important}
+      .about-text h1{color:var(--sand) !important}
+      .about-text p{color:rgba(232,223,208,.8) !important}
+      .about-text div[style*="background"]{background:rgba(232,223,208,.4) !important}
     }
     @media(max-width:390px){
       .htit{font-size:28px}.mh-t{font-size:26px}.ctab-t{font-size:24px}.apl-t{font-size:24px}
@@ -358,6 +396,7 @@ function Faq({ q, a }) {
 
 /* ─── NAV ────────────────────────────────────────────────────────── */
 const NI = [
+  { l: "首頁",           p: "home" },
   { l: "開始這一步",     p: "start" },
   { l: "陪跑計畫",       p: "deep" },
   { l: "自我覺察",       p: "aware" },
@@ -376,7 +415,7 @@ function Nav({ cur, go }) {
   const nav = p => { go(p); setMob(false); };
   return (
     <>
-      <nav className={sc || mob ? "sc" : ""}>
+      <nav className={[sc || mob ? "sc" : "", !sc && !mob && ["subscribe","deep","apply","about"].includes(cur) ? "dk" : ""].filter(Boolean).join(" ")}>
         <div className="nl" onClick={() => nav("home")}>
           Sofia
           <span>情緒穩定 × 關係覺察 × 內在主導權</span>
@@ -407,13 +446,13 @@ function Home({ go }) {
     <div className="page">
 
       {/* ── HERO ── */}
-      <div style={{minHeight:"100vh",display:"flex",alignItems:"center",background:"var(--cream)",position:"relative",overflow:"hidden"}}>
+      <div className="home-hero" style={{minHeight:"100vh",display:"flex",alignItems:"center",background:"var(--cream)",position:"relative",overflow:"hidden"}}>
         {/* 背景光暈流動感 */}
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 60% 80% at 75% 40%,rgba(232,215,200,.35) 0%,transparent 65%)",pointerEvents:"none",zIndex:0}}/>
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 40% 50% at 85% 70%,rgba(212,190,175,.2) 0%,transparent 60%)",pointerEvents:"none",zIndex:0}}/>
 
         {/* 右側照片 */}
-        <div style={{position:"absolute",right:0,top:0,height:"100%",width:"52%",zIndex:1}}>
+        <div className="home-photo" style={{position:"absolute",right:0,top:0,height:"100%",width:"52%",zIndex:1}}>
           <img src={PHOTO} alt="Sofia" style={{
             height:"100%", width:"100%",
             objectFit:"cover", objectPosition:"left top",
@@ -428,7 +467,7 @@ function Home({ go }) {
         </div>
 
         {/* 文字區 */}
-        <div style={{position:"relative",zIndex:2,maxWidth:"1200px",width:"100%",margin:"0 auto",padding:"140px 60px 100px"}}>
+        <div className="home-text" style={{position:"relative",zIndex:2,maxWidth:"1200px",width:"100%",margin:"0 auto",padding:"140px 60px 100px"}}>
           <div style={{maxWidth:"480px"}}>
             <div className="slb fi">Sofia · 蘇菲療癒轉化</div>
             <h1 className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(30px,4vw,54px)",fontWeight:300,color:"var(--text)",lineHeight:1.3,marginBottom:"28px"}}>
@@ -479,7 +518,7 @@ function Home({ go }) {
       <section style={{background:"var(--w)"}}>
         <div className="C">
           <div className="slb fi">這不是療癒</div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px"}}>
+          <div className="home-compare" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px"}}>
             <div className="fi" style={{padding:"48px 44px",background:"var(--cream)"}}>
               <div style={{fontSize:"11px",letterSpacing:"0.25em",color:"var(--wg)",marginBottom:"28px",textTransform:"uppercase"}}>一般的方式</div>
               {["給你方法和建議","告訴你應該怎麼做","幫你在當下好過一點","讓你更努力撐下去"].map((s,i) => (
@@ -506,7 +545,7 @@ function Home({ go }) {
       <section style={{background:"var(--cream)"}}>
         <div className="C">
           <div className="slb fi">當你開始穩下來</div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
+          <div className="home-results" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
             {[
               { icon:"◎", t:"關係", x:"不再習慣性退讓，開始清楚自己的位置" },
               { icon:"◎", t:"工作", x:"在壓力下依然能做出清晰的選擇" },
@@ -552,7 +591,7 @@ function Home({ go }) {
         <div className="C">
           <div className="slb fi">自我覺察工具</div>
           <p className="fi" style={{fontSize:"14px",color:"var(--wg)",marginBottom:"32px",lineHeight:1.9}}>不確定從哪裡開始？這兩個工具可以幫你先了解自己現在的狀態。</p>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px"}}>
+          <div className="home-tools" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px"}}>
             {[
               { t:"生命數字", x:"從出生日期了解你的主命數、流年數與挑戰數", p:"aware", btn:"計算我的數字" },
               { t:"身心平衡檢測", x:"花 3 分鐘，看見自己現在真正的狀態", p:"aware", btn:"開始檢測" },
@@ -579,7 +618,7 @@ function Home({ go }) {
       </div>
 
       {/* 舊客入口 — 隱藏式 */}
-      <div className="fi" style={{background:"var(--cream)",padding:"40px 0",textAlign:"center",borderTop:"1px solid var(--div)"}}>
+      <div style={{background:"var(--cream)",padding:"40px 0",textAlign:"center",borderTop:"1px solid var(--div)"}}>
         <p style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9}}>如果你已經走過一段，也可以從這裡繼續。</p>
         <button onClick={() => go("ongoing")} style={{
           background:"transparent", border:"none",
@@ -600,9 +639,9 @@ function About({ go }) {
     <div className="page">
 
       {/* HERO — 圖片全版，文字壓在左側 */}
-      <div style={{minHeight:"100vh",position:"relative",overflow:"hidden",display:"flex",alignItems:"center"}}>
+      <div className="about-hero" style={{minHeight:"100vh",position:"relative",overflow:"hidden",display:"flex",flexDirection:"column",alignItems:"stretch"}}>
         {/* 圖片水平翻轉，人像在右 */}
-        <div style={{position:"absolute",inset:0,zIndex:0}}>
+        <div className="about-hero-photo" style={{position:"absolute",inset:0,zIndex:0}}>
           <img src={PHOTO} alt="Sofia" style={{
             width:"100%", height:"100%",
             objectFit:"cover", objectPosition:"right top",
@@ -616,7 +655,7 @@ function About({ go }) {
         </div>
 
         {/* 文字壓在圖片左側 */}
-        <div style={{position:"relative",zIndex:1,maxWidth:"1200px",width:"100%",margin:"0 auto",padding:"160px 60px 120px"}}>
+        <div className="about-text" style={{position:"relative",zIndex:1,maxWidth:"1200px",width:"100%",margin:"0 auto",padding:"160px 60px 120px"}}>
           <div style={{maxWidth:"480px"}}>
             <div style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.5)",marginBottom:"28px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}} className="fi">關於 Sofia</div>
             <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(28px,3.8vw,48px)",fontWeight:300,color:"#FAF7F2",lineHeight:1.35,marginBottom:"32px"}} className="fi">
@@ -853,6 +892,19 @@ const TESTIMONIALS = [
     text: "一路走來的成長，原生家庭與過往的心路歷程，讓我慢慢變成了一個連自己都不太確定的樣子。在這 90 天的陪伴裡，沒有對錯、沒有批判，只有一次次被溫柔地接住。它讓我明白——我本身的存在，就已經很美好。現在的我，做自己的女王，笑起來都很美麗。",
     name: "S.",
     tag: "深度陪跑 90 天"
+  },
+  {
+    stars: 5,
+    text: "這13週，我最大的轉變是，我開始看見自己的模式，而不只是反應它。",
+    name: "鳳",
+    tag: "深度陪跑 90 天",
+    full: `以前的我，很習慣把時間排滿，覺得只要夠忙、夠努力，就可以不用面對那些不舒服的感覺。
+
+開始陪跑之後，Sofia 幫我看見——我不是不知道自己想要什麼，我只是一直在用「忙碌」來避開那個需要做選擇的時刻。
+
+這 13 週，我最大的改變不是「學到什麼技巧」，而是我開始可以在情緒來的時候，慢下來一點，問自己：這是我真正想要的嗎？
+
+我還在練習，但我知道我已經不一樣了。`
   },
 ];
 
@@ -1446,27 +1498,35 @@ function Ongoing({ go }) {
 /* ─── ART PAGE (文章與個案分享) ─────────────────────────────────── */
 function Art({ go }) {
   useFade();
-  const SHEET_URL = "https://docs.google.com/spreadsheets/d/1aQzKf9Pe1lvD4U3UQs5qUuzCgCAObETrZCEeNq5CwE8/gviz/tq?tqx=out:json&sheet=Sheet1";
+  const CSV_URL = "https://docs.google.com/spreadsheets/d/1aQzKf9Pe1lvD4U3UQs5qUuzCgCAObETrZCEeNq5CwE8/export?format=csv&sheet=Sheet1";
 
   const [arts, setArts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(false);
+  const [expanded, setExpanded] = useState({});
 
   useEffect(() => {
-    fetch(SHEET_URL)
+    fetch(CSV_URL)
       .then(r => r.text())
       .then(text => {
-        const json = JSON.parse(text.replace(/^.*?\(/, '').replace(/\);?$/, ''));
-        const rows = json.table.rows;
-        const parsed = rows
-          .filter(row => row.c && row.c[0] && row.c[1])
-          .map(row => ({
-            d:   row.c[0]?.v || '',
-            t:   row.c[1]?.v || '',
-            x:   row.c[2]?.v || '',
-            tg:  row.c[3]?.v || '',
-            url: row.c[4]?.v || '',
-          }));
+        const rows = [];
+        let field = '', row = [], inQ = false;
+        for (let i = 0; i < text.length; i++) {
+          const c = text[i];
+          if (inQ) {
+            if (c === '"' && text[i+1] === '"') { field += '"'; i++; }
+            else if (c === '"') { inQ = false; }
+            else { field += c; }
+          } else {
+            if (c === '"') { inQ = true; }
+            else if (c === ',') { row.push(field); field = ''; }
+            else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+            else if (c !== '\r') { field += c; }
+          }
+        }
+        if (row.length > 0 || field) { row.push(field); rows.push(row); }
+        const parsed = rows.slice(1).filter(r => r[0] && r[1])
+          .map(r => ({ d:r[0]||'', t:r[1]||'', x:r[2]||'', tg:r[3]||'', url:r[4]||'' }));
         setArts(parsed);
         setLoading(false);
       })
@@ -1484,39 +1544,73 @@ function Art({ go }) {
         </div>
       </div>
 
-      <section style={{background:"var(--w)"}}>
+      {/* 文章區 — 綠底白字 */}
+      <section style={{background:"var(--forest)",padding:"80px 0"}}>
         <div className="CN">
           {loading && (
-            <div style={{padding:"80px 0",textAlign:"center",color:"var(--wg)",fontSize:"14px",letterSpacing:"0.1em"}}>載入中⋯⋯</div>
+            <div style={{padding:"60px 0",textAlign:"center",color:"rgba(232,223,208,.5)",fontSize:"14px",letterSpacing:"0.1em"}}>載入中⋯⋯</div>
           )}
           {err && (
             <div style={{padding:"60px 0",textAlign:"center"}}>
-              <p style={{fontSize:"14px",color:"var(--wg)",lineHeight:2}}>文章暫時無法載入，請稍後再試。</p>
+              <p style={{fontSize:"14px",color:"rgba(232,223,208,.6)",lineHeight:2}}>文章暫時無法載入，請稍後再試。</p>
             </div>
           )}
           {!loading && !err && arts.length === 0 && (
             <div style={{padding:"60px 0",textAlign:"center"}}>
-              <p style={{fontSize:"14px",color:"var(--wg)",lineHeight:2}}>文章即將發布，敬請期待。</p>
+              <p style={{fontSize:"14px",color:"rgba(232,223,208,.6)",lineHeight:2}}>文章即將發布，敬請期待。</p>
             </div>
           )}
           {!loading && arts.map((a, i) => (
-            <div key={i} className="fi" style={{
+            <div key={i} style={{
               display:"flex", alignItems:"flex-start", gap:"32px",
-              padding:"36px 0", borderBottom:"1px solid var(--div)",
+              padding:"36px 0", borderBottom:"1px solid rgba(255,255,255,.1)",
               cursor: a.url ? "pointer" : "default",
             }}
             onClick={() => a.url && window.open(a.url, '_blank')}>
               <div style={{flexShrink:0,width:"72px"}}>
-                <div style={{fontSize:"11px",letterSpacing:"0.12em",color:"var(--wg)",lineHeight:1.6}}>{a.d}</div>
-                {a.tg && <div style={{fontSize:"11px",letterSpacing:"0.1em",color:"var(--forest)",marginTop:"6px"}}>{"#"+a.tg}</div>}
+                <div style={{fontSize:"11px",letterSpacing:"0.12em",color:"rgba(232,223,208,.5)",lineHeight:1.6}}>{a.d}</div>
+                {a.tg && <div style={{fontSize:"11px",letterSpacing:"0.1em",color:"rgba(232,223,208,.6)",marginTop:"6px"}}>{"#"+a.tg}</div>}
               </div>
               <div style={{flex:1}}>
-                <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",fontWeight:300,color:"var(--text)",marginBottom:"10px",lineHeight:1.6}}>{a.t}</div>
-                {a.x && <div style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9}}>{a.x}</div>}
-                {a.url && <div style={{marginTop:"12px",fontSize:"12px",letterSpacing:"0.12em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>閱讀全文 →</div>}
+                <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",fontWeight:300,color:"#fff",marginBottom:"10px",lineHeight:1.6}}>{a.t}</div>
+                {a.x && <div style={{fontSize:"13px",color:"rgba(255,255,255,.75)",lineHeight:1.9,whiteSpace:"pre-line"}}>{a.x}</div>}
+                {a.url && <div style={{marginTop:"12px",fontSize:"12px",letterSpacing:"0.12em",color:"rgba(232,223,208,.7)",fontFamily:"'Cormorant Garamond',serif"}}>閱讀全文 →</div>}
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* 見證區 */}
+      <section style={{background:"var(--cream)"}}>
+        <div className="CN">
+          <div className="slb fi">學員見證</div>
+          <h2 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(18px,2.2vw,26px)",fontWeight:300,color:"var(--text)",marginBottom:"8px"}} className="fi">真實的整理，會留下真實的改變。</h2>
+          <p style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9,marginBottom:"48px"}} className="fi">以下是學員的回饋，經本人同意後分享。</p>
+          {TESTIMONIALS.map((t, i) => {
+            const isExp = expanded[i];
+            const content = t.full || t.text;
+            const showToggle = !!t.full;
+            return (
+              <div key={i} style={{padding:"36px 0",borderBottom:"1px solid var(--div)"}}>
+                <div style={{fontSize:"13px",color:"var(--gold)",letterSpacing:"3px",marginBottom:"14px"}}>{"★".repeat(t.stars)}</div>
+                <div style={{
+                  fontFamily:"'Noto Serif TC',serif",fontSize:"15px",fontWeight:300,
+                  color:"var(--text)",lineHeight:2,marginBottom:"16px",
+                  ...(showToggle && !isExp ? {display:"-webkit-box",WebkitLineClamp:3,WebkitBoxOrient:"vertical",overflow:"hidden"} : {})
+                }}>「{showToggle ? content : t.text}」</div>
+                {showToggle && (
+                  <button onClick={e => { e.stopPropagation(); setExpanded(ex => ({...ex,[i]:!isExp})); }} style={{
+                    background:"transparent",border:"none",padding:0,cursor:"pointer",
+                    fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",
+                    fontFamily:"'Cormorant Garamond',serif",marginBottom:"12px"
+                  }}>{isExp ? "收起 ↑" : "看更多 ↓"}</button>
+                )}
+                <div style={{fontSize:"13px",color:"var(--soft)",letterSpacing:".1em",marginBottom:"4px"}}>{t.name}</div>
+                <div style={{fontSize:"11px",letterSpacing:"0.2em",color:"var(--forest)",border:"1px solid var(--forest)",display:"inline-block",padding:"3px 12px"}}>{t.tag}</div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
