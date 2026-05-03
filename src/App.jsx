@@ -285,7 +285,7 @@ const Styles = () => (
 
     /* MOBILE */
     @media(max-width:768px){
-      :root{--nav:60px}
+      :root{--nav:60px;--soft:#4E4741;--wg:#655B52}
       nav,nav.sc{padding:0 18px}
       .nm,.nc{display:none}
       .hb{display:flex;flex-direction:column;justify-content:center;gap:5px;width:38px;height:38px;background:none;border:none;cursor:pointer;padding:4px;flex-shrink:0}
@@ -298,7 +298,7 @@ const Styles = () => (
       section{padding:64px 0}
       .hero{grid-template-columns:1fr;min-height:auto;display:flex;flex-direction:column}
       .hl{padding:48px 18px 48px;align-items:flex-start;order:2}
-      .htit{font-size:34px}.hbo{font-size:14px;max-width:100%;margin-bottom:36px}
+      .htit{font-size:34px}.hbo{font-size:16px;max-width:100%;margin-bottom:36px;color:#4E4741;line-height:2.05}
       .hr{order:1;height:90vw;max-height:460px;min-height:300px}
       .hri img{object-position:20% center}
       .hov{background:linear-gradient(to bottom,rgba(250,247,242,0) 60%,var(--w) 100%) !important}
@@ -313,13 +313,13 @@ const Styles = () => (
       .pv1{width:140px;height:190px;left:0}.pv2{width:170px;height:130px;right:0}
       .pvq{max-width:175px;font-size:12px;padding:14px 16px}
       .tiers{grid-template-columns:1fr}.tier{padding:44px 18px}
-      .ctab{padding:68px 18px}.ctab-t{font-size:28px}.ctab-x{font-size:14px}
+      .ctab{padding:68px 18px}.ctab-t{font-size:28px}.ctab-x{font-size:16px;color:#4E4741;line-height:2}
       .ab-hero{grid-template-columns:1fr}
       .ab-l{padding:calc(var(--nav) + 48px) 18px 48px}
       .ab-r{min-height:90vw;max-height:440px}
       .two{grid-template-columns:1fr;gap:24px}
       .slb2{border-top:none;border-bottom:1px solid var(--div);padding-bottom:7px;margin-bottom:4px}
-      .mem-h{padding:calc(var(--nav) + 48px) 18px 68px}.mh-t{font-size:32px}.mh-x{font-size:14px}
+      .mem-h{padding:calc(var(--nav) + 48px) 18px 68px}.mh-t{font-size:32px}.mh-x{font-size:16px;color:rgba(250,247,242,.82);line-height:2}
       .ben{grid-template-columns:1fr}.bi{padding:34px 18px}
       .prs{grid-template-columns:1fr;max-width:340px;margin:36px auto 0}
       .adv-h{padding:calc(var(--nav) + 48px) 0 68px}
@@ -331,33 +331,72 @@ const Styles = () => (
       .art-d{display:none}.art-tg{align-self:auto}
       .art-cta{padding:40px 18px}
       .msample-grid{grid-template-columns:1fr !important}
-      .apl-h{padding:calc(var(--nav) + 48px) 18px 68px}.apl-t{font-size:30px}
+      .apl-h{padding:calc(var(--nav) + 48px) 18px 68px}.apl-t{font-size:30px}.apl-x{font-size:16px;color:rgba(250,247,242,.82);line-height:2}
       .fg{grid-template-columns:1fr}.fgp.ful{grid-column:auto}.fsb{width:100%;padding:16px}
       .fti{padding:0 18px}
       .ftt{grid-template-columns:1fr;gap:36px;padding-bottom:36px}
       .fb{flex-direction:column;align-items:flex-start}
       .slb::before{width:24px}
       .fs{grid-template-columns:60px 1fr;gap:20px}
+      .page>section .slb{font-size:15px !important;letter-spacing:.18em !important;color:#4A433D !important;margin-bottom:34px !important}
+      .page>section .slb::before{width:46px !important;background:#B8A882 !important}
+      p,.cx,.ptx,.tier-tx,.art-x,.fsx,.fqa,.chkt,.testi-text{font-size:16px !important;color:#4E4741 !important;line-height:2 !important}
+      .tier-tit,.art-t,.fst,.ct,.dt{color:#2C2825 !important}
+      .px,.bx,.fd,.ful2 li,.fc{color:rgba(250,247,242,.72) !important}
+      .home-compare-label{font-size:16px !important;letter-spacing:.16em !important}
+      .home-cta-text{color:#FFFFFF !important;font-size:24px !important;line-height:1.8 !important}
+      .home-tool-link{font-size:16px !important;letter-spacing:.08em !important;color:var(--forest) !important}
 
       /* HOME HERO */
       .home-hero{flex-direction:column !important;align-items:stretch !important;min-height:auto !important}
-      .home-photo{position:relative !important;top:auto !important;right:auto !important;left:auto !important;width:100% !important;height:88vw !important;max-height:520px !important;margin-top:var(--nav) !important}
-      .home-photo img{object-position:center top !important}
+      .home-photo{position:relative !important;top:auto !important;right:auto !important;left:auto !important;width:100% !important;height:104vw !important;max-height:560px !important;min-height:390px !important;margin-top:var(--nav) !important;background:#F3E8E2 !important}
+      .home-photo img{object-position:22% top !important;filter:contrast(1.06) saturate(1.05) brightness(1.02)}
+      .home-photo>div{opacity:.22 !important}
       .home-text{padding:36px 18px 56px !important}
       .home-text>div{max-width:100% !important}
+      .home-text h1{font-size:34px !important;line-height:1.35 !important;color:#2C2825 !important}
+      .home-text p{font-size:17px !important;color:#4A433D !important;line-height:2.05 !important}
       .home-compare{grid-template-columns:1fr !important}
-      .home-results{grid-template-columns:1fr !important}
+      .home-results{grid-template-columns:repeat(3,1fr) !important;gap:1px !important;background:rgba(250,247,242,.18) !important}
+      .home-results>div{padding:30px 10px !important;background:var(--forest) !important;min-height:210px !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important}
+      .home-results>div>div:nth-child(1){font-size:28px !important;color:rgba(250,247,242,.9) !important;margin-bottom:14px !important}
+      .home-results>div>div:nth-child(2){font-size:20px !important;color:#FFFFFF !important;margin-bottom:10px !important}
+      .home-results>div>div:nth-child(3){font-size:14px !important;color:rgba(250,247,242,.82) !important;line-height:1.8 !important}
       .home-tools{grid-template-columns:1fr !important}
       .testi-grid{grid-template-columns:1fr !important}
 
       /* ABOUT HERO */
-      .about-hero{min-height:auto !important}
-      .about-hero-photo{position:relative !important;inset:auto !important;width:100% !important;height:88vw !important;max-height:480px !important;margin-top:var(--nav) !important}
-      .about-hero-photo img{object-position:center top !important;transform:none !important}
-      .about-text{position:relative !important;padding:36px 18px 48px !important;background:var(--text) !important}
+      .about-hero{min-height:680px !important;padding-top:var(--nav) !important;justify-content:flex-end !important;background:#F0E4E0 !important}
+      .about-hero-photo{position:absolute !important;inset:0 !important;width:100% !important;height:100% !important;margin-top:0 !important}
+      .about-hero-photo img{width:100% !important;max-width:none !important;object-position:left top !important;transform:scaleX(-1) !important;filter:contrast(1.08) saturate(1.04)}
+      .about-hero-photo>div:first-of-type{background:linear-gradient(105deg,rgba(18,16,15,.82) 0%,rgba(24,22,20,.74) 22%,rgba(32,29,27,.48) 42%,rgba(44,40,37,.18) 60%,transparent 78%) !important}
+      .about-hero-photo>div:last-of-type{background:radial-gradient(ellipse 115% 72% at 0% 90%,rgba(18,16,15,.72) 0%,rgba(28,25,23,.5) 34%,rgba(44,40,37,.22) 58%,transparent 84%) !important}
+      .about-text{position:relative !important;z-index:1 !important;padding:calc(var(--nav) + 46px) 18px 58px !important;background:transparent !important;margin:0 !important}
+      .about-text>div{max-width:310px !important}
       .about-text h1{color:var(--sand) !important}
-      .about-text p{color:rgba(232,223,208,.8) !important}
+      .about-text p{font-size:17px !important;color:rgba(250,247,242,.88) !important;line-height:2.05 !important}
       .about-text div[style*="background"]{background:rgba(232,223,208,.4) !important}
+      section:nth-of-type(2) > .CN > .fi:first-child > p{color:#FFFFFF !important}
+
+      /* MOBILE TYPE SCALE */
+      body{font-size:16px}
+      .page section :is(p,li,label,input,select,textarea,button){font-size:17px !important;line-height:1.9 !important}
+      .page section :is(h1,.htit){font-size:clamp(30px,8vw,42px) !important;line-height:1.45 !important}
+      .page section :is(h2,h3){font-size:clamp(22px,6vw,30px) !important;line-height:1.55 !important}
+      .page section [style*="font-size: 11px"],
+      .page section [style*="font-size: 12px"]{font-size:15px !important}
+      .page section [style*="font-size: 13px"],
+      .page section [style*="font-size: 14px"],
+      .page section [style*="font-size: 15px"]{font-size:17px !important}
+      .page section [style*="font-size: 16px"]{font-size:18px !important}
+      .page section [style*="font-size: 17px"]{font-size:19px !important}
+      .page section .slb,
+      .page section .slb2,
+      .page section [style*="letter-spacing: 0.25em"]{font-size:16px !important;line-height:1.7 !important}
+      .page section .bp,
+      .page section .bg,
+      .page section .fsb,
+      .page section .pb{font-size:16px !important;line-height:1.5 !important}
     }
     @media(max-width:390px){
       .htit{font-size:28px}.mh-t{font-size:26px}.ctab-t{font-size:24px}.apl-t{font-size:24px}
@@ -430,7 +469,6 @@ function Nav({ cur, go }) {
       </nav>
       <div className={"mo" + (mob ? " op" : "")}>
         <ul>
-          <li onClick={() => nav("home")}>首頁</li>
           {NI.map(i => <li key={i.p} onClick={() => nav(i.p)}>{i.l}</li>)}
         </ul>
         <div className="mo-ft">Sofia — 蘇菲療癒轉化</div>
@@ -520,20 +558,20 @@ function Home({ go }) {
           <div className="slb fi">這不是療癒</div>
           <div className="home-compare" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px"}}>
             <div className="fi" style={{padding:"48px 44px",background:"var(--cream)"}}>
-              <div style={{fontSize:"11px",letterSpacing:"0.25em",color:"var(--wg)",marginBottom:"28px",textTransform:"uppercase"}}>一般的方式</div>
+              <div className="home-compare-label" style={{fontSize:"12px",letterSpacing:"0.25em",color:"var(--text)",marginBottom:"28px",textTransform:"uppercase"}}>一般的方式</div>
               {["給你方法和建議","告訴你應該怎麼做","幫你在當下好過一點","讓你更努力撐下去"].map((s,i) => (
-                <div key={i} style={{display:"flex",gap:"12px",marginBottom:"14px",opacity:0.6}}>
-                  <span style={{color:"var(--sandm)",flexShrink:0}}>–</span>
-                  <span style={{fontSize:"14px",color:"var(--soft)",lineHeight:1.8}}>{s}</span>
+                <div key={i} style={{display:"flex",gap:"12px",marginBottom:"14px"}}>
+                  <span style={{color:"var(--wg)",flexShrink:0}}>–</span>
+                  <span style={{fontSize:"16px",color:"var(--text)",lineHeight:1.8}}>{s}</span>
                 </div>
               ))}
             </div>
             <div className="fi" style={{padding:"48px 44px",background:"var(--forest)"}}>
-              <div style={{fontSize:"11px",letterSpacing:"0.25em",color:"rgba(232,223,208,.5)",marginBottom:"28px",textTransform:"uppercase"}}>我在做的</div>
+              <div className="home-compare-label" style={{fontSize:"12px",letterSpacing:"0.25em",color:"rgba(250,247,242,.82)",marginBottom:"28px",textTransform:"uppercase"}}>我在做的</div>
               {["幫你看見你的模式","讓你理解自己為什麼卡住","建立你的內在穩定能力","讓你在關鍵時刻做出不同的選擇"].map((s,i) => (
                 <div key={i} style={{display:"flex",gap:"12px",marginBottom:"14px"}}>
-                  <span style={{color:"var(--sand)",flexShrink:0}}>—</span>
-                  <span style={{fontSize:"14px",color:"rgba(232,223,208,.85)",lineHeight:1.8}}>{s}</span>
+                  <span style={{color:"rgba(250,247,242,.9)",flexShrink:0}}>—</span>
+                  <span style={{fontSize:"16px",color:"#FFFFFF",lineHeight:1.8}}>{s}</span>
                 </div>
               ))}
             </div>
@@ -580,7 +618,7 @@ function Home({ go }) {
 
       {/* ── 中段 CTA ── */}
       <section style={{background:"var(--forest)",padding:"80px 24px",textAlign:"center"}}>
-        <p className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(18px,2.5vw,26px)",fontWeight:300,color:"var(--sand)",lineHeight:1.7,marginBottom:"36px"}}>
+        <p className="home-cta-text fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(18px,2.5vw,26px)",fontWeight:300,color:"var(--sand)",lineHeight:1.7,marginBottom:"36px"}}>
           你不需要一次改變很多。<br/>你只需要先看清楚。
         </p>
         <button className="bp fi" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)",fontSize:"14px",padding:"16px 40px"}}>預約初次穩定體驗</button>
@@ -599,7 +637,7 @@ function Home({ go }) {
               <div key={i} className="fi" style={{padding:"36px 32px",background:"var(--w)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => go(s.p)}>
                 <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",fontWeight:300,color:"var(--text)",marginBottom:"10px"}}>{s.t}</div>
                 <div style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9,marginBottom:"20px"}}>{s.x}</div>
-                <div style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>{s.btn} →</div>
+                <div className="home-tool-link" style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>{s.btn} →</div>
               </div>
             ))}
           </div>
