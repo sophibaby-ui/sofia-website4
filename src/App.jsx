@@ -416,6 +416,21 @@ const Styles = () => (
       footer a{font-size:16px !important;line-height:1.7 !important;display:block !important;width:max-content !important;max-width:100% !important}
       footer p,
       footer .C>div:last-child>div{font-size:15px !important;line-height:1.9 !important}
+
+      /* MOBILE CARD LAYOUTS */
+      .start-pricing-grid,
+      .aware-tools-grid{grid-template-columns:1fr !important;gap:16px !important}
+      .start-plan-card,
+      .aware-tool-card{padding:32px 26px !important;text-align:left !important}
+      .start-plan-card{display:grid !important;grid-template-columns:1fr auto !important;column-gap:18px !important;align-items:start !important}
+      .start-plan-card .plan-meta{grid-column:1 !important}
+      .start-plan-card .plan-price{grid-column:2 !important;grid-row:1 / span 2 !important;text-align:right !important;font-size:32px !important;white-space:nowrap !important;margin:0 !important}
+      .start-plan-card .plan-desc{grid-column:1 / -1 !important;font-size:16px !important;line-height:1.85 !important;margin:18px 0 22px !important;text-wrap:pretty}
+      .start-plan-card .plan-button{grid-column:1 / -1 !important;width:100% !important;white-space:normal !important}
+      .start-plan-card .plan-badge{position:static !important;transform:none !important;display:inline-block !important;margin-bottom:12px !important}
+      .aware-tool-card{border-left:3px solid var(--sandm) !important;border-top:none !important}
+      .aware-tool-card p{margin-bottom:22px !important;text-wrap:pretty}
+      .aware-tool-card .aware-tool-link{font-size:16px !important;letter-spacing:.08em !important}
     }
     @media(max-width:390px){
       .htit{font-size:28px}.mh-t{font-size:26px}.ctab-t{font-size:24px}.apl-t{font-size:24px}
@@ -865,19 +880,21 @@ function Start({ go }) {
       <section style={{background:"var(--w)"}}>
         <div className="C">
           <div className="slb fi">選擇方案</div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
+          <div className="start-pricing-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
             {plans.map((p,i) => (
-              <div key={i} className="fi" style={{
+              <div key={i} className="start-plan-card fi" style={{
                 padding:"44px 36px",
                 background: p.featured ? "var(--forest)" : "var(--cream)",
                 textAlign:"center",
                 position:"relative",
               }}>
-                {p.featured && <div style={{position:"absolute",top:"16px",left:"50%",transform:"translateX(-50%)",fontSize:"11px",letterSpacing:"0.2em",color:"rgba(232,223,208,.6)",textTransform:"uppercase"}}>最多人選擇</div>}
-                <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",fontWeight:300,color:p.featured?"var(--sand)":"var(--text)",marginBottom:"20px",marginTop:p.featured?"16px":"0"}}>{p.t}</div>
-                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"36px",fontWeight:300,color:p.featured?"var(--sand)":"var(--text)",marginBottom:"16px"}}>{p.p}</div>
-                <div style={{fontSize:"13px",color:p.featured?"rgba(232,223,208,.65)":"var(--soft)",lineHeight:1.8,marginBottom:"28px"}}>{p.x}</div>
-                <button className="bp" onClick={() => go("apply")} style={{
+                <div className="plan-meta">
+                  {p.featured && <div className="plan-badge" style={{position:"absolute",top:"16px",left:"50%",transform:"translateX(-50%)",fontSize:"11px",letterSpacing:"0.2em",color:"rgba(232,223,208,.6)",textTransform:"uppercase"}}>最多人選擇</div>}
+                  <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",fontWeight:300,color:p.featured?"var(--sand)":"var(--text)",marginBottom:"20px",marginTop:p.featured?"16px":"0"}}>{p.t}</div>
+                </div>
+                <div className="plan-price" style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"36px",fontWeight:300,color:p.featured?"var(--sand)":"var(--text)",marginBottom:"16px"}}>{p.p}</div>
+                <div className="plan-desc" style={{fontSize:"13px",color:p.featured?"rgba(232,223,208,.65)":"var(--soft)",lineHeight:1.8,marginBottom:"28px"}}>{p.x}</div>
+                <button className="plan-button bp" onClick={() => go("apply")} style={{
                   background: p.featured ? "var(--sand)" : "var(--forest)",
                   color: p.featured ? "var(--forest)" : "var(--sand)",
                   width:"100%",
@@ -915,18 +932,18 @@ function Aware({ go }) {
 
       <section style={{background:"var(--w)"}}>
         <div className="CN">
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px",marginBottom:"60px"}}>
+          <div className="aware-tools-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px",marginBottom:"60px"}}>
             {/* 生命數字 */}
-            <div className="fi" style={{padding:"52px 44px",background:"var(--cream)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => go("num")}>
+            <div className="aware-tool-card fi" style={{padding:"52px 44px",background:"var(--cream)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => go("num")}>
               <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"22px",fontWeight:300,color:"var(--text)",marginBottom:"16px"}}>生命數字</div>
               <p style={{fontSize:"14px",color:"var(--soft)",lineHeight:1.9,marginBottom:"28px"}}>從出生日期了解你的主命數、流年數、關係數與挑戰數。看見你這一生最容易反覆面對的主題。</p>
-              <div style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>計算我的數字 →</div>
+              <div className="aware-tool-link" style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>計算我的數字 →</div>
             </div>
             {/* 身心平衡檢測 — 外部連結 */}
-            <div className="fi" style={{padding:"52px 44px",background:"var(--cream)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => window.open("https://sofiacentering.netlify.app/", "_blank")}>
+            <div className="aware-tool-card fi" style={{padding:"52px 44px",background:"var(--cream)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => window.open("https://sofiacentering.netlify.app/", "_blank")}>
               <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"22px",fontWeight:300,color:"var(--text)",marginBottom:"16px"}}>身心平衡檢測</div>
               <p style={{fontSize:"14px",color:"var(--soft)",lineHeight:1.9,marginBottom:"28px"}}>花約 3 分鐘，選擇最接近你近兩週感受的答案，看見自己現在真正的狀態。</p>
-              <div style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>開始檢測 →</div>
+              <div className="aware-tool-link" style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>開始檢測 →</div>
             </div>
           </div>
 
