@@ -242,6 +242,26 @@ const Styles = () => (
     .num-cta-text{font-family:'Noto Serif TC',serif;font-size:clamp(21px,2.4vw,28px);font-weight:300;color:#F5EFE4;line-height:1.8;margin-bottom:34px;text-wrap:balance}
     .num-cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
     .num-cta-secondary{background:rgba(250,247,242,.08)!important;border:1px solid rgba(232,223,208,.46)!important;color:#F5EFE4!important}
+    .num-mini-label{display:inline-flex;align-items:center;gap:8px;font-family:'Noto Sans TC',sans-serif;font-size:12px;letter-spacing:.14em;color:var(--forest);background:rgba(58,92,76,.1);border-left:3px solid var(--forest);padding:7px 12px;margin-bottom:12px}
+    .num-mini-label::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--sandm);flex-shrink:0}
+    .num-section-title{display:flex;align-items:center;gap:18px;font-family:'Noto Serif TC',serif;font-size:26px;font-weight:300;color:var(--text);line-height:1.4;margin-bottom:18px}
+    .num-section-title::before{content:"";width:54px;height:1px;background:var(--sandm);flex-shrink:0}
+    .num-section-title span{font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.22em;color:var(--forest);text-transform:uppercase}
+    .about-ability-panel{background:linear-gradient(145deg,#385B4C 0%,#315143 55%,#24211E 100%)}
+    .about-ability-title{font-family:'Noto Serif TC',serif;font-size:clamp(20px,2.4vw,28px);font-weight:300;color:#F5EFE4;line-height:1.85;margin-bottom:34px;text-wrap:balance}
+    .about-ability-row{display:flex;gap:14px;margin-bottom:16px}
+    .about-ability-row span:first-child{color:#D8C9A5;flex-shrink:0}
+    .about-ability-row span:last-child{font-size:15px;color:rgba(250,247,242,.82);line-height:1.9}
+    .green-cta{background:linear-gradient(145deg,#385B4C 0%,#315143 55%,#24211E 100%);padding:80px 0;text-align:center;position:relative;overflow:hidden}
+    .green-cta::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 75% 62% at 50% 18%,rgba(232,223,208,.13),transparent 65%);pointer-events:none}
+    .green-cta > div{position:relative;z-index:1}
+    .green-cta-kicker{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.28em;color:rgba(232,223,208,.72);margin-bottom:20px;text-transform:uppercase}
+    .green-cta-price{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:#F5EFE4;margin-bottom:8px}
+    .green-cta-meta{font-size:13px;color:rgba(250,247,242,.68);margin-bottom:40px;letter-spacing:.08em}
+    .green-cta-title{font-family:'Noto Serif TC',serif;font-size:clamp(21px,2.4vw,28px);font-weight:300;color:#F5EFE4;line-height:1.85;margin-bottom:18px;text-wrap:balance}
+    .green-cta-text{font-size:15px;color:rgba(250,247,242,.8);line-height:2;margin-bottom:36px;text-wrap:balance}
+    .green-cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .green-cta-secondary{background:rgba(250,247,242,.08)!important;border:1px solid rgba(232,223,208,.46)!important;color:#F5EFE4!important}
 
     /* FAQ */
     .fq{border-bottom:1px solid var(--div)}
@@ -389,6 +409,29 @@ const Styles = () => (
       .num-cta-text{font-size:24px !important;color:#F5EFE4 !important;line-height:1.85 !important}
       .num-cta-actions{flex-direction:column !important;align-items:stretch !important}
       .num-cta-actions .bp{width:100% !important}
+      .num-mini-label{font-size:14px !important;color:var(--forest) !important;background:rgba(58,92,76,.12) !important;letter-spacing:.12em !important;line-height:1.4 !important}
+      .num-section-title{font-size:30px !important;color:#2C2825 !important;margin-bottom:22px !important;gap:14px !important}
+      .num-section-title::before{width:44px !important;background:#B8A882 !important}
+      .num-section-title span{font-size:14px !important;color:var(--forest) !important}
+      .deep-fit-grid{grid-template-columns:1fr !important;gap:14px !important}
+      .deep-fit-card{padding:34px 26px !important}
+      .deep-fit-card p{font-size:18px !important;line-height:1.9 !important;text-wrap:pretty !important}
+      .about-ability-panel{padding:46px 28px !important}
+      .about-ability-title{font-size:24px !important;color:#F5EFE4 !important;line-height:1.85 !important}
+      .about-ability-row span:first-child{color:#D8C9A5 !important}
+      .about-ability-row span:last-child{font-size:17px !important;color:rgba(250,247,242,.84) !important;line-height:1.9 !important}
+      .ongoing-ways-grid{grid-template-columns:1fr !important;gap:14px !important}
+      .ongoing-way-card{padding:34px 26px !important}
+      .ongoing-way-card p{font-size:17px !important;line-height:1.9 !important;text-wrap:pretty !important}
+      .ongoing-way-card button{width:100% !important;font-size:15px !important}
+      .green-cta{padding:70px 0 !important}
+      .green-cta-kicker{font-size:14px !important;color:rgba(232,223,208,.76) !important}
+      .green-cta-price{font-size:48px !important;color:#F5EFE4 !important}
+      .green-cta-meta{font-size:15px !important;color:rgba(250,247,242,.68) !important;line-height:1.8 !important}
+      .green-cta-title{font-size:24px !important;color:#F5EFE4 !important;line-height:1.85 !important}
+      .green-cta-text{font-size:17px !important;color:rgba(250,247,242,.82) !important;line-height:2 !important}
+      .green-cta-actions{flex-direction:column !important;align-items:stretch !important}
+      .green-cta-actions .bp{width:100% !important}
 
       /* HOME HERO */
       .home-hero{flex-direction:column !important;align-items:stretch !important;min-height:auto !important}
@@ -401,10 +444,10 @@ const Styles = () => (
       .home-text p{font-size:17px !important;color:#4A433D !important;line-height:2.05 !important}
       .home-compare{grid-template-columns:1fr !important}
       .home-results{grid-template-columns:repeat(3,1fr) !important;gap:1px !important;background:rgba(250,247,242,.18) !important}
-      .home-results>div{padding:30px 10px !important;background:var(--forest) !important;min-height:210px !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important}
-      .home-results>div>div:nth-child(1){font-size:28px !important;color:rgba(250,247,242,.9) !important;margin-bottom:14px !important}
-      .home-results>div>div:nth-child(2){font-size:20px !important;color:#FFFFFF !important;margin-bottom:10px !important}
-      .home-results>div>div:nth-child(3){font-size:14px !important;color:rgba(250,247,242,.82) !important;line-height:1.8 !important}
+      .home-results>div{padding:34px 10px 30px !important;background:var(--forest) !important;min-height:236px !important;display:grid !important;grid-template-rows:46px 42px 1fr !important;align-items:start !important;justify-items:center !important}
+      .home-results>div>div:nth-child(1){font-size:28px !important;color:rgba(250,247,242,.9) !important;margin-bottom:0 !important;line-height:1 !important;display:flex !important;align-items:center !important}
+      .home-results>div>div:nth-child(2){font-size:20px !important;color:#FFFFFF !important;margin-bottom:0 !important;line-height:1.35 !important;display:flex !important;align-items:center !important}
+      .home-results>div>div:nth-child(3){font-size:14px !important;color:rgba(250,247,242,.82) !important;line-height:1.75 !important;max-width:92px !important;text-align:center !important;text-wrap:balance !important}
       .home-tools{grid-template-columns:1fr !important}
       .testi-grid{grid-template-columns:1fr !important}
 
@@ -829,14 +872,14 @@ function About({ go }) {
       {/* 我在建立的能力 */}
       <section style={{background:"var(--cream)"}}>
         <div className="CN">
-          <div className="fi" style={{padding:"52px 56px",background:"var(--forest)"}}>
-            <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(18px,2.2vw,24px)",fontWeight:300,color:"var(--sand)",lineHeight:1.8,marginBottom:"32px"}}>
+          <div className="about-ability-panel fi" style={{padding:"52px 56px",background:"var(--forest)"}}>
+            <p className="about-ability-title">
               不是讓你變得更好，<br/>而是幫你慢慢建立一種能力。
             </p>
             {["你可以在壓力裡，依然穩住自己","你可以在情緒裡，不被拉走","你可以開始做出，不一樣的決定"].map((s,i) => (
-              <div key={i} style={{display:"flex",gap:"14px",marginBottom:"16px"}}>
-                <span style={{color:"rgba(232,223,208,.5)",flexShrink:0}}>—</span>
-                <span style={{fontSize:"15px",color:"rgba(232,223,208,.85)",lineHeight:1.9}}>{s}</span>
+              <div key={i} className="about-ability-row">
+                <span>—</span>
+                <span>{s}</span>
               </div>
             ))}
           </div>
@@ -1414,12 +1457,12 @@ function Deep({ go }) {
       <section style={{background:"var(--cream)"}}>
         <div className="CN">
           <div className="slb fi">這適合你，如果</div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px"}}>
+          <div className="deep-fit-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px"}}>
             {[
               "你已經走到一個階段，知道這些事情不是一次理解就會改變",
               "你願意花一段時間，慢慢把這件事情穩下來",
             ].map((s,i) => (
-              <div key={i} className="fi" style={{padding:"44px 40px",background:"var(--w)"}}>
+              <div key={i} className="deep-fit-card fi" style={{padding:"44px 40px",background:"var(--w)"}}>
                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"32px",fontWeight:300,color:"var(--sandm)",marginBottom:"20px",lineHeight:1}}>0{i+1}</div>
                 <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"16px",fontWeight:300,color:"var(--text)",lineHeight:1.9}}>{s}</p>
               </div>
@@ -1551,17 +1594,16 @@ function Subscribe({ go }) {
         </div>
       </section>
 
-      <section style={{background:"var(--forest)",padding:"80px 0",textAlign:"center"}}>
+      <section className="green-cta">
         <div style={{maxWidth:"480px",margin:"0 auto",padding:"0 24px"}}>
-          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"12px",letterSpacing:"0.28em",color:"rgba(232,223,208,.4)",marginBottom:"20px",textTransform:"uppercase"}}>費用</div>
-          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"52px",fontWeight:300,color:"var(--sand)",marginBottom:"8px"}} className="fi">NT$ 12,800</div>
-          <div style={{fontSize:"13px",color:"rgba(232,223,208,.5)",marginBottom:"40px",letterSpacing:"0.08em"}}>/ 年　（平均每月約 NT$ 1,066）</div>
-          <p className="fi" style={{fontSize:"14px",color:"rgba(232,223,208,.65)",lineHeight:2,marginBottom:"36px"}}>
+          <div className="green-cta-kicker">費用</div>
+          <div className="green-cta-price fi">NT$ 12,800</div>
+          <div className="green-cta-meta">/ 年　（平均每月約 NT$ 1,066）</div>
+          <p className="green-cta-text fi">
             這個方式通常會在你已經有一定基礎之後才會比較適合。如果你不確定現在是否適合，可以先跟我說說你目前的狀態，我們一起看一下。
           </p>
-          <div style={{display:"flex",gap:"12px",justifyContent:"center",flexWrap:"wrap"}} className="fi">
-            <button className="bp" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>了解這個方式</button>
-            <button className="bp" onClick={() => go("apply")} style={{background:"transparent",border:"1px solid rgba(232,223,208,.4)",color:"var(--sand)"}}>跟我說我適不適合</button>
+          <div className="green-cta-actions fi">
+            <button className="bp" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>預約並確認是否適合</button>
           </div>
         </div>
       </section>
@@ -1664,9 +1706,9 @@ function Ongoing({ go }) {
       <section style={{background:"var(--w)"}}>
         <div className="CN">
           <div className="slb fi">你可以用的三種方式</div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
+          <div className="ongoing-ways-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
             {ways.map((w,i) => (
-              <div key={i} className="fi" style={{padding:"44px 36px",background:"var(--cream)"}}>
+              <div key={i} className="ongoing-way-card fi" style={{padding:"44px 36px",background:"var(--cream)"}}>
                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"28px",color:"var(--sandm)",marginBottom:"16px",lineHeight:1}}>{w.n}</div>
                 <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",color:"var(--text)",marginBottom:"4px"}}>{w.t}</div>
                 <div style={{fontSize:"11px",letterSpacing:"0.15em",color:"var(--forest)",marginBottom:"16px"}}>{w.sub}</div>
@@ -1679,12 +1721,12 @@ function Ongoing({ go }) {
         </div>
       </section>
 
-      <section style={{background:"var(--forest)",padding:"80px 0",textAlign:"center"}}>
+      <section className="green-cta">
         <div style={{maxWidth:"480px",margin:"0 auto",padding:"0 24px"}}>
-          <p className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(17px,2vw,22px)",fontWeight:300,color:"var(--sand)",lineHeight:1.9,marginBottom:"16px"}}>
+          <p className="green-cta-title fi">
             你不需要等到很嚴重，才回來。
           </p>
-          <p className="fi" style={{fontSize:"14px",color:"rgba(232,223,208,.65)",lineHeight:2,marginBottom:"36px"}}>
+          <p className="green-cta-text fi">
             很多時候，只是提早一點調整，就會差很多。
           </p>
           <button className="bp fi" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>跟我說說你現在的狀態</button>
@@ -2019,9 +2061,9 @@ function NumCard({ label, lifePath, yrPath, thisYear }) {
       </div>
       {d.sub && <div style={{fontSize:"12px",letterSpacing:"0.15em",color:d.color,marginBottom:"16px",fontFamily:"'Cormorant Garamond',serif"}}>{d.sub}</div>}
       <p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)"}}>{d.x}</p>
-      {d.note && <div style={{marginTop:"20px",paddingTop:"20px",borderTop:"1px solid rgba(0,0,0,0.07)"}}><div style={{fontSize:"11px",letterSpacing:"0.22em",color:d.color,marginBottom:"10px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 靈魂小叮嚀</div><p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)"}}>{d.note}</p></div>}
+      {d.note && <div style={{marginTop:"20px",paddingTop:"20px",borderTop:"1px solid rgba(0,0,0,0.07)"}}><div className="num-mini-label">靈魂小叮嚀</div><p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)"}}>{d.note}</p></div>}
       {yn && NUM_DESC[yn] && <div style={{marginTop:"20px",paddingTop:"20px",borderTop:"1px solid rgba(0,0,0,0.07)"}}><div style={{fontSize:"11px",letterSpacing:"0.25em",color:"var(--forest)",marginBottom:"10px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>流年數 · {thisYear}</div><div style={{display:"flex",alignItems:"baseline",gap:"12px",marginBottom:"12px",flexWrap:"wrap"}}><div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"18px",fontWeight:300,color:"var(--text)"}}>{NUM_DESC[yn].title}</div><div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"18px",color:"var(--forest)",letterSpacing:"0.06em"}}>{yrPath.display}</div></div><p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)"}}>{NUM_DESC[yn].yr}</p></div>}
-      {d.oil && <div style={{marginTop:"20px",paddingTop:"20px",borderTop:"1px solid rgba(0,0,0,0.07)"}}><div style={{fontSize:"11px",letterSpacing:"0.22em",color:d.color,marginBottom:"10px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 精油建議</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)"}}>{d.oil}</p></div>}
+      {d.oil && <div style={{marginTop:"20px",paddingTop:"20px",borderTop:"1px solid rgba(0,0,0,0.07)"}}><div className="num-mini-label">精油建議</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)"}}>{d.oil}</p></div>}
     </div>
   );
 }
@@ -2038,9 +2080,9 @@ function RelCard({ relPath }) {
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"22px",color:"var(--sandm)",letterSpacing:"0.06em"}}>{n}</div>
       </div>
       <p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)",marginBottom:"16px"}}>{d.x}</p>
-      {d.note && <div style={{padding:"16px 20px",background:"rgba(212,200,181,.12)",borderLeft:"2px solid var(--sandm)",marginBottom:"16px"}}><div style={{fontSize:"11px",letterSpacing:"0.2em",color:"var(--sandm)",marginBottom:"6px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 狀態留意</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--soft)",margin:0}}>{d.note}</p></div>}
+      {d.note && <div style={{padding:"16px 20px",background:"rgba(212,200,181,.12)",borderLeft:"2px solid var(--sandm)",marginBottom:"16px"}}><div className="num-mini-label">狀態留意</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--soft)",margin:0}}>{d.note}</p></div>}
       {d.lesson && <div style={{fontSize:"13px",color:"var(--forest)",lineHeight:1.9}}><span style={{letterSpacing:"0.1em",fontFamily:"'Cormorant Garamond',serif"}}>核心功課 → </span>{d.lesson}</div>}
-      {d.oil && <div style={{marginTop:"16px",paddingTop:"16px",borderTop:"1px solid rgba(0,0,0,0.06)"}}><div style={{fontSize:"11px",letterSpacing:"0.22em",color:"var(--sandm)",marginBottom:"8px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 精油建議</div>{d.oil.split("。").filter(s=>s.trim()).map((line,i)=><p key={i} style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)",marginBottom:"4px"}}>{line.trim()}。</p>)}</div>}
+      {d.oil && <div style={{marginTop:"16px",paddingTop:"16px",borderTop:"1px solid rgba(0,0,0,0.06)"}}><div className="num-mini-label">精油建議</div>{d.oil.split("。").filter(s=>s.trim()).map((line,i)=><p key={i} style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)",marginBottom:"4px"}}>{line.trim()}。</p>)}</div>}
     </div>
   );
 }
@@ -2058,9 +2100,9 @@ function ChallengeCard({ sy, sm, sd }) {
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"22px",color:"var(--sandm)",letterSpacing:"0.06em"}}>{n}</div>
       </div>
       <p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)",marginBottom:"20px"}}>{d.x}</p>
-      <div style={{padding:"20px 24px",background:"rgba(212,200,181,.15)",borderLeft:"2px solid var(--sandm)",marginBottom:"16px"}}><div style={{fontSize:"11px",letterSpacing:"0.2em",color:"var(--sandm)",marginBottom:"8px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 狀態留意</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--soft)",margin:0}}>{d.note}</p></div>
+      <div style={{padding:"20px 24px",background:"rgba(212,200,181,.15)",borderLeft:"2px solid var(--sandm)",marginBottom:"16px"}}><div className="num-mini-label">狀態留意</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--soft)",margin:0}}>{d.note}</p></div>
       <div style={{fontSize:"13px",color:"var(--forest)",lineHeight:1.9}}><span style={{letterSpacing:"0.1em",fontFamily:"'Cormorant Garamond',serif"}}>核心功課 → </span>{d.lesson}</div>
-      {d.oil && <div style={{marginTop:"16px",paddingTop:"16px",borderTop:"1px solid rgba(0,0,0,0.06)"}}><div style={{fontSize:"11px",letterSpacing:"0.22em",color:"var(--sandm)",marginBottom:"8px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 精油建議</div>{d.oil.split("。").filter(s=>s.trim()).map((line,i)=><p key={i} style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)",marginBottom:"4px"}}>{line.trim()}。</p>)}</div>}
+      {d.oil && <div style={{marginTop:"16px",paddingTop:"16px",borderTop:"1px solid rgba(0,0,0,0.06)"}}><div className="num-mini-label">精油建議</div>{d.oil.split("。").filter(s=>s.trim()).map((line,i)=><p key={i} style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)",marginBottom:"4px"}}>{line.trim()}。</p>)}</div>}
     </div>
   );
 }
@@ -2170,14 +2212,14 @@ function NumCalc({ go }) {
 
             {/* 陽曆主命數 + 流年數 */}
             <div style={{marginBottom:"32px"}}>
-              <div className="slb" style={{marginBottom:"8px",letterSpacing:"0.2em",color:"var(--sandm)"}}>陽曆</div>
+              <div className="num-section-title">陽曆 <span>Solar</span></div>
               <NumCard label="主命數 · 流年數" lifePath={result.solarLife} yrPath={result.solarYr} thisYear={thisYear} />
             </div>
 
             {/* 農曆主命數 + 流年數 */}
             {result.lunarLife && (
               <div style={{marginBottom:"48px"}}>
-                <div className="slb" style={{marginBottom:"8px",letterSpacing:"0.2em",color:"var(--forest)"}}>農曆</div>
+                <div className="num-section-title">農曆 <span>Lunar</span></div>
                 <NumCard label="主命數 · 流年數" lifePath={result.lunarLife} yrPath={result.solarYr} thisYear={thisYear} />
               </div>
             )}
@@ -2185,14 +2227,14 @@ function NumCalc({ go }) {
             {/* 關係數 */}
             {result.relPath && (
               <div style={{marginBottom:"48px"}}>
-                <div className="slb" style={{marginBottom:"8px"}}>關係數</div>
+                <div className="num-section-title">關係數 <span>Relation</span></div>
                 <RelCard relPath={result.relPath} />
               </div>
             )}
 
             {/* 挑戰數 */}
             <div style={{marginBottom:"48px"}}>
-              <div className="slb" style={{marginBottom:"8px"}}>挑戰數</div>
+              <div className="num-section-title">挑戰數 <span>Challenge</span></div>
               <div style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9,marginBottom:"20px",padding:"16px 20px",background:"var(--w)",borderLeft:"2px solid var(--sandm)"}}>挑戰數代表你在人生中最容易反覆卡住的內在模式，它不是你的缺點，而是你最容易過度或失衡的那個點。當你開始看懂它，這個挑戰反而會變成你的穩定力。</div>
               <ChallengeCard sy={sy} sm={sm} sd={sdy} />
               <div className="num-insight-panel">
