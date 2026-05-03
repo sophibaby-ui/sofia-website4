@@ -225,6 +225,23 @@ const Styles = () => (
     .ft2{resize:vertical;min-height:108px}
     .fsb{background:var(--forest);color:var(--sand);border:none;padding:16px 50px;font-size:13px;letter-spacing:.2em;cursor:pointer;transition:all .3s;margin-top:12px;font-family:'Noto Sans TC',sans-serif}
     .fsb:hover{background:var(--flt)}
+    .deep-entry-cta{background:linear-gradient(145deg,#385B4C 0%,#315143 48%,#24211E 100%);padding:100px 0;text-align:center;position:relative;overflow:hidden}
+    .deep-entry-cta::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 20%,rgba(232,223,208,.12),transparent 62%);pointer-events:none}
+    .deep-entry-cta > div{position:relative;z-index:1}
+    .deep-entry-kicker{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.32em;color:rgba(232,223,208,.76);margin-bottom:24px;text-transform:uppercase}
+    .deep-entry-main{font-family:'Noto Serif TC',serif;font-size:clamp(19px,2.2vw,24px);font-weight:300;color:#F5EFE4;line-height:1.9;margin-bottom:22px;text-wrap:balance}
+    .deep-entry-sub{font-size:15px;color:rgba(250,247,242,.78);line-height:2;margin-bottom:40px;text-wrap:balance}
+    .num-insight-panel{margin-top:22px;padding:28px;background:linear-gradient(145deg,#385B4C 0%,#315143 52%,#24211E 100%);display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .num-insight-card{padding:24px 26px;background:rgba(250,247,242,.08);border:1px solid rgba(232,223,208,.18)}
+    .num-insight-mark{font-family:'Cormorant Garamond',serif;font-size:22px;color:#D8C9A5;margin-bottom:12px;line-height:1}
+    .num-insight-card p{font-size:14px;color:rgba(250,247,242,.82);line-height:2;margin:0}
+    .num-result-cta{padding:58px 52px;background:linear-gradient(145deg,#385B4C 0%,#315143 46%,#24211E 100%);text-align:center;position:relative;overflow:hidden}
+    .num-result-cta::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 58% at 50% 12%,rgba(232,223,208,.13),transparent 64%);pointer-events:none}
+    .num-result-cta>*{position:relative;z-index:1}
+    .num-cta-kicker{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.32em;color:rgba(232,223,208,.76);margin-bottom:20px}
+    .num-cta-text{font-family:'Noto Serif TC',serif;font-size:clamp(21px,2.4vw,28px);font-weight:300;color:#F5EFE4;line-height:1.8;margin-bottom:34px;text-wrap:balance}
+    .num-cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .num-cta-secondary{background:rgba(250,247,242,.08)!important;border:1px solid rgba(232,223,208,.46)!important;color:#F5EFE4!important}
 
     /* FAQ */
     .fq{border-bottom:1px solid var(--div)}
@@ -260,6 +277,12 @@ const Styles = () => (
     .testi-text{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:300;color:var(--text);line-height:2;margin-bottom:24px}
     .testi-name{font-size:13px;color:var(--soft);letter-spacing:.12em;margin-bottom:6px}
     .testi-tag{font-size:11px;letter-spacing:.2em;color:var(--forest);border:1px solid var(--forest);display:inline-block;padding:3px 12px}
+    .tone-panel{background:linear-gradient(145deg,#1F1B18 0%,#2C2825 46%,#38594B 100%);padding:76px 60px;position:relative;overflow:hidden}
+    .tone-panel::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 90% at 100% 0%,rgba(184,168,130,.16),transparent 62%);pointer-events:none}
+    .tone-panel-inner{max-width:720px;margin:0 auto;position:relative;z-index:1;text-align:center}
+    .tone-kicker{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:24px}
+    .tone-text{font-family:'Noto Serif TC',serif;font-size:clamp(20px,2.6vw,30px);font-weight:300;line-height:1.9;color:var(--sand)}
+    .tone-sub{font-size:14px;line-height:2;color:rgba(232,223,208,.68);margin-top:24px}
 
     /* TABLET */
     @media(max-width:1024px){
@@ -338,14 +361,34 @@ const Styles = () => (
       .fb{flex-direction:column;align-items:flex-start}
       .slb::before{width:24px}
       .fs{grid-template-columns:60px 1fr;gap:20px}
-      .page>section .slb{font-size:15px !important;letter-spacing:.18em !important;color:#4A433D !important;margin-bottom:34px !important}
-      .page>section .slb::before{width:46px !important;background:#B8A882 !important}
+      .page .slb{font-size:16px !important;letter-spacing:.16em !important;color:#4A433D !important;margin-bottom:34px !important;line-height:1.7 !important}
+      .page .slb::before{width:46px !important;background:#B8A882 !important}
       p,.cx,.ptx,.tier-tx,.art-x,.fsx,.fqa,.chkt,.testi-text{font-size:16px !important;color:#4E4741 !important;line-height:2 !important}
       .tier-tit,.art-t,.fst,.ct,.dt{color:#2C2825 !important}
       .px,.bx,.fd,.ful2 li,.fc{color:rgba(250,247,242,.72) !important}
       .home-compare-label{font-size:16px !important;letter-spacing:.16em !important}
       .home-cta-text{color:#FFFFFF !important;font-size:24px !important;line-height:1.8 !important}
       .home-tool-link{font-size:16px !important;letter-spacing:.08em !important;color:var(--forest) !important}
+      .tone-panel{padding:58px 22px !important}
+      .tone-kicker{font-size:14px !important;letter-spacing:.22em !important}
+      .tone-text{font-size:24px !important;line-height:1.85 !important;text-wrap:balance}
+      .tone-sub{font-size:16px !important;color:rgba(250,247,242,.72) !important}
+      .dark-hero{background:linear-gradient(145deg,#385B4C 0%,#315143 48%,#24211E 100%) !important}
+      .dark-hero .hero-kicker{font-size:14px !important;letter-spacing:.22em !important;color:rgba(232,223,208,.72) !important}
+      .dark-hero h1{color:#F5EFE4 !important;text-shadow:0 1px 14px rgba(0,0,0,.12)}
+      .dark-hero p{font-size:17px !important;color:rgba(250,247,242,.82) !important;line-height:2.05 !important;max-width:100% !important}
+      .deep-entry-cta{padding:78px 0 !important}
+      .deep-entry-kicker{font-size:14px !important;letter-spacing:.22em !important;color:rgba(232,223,208,.76) !important}
+      .deep-entry-main{font-size:24px !important;color:#F5EFE4 !important;line-height:1.85 !important}
+      .deep-entry-sub{font-size:17px !important;color:rgba(250,247,242,.78) !important;line-height:2 !important}
+      .num-insight-panel{grid-template-columns:1fr !important;padding:20px !important;gap:12px !important}
+      .num-insight-card{padding:22px 20px !important}
+      .num-insight-card p{font-size:17px !important;color:rgba(250,247,242,.84) !important;line-height:1.95 !important}
+      .num-result-cta{padding:52px 22px !important}
+      .num-cta-kicker{font-size:14px !important;letter-spacing:.24em !important;color:rgba(232,223,208,.76) !important}
+      .num-cta-text{font-size:24px !important;color:#F5EFE4 !important;line-height:1.85 !important}
+      .num-cta-actions{flex-direction:column !important;align-items:stretch !important}
+      .num-cta-actions .bp{width:100% !important}
 
       /* HOME HERO */
       .home-hero{flex-direction:column !important;align-items:stretch !important;min-height:auto !important}
@@ -599,6 +642,14 @@ function Home({ go }) {
         </div>
       </section>
 
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">A quieter shift</div>
+          <div className="tone-text">真正讓人穩下來的，<br/>不是更努力，而是開始看懂自己。</div>
+          <p className="tone-sub">當你知道自己怎麼反應，選擇才會慢慢變得不一樣。</p>
+        </div>
+      </section>
+
       {/* ── 差異對比 ── */}
       <section style={{background:"var(--w)"}}>
         <div className="C">
@@ -767,6 +818,14 @@ function About({ go }) {
         </div>
       </section>
 
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">About the work</div>
+          <div className="tone-text">我不急著把你推向答案，<br/>我陪你看見答案前面的自己。</div>
+          <p className="tone-sub">真正的轉變，常常從你第一次不再責怪自己開始。</p>
+        </div>
+      </section>
+
       {/* 我在建立的能力 */}
       <section style={{background:"var(--cream)"}}>
         <div className="CN">
@@ -831,6 +890,14 @@ function Start({ go }) {
         </div>
       </section>
 
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">First session</div>
+          <div className="tone-text">第一次不急著解決，<br/>而是先把自己看清楚。</div>
+          <p className="tone-sub">這個空間會讓你把混亂慢慢放下來，看見真正卡住的位置。</p>
+        </div>
+      </section>
+
       {/* 適合誰 */}
       <section style={{background:"var(--cream)"}}>
         <div className="CN">
@@ -840,6 +907,7 @@ function Start({ go }) {
             "你很努力，但不知道為什麼還是卡在同樣的地方",
             "你在情緒或關係裡很消耗，但說不清楚問題在哪",
             "你已經撐很久，開始覺得需要停下來整理自己",
+            "你明明知道不應該，但卻一直重複發生",
           ].map((s,i) => (
             <div key={i} className="fi" style={{display:"flex",gap:"16px",alignItems:"flex-start",padding:"22px 0",borderBottom:"1px solid var(--div)"}}>
               <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"18px",color:"var(--sandm)",flexShrink:0}}>0{i+1}</span>
@@ -875,7 +943,8 @@ function Start({ go }) {
           <div className="slb fi">進行方式</div>
           <div className="fi" style={{padding:"44px 52px",background:"var(--w)"}}>
             {[
-              "透過線上視訊進行，你在任何地方都可以",
+              "主要透過線上視訊進行，你在任何地方都可以",
+              "或是另外預約台北市諮詢空間",
               "不需要事前準備，帶著現在的狀態來就好",
               "過程中我不會給你建議或任務，只是幫你看清楚",
               "結束後你會知道自己接下來想怎麼走",
@@ -957,6 +1026,14 @@ function Aware({ go }) {
               <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"22px",fontWeight:300,color:"var(--text)",marginBottom:"16px"}}>身心平衡檢測</div>
               <p style={{fontSize:"14px",color:"var(--soft)",lineHeight:1.9,marginBottom:"28px"}}>花約 3 分鐘，選擇最接近你近兩週感受的答案，看見自己現在真正的狀態。</p>
               <div className="aware-tool-link" style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>開始檢測 →</div>
+            </div>
+          </div>
+
+          <div className="tone-panel fi" style={{marginBottom:"60px"}}>
+            <div className="tone-panel-inner">
+              <div className="tone-kicker">Before the next step</div>
+              <div className="tone-text">工具不是答案，<br/>它只是讓你先看見自己在哪裡。</div>
+              <p className="tone-sub">看見當下的狀態，下一步才會變得比較清楚。</p>
             </div>
           </div>
 
@@ -1096,10 +1173,10 @@ function Apply() {
   return (
     <div className="page">
       {/* HERO */}
-      <div style={{background:"var(--forest)",padding:"140px 0 80px",position:"relative",overflow:"hidden"}}>
+      <div className="dark-hero" style={{background:"var(--forest)",padding:"140px 0 80px",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 60% at 20% 50%,rgba(255,255,255,.04) 0%,transparent 60%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
-          <div style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",textTransform:"uppercase",fontFamily:"'Cormorant Garamond',serif"}}>預約</div>
+          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",textTransform:"uppercase",fontFamily:"'Cormorant Garamond',serif"}}>預約</div>
           <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(26px,3.5vw,44px)",fontWeight:300,color:"var(--sand)",lineHeight:1.4,marginBottom:"20px"}}>
             先讓自己有一個<br/>可以站穩的位置。
           </h1>
@@ -1108,6 +1185,14 @@ function Apply() {
           </p>
         </div>
       </div>
+
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">Before we begin</div>
+          <div className="tone-text">你不需要整理好才來，<br/>現在的狀態就已經足夠。</div>
+          <p className="tone-sub">表單只是讓我先靠近你正在經歷的地方。</p>
+        </div>
+      </section>
 
       {/* FORM */}
       <section style={{background:"var(--w)"}}>
@@ -1225,6 +1310,9 @@ function Footer({ go }) {
             <a href="https://www.instagram.com/sofia202219101/" target="_blank" rel="noopener" style={SL}>Instagram</a>
             <a href="https://line.me/R/ti/p/@567avtfh" target="_blank" rel="noopener" style={SL}>Line 官方帳號</a>
             <a href="https://www.facebook.com/BelovedSofia" target="_blank" rel="noopener" style={SL}>Facebook</a>
+            <div className="footer-address" style={{fontSize:"13px",color:"rgba(212,200,181,.82)",lineHeight:1.8,marginTop:"18px"}}>
+              引力所 Fold Space<br/>台北市中山區復興北路366號7樓
+            </div>
           </div>
         </div>
         <div className="footer-bottom" style={{borderTop:"1px solid rgba(232,223,208,.1)",paddingTop:"32px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"12px"}}>
@@ -1244,10 +1332,10 @@ function Deep({ go }) {
     <div className="page">
 
       {/* HERO */}
-      <div style={{background:"var(--forest)",padding:"140px 0 100px",position:"relative",overflow:"hidden"}}>
+      <div className="dark-hero" style={{background:"var(--forest)",padding:"140px 0 100px",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 65% at 15% 50%,rgba(255,255,255,.04) 0%,transparent 60%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
-          <div style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>陪跑計畫</div>
+          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>陪跑計畫</div>
           <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(28px,4vw,50px)",fontWeight:300,color:"var(--sand)",lineHeight:1.35,marginBottom:"28px"}} className="fi">
             你其實已經知道很多。
           </h1>
@@ -1270,6 +1358,14 @@ function Deep({ go }) {
           <p className="fi" style={{fontSize:"15px",color:"var(--soft)",lineHeight:2}}>
             這不是因為你不夠努力，而是因為——穩定這件事，需要被練習。
           </p>
+        </div>
+      </section>
+
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">A steady process</div>
+          <div className="tone-text">理解是一個開始，<br/>穩定才是你真正帶回生活的力量。</div>
+          <p className="tone-sub">陪跑不是催促你變快，而是陪你在關鍵時刻不再回到舊路。</p>
         </div>
       </section>
 
@@ -1304,6 +1400,7 @@ function Deep({ go }) {
             "你可以在情緒裡，慢一點",
             "你開始看得見——哪些是你在承擔，哪些其實不需要",
             "你在關係中，開始有位置",
+            "你會發現自己其實可以過得更自在",
           ].map((s,i) => (
             <div key={i} className="fi" style={{display:"flex",gap:"16px",alignItems:"flex-start",padding:"22px 0",borderBottom:"1px solid var(--div)"}}>
               <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"18px",color:"var(--sandm)",flexShrink:0,lineHeight:1.4}}>0{i+1}</span>
@@ -1350,13 +1447,13 @@ function Deep({ go }) {
       </section>
 
       {/* 如何進入 */}
-      <section style={{background:"var(--forest)",padding:"100px 0"}}>
+      <section className="deep-entry-cta">
         <div style={{maxWidth:"560px",margin:"0 auto",padding:"0 24px",textAlign:"center"}}>
-          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.4)",marginBottom:"24px",textTransform:"uppercase"}}>如何進入</div>
-          <p className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(17px,2vw,22px)",fontWeight:300,color:"var(--sand)",lineHeight:1.9,marginBottom:"20px"}}>
+          <div className="deep-entry-kicker">如何進入</div>
+          <p className="deep-entry-main fi">
             當你開始更清楚自己的狀態，也確認自己想穩定走一段轉變的過程，我們會一起討論這樣的陪伴方式是否適合你。
           </p>
-          <p className="fi" style={{fontSize:"14px",color:"rgba(232,223,208,.65)",lineHeight:2,marginBottom:"40px"}}>
+          <p className="deep-entry-sub fi">
             我會陪伴你一起，慢慢看見自己的模式，再決定下一步要走多深。<br/>如果你還沒有開始，可以先從這裡。
           </p>
           <button className="bp fi" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)",fontSize:"14px",padding:"16px 40px"}}>
@@ -1375,10 +1472,10 @@ function Subscribe({ go }) {
   useFade();
   return (
     <div className="page">
-      <div style={{background:"var(--forest)",padding:"140px 0 100px",position:"relative",overflow:"hidden"}}>
+      <div className="dark-hero" style={{background:"var(--forest)",padding:"140px 0 100px",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 60% at 15% 50%,rgba(255,255,255,.04) 0%,transparent 60%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
-          <div style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>年度調頻訂閱</div>
+          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>年度調頻訂閱</div>
           <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(26px,3.8vw,46px)",fontWeight:300,color:"var(--sand)",lineHeight:1.4,marginBottom:"24px"}} className="fi">
             讓穩定可以持續的方式。
           </h1>
@@ -1400,6 +1497,14 @@ function Subscribe({ go }) {
           <p className="fi" style={{fontSize:"15px",color:"var(--soft)",lineHeight:2}}>
             不是因為你不夠努力，而是因為——穩定這件事，需要一個可以持續的節奏。
           </p>
+        </div>
+      </section>
+
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">Keep the rhythm</div>
+          <div className="tone-text">穩定不是一次完成，<br/>而是一種慢慢留在生活裡的節奏。</div>
+          <p className="tone-sub">當生活又開始拉扯，這個節奏會提醒你回到自己。</p>
         </div>
       </section>
 
@@ -1530,6 +1635,14 @@ function Ongoing({ go }) {
         </div>
       </section>
 
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">Return gently</div>
+          <div className="tone-text">回來不是退步，<br/>是你開始知道自己需要什麼。</div>
+          <p className="tone-sub">不同階段會需要不同的支持，你可以慢慢選。</p>
+        </div>
+      </section>
+
       <section style={{background:"var(--cream)"}}>
         <div className="CN">
           <div className="slb fi">你現在比較接近哪一種狀態？</div>
@@ -1590,6 +1703,7 @@ function Art({ go }) {
   const [arts, setArts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(false);
+  const [artExpanded, setArtExpanded] = useState({});
   const [expanded, setExpanded] = useState({});
 
   useEffect(() => {
@@ -1631,6 +1745,14 @@ function Art({ go }) {
         </div>
       </div>
 
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">Read slowly</div>
+          <div className="tone-text">有些句子不是要說服你，<br/>而是讓你在某一刻認出自己。</div>
+          <p className="tone-sub">你可以慢慢讀，不急著立刻知道答案。</p>
+        </div>
+      </section>
+
       {/* 文章區 — 綠底白字 */}
       <section style={{background:"var(--forest)",padding:"80px 0"}}>
         <div className="CN">
@@ -1647,7 +1769,10 @@ function Art({ go }) {
               <p style={{fontSize:"14px",color:"rgba(232,223,208,.6)",lineHeight:2}}>文章即將發布，敬請期待。</p>
             </div>
           )}
-          {!loading && arts.map((a, i) => (
+          {!loading && arts.map((a, i) => {
+            const isOpen = !!artExpanded[i];
+            const shouldClamp = (a.x || "").length > 120 || (a.x || "").includes("\n");
+            return (
             <div key={i} style={{
               display:"flex", alignItems:"flex-start", gap:"32px",
               padding:"36px 0", borderBottom:"1px solid rgba(255,255,255,.1)",
@@ -1660,11 +1785,21 @@ function Art({ go }) {
               </div>
               <div style={{flex:1}}>
                 <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",fontWeight:300,color:"#fff",marginBottom:"10px",lineHeight:1.6}}>{a.t}</div>
-                {a.x && <div style={{fontSize:"13px",color:"rgba(255,255,255,.75)",lineHeight:1.9,whiteSpace:"pre-line"}}>{a.x}</div>}
+                {a.x && <div style={{
+                  fontSize:"13px",color:"rgba(255,255,255,.75)",lineHeight:1.9,whiteSpace:"pre-line",
+                  ...(shouldClamp && !isOpen ? {display:"-webkit-box",WebkitLineClamp:6,WebkitBoxOrient:"vertical",overflow:"hidden"} : {})
+                }}>{a.x}</div>}
+                {shouldClamp && (
+                  <button onClick={e => { e.stopPropagation(); setArtExpanded(ex => ({...ex,[i]:!isOpen})); }} style={{
+                    background:"transparent",border:"none",padding:0,cursor:"pointer",
+                    marginTop:"12px",fontSize:"12px",letterSpacing:"0.15em",
+                    color:"rgba(232,223,208,.78)",fontFamily:"'Cormorant Garamond',serif"
+                  }}>{isOpen ? "收起 ↑" : "展開更多 ↓"}</button>
+                )}
                 {a.url && <div style={{marginTop:"12px",fontSize:"12px",letterSpacing:"0.12em",color:"rgba(232,223,208,.7)",fontFamily:"'Cormorant Garamond',serif"}}>閱讀全文 →</div>}
               </div>
             </div>
-          ))}
+          )})}
         </div>
       </section>
 
@@ -2060,19 +2195,25 @@ function NumCalc({ go }) {
               <div className="slb" style={{marginBottom:"8px"}}>挑戰數</div>
               <div style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9,marginBottom:"20px",padding:"16px 20px",background:"var(--w)",borderLeft:"2px solid var(--sandm)"}}>挑戰數代表你在人生中最容易反覆卡住的內在模式，它不是你的缺點，而是你最容易過度或失衡的那個點。當你開始看懂它，這個挑戰反而會變成你的穩定力。</div>
               <ChallengeCard sy={sy} sm={sm} sd={sdy} />
-              <div style={{marginTop:"20px",padding:"24px 28px",background:"var(--forest)"}}>
-                <p style={{fontSize:"13px",color:"rgba(232,223,208,.8)",lineHeight:2,marginBottom:"10px"}}>✦ 挑戰數不是你哪裡不好，而是你這一生會反覆遇到、也有機會轉化成力量的地方。</p>
-                <p style={{fontSize:"13px",color:"rgba(232,223,208,.8)",lineHeight:2}}>✦ 當你看懂自己的挑戰，你就不會再用錯方式對待自己。</p>
+              <div className="num-insight-panel">
+                <div className="num-insight-card">
+                  <div className="num-insight-mark">01</div>
+                  <p>挑戰數不是你哪裡不好，而是你這一生會反覆遇到、也有機會轉化成力量的地方。</p>
+                </div>
+                <div className="num-insight-card">
+                  <div className="num-insight-mark">02</div>
+                  <p>當你看懂自己的挑戰，你就不會再用錯方式對待自己。</p>
+                </div>
               </div>
             </div>
 
             {/* CTA */}
-            <div style={{padding:"48px 52px",background:"var(--forest)",textAlign:"center"}}>
-              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"13px",letterSpacing:"0.3em",color:"rgba(232,223,208,.48)",marginBottom:"18px"}}>Next Step</div>
-              <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"18px",fontWeight:300,color:"var(--sand)",lineHeight:1.9,marginBottom:"32px"}}>數字是一個起點，真正的整理需要更深一層的陪伴。</p>
-              <div style={{display:"flex",gap:"14px",justifyContent:"center",flexWrap:"wrap"}}>
+            <div className="num-result-cta">
+              <div className="num-cta-kicker">Next Step</div>
+              <p className="num-cta-text">數字是一個起點，<br/>真正的整理需要更深一層的陪伴。</p>
+              <div className="num-cta-actions">
                 <button className="bp" onClick={()=>go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>預約初次穩定體驗</button>
-                <button className="bp" onClick={()=>go("aware")} style={{background:"transparent",border:"1px solid rgba(232,223,208,.6)",color:"var(--sand)"}}>回到自我覺察</button>
+                <button className="bp num-cta-secondary" onClick={()=>go("aware")}>回到自我覺察</button>
               </div>
             </div>
           </div>
