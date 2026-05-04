@@ -262,6 +262,10 @@ const Styles = () => (
     .green-cta-text{font-size:15px;color:rgba(250,247,242,.8);line-height:2;margin-bottom:36px;text-wrap:balance}
     .green-cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
     .green-cta-secondary{background:rgba(250,247,242,.08)!important;border:1px solid rgba(232,223,208,.46)!important;color:#F5EFE4!important}
+    .num-date-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px}
+    .num-rel-panel{padding:32px 36px;background:var(--cream);margin-bottom:32px;border-left:2px solid var(--sandm)}
+    .num-guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:24px}
+    .num-lunar-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 
     /* FAQ */
     .fq{border-bottom:1px solid var(--div)}
@@ -432,6 +436,14 @@ const Styles = () => (
       .green-cta-text{font-size:17px !important;color:rgba(250,247,242,.82) !important;line-height:2 !important}
       .green-cta-actions{flex-direction:column !important;align-items:stretch !important}
       .green-cta-actions .bp{width:100% !important}
+      .num-date-grid{grid-template-columns:1fr 1fr !important;gap:16px 14px !important}
+      .num-date-grid>div:first-child{grid-column:1/-1 !important}
+      .num-date-grid label{white-space:nowrap !important;font-size:14px !important;letter-spacing:.1em !important}
+      .num-rel-panel{padding:28px 22px !important}
+      .num-guide-grid,.num-lunar-grid{grid-template-columns:1fr !important;gap:18px !important}
+      .num-guide-panel{padding:32px 24px !important}
+      .num-lunar-grid>div{padding:20px 22px !important}
+      .num-lunar-grid p{font-size:17px !important;line-height:1.9 !important;text-wrap:pretty !important}
 
       /* HOME HERO */
       .home-hero{flex-direction:column !important;align-items:stretch !important;min-height:auto !important}
@@ -2159,15 +2171,15 @@ function NumCalc({ go }) {
       <section style={{background:"var(--w)"}}>
         <div className="CN">
           <div className="slb">你的出生日期</div>
-          <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:"14px",marginBottom:"36px"}}>
+          <div className="num-date-grid" style={{marginBottom:"36px"}}>
             <div><label style={LS}>年份（西元）</label><input style={IS} type="number" placeholder="例：1990" value={sy} onChange={e=>setSy(e.target.value)} /></div>
             <div><label style={LS}>月份</label><input style={IS} type="number" placeholder="8" value={sm} min={1} max={12} onChange={e=>setSm(e.target.value)} /></div>
             <div><label style={LS}>日期</label><input style={IS} type="number" placeholder="15" value={sdy} min={1} max={31} onChange={e=>setSdy(e.target.value)} /></div>
           </div>
-          <div style={{padding:"32px 36px",background:"var(--cream)",marginBottom:"32px",borderLeft:"2px solid var(--sandm)"}}>
+          <div className="num-rel-panel">
             <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"14px",color:"var(--text)",marginBottom:"6px"}}>選填 — 計算關係數</div>
             <div style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9,marginBottom:"20px"}}>輸入對方的出生日期，計算你們之間的關係數。</div>
-            <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:"14px"}}>
+            <div className="num-date-grid">
               <div><label style={LS}>對方年份（西元）</label><input style={IS} type="number" placeholder="例：1988" value={sy2} onChange={e=>setSy2(e.target.value)} /></div>
               <div><label style={LS}>月份</label><input style={IS} type="number" placeholder="3" value={sm2} min={1} max={12} onChange={e=>setSm2(e.target.value)} /></div>
               <div><label style={LS}>日期</label><input style={IS} type="number" placeholder="22" value={sd2} min={1} max={31} onChange={e=>setSd2(e.target.value)} /></div>
@@ -2182,9 +2194,9 @@ function NumCalc({ go }) {
           <div className="CN">
 
             {/* 說明區塊 */}
-            <div style={{marginBottom:"40px",padding:"36px 44px",background:"var(--w)",borderLeft:"3px solid var(--sandm)"}}>
+            <div className="num-guide-panel" style={{marginBottom:"40px",padding:"36px 44px",background:"var(--w)",borderLeft:"3px solid var(--sandm)"}}>
               <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"16px",color:"var(--text)",marginBottom:"20px"}}>數字怎麼看</div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"32px",marginBottom:"24px"}}>
+              <div className="num-guide-grid">
                 <div>
                   <div style={{fontSize:"11px",letterSpacing:"0.22em",color:"var(--forest)",marginBottom:"10px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>主命數</div>
                   <p style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9}}>你這一生的主要能量方向，像是你天生的底色。來自你的出生日期，代表你在人生裡最核心的課題、天賦與模式。不會改變。</p>
@@ -2197,7 +2209,7 @@ function NumCalc({ go }) {
               <div style={{borderTop:"1px solid var(--div)",paddingTop:"20px"}}>
                 <div style={{fontSize:"11px",letterSpacing:"0.22em",color:"var(--sandm)",marginBottom:"12px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>陽曆 vs 農曆</div>
                 <p style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9,marginBottom:"16px"}}>兩個系統反映的是不同層次的自己，都看才能有更完整的理解。有些人陽曆和農曆的數字相同，有些人不同——不同的人往往會覺得其中一個特別「準」。</p>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px"}}>
+                <div className="num-lunar-grid">
                   <div style={{padding:"14px 18px",background:"var(--cream)",borderLeft:"2px solid var(--sandm)"}}>
                     <div style={{fontSize:"11px",letterSpacing:"0.18em",color:"var(--sandm)",marginBottom:"6px",fontFamily:"'Cormorant Garamond',serif"}}>陽曆</div>
                     <p style={{fontSize:"12px",color:"var(--soft)",lineHeight:1.8}}>工作狀態、初次認識、起心動念——你在外部世界裡行走的節奏與樣貌。</p>
