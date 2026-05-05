@@ -342,6 +342,13 @@ const Styles = () => (
     .tone-kicker{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:24px}
     .tone-text{font-family:'Noto Serif TC',serif;font-size:clamp(20px,2.6vw,30px);font-weight:300;line-height:1.9;color:var(--sand)}
     .tone-sub{font-size:14px;line-height:2;color:rgba(232,223,208,.68);margin-top:24px}
+    .apply-tone{padding:46px 60px}
+    .apply-tone .tone-kicker{margin-bottom:14px}
+    .apply-tone .tone-text{font-size:clamp(18px,2vw,24px);line-height:1.75}
+    .apply-tone .tone-sub{margin-top:12px}
+    .thanks-title{font-size:clamp(26px,3.2vw,36px)!important;line-height:1.55!important;margin-bottom:24px!important}
+    .thanks-copy{font-size:17px!important;line-height:1.95!important;gap:16px!important;max-width:560px!important}
+    .thanks-line-copy{font-size:16px!important;line-height:1.95!important}
 
     /* TABLET */
     @media(max-width:1024px){
@@ -431,7 +438,10 @@ const Styles = () => (
       .tone-panel{padding:58px 22px !important}
       .subscribe-start-hero{padding:96px 0 58px !important}
       .subscribe-start-tone{padding:42px 22px !important}
-      .apply-tone{padding:42px 22px !important}
+      .apply-tone{padding:28px 22px !important}
+      .apply-tone .tone-kicker{margin-bottom:10px !important}
+      .apply-tone .tone-text{font-size:19px !important;line-height:1.65 !important}
+      .apply-tone .tone-sub{font-size:14px !important;line-height:1.75 !important;margin-top:10px !important}
       .tone-kicker{font-size:14px !important;letter-spacing:.22em !important}
       .tone-text{font-size:24px !important;line-height:1.85 !important;text-wrap:balance}
       .tone-sub{font-size:16px !important;color:rgba(250,247,242,.72) !important}
@@ -496,9 +506,9 @@ const Styles = () => (
       .subscribe-preview-caption{font-size:17px !important;line-height:1.85 !important;padding:20px 22px !important}
       .subscribe-start-title{font-size:32px !important;line-height:1.55 !important}
       .subscribe-start-copy{font-size:19px !important;line-height:2 !important;color:rgba(250,247,242,.88) !important}
-      .thanks-title{font-size:28px !important;line-height:1.6 !important;margin-bottom:24px !important}
-      .thanks-copy{font-size:17px !important;line-height:1.95 !important;gap:16px !important}
-      .thanks-line-copy{font-size:16px !important;line-height:1.95 !important}
+      .thanks-title{font-size:25px !important;line-height:1.55 !important;margin-bottom:20px !important}
+      .thanks-copy{font-size:15px !important;line-height:1.85 !important;gap:12px !important}
+      .thanks-line-copy{font-size:15px !important;line-height:1.85 !important}
       .form-question label{font-size:17px !important;letter-spacing:.06em !important;color:#2C2825 !important;line-height:1.85 !important}
       .form-question-note{font-size:15px !important;color:#655B52 !important;line-height:1.9 !important}
 
