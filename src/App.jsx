@@ -2,9 +2,14 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 
 const PHOTO = "https://raw.githubusercontent.com/sophibaby-ui/sofia-website4/main/public/sofia.png";
+const LEAD_API_ORIGIN = "https://sofia-website4.vercel.app";
 
 const submitLead = async (lead) => {
-  const response = await fetch("/api/lead", {
+  const host = window.location.hostname;
+  const apiOrigin = host === "localhost" || host === "127.0.0.1" || host.includes("jrtm.vercel.app")
+    ? LEAD_API_ORIGIN
+    : "";
+  const response = await fetch(`${apiOrigin}/api/lead`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(lead),
