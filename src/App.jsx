@@ -431,6 +431,7 @@ const Styles = () => (
       .tone-panel{padding:58px 22px !important}
       .subscribe-start-hero{padding:96px 0 58px !important}
       .subscribe-start-tone{padding:42px 22px !important}
+      .apply-tone{padding:42px 22px !important}
       .tone-kicker{font-size:14px !important;letter-spacing:.22em !important}
       .tone-text{font-size:24px !important;line-height:1.85 !important;text-wrap:balance}
       .tone-sub{font-size:16px !important;color:rgba(250,247,242,.72) !important}
@@ -495,6 +496,9 @@ const Styles = () => (
       .subscribe-preview-caption{font-size:17px !important;line-height:1.85 !important;padding:20px 22px !important}
       .subscribe-start-title{font-size:32px !important;line-height:1.55 !important}
       .subscribe-start-copy{font-size:19px !important;line-height:2 !important;color:rgba(250,247,242,.88) !important}
+      .thanks-title{font-size:28px !important;line-height:1.6 !important;margin-bottom:24px !important}
+      .thanks-copy{font-size:17px !important;line-height:1.95 !important;gap:16px !important}
+      .thanks-line-copy{font-size:16px !important;line-height:1.95 !important}
       .form-question label{font-size:17px !important;letter-spacing:.06em !important;color:#2C2825 !important;line-height:1.85 !important}
       .form-question-note{font-size:15px !important;color:#655B52 !important;line-height:1.9 !important}
 
@@ -750,7 +754,7 @@ function Home({ go }) {
         </div>
       </section>
 
-      <section className="tone-panel fi">
+      <section className="tone-panel apply-tone fi">
         <div className="tone-panel-inner">
           <div className="tone-kicker">A quieter shift</div>
           <div className="tone-text">真正讓人穩下來的，<br/>不是更努力，而是開始看懂自己。</div>
@@ -1750,7 +1754,10 @@ function SubscribeStart({ go }) {
   const h = e => setForm({ ...form, [e.target.name]: e.target.value });
 
   const submitForm = async () => {
-    if (!form.name || !form.email) { setErr("請填寫姓名和 Email"); return; }
+    if (!form.need || !form.name || !form.email || !form.line) {
+      setErr("請填寫第 3 題、姓名、Email 和 LINE / IG");
+      return;
+    }
     setErr("");
     setSending(true);
     try {
@@ -1837,8 +1844,8 @@ function SubscribeStart({ go }) {
                 </div>
 
                 <div className="form-question" style={FG}>
-                  <label style={LS}>03 ／ 你現在最需要的是什麼？</label>
-                  <textarea style={TA} name="need" placeholder="可以很簡單，寫下你現在最需要的支持或感覺⋯⋯" value={form.need} onChange={h} />
+                  <label style={LS}>03 ／ 你現在最需要的是什麼？ <span style={{color:"#B85A5A"}}>*</span></label>
+                  <textarea required style={TA} name="need" placeholder="可以很簡單，寫下你現在最需要的支持或感覺⋯⋯" value={form.need} onChange={h} />
                 </div>
               </div>
 
@@ -1853,8 +1860,8 @@ function SubscribeStart({ go }) {
                   <input style={IS} type="email" name="email" placeholder="your@email.com" value={form.email} onChange={h} />
                 </div>
                 <div style={FG}>
-                  <label style={LS}>LINE / IG</label>
-                  <input style={IS} type="text" name="line" placeholder="方便聯繫你的帳號" value={form.line} onChange={h} />
+                  <label style={LS}>LINE / IG <span style={{color:"#B85A5A"}}>*</span></label>
+                  <input required style={IS} type="text" name="line" placeholder="方便聯繫你的帳號" value={form.line} onChange={h} />
                 </div>
               </div>
 
@@ -1917,16 +1924,16 @@ function Thanks({ go, subscribe = false }) {
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 65% at 18% 48%,rgba(232,223,208,.08) 0%,transparent 64%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
           <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.58)",marginBottom:"28px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>Received</div>
-          <h1 className="subscribe-start-title fi">
+          <h1 className="subscribe-start-title thanks-title fi">
             {title}
           </h1>
-          <div className="subscribe-start-copy fi" style={{display:"grid",gap:"22px",marginBottom:"40px"}}>
+          <div className="subscribe-start-copy thanks-copy fi" style={{display:"grid",gap:"22px",marginBottom:"40px"}}>
             {paragraphs.map((p, i) => <p key={i} style={{margin:0,whiteSpace:"pre-line"}}>{p}</p>)}
           </div>
 
           {!subscribe && (
             <div className="fi" style={{marginTop:"18px",padding:"30px 0 0",borderTop:"1px solid rgba(232,223,208,.22)"}}>
-              <p className="subscribe-start-copy" style={{fontSize:"18px",margin:"0 0 24px",color:"rgba(250,247,242,.82)"}}>
+              <p className="subscribe-start-copy thanks-line-copy" style={{fontSize:"18px",margin:"0 0 24px",color:"rgba(250,247,242,.82)"}}>
                 如果你希望後續安排時間更順一點<br/>
                 可以先加入我們的 LINE<br/>
                 跟我說一聲你的名字<br/>
