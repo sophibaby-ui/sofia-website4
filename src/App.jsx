@@ -429,6 +429,8 @@ const Styles = () => (
       .home-cta-text{color:#FFFFFF !important;font-size:24px !important;line-height:1.8 !important}
       .home-tool-link{font-size:16px !important;letter-spacing:.08em !important;color:var(--forest) !important}
       .tone-panel{padding:58px 22px !important}
+      .subscribe-start-hero{padding:96px 0 58px !important}
+      .subscribe-start-tone{padding:42px 22px !important}
       .tone-kicker{font-size:14px !important;letter-spacing:.22em !important}
       .tone-text{font-size:24px !important;line-height:1.85 !important;text-wrap:balance}
       .tone-sub{font-size:16px !important;color:rgba(250,247,242,.72) !important}
@@ -650,7 +652,7 @@ function Nav({ cur, go }) {
   const nav = p => { go(p); setMob(false); };
   return (
     <>
-      <nav className={[sc || mob ? "sc" : "", !sc && !mob && ["subscribe","subscribeStart","deep","apply","about"].includes(cur) ? "dk" : ""].filter(Boolean).join(" ")}>
+      <nav className={[sc || mob ? "sc" : "", !sc && !mob && ["subscribe","subscribeStart","thanks","subscribeThanks","deep","apply","about"].includes(cur) ? "dk" : ""].filter(Boolean).join(" ")}>
         <div className="nl" onClick={() => nav("home")}>
           Sofia
           <span>情緒穩定 × 關係覺察 × 內在主導權</span>
@@ -1738,6 +1740,7 @@ function Subscribe({ go }) {
 }
 
 function SubscribeStart({ go }) {
+  useFade();
   const [form, setForm] = useState({
     name:"", email:"", line:"", pain:"", stuck:"", need:""
   });
@@ -1788,7 +1791,7 @@ function SubscribeStart({ go }) {
 
   return (
     <div className="page">
-      <div className="dark-hero" style={{background:"var(--forest)",padding:"140px 0 90px",position:"relative",overflow:"hidden"}}>
+      <div className="dark-hero subscribe-start-hero" style={{background:"var(--forest)",padding:"112px 0 66px",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 60% at 20% 45%,rgba(255,255,255,.05) 0%,transparent 62%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
           <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.5)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>Before we begin</div>
@@ -1801,7 +1804,7 @@ function SubscribeStart({ go }) {
         </div>
       </div>
 
-      <section className="tone-panel fi">
+      <section className="tone-panel subscribe-start-tone fi">
         <div className="tone-panel-inner">
           <div className="tone-kicker">Gently</div>
           <div className="tone-text">你不需要寫很多，<br/>只要寫你此刻最真實的感覺就好。</div>
@@ -1885,6 +1888,7 @@ function SubscribeStart({ go }) {
 }
 
 function Thanks({ go, subscribe = false }) {
+  useFade();
   const lineUrl = "https://line.me/R/ti/p/@567avtfh";
   const title = subscribe ? "我們已經收到你的訂閱了" : "我們已經收到你的預約了";
   const paragraphs = subscribe ? [
@@ -1909,7 +1913,7 @@ function Thanks({ go, subscribe = false }) {
 
   return (
     <div className="page">
-      <div className="dark-hero" style={{background:"linear-gradient(145deg,#385B4C 0%,#315143 45%,#24211E 100%)",padding:"150px 0 90px",position:"relative",overflow:"hidden"}}>
+      <div className="dark-hero" style={{background:"linear-gradient(145deg,#385B4C 0%,#315143 45%,#24211E 100%)",padding:"118px 0 84px",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 65% at 18% 48%,rgba(232,223,208,.08) 0%,transparent 64%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
           <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.58)",marginBottom:"28px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>Received</div>
