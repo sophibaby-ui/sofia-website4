@@ -3,6 +3,17 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-ro
 
 const PHOTO = "https://raw.githubusercontent.com/sophibaby-ui/sofia-website4/main/public/sofia.png";
 
+const submitLead = async (lead) => {
+  const response = await fetch("/api/lead", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(lead),
+  });
+
+  if (!response.ok) throw new Error("lead_submit_failed");
+  return response.json();
+};
+
 /* ─── STYLES ─────────────────────────────────────────────────── */
 const Styles = () => (
   <style>{`
@@ -266,6 +277,30 @@ const Styles = () => (
     .num-rel-panel{padding:32px 36px;background:var(--cream);margin-bottom:32px;border-left:2px solid var(--sandm)}
     .num-guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:24px}
     .num-lunar-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .num-birthday-panel{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+    .num-birthday-card{padding:22px 24px;background:var(--w);border-left:3px solid var(--sandm)}
+    .num-birthday-card:nth-child(2){border-left-color:var(--forest)}
+    .num-birthday-label{font-size:12px;letter-spacing:.18em;color:var(--forest);margin-bottom:8px;font-family:'Cormorant Garamond',serif;text-transform:uppercase}
+    .num-birthday-date{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:300;color:var(--text);line-height:1.7}
+    .subscribe-hero-title{font-family:'Noto Serif TC',serif;font-size:clamp(34px,5vw,58px);font-weight:300;color:#F5EFE4;line-height:1.45;margin-bottom:30px;text-wrap:balance}
+    .subscribe-hero-copy{font-family:'Noto Serif TC',serif;font-size:clamp(20px,2.4vw,28px);font-weight:300;color:rgba(250,247,242,.84);line-height:1.9;margin-bottom:38px;text-wrap:balance}
+    .subscribe-section{background:var(--w)}
+    .subscribe-section.alt{background:var(--cream)}
+    .subscribe-inner{max-width:680px;margin:0 auto;padding:90px 24px}
+    .subscribe-copy{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:300;color:var(--text);line-height:2;text-wrap:pretty}
+    .subscribe-copy p{margin:0 0 18px}
+    .subscribe-copy .gap{height:10px}
+    .subscribe-list{display:grid;gap:14px;margin-top:28px}
+    .subscribe-list-item{padding:22px 26px;background:var(--w);border-left:3px solid var(--forest);font-size:16px;color:var(--soft);line-height:1.9}
+    .subscribe-section:not(.alt) .subscribe-list-item{background:var(--cream)}
+    .subscribe-preview{margin:34px 0 32px;background:var(--w);border:1px solid var(--div);overflow:hidden}
+    .subscribe-preview img{display:block;width:100%;height:auto}
+    .subscribe-preview.is-muted img{opacity:.8}
+    .subscribe-preview-caption{padding:22px 28px;background:linear-gradient(145deg,#385B4C 0%,#315143 55%,#24211E 100%);font-family:'Noto Serif TC',serif;font-size:18px;font-weight:300;color:#F5EFE4;line-height:1.85;text-wrap:balance}
+    .subscribe-start-title{font-family:'Noto Serif TC',serif;font-size:clamp(30px,4vw,46px);font-weight:300;color:#F5EFE4;line-height:1.55;margin-bottom:26px;text-wrap:balance}
+    .subscribe-start-copy{font-family:'Noto Serif TC',serif;font-size:clamp(19px,2.2vw,24px);font-weight:300;color:rgba(250,247,242,.86);line-height:2;max-width:560px;text-wrap:pretty}
+    .form-question label{font-size:15px!important;letter-spacing:.08em!important;color:#2C2825!important;line-height:1.8!important;font-family:'Noto Serif TC',serif!important}
+    .form-question-note{font-size:14px;color:#655B52;margin-bottom:12px;line-height:1.9}
 
     /* FAQ */
     .fq{border-bottom:1px solid var(--div)}
@@ -444,6 +479,22 @@ const Styles = () => (
       .num-guide-panel{padding:32px 24px !important}
       .num-lunar-grid>div{padding:20px 22px !important}
       .num-lunar-grid p{font-size:17px !important;line-height:1.9 !important;text-wrap:pretty !important}
+      .num-birthday-panel{grid-template-columns:1fr !important;gap:12px !important}
+      .num-birthday-card{padding:20px 22px !important}
+      .num-birthday-date{font-size:19px !important}
+      .subscribe-hero-title{font-size:36px !important;line-height:1.45 !important}
+      .subscribe-hero-copy{font-size:22px !important;line-height:1.9 !important;color:rgba(250,247,242,.84) !important}
+      .subscribe-inner{padding:68px 24px !important}
+      .subscribe-copy{font-size:20px !important;line-height:2 !important}
+      .subscribe-copy p{margin-bottom:18px !important}
+      .subscribe-copy .gap{height:10px !important}
+      .subscribe-list-item{font-size:17px !important;line-height:1.9 !important;padding:20px 22px !important}
+      .subscribe-preview{margin:30px 0 28px !important}
+      .subscribe-preview-caption{font-size:17px !important;line-height:1.85 !important;padding:20px 22px !important}
+      .subscribe-start-title{font-size:32px !important;line-height:1.55 !important}
+      .subscribe-start-copy{font-size:19px !important;line-height:2 !important;color:rgba(250,247,242,.88) !important}
+      .form-question label{font-size:17px !important;letter-spacing:.06em !important;color:#2C2825 !important;line-height:1.85 !important}
+      .form-question-note{font-size:15px !important;color:#655B52 !important;line-height:1.9 !important}
 
       /* HOME HERO */
       .home-hero{flex-direction:column !important;align-items:stretch !important;min-height:auto !important}
@@ -599,7 +650,7 @@ function Nav({ cur, go }) {
   const nav = p => { go(p); setMob(false); };
   return (
     <>
-      <nav className={[sc || mob ? "sc" : "", !sc && !mob && ["subscribe","deep","apply","about"].includes(cur) ? "dk" : ""].filter(Boolean).join(" ")}>
+      <nav className={[sc || mob ? "sc" : "", !sc && !mob && ["subscribe","subscribeStart","deep","apply","about"].includes(cur) ? "dk" : ""].filter(Boolean).join(" ")}>
         <div className="nl" onClick={() => nav("home")}>
           Sofia
           <span>情緒穩定 × 關係覺察 × 內在主導權</span>
@@ -1176,7 +1227,7 @@ function EmailCapture() {
   );
 }
 
-function Apply() {
+function Apply({ go }) {
   const [form, setForm] = useState({
     name:"", email:"", line:"", time:"", stuck:"", hope:"", source:""
   });
@@ -1185,31 +1236,32 @@ function Apply() {
   const [err, setErr]       = useState("");
   const h = e => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const FORM_ENDPOINT = "https://formspree.io/f/mrernlwv";
-
   const submitForm = async () => {
     if (!form.name || !form.email || !form.line) { setErr("請填寫姓名、Email 和 Line ID"); return; }
     setErr("");
-    if (FORM_ENDPOINT) {
-      setSending(true);
-      try {
-        await fetch(FORM_ENDPOINT, {
-          method:"POST",
-          headers:{"Content-Type":"application/json","Accept":"application/json"},
-          body:JSON.stringify({
-            姓名: form.name,
-            Email: form.email,
-            LineID: form.line,
-            希望預約時間: form.time,
-            目前最卡的狀態: form.stuck,
-            希望這次幫助的: form.hope,
-            怎麼知道這裡的: form.source,
-          })
-        });
-      } catch(e) { console.error(e); }
+    setSending(true);
+    try {
+      await submitLead({
+        type: "預約表單",
+        name: form.name,
+        email: form.email,
+        contact: form.line,
+        pain: form.stuck,
+        state: form.hope,
+        note: `希望預約時間：${form.time || "未填"}\n怎麼知道這裡的：${form.source || "未填"}`,
+        raw: {
+          希望預約時間: form.time,
+          怎麼知道這裡的: form.source,
+        },
+      });
       setSending(false);
+      setOk(true);
+      go("thanks");
+    } catch(e) {
+      console.error(e);
+      setSending(false);
+      setErr("送出時發生問題，請稍後再試一次");
     }
-    setOk(true);
   };
 
   const IS = {
@@ -1530,95 +1582,359 @@ function Subscribe({ go }) {
       <div className="dark-hero" style={{background:"var(--forest)",padding:"140px 0 100px",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 60% at 15% 50%,rgba(255,255,255,.04) 0%,transparent 60%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
-          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>年度調頻訂閱</div>
-          <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(26px,3.8vw,46px)",fontWeight:300,color:"var(--sand)",lineHeight:1.4,marginBottom:"24px"}} className="fi">
-            讓穩定可以持續的方式。
+          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>每月狀態</div>
+          <h1 className="subscribe-hero-title fi">
+            你不是想太多<br/>你只是一直在撐
           </h1>
-          <p style={{fontSize:"15px",color:"rgba(232,223,208,.65)",lineHeight:1.9,maxWidth:"480px"}} className="fi">
-            這個方式不是讓你變更好，而是讓你不要再回到原本那樣。
+          <p className="subscribe-hero-copy fi">
+            這不是一個<br/>讓你變得更好的地方<br/>而是讓你慢慢穩下來
           </p>
+          <button className="bp fi" onClick={() => go("subscribeStart")} style={{background:"var(--sand)",color:"var(--forest)"}}>開始我的每月狀態</button>
         </div>
       </div>
 
-      <section style={{background:"var(--w)"}}>
-        <div style={{maxWidth:"620px",margin:"0 auto",padding:"100px 24px"}}>
-          <div className="slb fi">為什麼需要長期</div>
-          <p className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(17px,2vw,22px)",fontWeight:300,color:"var(--text)",lineHeight:1.8,marginBottom:"28px"}}>
-            當你開始看見自己的模式，也慢慢能在一些時刻不再被情緒拉走，接下來更重要的，不是再做更多，而是讓這個狀態可以留在你的生活裡。
-          </p>
-          <p className="fi" style={{fontSize:"15px",color:"var(--soft)",lineHeight:2,marginBottom:"16px"}}>
-            很多人會在一段時間之後開始變得比較穩，也以為自己已經走出來了。但在忙碌、壓力、關係拉扯之中，很容易又慢慢回到原本的方式。
-          </p>
-          <p className="fi" style={{fontSize:"15px",color:"var(--soft)",lineHeight:2}}>
-            不是因為你不夠努力，而是因為——穩定這件事，需要一個可以持續的節奏。
-          </p>
+      <section className="subscribe-section">
+        <div className="subscribe-inner">
+          <div className="slb fi">你可能正在經歷</div>
+          <div className="subscribe-copy fi">
+            <p>有些時候</p>
+            <p>你其實沒有發生什麼事</p>
+            <p>但就是覺得有點累</p>
+            <div className="gap"/>
+            <p>你會把事情做好</p>
+            <p>也會把關係顧好</p>
+            <p>但你自己會知道</p>
+            <p>有些地方<br/>一直沒有真正放鬆</p>
+            <div className="gap"/>
+            <p>有時候</p>
+            <p>你會因為一個訊息<br/>想很多</p>
+            <p>或是在關係裡</p>
+            <p>不太確定<br/>自己應該站在哪裡</p>
+          </div>
         </div>
       </section>
 
       <section className="tone-panel fi">
         <div className="tone-panel-inner">
-          <div className="tone-kicker">Keep the rhythm</div>
-          <div className="tone-text">穩定不是一次完成，<br/>而是一種慢慢留在生活裡的節奏。</div>
-          <p className="tone-sub">當生活又開始拉扯，這個節奏會提醒你回到自己。</p>
+          <div className="tone-kicker">Monthly rhythm</div>
+          <div className="tone-text">每個月回來一次，<br/>不是為了變好，是為了看懂自己。</div>
+          <p className="tone-sub">狀態會變，理解也會慢慢變清楚。</p>
         </div>
       </section>
 
-      <section style={{background:"var(--cream)"}}>
-        <div className="CN">
-          <div className="slb fi">這不是一個課程</div>
-          <div className="fi" style={{padding:"44px 52px",background:"var(--w)",borderLeft:"3px solid var(--forest)",marginBottom:"24px"}}>
-            <p style={{fontSize:"15px",lineHeight:2,color:"var(--soft)",marginBottom:"16px"}}>這裡沒有要你學更多，也不會給你很多需要完成的事情。</p>
-            <p style={{fontSize:"15px",lineHeight:2,color:"var(--soft)"}}>我們做的，是用一個很穩定的頻率，讓你在生活裡，慢慢維持住現在的狀態。</p>
+      <section className="subscribe-section alt">
+        <div className="subscribe-inner">
+          <div className="slb fi">這個訂閱在做什麼</div>
+          <div className="subscribe-copy fi">
+            <p>這不是算命</p>
+            <p>也不是給你答案</p>
+            <div className="gap"/>
+            <p>每個月</p>
+            <p>你會收到一份</p>
+            <p>關於你現在狀態的整理</p>
+            <p>它會讓你看見：</p>
           </div>
-
-          <div className="slb fi" style={{marginTop:"48px"}}>你會感覺到的</div>
-          {["你比較不容易被情緒拉走","你在壓力來的時候，有空間","你開始可以在生活裡，慢慢穩住自己，而不是每次都回到原本的方式"].map((s,i) => (
-            <div key={i} className="fi" style={{display:"flex",gap:"16px",alignItems:"flex-start",padding:"20px 0",borderBottom:"1px solid var(--div)"}}>
-              <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"18px",color:"var(--sandm)",flexShrink:0}}>0{i+1}</span>
-              <span style={{fontFamily:"'Noto Serif TC',serif",fontSize:"16px",fontWeight:300,color:"var(--text)",lineHeight:1.8}}>{s}</span>
-            </div>
-          ))}
+          <div className="subscribe-list fi">
+            <div className="subscribe-list-item">你最近為什麼會卡住</div>
+            <div className="subscribe-list-item">你在關係或壓力裡<br/>是怎麼運作的</div>
+            <div className="subscribe-list-item">哪些地方正在慢慢改變</div>
+          </div>
         </div>
       </section>
 
-      <section style={{background:"var(--w)"}}>
-        <div style={{maxWidth:"620px",margin:"0 auto",padding:"80px 24px"}}>
-          <div className="slb fi">這適合你，如果</div>
-          {[
-            "你已經走過一段，開始知道穩定不是一次做到的，而是需要被維持的",
-            "你不想再回到原本那種，一直撐的狀態",
-          ].map((s,i) => (
-            <div key={i} className="fi" style={{display:"flex",gap:"16px",padding:"20px 0",borderBottom:"1px solid var(--div)"}}>
-              <span style={{color:"var(--forest)",flexShrink:0}}>—</span>
-              <span style={{fontSize:"15px",color:"var(--soft)",lineHeight:1.9}}>{s}</span>
+      <section className="subscribe-section">
+        <div className="subscribe-inner">
+          <div className="slb fi">你會拿到什麼</div>
+          <div className="subscribe-copy fi">
+            <p>每個月一份：</p>
+          </div>
+          <div className="subscribe-preview fi">
+            <img src="/monthly-status-preview.png" alt="本月穩定報告預覽" />
+            <div className="subscribe-preview-caption">
+              這不是分析<br/>是你最近的狀態
             </div>
-          ))}
+          </div>
+          <div className="subscribe-list fi">
+            <div className="subscribe-list-item">一張狀態圖（幫你看懂整體）</div>
+            <div className="subscribe-list-item">一份報告（讓你對照自己的生活）</div>
+            <div className="subscribe-list-item">一個很小的觀察點（不是任務）</div>
+          </div>
+          <div className="subscribe-copy fi" style={{marginTop:"34px"}}>
+            <p>你不需要做很多</p>
+            <p>你只需要開始看懂自己</p>
+          </div>
+          <div className="subscribe-preview is-muted fi">
+            <img src="/energy-structure-preview.png" alt="個人能量結構與穩定度分析圖預覽" />
+            <div className="subscribe-preview-caption">
+              這不是感覺<br/>是有邏輯的
+            </div>
+          </div>
         </div>
       </section>
 
-      <section style={{background:"var(--cream)"}}>
-        <div className="CN">
-          <div className="slb fi">這個方式</div>
-          <div className="fi" style={{padding:"44px 52px",background:"var(--w)"}}>
-            <p style={{fontSize:"15px",lineHeight:2,color:"var(--soft)",marginBottom:"12px"}}>每個月會有一次頻率調整，以及一份簡單的回饋，幫助你在生活中慢慢建立屬於自己的節奏。</p>
-            <p style={{fontSize:"15px",lineHeight:2,color:"var(--soft)"}}>這不是強度很高的過程，而是一個可以長期存在的支持。</p>
+      <section className="subscribe-section alt">
+        <div className="subscribe-inner">
+          <div className="slb fi">這段時間會發生什麼</div>
+          <div className="subscribe-copy fi">
+            <p>有些人會發現</p>
+            <p>自己比較不會那麼快被拉走</p>
+            <div className="gap"/>
+            <p>有些人會開始注意到</p>
+            <p>原來自己一直在撐</p>
+            <div className="gap"/>
+            <p>也有人會在某些時刻</p>
+            <p>突然停下來</p>
+            <div className="gap"/>
+            <p>這些都不是改變</p>
+            <p>是你開始有空間</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="subscribe-section">
+        <div className="subscribe-inner">
+          <div className="slb fi">這適合誰</div>
+          <div className="subscribe-copy fi">
+            <p>這不是給每個人的</p>
+            <p>如果你只是想找答案</p>
+            <p>這可能不適合你</p>
+            <div className="gap"/>
+            <p>但如果你開始覺得</p>
+            <p>一直用同一種方式撐</p>
+            <p>有點累了</p>
+            <div className="gap"/>
+            <p>這會是一個可以慢慢陪你的地方</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="subscribe-section alt">
+        <div className="subscribe-inner">
+          <div className="slb fi">時間節奏</div>
+          <div className="subscribe-copy fi">
+            <p>每個月</p>
+            <p>只會生成一次你的狀態</p>
+            <p>不是因為稀缺</p>
+            <p>而是因為</p>
+            <p>狀態本來就會改變</p>
           </div>
         </div>
       </section>
 
       <section className="green-cta">
-        <div style={{maxWidth:"480px",margin:"0 auto",padding:"0 24px"}}>
-          <div className="green-cta-kicker">費用</div>
-          <div className="green-cta-price fi">NT$ 12,800</div>
-          <div className="green-cta-meta">/ 年　（平均每月約 NT$ 1,066）</div>
-          <p className="green-cta-text fi">
-            這個方式通常會在你已經有一定基礎之後才會比較適合。如果你不確定現在是否適合，可以先跟我說說你目前的狀態，我們一起看一下。
+        <div style={{maxWidth:"520px",margin:"0 auto",padding:"0 24px"}}>
+          <p className="green-cta-title fi">
+            你不用一次變好<br/>你只需要先看懂自己
           </p>
+          <div className="green-cta-price fi" style={{fontSize:"42px",marginTop:"18px"}}>一年 NT$12,800</div>
+          <div className="green-cta-meta fi">平均每月不到 1,100</div>
           <div className="green-cta-actions fi">
-            <button className="bp" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>預約並確認是否適合</button>
+            <button className="bp" onClick={() => go("subscribeStart")} style={{background:"var(--sand)",color:"var(--forest)"}}>開始訂閱我的每月狀態</button>
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+function SubscribeStart({ go }) {
+  const [form, setForm] = useState({
+    name:"", email:"", line:"", pain:"", stuck:"", need:""
+  });
+  const [ok, setOk] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [err, setErr] = useState("");
+  const h = e => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const submitForm = async () => {
+    if (!form.name || !form.email) { setErr("請填寫姓名和 Email"); return; }
+    setErr("");
+    setSending(true);
+    try {
+      await submitLead({
+        type: "每月狀態訂閱前理解",
+        name: form.name,
+        email: form.email,
+        contact: form.line,
+        pain: form.pain,
+        state: form.stuck,
+        note: form.need,
+        raw: {
+          現在最需要的是什麼: form.need,
+        },
+      });
+      setSending(false);
+      setOk(true);
+      go("subscribeThanks");
+    } catch(e) {
+      console.error(e);
+      setSending(false);
+      setErr("送出時發生問題，請稍後再試一次");
+    }
+  };
+
+  const IS = {
+    background:"var(--cream)", border:"1px solid var(--div)",
+    borderBottom:"2px solid var(--sandm)",
+    padding:"13px 15px", fontSize:"15px",
+    fontFamily:"'Noto Sans TC',sans-serif",
+    color:"var(--text)", outline:"none",
+    borderRadius:0, width:"100%", WebkitAppearance:"none",
+    transition:"border-color .2s",
+  };
+  const TA = { ...IS, height:"140px", resize:"vertical" };
+  const LS = { fontSize:"12px", letterSpacing:"0.15em", color:"var(--wg)", display:"block", marginBottom:"8px" };
+  const FG = { marginBottom:"28px" };
+
+  return (
+    <div className="page">
+      <div className="dark-hero" style={{background:"var(--forest)",padding:"140px 0 90px",position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 60% at 20% 45%,rgba(255,255,255,.05) 0%,transparent 62%)",pointerEvents:"none"}}/>
+        <div className="CN" style={{position:"relative",zIndex:1}}>
+          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.5)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>Before we begin</div>
+          <h1 className="subscribe-start-title fi">
+            在開始之前<br/>我想先理解你現在的狀態
+          </h1>
+          <p className="subscribe-start-copy fi">
+            這不是一份正式填寫<br/>只是讓我知道<br/>你現在在哪裡
+          </p>
+        </div>
+      </div>
+
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">Gently</div>
+          <div className="tone-text">你不需要寫很多，<br/>只要寫你此刻最真實的感覺就好。</div>
+        </div>
+      </section>
+
+      <section style={{background:"var(--w)"}}>
+        <div className="CN">
+          {ok ? (
+            <div style={{padding:"100px 0",textAlign:"center"}}>
+              <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"28px",fontWeight:300,color:"var(--text)",marginBottom:"20px"}}>✦</div>
+              <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"22px",fontWeight:300,color:"var(--text)",marginBottom:"16px"}}>我收到你的狀態了。</div>
+              <p style={{fontSize:"14px",color:"var(--soft)",lineHeight:2,maxWidth:"380px",margin:"0 auto"}}>我會先看過你寫下的內容，再透過 Email 或 Line / IG 跟你聯繫。</p>
+            </div>
+          ) : (
+            <div style={{maxWidth:"640px"}}>
+              <div style={{marginBottom:"48px"}}>
+                <div className="slb" style={{marginBottom:"32px"}}>讓我先了解你</div>
+
+                <div className="form-question" style={FG}>
+                  <label style={LS}>01 ／ 最近有沒有一件事，你其實一直在想，但沒有真的說出來？</label>
+                  <div className="form-question-note">可以很簡單，一兩句就好</div>
+                  <textarea style={TA} name="pain" placeholder="寫下最近一直在心裡的那件事⋯⋯" value={form.pain} onChange={h} />
+                </div>
+
+                <div className="form-question" style={FG}>
+                  <label style={LS}>02 ／ 在生活或關係裡，你有沒有一種「一直在用同一種方式撐」的感覺？</label>
+                  <div className="form-question-note">如果有，那通常會出現在什麼時候？</div>
+                  <textarea style={TA} name="stuck" placeholder="例如關係、工作、家庭，或某個反覆出現的狀態⋯⋯" value={form.stuck} onChange={h} />
+                </div>
+
+                <div className="form-question" style={FG}>
+                  <label style={LS}>03 ／ 你現在最需要的是什麼？</label>
+                  <textarea style={TA} name="need" placeholder="可以很簡單，寫下你現在最需要的支持或感覺⋯⋯" value={form.need} onChange={h} />
+                </div>
+              </div>
+
+              <div style={{marginBottom:"48px"}}>
+                <div className="slb" style={{marginBottom:"32px"}}>基本資料</div>
+                <div style={FG}>
+                  <label style={LS}>姓名 <span style={{color:"#B85A5A"}}>*</span></label>
+                  <input style={IS} type="text" name="name" placeholder="你的名字" value={form.name} onChange={h} />
+                </div>
+                <div style={FG}>
+                  <label style={LS}>Email <span style={{color:"#B85A5A"}}>*</span></label>
+                  <input style={IS} type="email" name="email" placeholder="your@email.com" value={form.email} onChange={h} />
+                </div>
+                <div style={FG}>
+                  <label style={LS}>LINE / IG</label>
+                  <input style={IS} type="text" name="line" placeholder="方便聯繫你的帳號" value={form.line} onChange={h} />
+                </div>
+              </div>
+
+              <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"18px",fontWeight:300,color:"var(--text)",lineHeight:1.9,marginBottom:"28px"}}>
+                這不是要你準備好<br/>只是讓你開始看見自己
+              </p>
+
+              {err && <div style={{fontSize:"13px",color:"#B85A5A",marginBottom:"18px"}}>⚠ {err}</div>}
+
+              <button
+                onClick={submitForm}
+                disabled={sending}
+                style={{
+                  width:"100%", padding:"18px",
+                  background:"var(--forest)", color:"var(--sand)",
+                  border:"none", fontSize:"14px", letterSpacing:"0.18em",
+                  fontFamily:"'Noto Sans TC',sans-serif",
+                  cursor: sending ? "not-allowed" : "pointer",
+                  opacity: sending ? 0.6 : 1,
+                  transition:"all .22s",
+                }}
+              >
+                {sending ? "送出中⋯⋯" : "送出"}
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function Thanks({ go, subscribe = false }) {
+  const lineUrl = "https://line.me/R/ti/p/@567avtfh";
+  const title = subscribe ? "我們已經收到你的訂閱了" : "我們已經收到你的預約了";
+  const paragraphs = subscribe ? [
+    "剛剛那個決定\n其實不太小",
+    "你沒有急著解決什麼\n只是想把現在的狀態看清楚一點",
+    "我們會從這裡開始",
+    "第一個月的整理\n已經在幫你進行了",
+    "接下來\n我們會用每個月的方式\n慢慢陪你把狀態看清楚",
+    "有些變化\n不會一下子很明顯",
+    "可能只是某一天\n你比較早發現自己有點累",
+    "或是\n沒有那麼快被情緒帶走\n這些都會慢慢出現",
+    "現在\n你不需要多做什麼\n先讓這段過程開始就好",
+  ] : [
+    "剛剛在填的時候\n你其實已經慢慢把一些狀態說出來了",
+    "有些地方\n你可能平常沒有時間去想\n但它一直都在",
+    "像是\n一邊把事情做好\n一邊其實有點累",
+    "接下來\n我們會先整理你的資料\n再用另一個角度幫你看一次現在的狀態",
+    "你不需要先準備什麼\n這幾天\n只要留意一個很小的瞬間就好",
+    "有沒有哪一刻\n你其實想停一下\n但還是讓自己繼續往前",
+    "先看到這個就夠了\n我們之後會一起看得更清楚",
+  ];
+
+  return (
+    <div className="page">
+      <div className="dark-hero" style={{background:"linear-gradient(145deg,#385B4C 0%,#315143 45%,#24211E 100%)",padding:"150px 0 90px",position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 65% at 18% 48%,rgba(232,223,208,.08) 0%,transparent 64%)",pointerEvents:"none"}}/>
+        <div className="CN" style={{position:"relative",zIndex:1}}>
+          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.58)",marginBottom:"28px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>Received</div>
+          <h1 className="subscribe-start-title fi">
+            {title}
+          </h1>
+          <div className="subscribe-start-copy fi" style={{display:"grid",gap:"22px",marginBottom:"40px"}}>
+            {paragraphs.map((p, i) => <p key={i} style={{margin:0,whiteSpace:"pre-line"}}>{p}</p>)}
+          </div>
+
+          {!subscribe && (
+            <div className="fi" style={{marginTop:"18px",padding:"30px 0 0",borderTop:"1px solid rgba(232,223,208,.22)"}}>
+              <p className="subscribe-start-copy" style={{fontSize:"18px",margin:"0 0 24px",color:"rgba(250,247,242,.82)"}}>
+                如果你希望後續安排時間更順一點<br/>
+                可以先加入我們的 LINE<br/>
+                跟我說一聲你的名字<br/>
+                我們會一起找一個適合你的時間
+              </p>
+              <a className="bp" href={lineUrl} target="_blank" rel="noopener" style={{display:"inline-block",background:"var(--sand)",color:"var(--forest)",textDecoration:"none"}}>
+                加入 LINE 官方帳號
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
@@ -2133,9 +2449,13 @@ function NumCalc({ go }) {
     const solarYr   = calcPath(sumD(String(thisYear))+sumD(sm)+sumD(sdy));
     // 農曆主命數
     let lunarLife = null;
+    let lunarYr = null;
+    let lunarDate = null;
     try {
       const lDate = solarToLunar(parseInt(sy), parseInt(sm), parseInt(sdy));
+      lunarDate = lDate;
       lunarLife = calcPath(sumD(String(lDate.y))+sumD(String(lDate.m))+sumD(String(lDate.d)));
+      lunarYr = calcPath(sumD(String(thisYear))+sumD(String(lDate.m))+sumD(String(lDate.d)));
     } catch(e) {}
     let relPath = null;
     if (sy2&&sm2&&sd2) {
@@ -2152,7 +2472,15 @@ function NumCalc({ go }) {
       if (rn < 2) rn = 2;
       relPath = { final: rn };
     }
-    setResult({ solarLife, solarYr, lunarLife, relPath });
+    setResult({
+      solarLife,
+      solarYr,
+      lunarLife,
+      lunarYr,
+      relPath,
+      solarDate:{ y:parseInt(sy), m:parseInt(sm), d:parseInt(sdy) },
+      lunarDate
+    });
   };
 
   const IS = { background:"var(--cream)", border:"1px solid var(--div)", borderBottom:"2px solid var(--sandm)", padding:"13px 15px", fontSize:"15px", fontFamily:"'Noto Sans TC',sans-serif", color:"var(--text)", outline:"none", borderRadius:0, width:"100%", WebkitAppearance:"none" };
@@ -2192,6 +2520,22 @@ function NumCalc({ go }) {
       {result && (
         <section style={{background:"var(--cream)"}}>
           <div className="CN">
+            <div className="num-birthday-panel">
+              <div className="num-birthday-card">
+                <div className="num-birthday-label">Solar Birthday</div>
+                <div className="num-birthday-date">
+                  國曆 {result.solarDate.y} 年 {result.solarDate.m} 月 {result.solarDate.d} 日
+                </div>
+              </div>
+              {result.lunarDate && (
+                <div className="num-birthday-card">
+                  <div className="num-birthday-label">Lunar Birthday</div>
+                  <div className="num-birthday-date">
+                    農曆 {result.lunarDate.y} 年 {result.lunarDate.m} 月 {result.lunarDate.d} 日
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* 說明區塊 */}
             <div className="num-guide-panel" style={{marginBottom:"40px",padding:"36px 44px",background:"var(--w)",borderLeft:"3px solid var(--sandm)"}}>
@@ -2232,7 +2576,7 @@ function NumCalc({ go }) {
             {result.lunarLife && (
               <div style={{marginBottom:"48px"}}>
                 <div className="num-section-title">農曆 <span>Lunar</span></div>
-                <NumCard label="主命數 · 流年數" lifePath={result.lunarLife} yrPath={result.solarYr} thisYear={thisYear} />
+                <NumCard label="主命數 · 流年數" lifePath={result.lunarLife} yrPath={result.lunarYr} thisYear={thisYear} />
               </div>
             )}
 
@@ -2282,14 +2626,15 @@ function AppInner() {
   const navigate = useNavigate();
   const location = useLocation();
   const go = p => {
-    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/art", apply:"/apply", ongoing:"/ongoing", subscribe:"/subscribe" };
+    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/art", apply:"/apply", ongoing:"/ongoing", subscribe:"/subscribe", subscribeStart:"/subscribe-start", thanks:"/thanks", subscribeThanks:"/subscribe-thanks" };
     navigate(paths[p] || "/");
     window.scrollTo({ top: 0, behavior: "instant" });
   };
   const cur = {
     "/":"home", "/start":"start", "/aware":"aware", "/num":"num", "/deep":"deep",
     "/about":"about", "/art":"art", "/apply":"apply",
-    "/ongoing":"ongoing", "/subscribe":"subscribe"
+    "/ongoing":"ongoing", "/subscribe":"subscribe", "/subscribe-start":"subscribeStart",
+    "/thanks":"thanks", "/subscribe-thanks":"subscribeThanks"
   }[location.pathname] || "home";
 
   return (
@@ -2305,9 +2650,12 @@ function AppInner() {
           <Route path="/deep" element={<Deep go={go} />} />
           <Route path="/about" element={<About go={go} />} />
           <Route path="/art" element={<Art go={go} />} />
-          <Route path="/apply" element={<Apply />} />
+          <Route path="/apply" element={<Apply go={go} />} />
           <Route path="/ongoing" element={<Ongoing go={go} />} />
           <Route path="/subscribe" element={<Subscribe go={go} />} />
+          <Route path="/subscribe-start" element={<SubscribeStart go={go} />} />
+          <Route path="/thanks" element={<Thanks go={go} />} />
+          <Route path="/subscribe-thanks" element={<Thanks go={go} subscribe />} />
           <Route path="*" element={<Home go={go} />} />
         </Routes>
       </main>
