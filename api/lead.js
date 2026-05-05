@@ -52,7 +52,8 @@ const postSheet = async (lead) => {
     body: JSON.stringify(lead),
   });
 
-  return { ok: response.ok };
+  const body = await response.text();
+  return { ok: response.ok, status: response.status, body: body.slice(0, 500) };
 };
 
 const normalizeFromEmail = (value) => {
