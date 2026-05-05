@@ -346,6 +346,7 @@ const Styles = () => (
     .apply-tone .tone-kicker{margin-bottom:14px}
     .apply-tone .tone-text{font-size:clamp(18px,2vw,24px);line-height:1.75}
     .apply-tone .tone-sub{margin-top:12px}
+    .apply-form-section{padding-top:46px;padding-bottom:100px}
     .thanks-title{font-size:clamp(26px,3.2vw,36px)!important;line-height:1.55!important;margin-bottom:24px!important}
     .thanks-copy{font-size:17px!important;line-height:1.95!important;gap:16px!important;max-width:560px!important}
     .thanks-line-copy{font-size:16px!important;line-height:1.95!important}
@@ -442,6 +443,7 @@ const Styles = () => (
       .apply-tone .tone-kicker{margin-bottom:10px !important}
       .apply-tone .tone-text{font-size:19px !important;line-height:1.65 !important}
       .apply-tone .tone-sub{font-size:14px !important;line-height:1.75 !important;margin-top:10px !important}
+      .apply-form-section{padding-top:28px !important;padding-bottom:64px !important}
       .tone-kicker{font-size:14px !important;letter-spacing:.22em !important}
       .tone-text{font-size:24px !important;line-height:1.85 !important;text-wrap:balance}
       .tone-sub{font-size:16px !important;color:rgba(250,247,242,.72) !important}
@@ -764,7 +766,7 @@ function Home({ go }) {
         </div>
       </section>
 
-      <section className="tone-panel apply-tone fi">
+      <section className="tone-panel fi">
         <div className="tone-panel-inner">
           <div className="tone-kicker">A quieter shift</div>
           <div className="tone-text">真正讓人穩下來的，<br/>不是更努力，而是開始看懂自己。</div>
@@ -1309,7 +1311,7 @@ function Apply({ go }) {
         </div>
       </div>
 
-      <section className="tone-panel fi">
+      <section className="tone-panel apply-tone fi">
         <div className="tone-panel-inner">
           <div className="tone-kicker">Before we begin</div>
           <div className="tone-text">你不需要整理好才來，<br/>現在的狀態就已經足夠。</div>
@@ -1318,7 +1320,7 @@ function Apply({ go }) {
       </section>
 
       {/* FORM */}
-      <section style={{background:"var(--w)"}}>
+      <section className="apply-form-section" style={{background:"var(--w)"}}>
         <div className="CN">
           {ok ? (
             <div style={{padding:"100px 0",textAlign:"center"}}>
