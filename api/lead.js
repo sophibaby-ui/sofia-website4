@@ -55,10 +55,17 @@ const postSheet = async (lead) => {
   return { ok: response.ok };
 };
 
+const normalizeFromEmail = (value) => {
+  if (!value || /@(gmail|yahoo|hotmail|outlook|icloud)\./i.test(value)) {
+    return "Sofia Website <onboarding@resend.dev>";
+  }
+  return value;
+};
+
 const sendEmail = async (lead) => {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.NOTIFY_EMAIL || "Sophibaby@gmail.com";
-  const from = process.env.NOTIFY_FROM_EMAIL || "Sofia Website <onboarding@resend.dev>";
+  const from = normalizeFromEmail(process.env.NOTIFY_FROM_EMAIL);
   if (!apiKey || !to) return { skipped: true };
 
   const response = await fetch("https://api.resend.com/emails", {
@@ -76,7 +83,8 @@ const sendEmail = async (lead) => {
     }),
   });
 
-  return { ok: response.ok };
+  const body = await response.text();
+  return { ok: response.ok, status: response.status, body: body.slice(0, 500) };
 };
 
 const sendTelegram = async (lead) => {
