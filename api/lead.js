@@ -64,7 +64,7 @@ const normalizeFromEmail = (value) => {
 
 const sendEmail = async (lead) => {
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.NOTIFY_EMAIL || "Sophibaby@gmail.com";
+  const to = (process.env.NOTIFY_EMAIL || "sophibaby@gmail.com").trim().toLowerCase();
   const from = normalizeFromEmail(process.env.NOTIFY_FROM_EMAIL);
   if (!apiKey || !to) return { skipped: true };
 
