@@ -304,6 +304,36 @@ const Styles = () => (
     .subscribe-preview-caption{padding:22px 28px;background:linear-gradient(145deg,#385B4C 0%,#315143 55%,#24211E 100%);font-family:'Noto Serif TC',serif;font-size:18px;font-weight:300;color:#F5EFE4;line-height:1.85;text-wrap:balance}
     .subscribe-start-title{font-family:'Noto Serif TC',serif;font-size:clamp(30px,4vw,46px);font-weight:300;color:#F5EFE4;line-height:1.55;margin-bottom:26px;text-wrap:balance}
     .subscribe-start-copy{font-family:'Noto Serif TC',serif;font-size:clamp(19px,2.2vw,24px);font-weight:300;color:rgba(250,247,242,.86);line-height:2;max-width:560px;text-wrap:pretty}
+    .short-hero{background:linear-gradient(145deg,#385B4C 0%,#315143 48%,#24211E 100%);padding:136px 0 92px;position:relative;overflow:hidden}
+    .short-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 18% 42%,rgba(232,223,208,.09) 0%,transparent 66%);pointer-events:none}
+    .short-title{font-family:'Noto Serif TC',serif;font-size:clamp(32px,4.8vw,58px);font-weight:300;color:#F5EFE4;line-height:1.5;margin-bottom:30px;text-wrap:balance}
+    .short-copy{font-family:'Noto Serif TC',serif;font-size:clamp(18px,2.1vw,23px);font-weight:300;color:rgba(250,247,242,.84);line-height:2;text-wrap:pretty}
+    .short-hero .short-copy,.short-hero .short-copy p{color:#F5EFE4!important;text-shadow:0 1px 18px rgba(0,0,0,.2)}
+    .short-section{background:var(--w)}
+    .short-section.alt{background:var(--cream)}
+    .short-inner{max-width:780px;margin:0 auto;padding:88px 24px}
+    .short-kicker{display:flex;align-items:center;gap:16px;font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.28em;color:var(--wg);text-transform:uppercase;margin-bottom:34px}
+    .short-kicker::before{content:'';display:block;width:48px;height:1px;background:var(--sandm)}
+    .short-body{font-family:'Noto Serif TC',serif;font-size:21px;font-weight:300;color:var(--text);line-height:2;text-wrap:pretty}
+    .short-body p{margin:0 0 18px}
+    .short-dashboard{margin:34px 0;background:var(--w);border:1px solid var(--div);overflow:hidden;padding:34px 28px}
+    .short-dashboard-title{text-align:center;font-family:'Noto Serif TC',serif;font-size:18px;color:var(--forest);letter-spacing:.12em;margin-bottom:24px}
+    .short-dashboard-visual{max-width:720px;margin:0 auto}
+    .short-radar svg{display:block;width:100%;height:auto}
+    .short-radar-label{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:400;fill:var(--text)}
+    .short-radar-value{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:400;fill:var(--forest)}
+    .short-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--div);margin:24px 0 36px}
+    .short-stat{background:var(--cream);padding:24px 22px;border-top:3px solid var(--forest)}
+    .short-stat strong{display:block;font-family:'Noto Serif TC',serif;font-size:18px;font-weight:400;color:var(--forest);margin-bottom:10px}
+    .short-stat p{font-size:14px;line-height:1.85;color:var(--soft);margin:0}
+    .short-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--div);margin:30px 0}
+    .short-card{background:var(--w);padding:34px 32px}
+    .short-card h3{font-size:24px;font-weight:300;color:var(--text);margin-bottom:18px}
+    .short-checks{display:grid;gap:12px;margin-top:28px}
+    .short-check{background:var(--cream);border-left:3px solid var(--forest);padding:18px 22px;font-size:16px;color:var(--soft);line-height:1.8}
+    .short-price{background:var(--forest);color:#F5EFE4;text-align:center;padding:76px 24px}
+    .short-price h2{font-size:clamp(28px,4vw,46px);font-weight:300;line-height:1.6;margin-bottom:24px}
+    .short-price .amount{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,8vw,88px);font-weight:300;line-height:1.1;margin-bottom:10px}
     .form-question label{font-size:15px!important;letter-spacing:.08em!important;color:#2C2825!important;line-height:1.8!important;font-family:'Noto Serif TC',serif!important}
     .form-question-note{font-size:14px;color:#655B52;margin-bottom:12px;line-height:1.9}
 
@@ -351,7 +381,7 @@ const Styles = () => (
     .apply-tone .tone-kicker{margin-bottom:14px}
     .apply-tone .tone-text{font-size:clamp(18px,2vw,24px);line-height:1.75}
     .apply-tone .tone-sub{margin-top:12px}
-    .apply-form-section{padding-top:46px;padding-bottom:100px}
+    .apply-form-section{padding-top:16px;padding-bottom:100px}
     .thanks-title{font-size:clamp(26px,3.2vw,36px)!important;line-height:1.55!important;margin-bottom:24px!important}
     .thanks-copy{font-size:17px!important;line-height:1.95!important;gap:16px!important;max-width:560px!important}
     .thanks-line-copy{font-size:16px!important;line-height:1.95!important}
@@ -448,7 +478,7 @@ const Styles = () => (
       .apply-tone .tone-kicker{margin-bottom:10px !important}
       .apply-tone .tone-text{font-size:19px !important;line-height:1.65 !important}
       .apply-tone .tone-sub{font-size:14px !important;line-height:1.75 !important;margin-top:10px !important}
-      .apply-form-section{padding-top:28px !important;padding-bottom:64px !important}
+      .apply-form-section{padding-top:6px !important;padding-bottom:64px !important}
       .tone-kicker{font-size:14px !important;letter-spacing:.22em !important}
       .tone-text{font-size:24px !important;line-height:1.85 !important;text-wrap:balance}
       .tone-sub{font-size:16px !important;color:rgba(250,247,242,.72) !important}
@@ -513,6 +543,17 @@ const Styles = () => (
       .subscribe-preview-caption{font-size:17px !important;line-height:1.85 !important;padding:20px 22px !important}
       .subscribe-start-title{font-size:32px !important;line-height:1.55 !important}
       .subscribe-start-copy{font-size:19px !important;line-height:2 !important;color:rgba(250,247,242,.88) !important}
+      .short-hero{padding:112px 0 70px !important}
+      .short-title{font-size:34px !important;line-height:1.5 !important}
+      .short-copy{font-size:19px !important;line-height:1.95 !important}
+      .short-inner{padding:64px 24px !important}
+      .short-body{font-size:19px !important;line-height:1.95 !important}
+      .short-stats,.short-cards{grid-template-columns:1fr !important;gap:12px !important;background:transparent !important}
+      .short-stat,.short-card{padding:24px 22px !important}
+      .short-dashboard{padding:26px 18px !important}
+      .short-radar-label{font-size:17px !important}
+      .short-radar-value{font-size:31px !important}
+      .short-price{padding:64px 24px !important}
       .thanks-title{font-size:25px !important;line-height:1.55 !important;margin-bottom:20px !important}
       .thanks-copy{font-size:15px !important;line-height:1.85 !important;gap:12px !important}
       .thanks-line-copy{font-size:15px !important;line-height:1.85 !important}
@@ -673,7 +714,7 @@ function Nav({ cur, go }) {
   const nav = p => { go(p); setMob(false); };
   return (
     <>
-      <nav className={[sc || mob ? "sc" : "", !sc && !mob && ["subscribe","subscribeStart","thanks","subscribeThanks","deep","apply","about"].includes(cur) ? "dk" : ""].filter(Boolean).join(" ")}>
+      <nav className={[sc || mob ? "sc" : "", !sc && !mob && ["subscribe","subscribeStart","thanks","subscribeThanks","deep","apply","about","short"].includes(cur) ? "dk" : ""].filter(Boolean).join(" ")}>
         <div className="nl" onClick={() => nav("home")}>
           Sofia
           <span>情緒穩定 × 關係覺察 × 內在主導權</span>
@@ -1967,6 +2008,202 @@ function Thanks({ go, subscribe = false }) {
   );
 }
 
+function ShortAdjust({ go }) {
+  useFade();
+  const stats = [
+    ["情緒狀態｜77%", "最近比較容易把感受留在心裡。"],
+    ["人際關係｜72%", "有些外在反應會停留比較久。"],
+    ["內在壓力｜81%", "很多事情同時在跑，裡面有點停不下來。"],
+  ];
+  const includes = [
+    "TimeWaver 狀態整理",
+    "每月生活化報告",
+    "六大面向儀表板",
+    "狀態重點回饋",
+  ];
+
+  return (
+    <div className="page">
+      <section className="short-hero">
+        <div className="CN" style={{position:"relative",zIndex:1}}>
+          <div className="hero-kicker fi" style={{fontSize:"12px",letterSpacing:"0.3em",color:"rgba(232,223,208,.62)",marginBottom:"28px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>TimeWaver</div>
+          <h1 className="short-title fi">短期調整｜TimeWaver</h1>
+          <div className="short-copy fi" style={{maxWidth:"620px",marginBottom:"34px"}}>
+            <p>如果最近的你<br/>有點亂了節奏。</p>
+            <p>很多事情都還在進行。<br/>但心裡好像一直沒有真的安靜下來。</p>
+            <p>你不一定需要立刻改變什麼。</p>
+            <p>也許只是需要先把最近的狀態整理一下。</p>
+          </div>
+          <button className="bp fi" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>開始短期調整</button>
+        </div>
+      </section>
+
+      <section className="short-section">
+        <div className="short-inner">
+          <div className="short-body fi">
+            <p>這是一個 2 個月的短期調整方案。</p>
+            <p>透過 TimeWaver 的狀態整理與每月回饋，慢慢把最近混在一起的感受、節奏與拉扯感，重新看清楚。</p>
+            <p>不是療癒。<br/>不是命定。<br/>也不是要你變成另一個人。</p>
+            <p>而是先幫你回到自己的節奏。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="short-section alt">
+        <div className="short-inner">
+          <div className="short-kicker fi">這段時間的你，可能是這樣</div>
+          <div className="short-body fi">
+            <p>有些事情沒有真的出錯。</p>
+            <p>只是最近的你，好像一直在回應外面的事情。</p>
+            <p>訊息、工作、關係、情緒、安排。</p>
+            <p>一天很快就過去了。</p>
+            <p>但安靜下來的時候，腦袋還是在轉。</p>
+            <p>有些感受不是很大，只是一直放在後面。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="short-section">
+        <div className="short-inner">
+          <div className="short-kicker fi">我們會怎麼幫你整理</div>
+          <div className="short-dashboard fi">
+            <div className="short-dashboard-title">六大面向儀表板</div>
+            <div className="short-dashboard-visual">
+              <div className="short-radar" aria-label="TimeWaver 六大面向儀表板">
+                <svg viewBox="0 0 420 360" role="img">
+                  <polygon points="210,54 320,118 320,246 210,310 100,246 100,118" fill="none" stroke="#D4C8B5" strokeWidth="1.5"/>
+                  <polygon points="210,94 285,137 285,227 210,270 135,227 135,137" fill="none" stroke="#DDD5C8" strokeWidth="1.2"/>
+                  <polygon points="210,134 250,158 250,206 210,230 170,206 170,158" fill="none" stroke="#DDD5C8" strokeWidth="1.2"/>
+                  <line x1="210" y1="54" x2="210" y2="310" stroke="#DDD5C8" strokeWidth="1"/>
+                  <line x1="100" y1="118" x2="320" y2="246" stroke="#DDD5C8" strokeWidth="1"/>
+                  <line x1="320" y1="118" x2="100" y2="246" stroke="#DDD5C8" strokeWidth="1"/>
+                  <polygon points="210,94 284,140 298,228 210,254 136,226 130,136" fill="rgba(72,132,184,.18)" stroke="#4E83B5" strokeWidth="5" strokeLinejoin="round"/>
+                  <circle cx="210" cy="94" r="7" fill="#4E83B5"/>
+                  <circle cx="284" cy="140" r="7" fill="#4E83B5"/>
+                  <circle cx="298" cy="228" r="7" fill="#4E83B5"/>
+                  <circle cx="210" cy="254" r="7" fill="#4E83B5"/>
+                  <circle cx="136" cy="226" r="7" fill="#4E83B5"/>
+                  <circle cx="130" cy="136" r="7" fill="#4E83B5"/>
+                  <text className="short-radar-label" x="210" y="22" textAnchor="middle">情緒狀態</text>
+                  <text className="short-radar-value" x="210" y="50" textAnchor="middle">77%</text>
+                  <text className="short-radar-label" x="345" y="116" textAnchor="start">人際關係</text>
+                  <text className="short-radar-value" x="345" y="145" textAnchor="start">72%</text>
+                  <text className="short-radar-label" x="345" y="238" textAnchor="start">內在壓力</text>
+                  <text className="short-radar-value" x="345" y="267" textAnchor="start">81%</text>
+                  <text className="short-radar-label" x="210" y="334" textAnchor="middle">行動與節奏</text>
+                  <text className="short-radar-value" x="210" y="360" textAnchor="middle">76%</text>
+                  <text className="short-radar-label" x="75" y="238" textAnchor="end">身體感受</text>
+                  <text className="short-radar-value" x="75" y="267" textAnchor="end">73%</text>
+                  <text className="short-radar-label" x="75" y="116" textAnchor="end">自我狀態</text>
+                  <text className="short-radar-value" x="75" y="145" textAnchor="end">70%</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div className="short-stats fi">
+            {stats.map(([title, copy]) => (
+              <div className="short-stat" key={title}>
+                <strong>{title}</strong>
+                <p>{copy}</p>
+              </div>
+            ))}
+          </div>
+          <div className="short-body fi">
+            <p>最近的狀態，其實不一定會立刻說出口。</p>
+            <p>有些節奏、情緒與關係感，會慢慢累積在生活裡。</p>
+            <p>我們會先幫你整理出：</p>
+          </div>
+          <div className="short-checks fi">
+            <div className="short-check">最近整體的狀態輪廓</div>
+            <div className="short-check">哪些地方正在互相影響</div>
+            <div className="short-check">哪兩個部分最需要被看見</div>
+          </div>
+          <div className="short-body fi" style={{marginTop:"30px"}}>
+            <p>讓你不用一直猜自己怎麼了。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="short-section alt">
+        <div className="short-inner">
+          <div className="short-kicker fi">你會收到什麼</div>
+          <div className="short-cards fi">
+            <div className="short-card">
+              <h3>第 1 個月</h3>
+              <p className="short-body" style={{fontSize:"18px"}}>先整理最近混在一起的狀態。看見最近最明顯的節奏、拉扯感與影響來源。</p>
+            </div>
+            <div className="short-card">
+              <h3>第 2 個月</h3>
+              <p className="short-body" style={{fontSize:"18px"}}>開始看見狀態的變化。有些地方會慢慢鬆開，有些地方，也會比較容易回到自己。</p>
+            </div>
+          </div>
+          <div className="short-checks fi">
+            {["六大面向狀態整理", "最近最需要被看見的部分", "生活化回饋報告", "一個很小的提醒"].map(x => (
+              <div className="short-check" key={x}>✔ {x}</div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="short-section">
+        <div className="short-inner">
+          <div className="short-kicker fi">這不是什麼</div>
+          <div className="short-checks fi">
+            {["心理諮商", "命理分析", "心靈雞湯", "要你正向思考"].map(x => (
+              <div className="short-check" key={x}>✘ {x}</div>
+            ))}
+          </div>
+          <div className="short-body fi" style={{marginTop:"34px"}}>
+            <p>我們不會告訴你：「你應該變得更好」</p>
+            <p>而是陪你慢慢看懂：最近的自己，到底正在經歷什麼。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="short-section alt">
+        <div className="short-inner">
+          <div className="short-kicker fi">為什麼建議先做兩個月</div>
+          <div className="short-body fi">
+            <p>很多狀態，不是一天形成的。</p>
+            <p>有些節奏、關係感與內在反應，會慢慢累積在生活裡。</p>
+            <p>所以我們不想只看一次。</p>
+          </div>
+          <div className="short-checks fi">
+            <div className="short-check">最近真正影響你的節奏</div>
+            <div className="short-check">哪些地方開始改變了</div>
+            <div className="short-check">你怎麼慢慢回到自己的步調</div>
+          </div>
+          <div className="short-body fi" style={{marginTop:"30px"}}>
+            <p>兩個月，比較能真正感受到差異。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="short-price">
+        <div style={{maxWidth:"680px",margin:"0 auto"}}>
+          <div className="short-kicker fi" style={{justifyContent:"center",color:"rgba(232,223,208,.62)"}}>方案資訊</div>
+          <h2 className="fi">短期調整｜2 個月體驗</h2>
+          <div className="short-checks fi" style={{maxWidth:"520px",margin:"0 auto 36px",textAlign:"left"}}>
+            {includes.map(x => <div className="short-check" key={x} style={{background:"rgba(250,247,242,.08)",color:"rgba(250,247,242,.86)",borderColor:"var(--sand)"}}>{x}</div>)}
+          </div>
+          <div className="amount fi">NT$2,999</div>
+          <button className="bp fi" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)",marginTop:"28px"}}>開始短期調整</button>
+        </div>
+      </section>
+
+      <section className="short-section">
+        <div className="short-inner">
+          <div className="short-body fi" style={{textAlign:"center"}}>
+            <p>有些事情，最近一直放在心裡。</p>
+            <p>你不一定要立刻解決它。</p>
+            <p>但也許可以先開始看見它。</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 /* ─── ONGOING PAGE (持續中的你) ─────────────────────────────────── */
 function Ongoing({ go }) {
   useFade();
@@ -1979,7 +2216,7 @@ function Ongoing({ go }) {
     {
       icon:"◎", t:"我最近開始有點亂",
       x:"有些情緒開始出現，有些狀態變得不太一樣，但還沒有完全失控。這時候，只需要讓自己先穩下來。",
-      cta:"預約短期調整", action:"apply", label:"預約"
+      cta:"預約短期調整", action:"short", label:"預約"
     },
     {
       icon:"◎", t:"我好像又回到原本的狀態",
@@ -1999,7 +2236,7 @@ function Ongoing({ go }) {
       n:"02", t:"短期調整", sub:"TimeWaver",
       x:"如果你最近有些波動，想先讓自己穩一下，不需要進入長期，可以用比較輕的方式，讓狀態回來。",
       note:"",
-      cta:"預約短期調整", action:"apply",
+      cta:"預約短期調整", action:"short",
     },
     {
       n:"03", t:"重新深入", sub:"陪跑計畫",
@@ -2654,14 +2891,14 @@ function AppInner() {
   const navigate = useNavigate();
   const location = useLocation();
   const go = p => {
-    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/art", apply:"/apply", ongoing:"/ongoing", subscribe:"/subscribe", subscribeStart:"/subscribe-start", thanks:"/thanks", subscribeThanks:"/subscribe-thanks" };
+    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/art", apply:"/apply", ongoing:"/ongoing", short:"/short", subscribe:"/subscribe", subscribeStart:"/subscribe-start", thanks:"/thanks", subscribeThanks:"/subscribe-thanks" };
     navigate(paths[p] || "/");
     window.scrollTo({ top: 0, behavior: "instant" });
   };
   const cur = {
     "/":"home", "/start":"start", "/aware":"aware", "/num":"num", "/deep":"deep",
     "/about":"about", "/art":"art", "/apply":"apply",
-    "/ongoing":"ongoing", "/subscribe":"subscribe", "/subscribe-start":"subscribeStart",
+    "/ongoing":"ongoing", "/short":"short", "/subscribe":"subscribe", "/subscribe-start":"subscribeStart",
     "/thanks":"thanks", "/subscribe-thanks":"subscribeThanks"
   }[location.pathname] || "home";
 
@@ -2680,6 +2917,7 @@ function AppInner() {
           <Route path="/art" element={<Art go={go} />} />
           <Route path="/apply" element={<Apply go={go} />} />
           <Route path="/ongoing" element={<Ongoing go={go} />} />
+          <Route path="/short" element={<ShortAdjust go={go} />} />
           <Route path="/subscribe" element={<Subscribe go={go} />} />
           <Route path="/subscribe-start" element={<SubscribeStart go={go} />} />
           <Route path="/thanks" element={<Thanks go={go} />} />
