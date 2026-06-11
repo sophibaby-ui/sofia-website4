@@ -283,6 +283,42 @@ const Styles = () => (
       .htit{font-size:34px}.hbo{font-size:14px;max-width:100%;margin-bottom:36px}
       .hr{order:1;height:90vw;max-height:460px;min-height:300px}
       .hri img{object-position:20% center}
+      .home-mobile-hero{
+        min-height:auto!important;
+        display:flex!important;
+        flex-direction:column!important;
+        align-items:stretch!important;
+        padding-top:var(--nav);
+      }
+      .home-mobile-photo{
+        position:relative!important;
+        order:1;
+        width:100%!important;
+        height:108vw!important;
+        min-height:380px;
+        max-height:500px;
+        inset:auto!important;
+        z-index:1!important;
+      }
+      .home-mobile-photo img{object-position:24% center!important}
+      .home-mobile-copy{
+        order:2;
+        margin:0!important;
+        padding:38px 18px 52px!important;
+      }
+      .home-mobile-copy-inner{max-width:100%!important}
+      .home-mobile-narrow{padding:64px 18px!important}
+      .home-mobile-compare,.home-mobile-tools{grid-template-columns:1fr!important}
+      .home-mobile-results{grid-template-columns:1fr!important}
+      .home-mobile-results>div{
+        min-height:0;
+        padding:30px 24px!important;
+        display:grid;
+        grid-template-columns:52px minmax(72px,.45fr) 1fr;
+        gap:14px;
+        align-items:center;
+        text-align:left!important;
+      }
       .hov{background:linear-gradient(to bottom,rgba(250,247,242,0) 60%,var(--w) 100%) !important}
       .hray,.hsc{display:none}
       .hac{flex-direction:column;align-items:stretch;gap:14px}
@@ -407,13 +443,13 @@ function Home({ go }) {
     <div className="page">
 
       {/* ── HERO ── */}
-      <div style={{minHeight:"100vh",display:"flex",alignItems:"center",background:"var(--cream)",position:"relative",overflow:"hidden"}}>
+      <div className="home-mobile-hero" style={{minHeight:"100vh",display:"flex",alignItems:"center",background:"var(--cream)",position:"relative",overflow:"hidden"}}>
         {/* 背景光暈流動感 */}
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 60% 80% at 75% 40%,rgba(232,215,200,.35) 0%,transparent 65%)",pointerEvents:"none",zIndex:0}}/>
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 40% 50% at 85% 70%,rgba(212,190,175,.2) 0%,transparent 60%)",pointerEvents:"none",zIndex:0}}/>
 
         {/* 右側照片 */}
-        <div style={{position:"absolute",right:0,top:0,height:"100%",width:"52%",zIndex:1}}>
+        <div className="home-mobile-photo" style={{position:"absolute",right:0,top:0,height:"100%",width:"52%",zIndex:1}}>
           <img src={PHOTO} alt="Sofia" style={{
             height:"100%", width:"100%",
             objectFit:"cover", objectPosition:"left top",
@@ -428,8 +464,8 @@ function Home({ go }) {
         </div>
 
         {/* 文字區 */}
-        <div style={{position:"relative",zIndex:2,maxWidth:"1200px",width:"100%",margin:"0 auto",padding:"140px 60px 100px"}}>
-          <div style={{maxWidth:"480px"}}>
+        <div className="home-mobile-copy" style={{position:"relative",zIndex:2,maxWidth:"1200px",width:"100%",margin:"0 auto",padding:"140px 60px 100px"}}>
+          <div className="home-mobile-copy-inner" style={{maxWidth:"480px"}}>
             <div className="slb fi">Sofia · 蘇菲療癒轉化</div>
             <h1 className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(30px,4vw,54px)",fontWeight:300,color:"var(--text)",lineHeight:1.3,marginBottom:"28px"}}>
               你不是不會，<br/>你只是一直在用<br/>同一種方式撐。
@@ -444,7 +480,7 @@ function Home({ go }) {
 
       {/* ── 痛點區 ── */}
       <section style={{background:"var(--w)"}}>
-        <div style={{maxWidth:"560px",margin:"0 auto",padding:"100px 24px"}}>
+        <div className="home-mobile-narrow" style={{maxWidth:"560px",margin:"0 auto",padding:"100px 24px"}}>
           <div className="slb fi">你可能正在這裡</div>
           {[
             "你很努力，但還是常常卡住。",
@@ -461,7 +497,7 @@ function Home({ go }) {
 
       {/* ── 我在做的事 ── */}
       <section style={{background:"var(--cream)"}}>
-        <div style={{maxWidth:"640px",margin:"0 auto",padding:"100px 24px",textAlign:"center"}}>
+        <div className="home-mobile-narrow" style={{maxWidth:"640px",margin:"0 auto",padding:"100px 24px",textAlign:"center"}}>
           <div className="slb fi">我在做的事</div>
           <p className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(18px,2.2vw,24px)",fontWeight:300,color:"var(--text)",lineHeight:1.7,marginBottom:"32px"}}>
             我不給答案，也不幫你做選擇。
@@ -479,7 +515,7 @@ function Home({ go }) {
       <section style={{background:"var(--w)"}}>
         <div className="C">
           <div className="slb fi">這不是療癒</div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px"}}>
+          <div className="home-mobile-compare" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px"}}>
             <div className="fi" style={{padding:"48px 44px",background:"var(--cream)"}}>
               <div style={{fontSize:"11px",letterSpacing:"0.25em",color:"var(--wg)",marginBottom:"28px",textTransform:"uppercase"}}>一般的方式</div>
               {["給你方法和建議","告訴你應該怎麼做","幫你在當下好過一點","讓你更努力撐下去"].map((s,i) => (
@@ -506,7 +542,7 @@ function Home({ go }) {
       <section style={{background:"var(--cream)"}}>
         <div className="C">
           <div className="slb fi">當你開始穩下來</div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
+          <div className="home-mobile-results" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
             {[
               { icon:"◎", t:"關係", x:"不再習慣性退讓，開始清楚自己的位置" },
               { icon:"◎", t:"工作", x:"在壓力下依然能做出清晰的選擇" },
@@ -524,7 +560,7 @@ function Home({ go }) {
 
       {/* ── 適合誰 ── */}
       <section style={{background:"var(--w)"}}>
-        <div style={{maxWidth:"560px",margin:"0 auto",padding:"100px 24px"}}>
+        <div className="home-mobile-narrow" style={{maxWidth:"560px",margin:"0 auto",padding:"100px 24px"}}>
           <div className="slb fi">適合你如果</div>
           {[
             "你已經撐很久，開始覺得這樣下去不行",
@@ -552,7 +588,7 @@ function Home({ go }) {
         <div className="C">
           <div className="slb fi">自我覺察工具</div>
           <p className="fi" style={{fontSize:"14px",color:"var(--wg)",marginBottom:"32px",lineHeight:1.9}}>不確定從哪裡開始？這兩個工具可以幫你先了解自己現在的狀態。</p>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px"}}>
+          <div className="home-mobile-tools" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px"}}>
             {[
               { t:"生命數字", x:"從出生日期了解你的主命數、流年數與挑戰數", p:"aware", btn:"計算我的數字" },
               { t:"身心平衡檢測", x:"花 3 分鐘，看見自己現在真正的狀態", p:"aware", btn:"開始檢測" },
