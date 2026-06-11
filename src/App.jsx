@@ -2,6 +2,27 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 
 const PHOTO = "https://raw.githubusercontent.com/sophibaby-ui/sofia-website4/main/public/sofia.png";
+const HOME_SCENARIO_REPLY = "/home-scenario-reply.png";
+const HOME_SCENARIO_TIRED = "/home-scenario-tired.png";
+const HOME_SCENARIO_CARE = "/home-scenario-care.png";
+const HOME_SOFIA_WORK = "/home-sofia-work.png";
+const HOME_SOUL_REPORT = "/home-soul-report.png";
+const LEAD_API_ORIGIN = "https://sofia-website4.vercel.app";
+
+const submitLead = async (lead) => {
+  const host = window.location.hostname;
+  const apiOrigin = host === "localhost" || host === "127.0.0.1" || host.includes("jrtm.vercel.app")
+    ? LEAD_API_ORIGIN
+    : "";
+  const response = await fetch(`${apiOrigin}/api/lead`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(lead),
+  });
+
+  if (!response.ok) throw new Error("lead_submit_failed");
+  return response.json();
+};
 
 /* ─── STYLES ─────────────────────────────────────────────────── */
 const Styles = () => (
@@ -12,6 +33,15 @@ const Styles = () => (
       --w:#FAF7F2; --cream:#F5F0E8; --sand:#E8DFD0; --sandm:#D4C8B5;
       --wg:#9E9087; --text:#2C2825; --soft:#6B6259; --div:#DDD5C8;
       --forest:#3D5A4C; --flt:#5A7A68; --gold:#B8A882; --nav:72px;
+      --type-display:clamp(42px,4.2vw,58px);
+      --type-page:clamp(34px,3.4vw,46px);
+      --type-section:clamp(28px,2.6vw,36px);
+      --type-card:clamp(20px,1.6vw,23px);
+      --type-body:clamp(16px,1.05vw,17px);
+      --type-small:13px;
+      --leading-display:1.38;
+      --leading-heading:1.55;
+      --leading-body:1.95;
     }
     html{scroll-behavior:smooth}
     body{background:var(--w);color:var(--text);font-family:'Noto Sans TC',sans-serif;font-weight:300;line-height:1.8;-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -225,6 +255,101 @@ const Styles = () => (
     .ft2{resize:vertical;min-height:108px}
     .fsb{background:var(--forest);color:var(--sand);border:none;padding:16px 50px;font-size:13px;letter-spacing:.2em;cursor:pointer;transition:all .3s;margin-top:12px;font-family:'Noto Sans TC',sans-serif}
     .fsb:hover{background:var(--flt)}
+    .deep-entry-cta{background:linear-gradient(145deg,#385B4C 0%,#315143 48%,#24211E 100%);padding:100px 0;text-align:center;position:relative;overflow:hidden}
+    .deep-entry-cta::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 20%,rgba(232,223,208,.12),transparent 62%);pointer-events:none}
+    .deep-entry-cta > div{position:relative;z-index:1}
+    .deep-entry-kicker{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.32em;color:rgba(232,223,208,.76);margin-bottom:24px;text-transform:uppercase}
+    .deep-entry-main{font-family:'Noto Serif TC',serif;font-size:clamp(19px,2.2vw,24px);font-weight:300;color:#F5EFE4;line-height:1.9;margin-bottom:22px;text-wrap:balance}
+    .deep-entry-sub{font-size:15px;color:rgba(250,247,242,.78);line-height:2;margin-bottom:40px;text-wrap:balance}
+    .num-insight-panel{margin-top:22px;padding:28px;background:linear-gradient(145deg,#385B4C 0%,#315143 52%,#24211E 100%);display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .num-insight-card{padding:24px 26px;background:rgba(250,247,242,.08);border:1px solid rgba(232,223,208,.18)}
+    .num-insight-mark{font-family:'Cormorant Garamond',serif;font-size:22px;color:#D8C9A5;margin-bottom:12px;line-height:1}
+    .num-insight-card p{font-size:14px;color:rgba(250,247,242,.82);line-height:2;margin:0}
+    .num-result-cta{padding:58px 52px;background:linear-gradient(145deg,#385B4C 0%,#315143 46%,#24211E 100%);text-align:center;position:relative;overflow:hidden}
+    .num-result-cta::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 58% at 50% 12%,rgba(232,223,208,.13),transparent 64%);pointer-events:none}
+    .num-result-cta>*{position:relative;z-index:1}
+    .num-cta-kicker{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.32em;color:rgba(232,223,208,.76);margin-bottom:20px}
+    .num-cta-text{font-family:'Noto Serif TC',serif;font-size:clamp(21px,2.4vw,28px);font-weight:300;color:#F5EFE4;line-height:1.8;margin-bottom:34px;text-wrap:balance}
+    .num-cta-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+    .num-cta-secondary{background:rgba(250,247,242,.08)!important;border:1px solid rgba(232,223,208,.46)!important;color:#F5EFE4!important}
+    .num-mini-label{display:inline-flex;align-items:center;gap:8px;font-family:'Noto Sans TC',sans-serif;font-size:12px;letter-spacing:.14em;color:var(--forest);background:rgba(58,92,76,.1);border-left:3px solid var(--forest);padding:7px 12px;margin-bottom:12px}
+    .num-mini-label::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--sandm);flex-shrink:0}
+    .num-section-title{display:flex;align-items:center;gap:18px;font-family:'Noto Serif TC',serif;font-size:26px;font-weight:300;color:var(--text);line-height:1.4;margin-bottom:18px}
+    .num-section-title::before{content:"";width:54px;height:1px;background:var(--sandm);flex-shrink:0}
+    .num-section-title span{font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:.22em;color:var(--forest);text-transform:uppercase}
+    .about-ability-panel{background:linear-gradient(145deg,#385B4C 0%,#315143 55%,#24211E 100%)}
+    .about-ability-title{font-family:'Noto Serif TC',serif;font-size:clamp(20px,2.4vw,28px);font-weight:300;color:#F5EFE4;line-height:1.85;margin-bottom:34px;text-wrap:balance}
+    .about-ability-row{display:flex;gap:14px;margin-bottom:16px}
+    .about-ability-row span:first-child{color:#D8C9A5;flex-shrink:0}
+    .about-ability-row span:last-child{font-size:15px;color:rgba(250,247,242,.82);line-height:1.9}
+    .green-cta{background:linear-gradient(145deg,#385B4C 0%,#315143 55%,#24211E 100%);padding:80px 0;text-align:center;position:relative;overflow:hidden}
+    .green-cta::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 75% 62% at 50% 18%,rgba(232,223,208,.13),transparent 65%);pointer-events:none}
+    .green-cta > div{position:relative;z-index:1}
+    .green-cta-kicker{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.28em;color:rgba(232,223,208,.72);margin-bottom:20px;text-transform:uppercase}
+    .green-cta-price{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;color:#F5EFE4;margin-bottom:8px}
+    .green-cta-meta{font-size:13px;color:rgba(250,247,242,.68);margin-bottom:40px;letter-spacing:.08em}
+    .green-cta-title{font-family:'Noto Serif TC',serif;font-size:clamp(21px,2.4vw,28px);font-weight:300;color:#F5EFE4;line-height:1.85;margin-bottom:18px;text-wrap:balance}
+    .green-cta-text{font-size:15px;color:rgba(250,247,242,.8);line-height:2;margin-bottom:36px;text-wrap:balance}
+    .green-cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+    .green-cta-secondary{background:rgba(250,247,242,.08)!important;border:1px solid rgba(232,223,208,.46)!important;color:#F5EFE4!important}
+    .num-date-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:14px}
+    .num-rel-panel{padding:32px 36px;background:var(--cream);margin-bottom:32px;border-left:2px solid var(--sandm)}
+    .num-guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:24px}
+    .num-lunar-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .num-birthday-panel{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}
+    .num-birthday-card{padding:22px 24px;background:var(--w);border-left:3px solid var(--sandm)}
+    .num-birthday-card:nth-child(2){border-left-color:var(--forest)}
+    .num-birthday-label{font-size:12px;letter-spacing:.18em;color:var(--forest);margin-bottom:8px;font-family:'Cormorant Garamond',serif;text-transform:uppercase}
+    .num-birthday-date{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:300;color:var(--text);line-height:1.7}
+    .subscribe-hero-title{font-family:'Noto Serif TC',serif;font-size:clamp(34px,5vw,58px);font-weight:300;color:#F5EFE4;line-height:1.45;margin-bottom:30px;text-wrap:balance}
+    .subscribe-hero-copy{font-family:'Noto Serif TC',serif;font-size:clamp(20px,2.4vw,28px);font-weight:300;color:rgba(250,247,242,.84);line-height:1.9;margin-bottom:38px;text-wrap:balance}
+    .subscribe-section{background:var(--w)}
+    .subscribe-section.alt{background:var(--cream)}
+    .subscribe-inner{max-width:680px;margin:0 auto;padding:90px 24px}
+    .subscribe-copy{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:300;color:var(--text);line-height:2;text-wrap:pretty}
+    .subscribe-copy p{margin:0 0 18px}
+    .subscribe-copy .gap{height:10px}
+    .subscribe-list{display:grid;gap:14px;margin-top:28px}
+    .subscribe-list-item{padding:22px 26px;background:var(--w);border-left:3px solid var(--forest);font-size:16px;color:var(--soft);line-height:1.9}
+    .subscribe-section:not(.alt) .subscribe-list-item{background:var(--cream)}
+    .subscribe-preview{margin:34px 0 32px;background:var(--w);border:1px solid var(--div);overflow:hidden}
+    .subscribe-preview img{display:block;width:100%;height:auto}
+    .subscribe-preview.is-muted img{opacity:.8}
+    .subscribe-preview-caption{padding:22px 28px;background:linear-gradient(145deg,#385B4C 0%,#315143 55%,#24211E 100%);font-family:'Noto Serif TC',serif;font-size:18px;font-weight:300;color:#F5EFE4;line-height:1.85;text-wrap:balance}
+    .subscribe-start-title{font-family:'Noto Serif TC',serif;font-size:clamp(30px,4vw,46px);font-weight:300;color:#F5EFE4;line-height:1.55;margin-bottom:26px;text-wrap:balance}
+    .subscribe-start-copy{font-family:'Noto Serif TC',serif;font-size:clamp(19px,2.2vw,24px);font-weight:300;color:rgba(250,247,242,.86);line-height:2;max-width:560px;text-wrap:pretty}
+    .short-hero{background:linear-gradient(145deg,#385B4C 0%,#315143 48%,#24211E 100%);padding:136px 0 92px;position:relative;overflow:hidden}
+    .short-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 18% 42%,rgba(232,223,208,.09) 0%,transparent 66%);pointer-events:none}
+    .short-title{font-family:'Noto Serif TC',serif;font-size:clamp(32px,4.8vw,58px);font-weight:300;color:#F5EFE4;line-height:1.5;margin-bottom:30px;text-wrap:balance}
+    .short-copy{font-family:'Noto Serif TC',serif;font-size:clamp(18px,2.1vw,23px);font-weight:300;color:rgba(250,247,242,.84);line-height:2;text-wrap:pretty}
+    .short-hero .short-copy,.short-hero .short-copy p{color:#F5EFE4!important;text-shadow:0 1px 18px rgba(0,0,0,.2)}
+    .short-section{background:var(--w)}
+    .short-section.alt{background:var(--cream)}
+    .short-inner{max-width:780px;margin:0 auto;padding:88px 24px}
+    .short-kicker{display:flex;align-items:center;gap:16px;font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.28em;color:var(--wg);text-transform:uppercase;margin-bottom:34px}
+    .short-kicker::before{content:'';display:block;width:48px;height:1px;background:var(--sandm)}
+    .short-body{font-family:'Noto Serif TC',serif;font-size:21px;font-weight:300;color:var(--text);line-height:2;text-wrap:pretty}
+    .short-body p{margin:0 0 18px}
+    .short-dashboard{margin:34px 0;background:var(--w);border:1px solid var(--div);overflow:hidden;padding:34px 28px}
+    .short-dashboard-title{text-align:center;font-family:'Noto Serif TC',serif;font-size:18px;color:var(--forest);letter-spacing:.12em;margin-bottom:24px}
+    .short-dashboard-visual{max-width:720px;margin:0 auto}
+    .short-radar svg{display:block;width:100%;height:auto}
+    .short-radar-label{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:400;fill:var(--text)}
+    .short-radar-value{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:400;fill:var(--forest)}
+    .short-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--div);margin:24px 0 36px}
+    .short-stat{background:var(--cream);padding:24px 22px;border-top:3px solid var(--forest)}
+    .short-stat strong{display:block;font-family:'Noto Serif TC',serif;font-size:18px;font-weight:400;color:var(--forest);margin-bottom:10px}
+    .short-stat p{font-size:14px;line-height:1.85;color:var(--soft);margin:0}
+    .short-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--div);margin:30px 0}
+    .short-card{background:var(--w);padding:34px 32px}
+    .short-card h3{font-size:24px;font-weight:300;color:var(--text);margin-bottom:18px}
+    .short-checks{display:grid;gap:12px;margin-top:28px}
+    .short-check{background:var(--cream);border-left:3px solid var(--forest);padding:18px 22px;font-size:16px;color:var(--soft);line-height:1.8}
+    .short-price{background:var(--forest);color:#F5EFE4;text-align:center;padding:76px 24px}
+    .short-price h2{font-size:clamp(28px,4vw,46px);font-weight:300;line-height:1.6;margin-bottom:24px}
+    .short-price .amount{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,8vw,88px);font-weight:300;line-height:1.1;margin-bottom:10px}
+    .form-question label{font-size:15px!important;letter-spacing:.08em!important;color:#2C2825!important;line-height:1.8!important;font-family:'Noto Serif TC',serif!important}
+    .form-question-note{font-size:14px;color:#655B52;margin-bottom:12px;line-height:1.9}
 
     /* FAQ */
     .fq{border-bottom:1px solid var(--div)}
@@ -253,6 +378,169 @@ const Styles = () => (
     .chkd{color:var(--forest);font-size:14px;margin-top:2px;flex-shrink:0}
     .chkt{font-size:14px;color:var(--soft);line-height:1.9}
 
+    /* TESTIMONIALS */
+    .testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:48px}
+    .testi-card{background:var(--w);padding:40px 36px;border-top:2px solid var(--sandm)}
+    .testi-stars{color:var(--gold);font-size:14px;letter-spacing:3px;margin-bottom:18px}
+    .testi-text{font-family:'Noto Serif TC',serif;font-size:15px;font-weight:300;color:var(--text);line-height:2;margin-bottom:24px}
+    .testi-name{font-size:13px;color:var(--soft);letter-spacing:.12em;margin-bottom:6px}
+    .testi-tag{font-size:11px;letter-spacing:.2em;color:var(--forest);border:1px solid var(--forest);display:inline-block;padding:3px 12px}
+    .tone-panel{background:linear-gradient(145deg,#1F1B18 0%,#2C2825 46%,#38594B 100%);padding:76px 60px;position:relative;overflow:hidden}
+    .tone-panel::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 90% at 100% 0%,rgba(184,168,130,.16),transparent 62%);pointer-events:none}
+    .tone-panel-inner{max-width:720px;margin:0 auto;position:relative;z-index:1;text-align:center}
+    .tone-kicker{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:24px}
+    .tone-text{font-family:'Noto Serif TC',serif;font-size:clamp(20px,2.6vw,30px);font-weight:300;line-height:1.9;color:var(--sand)}
+    .tone-sub{font-size:14px;line-height:2;color:rgba(232,223,208,.68);margin-top:24px}
+    .apply-tone{padding:46px 60px}
+    .apply-tone .tone-kicker{margin-bottom:14px}
+    .apply-tone .tone-text{font-size:clamp(18px,2vw,24px);line-height:1.75}
+    .apply-tone .tone-sub{margin-top:12px}
+    .apply-form-section{padding-top:16px;padding-bottom:100px}
+    .thanks-title{font-size:clamp(26px,3.2vw,36px)!important;line-height:1.55!important;margin-bottom:24px!important}
+    .thanks-copy{font-size:17px!important;line-height:1.95!important;gap:16px!important;max-width:560px!important}
+    .thanks-line-copy{font-size:16px!important;line-height:1.95!important}
+
+    /* HOME REFRESH */
+    .home-shell{background:#FAF7F2}
+    .home-section{padding:118px 0}
+    .home-quiet-hero{min-height:100vh;display:flex;align-items:center;background:#F7F2EA;padding:0;position:relative;overflow:hidden}
+    .home-quiet-hero::before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,#F7F2EA 0%,#F7F2EA 35%,rgba(247,242,234,.96) 42%,rgba(247,242,234,.72) 47%,rgba(247,242,234,.24) 53%,transparent 59%);pointer-events:none}
+    .home-quiet-hero::after{content:"";position:absolute;inset:auto -18% -34% auto;width:62vw;height:62vw;z-index:2;background:radial-gradient(ellipse,rgba(184,168,130,.1),transparent 66%);pointer-events:none}
+    .home-hero-copy{position:relative;z-index:3;max-width:650px;width:48%;margin-left:max(60px,calc((100vw - 1140px)/2));padding:132px 40px 84px 0}
+    .home-eyebrow{font-size:12px;letter-spacing:.18em;color:#7B7168;margin-bottom:28px;line-height:1.9}
+    .home-hero-title{font-family:'Noto Serif TC',serif;font-size:clamp(36px,4.4vw,58px);font-weight:300;color:#292520;line-height:1.34;letter-spacing:.03em;margin-bottom:30px}
+    .home-hero-body{font-size:16px;color:#5E554D;line-height:2.05;max-width:500px;margin-bottom:42px}
+    .home-hero-actions{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+    .home-secondary-btn{background:rgba(250,247,242,.46);border:1px solid rgba(61,90,76,.28);color:var(--forest);padding:15px 34px;font-size:13px;letter-spacing:.15em;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all .25s}
+    .home-secondary-btn:hover{background:rgba(61,90,76,.08)}
+    .home-portrait-frame{position:absolute;z-index:0;inset:0 0 0 39%;min-width:0;overflow:hidden;background:#E9DED2}
+    .home-portrait-frame img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:left center;display:block}
+    .home-portrait-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(250,247,242,.25),transparent 30%),linear-gradient(to bottom,rgba(250,247,242,.14),transparent 18%);pointer-events:none}
+    .home-intro{max-width:720px;margin:0 auto 54px;text-align:center}
+    .home-intro-kicker{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.32em;color:#A19179;text-transform:uppercase;margin-bottom:16px}
+    .home-section-title{font-family:'Noto Serif TC',serif;font-size:clamp(28px,3vw,40px);font-weight:300;color:#2C2825;line-height:1.55;letter-spacing:.03em}
+    .home-section-copy{font-size:15px;color:#665E56;line-height:2;max-width:560px;margin:18px auto 0}
+    .home-scenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .home-scenario-card{background:#FFFDF8;border:1px solid rgba(212,200,181,.55);border-radius:22px;overflow:hidden;box-shadow:0 24px 60px rgba(86,70,50,.08);transition:transform .25s,box-shadow .25s}
+    .home-scenario-card:hover{transform:translateY(-4px);box-shadow:0 30px 70px rgba(86,70,50,.12)}
+    .home-scenario-img{height:300px;overflow:hidden;background:#E9DED2}
+    .home-scenario-img img{width:100%;height:100%;object-fit:cover;display:block}
+    .home-scenario-text{padding:30px 30px 36px}
+    .home-card-title{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:300;color:#302B27;line-height:1.55;margin-bottom:16px}
+    .home-card-copy{font-size:14px;color:#665E56;line-height:2}
+    .home-split{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1fr);gap:72px;align-items:center}
+    .home-split.reverse{grid-template-columns:minmax(0,1fr) minmax(0,.95fr)}
+    .home-image-card{border-radius:26px;overflow:hidden;background:#E9DED2;box-shadow:0 30px 70px rgba(76,60,44,.1);border:1px solid rgba(212,200,181,.45)}
+    .home-image-card img{width:100%;height:auto;display:block}
+    .home-work-image img{aspect-ratio:1.04/1;object-fit:cover;object-position:center}
+    .home-split-copy{max-width:560px}
+    .home-large-title{font-family:'Noto Serif TC',serif;font-size:clamp(28px,3.1vw,42px);font-weight:300;color:#2C2825;line-height:1.6;margin-bottom:28px;letter-spacing:.03em}
+    .home-body-lines{display:flex;flex-direction:column;gap:14px;margin-bottom:34px}
+    .home-body-lines p{font-size:15px;color:#5F574F;line-height:2}
+    .home-focus-row{display:flex;gap:12px;flex-wrap:wrap}
+    .home-focus-pill{border:1px solid rgba(61,90,76,.28);background:rgba(255,253,248,.72);border-radius:999px;padding:9px 18px;font-size:13px;letter-spacing:.1em;color:var(--forest)}
+    .home-report-panel{background:linear-gradient(135deg,#F6F0E7 0%,#EFE3D2 100%)}
+    .home-report-list{display:grid;gap:10px;margin:28px 0 34px}
+    .home-report-list div{font-size:14px;color:#514941;line-height:1.8}
+    .home-start-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .home-start-card{background:#FFFDF8;border:1px solid rgba(212,200,181,.58);border-radius:22px;padding:34px 32px;box-shadow:0 22px 54px rgba(86,70,50,.07);display:flex;flex-direction:column;min-height:310px}
+    .home-start-number{font-family:'Cormorant Garamond',serif;font-size:28px;color:#C2AF89;margin-bottom:18px;line-height:1}
+    .home-start-title{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:300;color:#2C2825;line-height:1.5;margin-bottom:18px}
+    .home-start-fit{font-size:12px;letter-spacing:.18em;color:#A19179;margin-bottom:10px;text-transform:uppercase}
+    .home-start-card p{font-size:14px;color:#665E56;line-height:2;margin-bottom:28px}
+    .home-start-card button{margin-top:auto;align-self:flex-start}
+
+    /* ABOUT REFRESH */
+    .about-new{background:#FAF7F2}
+    .about-new-hero{min-height:92vh;padding:calc(var(--nav) + 58px) 0 72px;display:flex;align-items:center;background:linear-gradient(135deg,#F8F4ED 0%,#F2E9DE 100%)}
+    .about-new-hero-grid{max-width:1240px;width:100%;margin:0 auto;padding:0 60px;display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:72px;align-items:center}
+    .about-new-kicker{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:#A28D70;margin-bottom:24px}
+    .about-new-title{font-family:'Noto Serif TC',serif;font-size:clamp(38px,4.4vw,60px);font-weight:300;line-height:1.35;color:#292520;margin-bottom:34px}
+    .about-new-lead{font-family:'Noto Serif TC',serif;font-size:clamp(20px,2vw,28px);font-weight:300;line-height:1.9;color:#403A35;margin-bottom:38px;text-wrap:balance}
+    .about-new-hero-photo{height:min(680px,72vh);min-height:520px;border-radius:24px;overflow:hidden;box-shadow:0 30px 80px rgba(73,57,43,.13);background:#E9DED2}
+    .about-new-hero-photo img{width:100%;height:100%;display:block;object-fit:cover;object-position:55% center}
+    .about-new-section{padding:120px 0}
+    .about-new-inner{max-width:1120px;margin:0 auto;padding:0 60px}
+    .about-new-story{max-width:760px;margin:0 auto}
+    .about-new-story h2{font-family:'Noto Serif TC',serif;font-size:clamp(30px,3.5vw,48px);font-weight:300;line-height:1.72;color:#2C2825;margin-bottom:38px;text-wrap:balance}
+    .about-new-story-copy{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+    .about-new-story-copy p{font-size:16px;line-height:2.15;color:#60574F}
+    .about-new-methods{background:#F1E9DE}
+    .about-new-section-head{text-align:center;max-width:640px;margin:0 auto 52px}
+    .about-new-section-head h2{font-family:'Noto Serif TC',serif;font-size:clamp(30px,3.2vw,42px);font-weight:300;line-height:1.55;color:#2C2825}
+    .about-new-card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .about-new-card{background:rgba(255,253,248,.9);border:1px solid rgba(212,200,181,.56);border-radius:18px;padding:42px 34px;box-shadow:0 20px 56px rgba(77,60,43,.07);min-height:250px}
+    .about-new-card-num{font-family:'Cormorant Garamond',serif;font-size:30px;color:#BEAA83;line-height:1;margin-bottom:28px}
+    .about-new-card h3{font-family:'Noto Serif TC',serif;font-size:23px;font-weight:300;line-height:1.5;color:#302B27;margin-bottom:16px}
+    .about-new-card p{font-size:15px;line-height:2;color:#665E56}
+    .about-new-work{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:72px;align-items:center}
+    .about-new-work-photo{height:640px;border-radius:24px;overflow:hidden;background:#E9DED2;box-shadow:0 28px 70px rgba(72,57,43,.11)}
+    .about-new-work-photo img{width:100%;height:100%;display:block;object-fit:cover;object-position:42% center;transform:scale(1.08)}
+    .about-new-work-copy h2{font-family:'Noto Serif TC',serif;font-size:clamp(30px,3.2vw,44px);font-weight:300;line-height:1.55;color:#2C2825;margin-bottom:28px}
+    .about-new-work-copy p{font-size:15px;line-height:2.08;color:#60574F;margin-bottom:20px}
+    .about-new-work-list{margin:30px 0;display:grid;gap:12px}
+    .about-new-work-list div{font-family:'Noto Serif TC',serif;font-size:17px;font-weight:300;color:#3F4942;padding-bottom:12px;border-bottom:1px solid #DDD5C8}
+    .about-new-link{border:0;background:transparent;padding:8px 0;border-bottom:1px solid #869687;color:var(--forest);font-size:13px;letter-spacing:.12em;cursor:pointer;font-family:'Noto Sans TC',sans-serif}
+    .about-new-start{background:#EEE5D9}
+    .about-new-start-card{background:#FFFDF8;border:1px solid rgba(212,200,181,.62);border-radius:18px;padding:36px 32px;min-height:248px;display:flex;flex-direction:column;box-shadow:0 18px 48px rgba(77,60,43,.06)}
+    .about-new-start-card h3{font-family:'Noto Serif TC',serif;font-size:21px;font-weight:300;line-height:1.55;color:#302B27;margin:18px 0 30px}
+    .about-new-start-card button{margin-top:auto;align-self:flex-start}
+    .about-new-closing{padding:112px 24px;text-align:center;background:#2B302C}
+    .about-new-closing p{font-family:'Noto Serif TC',serif;font-size:clamp(25px,3vw,38px);font-weight:300;line-height:1.9;color:#F2E9DC}
+
+    /* FREQUENCY */
+    .frequency-page{background:var(--w)}
+    .frequency-hero{position:relative;min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:calc(var(--nav) + 70px) 24px 90px;overflow:hidden;background:var(--forest)}
+    .frequency-hero-bg{position:absolute;inset:0;background:url('/frequency/hero-bg.jpg') center/cover no-repeat;opacity:.2;filter:saturate(.75)}
+    .frequency-hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(34,48,41,.66),rgba(47,75,62,.88) 58%,#3D5A4C 100%)}
+    .frequency-hero-inner{position:relative;z-index:1;max-width:720px}
+    .frequency-eyebrow{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.36em;color:rgba(232,223,208,.68);text-transform:uppercase;margin-bottom:24px}
+    .frequency-title{font-family:'Noto Serif TC',serif;font-size:clamp(42px,6vw,70px);font-weight:300;line-height:1.22;color:#F7F1E7;letter-spacing:.03em}
+    .frequency-title em{font-style:normal;color:#D8C9A5}
+    .frequency-lead{max-width:570px;margin:32px auto 0;font-size:15px;line-height:2.15;color:rgba(250,247,242,.78)}
+    .frequency-lead strong{font-weight:400;color:#F4EBDD}
+    .frequency-tags{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:36px}
+    .frequency-tag{padding:7px 17px;border:1px solid rgba(232,223,208,.3);font-size:12px;letter-spacing:.08em;color:rgba(250,247,242,.76);background:rgba(250,247,242,.05)}
+    .frequency-section{padding:110px 0}
+    .frequency-inner{max-width:1040px;margin:0 auto;padding:0 60px}
+    .frequency-label{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.36em;text-transform:uppercase;color:var(--wg);margin-bottom:14px}
+    .frequency-heading{font-family:'Noto Serif TC',serif;font-size:clamp(28px,3.2vw,40px);font-weight:300;line-height:1.55;color:var(--text)}
+    .frequency-rule{width:40px;height:1px;background:var(--sandm);margin:22px 0 0}
+    .frequency-principle{position:relative;min-height:560px;margin-top:52px;padding:70px 56% 70px 64px;display:flex;align-items:center;overflow:hidden;background:#F4EFE8;border-top:1px solid var(--div);border-bottom:1px solid var(--div)}
+    .frequency-principle::before{content:"";position:absolute;inset:0;background:url('/frequency/flow.jpeg') 72% center/cover no-repeat;transform:scale(1.02)}
+    .frequency-principle::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(247,243,237,.98) 0%,rgba(247,243,237,.96) 38%,rgba(247,243,237,.78) 52%,rgba(247,243,237,.2) 75%,rgba(247,243,237,.04) 100%)}
+    .frequency-principle-copy{position:relative;z-index:1}
+    .frequency-principle-copy p{font-size:15px;line-height:2.15;color:var(--soft);margin-bottom:20px}
+    .frequency-principle-copy strong{font-weight:400;color:var(--forest)}
+    .frequency-apps{background:var(--cream)}
+    .frequency-app-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:48px}
+    .frequency-app-hint{display:none}
+    .frequency-app{position:relative;display:flex;flex-direction:column;background:var(--w);border:1px solid var(--div);border-radius:8px;overflow:hidden;min-height:330px;box-shadow:0 12px 34px rgba(80,60,50,.04)}
+    .frequency-app-image{height:132px;overflow:hidden;background:#E9DED2}
+    .frequency-app-image img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease}
+    .frequency-app:hover .frequency-app-image img{transform:scale(1.04)}
+    .frequency-app-copy{padding:22px 24px 26px;display:flex;flex-direction:column;flex:1}
+    .frequency-app-number{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.35em;color:var(--gold);margin-bottom:8px}
+    .frequency-app-title{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:300;color:var(--text);line-height:1.5;margin-bottom:10px}
+    .frequency-app-rule{width:28px;height:1px;background:var(--sandm);margin-bottom:12px}
+    .frequency-app-copy p{font-size:13px;line-height:1.9;color:var(--soft)}
+    .frequency-faq{max-width:860px;margin:46px auto 0}
+    .frequency-faq-item{border-bottom:1px solid var(--div)}
+    .frequency-faq-button{width:100%;border:0;background:transparent;padding:22px 0;display:flex;align-items:center;justify-content:space-between;gap:20px;text-align:left;font-family:'Noto Serif TC',serif;font-size:16px;font-weight:300;color:var(--text);cursor:pointer}
+    .frequency-faq-icon{width:24px;height:24px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;flex-shrink:0;transition:transform .25s}
+    .frequency-faq-item.is-open .frequency-faq-icon{transform:rotate(45deg)}
+    .frequency-faq-answer{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;font-size:14px;line-height:2;color:var(--soft)}
+    .frequency-faq-item.is-open .frequency-faq-answer{max-height:340px;padding-bottom:24px}
+    .frequency-note{margin-top:32px;padding:24px 28px;border-left:2px solid var(--forest);background:var(--cream);font-size:13px;line-height:2;color:var(--soft)}
+    .frequency-cta{position:relative;overflow:hidden;text-align:center;background:var(--forest)}
+    .frequency-cta-bg{position:absolute;inset:0;background:url('/frequency/cta-bg.jpg') center 30%/cover no-repeat;opacity:.16}
+    .frequency-cta-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(61,90,76,.96),rgba(38,43,39,.9))}
+    .frequency-cta-inner{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:120px 24px 130px}
+    .frequency-cta .frequency-label{color:rgba(232,223,208,.58)}
+    .frequency-cta h2{font-family:'Noto Serif TC',serif;font-size:clamp(29px,4vw,44px);font-weight:300;line-height:1.6;color:var(--sand)}
+    .frequency-cta p{font-size:15px;line-height:2.1;color:rgba(232,223,208,.74);margin:24px 0 38px}
+    .frequency-cta .bp{background:var(--sand);color:var(--forest)}
+
     /* TABLET */
     @media(max-width:1024px){
       nav,nav.sc{padding:0 32px}
@@ -264,11 +552,30 @@ const Styles = () => (
       .two{gap:44px;grid-template-columns:196px 1fr}
       .fti{padding:0 32px}.ctab{padding:80px 32px}
       .tier{padding:48px 36px}
+      .home-hero-copy{margin-left:32px;max-width:560px;width:50%;padding-right:32px}
+      .home-portrait-frame{left:38%}
+      .home-split,.home-split.reverse{grid-template-columns:1fr;gap:44px}
+      .home-start-grid{grid-template-columns:1fr}
+      .about-new-hero-grid{padding:0 32px;gap:42px;grid-template-columns:.9fr 1.1fr}
+      .about-new-inner{padding:0 32px}
+      .about-new-work{gap:44px}
+      .about-new-work-photo{height:560px}
+      .frequency-inner{padding:0 32px}
+      .frequency-principle{padding-right:48%;padding-left:48px}
     }
+
+    /* NAV DARK */
+    nav.dk .nl{color:rgba(250,247,242,.95)}
+    nav.dk .nl span{color:rgba(250,247,242,.65)}
+    nav.dk .nm li{color:rgba(250,247,242,.8)}
+    nav.dk .nm li::after{background:rgba(250,247,242,.8)}
+    nav.dk .nm li:hover,nav.dk .nm li.on{color:rgba(250,247,242,1)}
+    nav.dk .nc{border-color:rgba(250,247,242,.7);color:rgba(250,247,242,.9)}
+    nav.dk .nc:hover{background:rgba(250,247,242,.15);color:var(--w)}
 
     /* MOBILE */
     @media(max-width:768px){
-      :root{--nav:60px}
+      :root{--nav:60px;--soft:#4E4741;--wg:#655B52}
       nav,nav.sc{padding:0 18px}
       .nm,.nc{display:none}
       .hb{display:flex;flex-direction:column;justify-content:center;gap:5px;width:38px;height:38px;background:none;border:none;cursor:pointer;padding:4px;flex-shrink:0}
@@ -276,49 +583,107 @@ const Styles = () => (
       .hb.op span:nth-child(1){transform:translateY(6px) rotate(45deg)}
       .hb.op span:nth-child(2){opacity:0}
       .hb.op span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+      nav.dk .hb span{background:rgba(250,247,242,.9)}
       .C{padding:0 18px}.CN{padding:0 18px}
       section{padding:64px 0}
+      .home-section{padding:62px 0}
+      .home-quiet-hero{display:flex;flex-direction:column;padding:calc(var(--nav) + 18px) 18px 48px;gap:24px;min-height:auto;background:linear-gradient(155deg,#FAF7F2 0%,#F4EEE6 68%,#EDE2D5 100%)}
+      .home-quiet-hero::before,.home-quiet-hero::after{display:none}
+      .home-portrait-frame{position:relative;order:1;width:100%;inset:auto;min-height:0;height:108vw;max-height:500px;border-radius:18px;box-shadow:0 18px 44px rgba(72,57,43,.1);background:#EADFD8}
+      .home-portrait-frame img{object-fit:cover;object-position:24% center}
+      .home-portrait-frame::after{background:linear-gradient(to top,rgba(250,247,242,.16),transparent 24%)}
+      .home-hero-copy{order:2;width:100%;max-width:100%;margin:0;z-index:1}
+      .home-eyebrow{font-size:12px;letter-spacing:.12em;line-height:1.8;margin-bottom:22px;color:#5C524A}
+      .home-hero-title{font-size:34px;line-height:1.38;margin-bottom:24px}
+      .home-hero-body{font-size:16px;line-height:2;color:#4E4741;margin-bottom:32px}
+      .home-hero-actions{flex-direction:column;align-items:stretch;gap:12px}
+      .home-secondary-btn{width:100%;text-align:center}
+      .home-intro{margin-bottom:34px;text-align:left}
+      .home-intro-kicker{font-size:12px;letter-spacing:.24em}
+      .home-section-title{font-size:28px;line-height:1.55}
+      .home-section-copy{font-size:16px;line-height:2;margin-top:16px}
+      .home-scenario-grid{display:flex;overflow-x:auto;gap:16px;padding:0 18px 10px;margin:0 -18px;scroll-snap-type:x mandatory}
+      .home-scenario-card{min-width:84vw;border-radius:18px;scroll-snap-align:start}
+      .home-scenario-img{height:62vw;min-height:240px}
+      .home-scenario-text{padding:26px 24px 30px}
+      .home-card-title{font-size:22px;line-height:1.55}
+      .home-card-copy{font-size:16px;line-height:2;color:#4E4741}
+      .home-split,.home-split.reverse{grid-template-columns:1fr;gap:32px}
+      .home-split-copy{max-width:100%}
+      .home-large-title{font-size:28px;line-height:1.62;margin-bottom:22px}
+      .home-body-lines{gap:12px;margin-bottom:26px}
+      .home-body-lines p{font-size:16px;line-height:2;color:#4E4741}
+      .home-focus-row{gap:10px}
+      .home-focus-pill{font-size:13px;padding:9px 15px}
+      .home-image-card{border-radius:18px}
+      .home-start-grid{grid-template-columns:1fr;gap:16px}
+      .home-start-card{min-height:auto;padding:30px 26px;border-radius:18px}
+      .home-start-title{font-size:22px}
+      .home-start-card p{font-size:16px;line-height:2;color:#4E4741}
+      .home-start-card button{width:100%;align-self:stretch}
+      .about-new-hero{min-height:auto;padding:calc(var(--nav) + 24px) 0 64px}
+      .about-new-hero-grid{padding:0 18px;grid-template-columns:1fr;gap:34px}
+      .about-new-hero-copy{order:2}
+      .about-new-hero-photo{order:1;height:108vw;max-height:520px;min-height:340px;border-radius:18px}
+      .about-new-hero-photo img{object-position:48% center}
+      .about-new-kicker{font-size:11px;margin-bottom:16px}
+      .about-new-title{font-size:35px;margin-bottom:22px}
+      .about-new-lead{font-size:20px;line-height:1.85;margin-bottom:30px}
+      .about-new-section{padding:76px 0}
+      .about-new-inner{padding:0 18px}
+      .about-new-story h2{font-size:29px;line-height:1.7;margin-bottom:28px}
+      .about-new-story-copy{grid-template-columns:1fr;gap:14px}
+      .about-new-story-copy p{font-size:16px;line-height:2.05}
+      .about-new-section-head{text-align:left;margin-bottom:32px}
+      .about-new-section-head h2{font-size:29px}
+      .about-new-card-grid{grid-template-columns:1fr;gap:14px}
+      .about-new-card{min-height:auto;padding:30px 26px;border-radius:16px}
+      .about-new-card-num{margin-bottom:18px}
+      .about-new-card h3{font-size:22px}
+      .about-new-card p{font-size:16px}
+      .about-new-work{grid-template-columns:1fr;gap:34px}
+      .about-new-work-photo{height:112vw;max-height:540px;border-radius:18px}
+      .about-new-work-photo img{object-position:45% center;transform:scale(1.04)}
+      .about-new-work-copy h2{font-size:29px;margin-bottom:22px}
+      .about-new-work-copy p{font-size:16px;line-height:2.05}
+      .about-new-work-list div{font-size:17px}
+      .about-new-start-card{min-height:auto;padding:30px 26px}
+      .about-new-start-card button{width:100%;align-self:stretch}
+      .about-new-closing{padding:76px 22px}
+      .about-new-closing p{font-size:27px}
+      .frequency-hero{min-height:auto;padding:calc(var(--nav) + 64px) 18px 78px}
+      .frequency-title{font-size:52px}
+      .frequency-lead{font-size:16px;line-height:2.05}
+      .frequency-tags{gap:8px}
+      .frequency-tag{font-size:12px;padding:7px 13px}
+      .frequency-section{padding:76px 0}
+      .frequency-inner{padding:0 18px}
+      .frequency-heading{font-size:29px}
+      .frequency-principle{min-height:590px;margin:34px -18px 0;padding:38px 36px 245px;align-items:flex-start}
+      .frequency-principle::before{background-position:center 66%;background-size:cover;transform:scale(1.04);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 78%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 78%,transparent 100%)}
+      .frequency-principle::after{background:linear-gradient(180deg,rgba(247,243,237,.98) 0%,rgba(247,243,237,.95) 47%,rgba(247,243,237,.72) 61%,rgba(247,243,237,.12) 86%,rgba(247,243,237,.03) 100%)}
+      .frequency-principle-copy p{font-size:16px;line-height:2.05}
+      .frequency-app-hint{display:block;margin-top:20px;font-size:12px;letter-spacing:.16em;color:var(--wg)}
+      .frequency-app-list{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(246px,72vw);gap:14px;margin-top:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 18px 16px;margin-left:-18px;margin-right:-18px;scrollbar-width:none}
+      .frequency-app-list::-webkit-scrollbar{display:none}
+      .frequency-app{min-height:0;display:flex;scroll-snap-align:center}
+      .frequency-app-image{height:auto;min-height:0;aspect-ratio:1/1}
+      .frequency-app-copy{padding:18px 18px 22px}
+      .frequency-app-number{font-size:11px;margin-bottom:4px}
+      .frequency-app-title{font-size:18px;margin-bottom:7px}
+      .frequency-app-rule{margin-bottom:8px}
+      .frequency-app-copy p{font-size:14px;line-height:1.75;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+      .frequency-faq{margin-top:30px}
+      .frequency-faq-button{font-size:17px;line-height:1.7}
+      .frequency-faq-answer{font-size:16px;line-height:2}
+      .frequency-note{font-size:15px;padding:22px 20px}
+      .frequency-cta-inner{padding:88px 18px 96px}
+      .frequency-cta p{font-size:16px;line-height:2}
       .hero{grid-template-columns:1fr;min-height:auto;display:flex;flex-direction:column}
       .hl{padding:48px 18px 48px;align-items:flex-start;order:2}
-      .htit{font-size:34px}.hbo{font-size:14px;max-width:100%;margin-bottom:36px}
+      .htit{font-size:34px}.hbo{font-size:16px;max-width:100%;margin-bottom:36px;color:#4E4741;line-height:2.05}
       .hr{order:1;height:90vw;max-height:460px;min-height:300px}
       .hri img{object-position:20% center}
-      .home-mobile-hero{
-        min-height:auto!important;
-        display:flex!important;
-        flex-direction:column!important;
-        align-items:stretch!important;
-        padding-top:var(--nav);
-      }
-      .home-mobile-photo{
-        position:relative!important;
-        order:1;
-        width:100%!important;
-        height:108vw!important;
-        min-height:380px;
-        max-height:500px;
-        inset:auto!important;
-        z-index:1!important;
-      }
-      .home-mobile-photo img{object-position:24% center!important}
-      .home-mobile-copy{
-        order:2;
-        margin:0!important;
-        padding:38px 18px 52px!important;
-      }
-      .home-mobile-copy-inner{max-width:100%!important}
-      .home-mobile-narrow{padding:64px 18px!important}
-      .home-mobile-compare,.home-mobile-tools{grid-template-columns:1fr!important}
-      .home-mobile-results{grid-template-columns:1fr!important}
-      .home-mobile-results>div{
-        min-height:0;
-        padding:30px 24px!important;
-        display:grid;
-        grid-template-columns:52px minmax(72px,.45fr) 1fr;
-        gap:14px;
-        align-items:center;
-        text-align:left!important;
-      }
       .hov{background:linear-gradient(to bottom,rgba(250,247,242,0) 60%,var(--w) 100%) !important}
       .hray,.hsc{display:none}
       .hac{flex-direction:column;align-items:stretch;gap:14px}
@@ -331,13 +696,13 @@ const Styles = () => (
       .pv1{width:140px;height:190px;left:0}.pv2{width:170px;height:130px;right:0}
       .pvq{max-width:175px;font-size:12px;padding:14px 16px}
       .tiers{grid-template-columns:1fr}.tier{padding:44px 18px}
-      .ctab{padding:68px 18px}.ctab-t{font-size:28px}.ctab-x{font-size:14px}
+      .ctab{padding:68px 18px}.ctab-t{font-size:28px}.ctab-x{font-size:16px;color:#4E4741;line-height:2}
       .ab-hero{grid-template-columns:1fr}
       .ab-l{padding:calc(var(--nav) + 48px) 18px 48px}
       .ab-r{min-height:90vw;max-height:440px}
       .two{grid-template-columns:1fr;gap:24px}
       .slb2{border-top:none;border-bottom:1px solid var(--div);padding-bottom:7px;margin-bottom:4px}
-      .mem-h{padding:calc(var(--nav) + 48px) 18px 68px}.mh-t{font-size:32px}.mh-x{font-size:14px}
+      .mem-h{padding:calc(var(--nav) + 48px) 18px 68px}.mh-t{font-size:32px}.mh-x{font-size:16px;color:rgba(250,247,242,.82);line-height:2}
       .ben{grid-template-columns:1fr}.bi{padding:34px 18px}
       .prs{grid-template-columns:1fr;max-width:340px;margin:36px auto 0}
       .adv-h{padding:calc(var(--nav) + 48px) 0 68px}
@@ -349,16 +714,368 @@ const Styles = () => (
       .art-d{display:none}.art-tg{align-self:auto}
       .art-cta{padding:40px 18px}
       .msample-grid{grid-template-columns:1fr !important}
-      .apl-h{padding:calc(var(--nav) + 48px) 18px 68px}.apl-t{font-size:30px}
+      .apl-h{padding:calc(var(--nav) + 48px) 18px 68px}.apl-t{font-size:30px}.apl-x{font-size:16px;color:rgba(250,247,242,.82);line-height:2}
       .fg{grid-template-columns:1fr}.fgp.ful{grid-column:auto}.fsb{width:100%;padding:16px}
       .fti{padding:0 18px}
       .ftt{grid-template-columns:1fr;gap:36px;padding-bottom:36px}
       .fb{flex-direction:column;align-items:flex-start}
       .slb::before{width:24px}
       .fs{grid-template-columns:60px 1fr;gap:20px}
+      .page .slb{font-size:16px !important;letter-spacing:.16em !important;color:#4A433D !important;margin-bottom:34px !important;line-height:1.7 !important}
+      .page .slb::before{width:46px !important;background:#B8A882 !important}
+      p,.cx,.ptx,.tier-tx,.art-x,.fsx,.fqa,.chkt,.testi-text{font-size:16px !important;color:#4E4741 !important;line-height:2 !important}
+      .tier-tit,.art-t,.fst,.ct,.dt{color:#2C2825 !important}
+      .px,.bx,.fd,.ful2 li,.fc{color:rgba(250,247,242,.72) !important}
+      .home-compare-label{font-size:16px !important;letter-spacing:.16em !important}
+      .home-cta-text{color:#FFFFFF !important;font-size:24px !important;line-height:1.8 !important}
+      .home-tool-link{font-size:16px !important;letter-spacing:.08em !important;color:var(--forest) !important}
+      .tone-panel{padding:58px 22px !important}
+      .subscribe-start-hero{padding:96px 0 58px !important}
+      .subscribe-start-tone{padding:42px 22px !important}
+      .apply-tone{padding:28px 22px !important}
+      .apply-tone .tone-kicker{margin-bottom:10px !important}
+      .apply-tone .tone-text{font-size:19px !important;line-height:1.65 !important}
+      .apply-tone .tone-sub{font-size:14px !important;line-height:1.75 !important;margin-top:10px !important}
+      .apply-form-section{padding-top:6px !important;padding-bottom:64px !important}
+      .tone-kicker{font-size:14px !important;letter-spacing:.22em !important}
+      .tone-text{font-size:24px !important;line-height:1.85 !important;text-wrap:balance}
+      .tone-sub{font-size:16px !important;color:rgba(250,247,242,.72) !important}
+      .dark-hero{background:linear-gradient(145deg,#385B4C 0%,#315143 48%,#24211E 100%) !important}
+      .dark-hero .hero-kicker{font-size:14px !important;letter-spacing:.22em !important;color:rgba(232,223,208,.72) !important}
+      .dark-hero h1{color:#F5EFE4 !important;text-shadow:0 1px 14px rgba(0,0,0,.12)}
+      .dark-hero p{font-size:17px !important;color:rgba(250,247,242,.82) !important;line-height:2.05 !important;max-width:100% !important}
+      .deep-entry-cta{padding:78px 0 !important}
+      .deep-entry-kicker{font-size:14px !important;letter-spacing:.22em !important;color:rgba(232,223,208,.76) !important}
+      .deep-entry-main{font-size:24px !important;color:#F5EFE4 !important;line-height:1.85 !important}
+      .deep-entry-sub{font-size:17px !important;color:rgba(250,247,242,.78) !important;line-height:2 !important}
+      .num-insight-panel{grid-template-columns:1fr !important;padding:20px !important;gap:12px !important}
+      .num-insight-card{padding:22px 20px !important}
+      .num-insight-card p{font-size:17px !important;color:rgba(250,247,242,.84) !important;line-height:1.95 !important}
+      .num-result-cta{padding:52px 22px !important}
+      .num-cta-kicker{font-size:14px !important;letter-spacing:.24em !important;color:rgba(232,223,208,.76) !important}
+      .num-cta-text{font-size:24px !important;color:#F5EFE4 !important;line-height:1.85 !important}
+      .num-cta-actions{flex-direction:column !important;align-items:stretch !important}
+      .num-cta-actions .bp{width:100% !important}
+      .num-mini-label{font-size:14px !important;color:var(--forest) !important;background:rgba(58,92,76,.12) !important;letter-spacing:.12em !important;line-height:1.4 !important}
+      .num-section-title{font-size:30px !important;color:#2C2825 !important;margin-bottom:22px !important;gap:14px !important}
+      .num-section-title::before{width:44px !important;background:#B8A882 !important}
+      .num-section-title span{font-size:14px !important;color:var(--forest) !important}
+      .deep-fit-grid{grid-template-columns:1fr !important;gap:14px !important}
+      .deep-fit-card{padding:34px 26px !important}
+      .deep-fit-card p{font-size:18px !important;line-height:1.9 !important;text-wrap:pretty !important}
+      .about-ability-panel{padding:46px 28px !important}
+      .about-ability-title{font-size:24px !important;color:#F5EFE4 !important;line-height:1.85 !important}
+      .about-ability-row span:first-child{color:#D8C9A5 !important}
+      .about-ability-row span:last-child{font-size:17px !important;color:rgba(250,247,242,.84) !important;line-height:1.9 !important}
+      .ongoing-ways-grid{grid-template-columns:1fr !important;gap:14px !important}
+      .ongoing-way-card{padding:34px 26px !important}
+      .ongoing-way-card p{font-size:17px !important;line-height:1.9 !important;text-wrap:pretty !important}
+      .ongoing-way-card button{width:100% !important;font-size:15px !important}
+      .green-cta{padding:70px 0 !important}
+      .green-cta-kicker{font-size:14px !important;color:rgba(232,223,208,.76) !important}
+      .green-cta-price{font-size:48px !important;color:#F5EFE4 !important}
+      .green-cta-meta{font-size:15px !important;color:rgba(250,247,242,.68) !important;line-height:1.8 !important}
+      .green-cta-title{font-size:24px !important;color:#F5EFE4 !important;line-height:1.85 !important}
+      .green-cta-text{font-size:17px !important;color:rgba(250,247,242,.82) !important;line-height:2 !important}
+      .green-cta-actions{flex-direction:column !important;align-items:stretch !important}
+      .green-cta-actions .bp{width:100% !important}
+      .num-date-grid{grid-template-columns:1fr 1fr !important;gap:16px 14px !important}
+      .num-date-grid>div:first-child{grid-column:1/-1 !important}
+      .num-date-grid label{white-space:nowrap !important;font-size:14px !important;letter-spacing:.1em !important}
+      .num-rel-panel{padding:28px 22px !important}
+      .num-guide-grid,.num-lunar-grid{grid-template-columns:1fr !important;gap:18px !important}
+      .num-guide-panel{padding:32px 24px !important}
+      .num-lunar-grid>div{padding:20px 22px !important}
+      .num-lunar-grid p{font-size:17px !important;line-height:1.9 !important;text-wrap:pretty !important}
+      .num-birthday-panel{grid-template-columns:1fr !important;gap:12px !important}
+      .num-birthday-card{padding:20px 22px !important}
+      .num-birthday-date{font-size:19px !important}
+      .subscribe-hero-title{font-size:36px !important;line-height:1.45 !important}
+      .subscribe-hero-copy{font-size:22px !important;line-height:1.9 !important;color:rgba(250,247,242,.84) !important}
+      .subscribe-inner{padding:68px 24px !important}
+      .subscribe-copy{font-size:20px !important;line-height:2 !important}
+      .subscribe-copy p{margin-bottom:18px !important}
+      .subscribe-copy .gap{height:10px !important}
+      .subscribe-list-item{font-size:17px !important;line-height:1.9 !important;padding:20px 22px !important}
+      .subscribe-preview{margin:30px 0 28px !important}
+      .subscribe-preview-caption{font-size:17px !important;line-height:1.85 !important;padding:20px 22px !important}
+      .subscribe-start-title{font-size:32px !important;line-height:1.55 !important}
+      .subscribe-start-copy{font-size:19px !important;line-height:2 !important;color:rgba(250,247,242,.88) !important}
+      .short-hero{padding:112px 0 70px !important}
+      .short-title{font-size:34px !important;line-height:1.5 !important}
+      .short-copy{font-size:19px !important;line-height:1.95 !important}
+      .short-inner{padding:64px 24px !important}
+      .short-body{font-size:19px !important;line-height:1.95 !important}
+      .short-stats,.short-cards{grid-template-columns:1fr !important;gap:12px !important;background:transparent !important}
+      .short-stat,.short-card{padding:24px 22px !important}
+      .short-dashboard{padding:26px 18px !important}
+      .short-radar-label{font-size:17px !important}
+      .short-radar-value{font-size:31px !important}
+      .short-price{padding:64px 24px !important}
+      .thanks-title{font-size:25px !important;line-height:1.55 !important;margin-bottom:20px !important}
+      .thanks-copy{font-size:15px !important;line-height:1.85 !important;gap:12px !important}
+      .thanks-line-copy{font-size:15px !important;line-height:1.85 !important}
+      .form-question label{font-size:17px !important;letter-spacing:.06em !important;color:#2C2825 !important;line-height:1.85 !important}
+      .form-question-note{font-size:15px !important;color:#655B52 !important;line-height:1.9 !important}
+
+      /* HOME HERO */
+      .home-hero{flex-direction:column !important;align-items:stretch !important;min-height:auto !important}
+      .home-photo{position:relative !important;top:auto !important;right:auto !important;left:auto !important;width:100% !important;height:104vw !important;max-height:560px !important;min-height:390px !important;margin-top:var(--nav) !important;background:#F3E8E2 !important}
+      .home-photo img{object-position:22% top !important;filter:contrast(1.06) saturate(1.05) brightness(1.02)}
+      .home-photo>div{opacity:.22 !important}
+      .home-text{padding:36px 18px 56px !important}
+      .home-text>div{max-width:100% !important}
+      .home-text h1{font-size:34px !important;line-height:1.35 !important;color:#2C2825 !important}
+      .home-text p{font-size:17px !important;color:#4A433D !important;line-height:2.05 !important}
+      .home-compare{grid-template-columns:1fr !important}
+      .home-results{grid-template-columns:1fr !important;gap:1px !important;background:rgba(250,247,242,.18) !important}
+      .home-results>div{padding:30px 24px !important;background:var(--forest) !important;min-height:0 !important;display:grid !important;grid-template-columns:52px minmax(72px,.45fr) 1fr !important;grid-template-rows:auto !important;gap:14px !important;align-items:center !important;justify-items:start !important}
+      .home-results>div>div:nth-child(1){font-size:28px !important;color:rgba(250,247,242,.9) !important;margin-bottom:0 !important;line-height:1 !important;display:flex !important;align-items:center !important}
+      .home-results>div>div:nth-child(2){font-size:20px !important;color:#FFFFFF !important;margin-bottom:0 !important;line-height:1.35 !important;display:flex !important;align-items:center !important}
+      .home-results>div>div:nth-child(3){font-size:15px !important;color:rgba(250,247,242,.86) !important;line-height:1.75 !important;max-width:none !important;text-align:left !important;text-wrap:pretty !important}
+      .home-tools{grid-template-columns:1fr !important}
+      .testi-grid{grid-template-columns:1fr !important}
+
+      /* ABOUT HERO */
+      .about-hero{min-height:680px !important;padding-top:var(--nav) !important;justify-content:flex-end !important;background:#F0E4E0 !important}
+      .about-hero-photo{position:absolute !important;inset:0 !important;width:100% !important;height:100% !important;margin-top:0 !important}
+      .about-hero-photo img{width:100% !important;max-width:none !important;object-position:left top !important;transform:scaleX(-1) !important;filter:contrast(1.08) saturate(1.04)}
+      .about-hero-photo>div:first-of-type{background:linear-gradient(105deg,rgba(18,16,15,.82) 0%,rgba(24,22,20,.74) 22%,rgba(32,29,27,.48) 42%,rgba(44,40,37,.18) 60%,transparent 78%) !important}
+      .about-hero-photo>div:last-of-type{background:radial-gradient(ellipse 115% 72% at 0% 90%,rgba(18,16,15,.72) 0%,rgba(28,25,23,.5) 34%,rgba(44,40,37,.22) 58%,transparent 84%) !important}
+      .about-text{position:relative !important;z-index:1 !important;padding:calc(var(--nav) + 46px) 18px 58px !important;background:transparent !important;margin:0 !important}
+      .about-text>div{max-width:310px !important}
+      .about-text h1{color:var(--sand) !important}
+      .about-text p{font-size:17px !important;color:rgba(250,247,242,.88) !important;line-height:2.05 !important}
+      .about-text div[style*="background"]{background:rgba(232,223,208,.4) !important}
+      section:nth-of-type(2) > .CN > .fi:first-child > p{color:#FFFFFF !important}
+
+      /* MOBILE TYPE SCALE */
+      body{font-size:16px}
+      .page section :is(p,li,label,input,select,textarea,button){font-size:17px !important;line-height:1.9 !important}
+      .page section :is(h1,.htit){font-size:clamp(30px,8vw,42px) !important;line-height:1.45 !important}
+      .page section :is(h2,h3){font-size:clamp(22px,6vw,30px) !important;line-height:1.55 !important}
+      .page section [style*="font-size: 11px"],
+      .page section [style*="font-size: 12px"]{font-size:15px !important}
+      .page section [style*="font-size: 13px"],
+      .page section [style*="font-size: 14px"],
+      .page section [style*="font-size: 15px"]{font-size:17px !important}
+      .page section [style*="font-size: 16px"]{font-size:17px !important}
+      .page section [style*="font-size: 17px"]{font-size:17px !important}
+      .page section .slb,
+      .page section .slb2,
+      .page section [style*="letter-spacing: 0.25em"]{font-size:16px !important;line-height:1.7 !important}
+      .page section .bp,
+      .page section .bg,
+      .page section .fsb,
+      .page section .pb{font-size:16px !important;line-height:1.5 !important}
+      .page section :is(p,span,div,a){text-wrap:pretty}
+      .page section .CN,
+      .page section .C{max-width:100% !important}
+      .page section .CN>div[style*="padding: 52px 56px"],
+      .page section .CN>div[style*="padding:52px 56px"]{padding:40px 24px !important}
+      .page section .CN>div[style*="padding: 40px 56px"],
+      .page section .CN>div[style*="padding:40px 56px"]{padding:32px 24px !important}
+      .page section div[style*="display: flex"][style*="gap: 16px"],
+      .page section div[style*="display:flex"][style*="gap:\"16px\""]{gap:12px !important}
+      .page section div[style*="display: flex"][style*="gap: 28px"],
+      .page section div[style*="display:flex"][style*="gap:\"28px\""]{gap:14px !important}
+      .page section div[style*="display: flex"] > span:last-child,
+      .page section div[style*="display:flex"] > span:last-child{font-size:17px !important;line-height:1.85 !important;min-width:0;text-wrap:balance}
+      .page section div[style*="background: var(--forest)"] p,
+      .page section div[style*="background:var(--forest)"] p{text-wrap:balance}
+      footer .C>div:first-child{grid-template-columns:1fr !important;gap:34px !important;margin-bottom:44px !important}
+      footer a{font-size:16px !important;line-height:1.7 !important;display:block !important;width:max-content !important;max-width:100% !important}
+      footer p,
+      footer .C>div:last-child>div{font-size:15px !important;line-height:1.9 !important}
+
+      /* MOBILE CARD LAYOUTS */
+      .start-pricing-grid,
+      .aware-tools-grid{grid-template-columns:1fr !important;gap:16px !important}
+      .start-plan-card,
+      .aware-tool-card{padding:32px 26px !important;text-align:left !important}
+      .start-plan-card{display:grid !important;grid-template-columns:1fr auto !important;column-gap:18px !important;align-items:start !important}
+      .start-plan-card .plan-meta{grid-column:1 !important}
+      .start-plan-card .plan-price{grid-column:2 !important;grid-row:1 / span 2 !important;text-align:right !important;font-size:32px !important;white-space:nowrap !important;margin:0 !important}
+      .start-plan-card .plan-desc{grid-column:1 / -1 !important;font-size:16px !important;line-height:1.85 !important;margin:18px 0 22px !important;text-wrap:pretty}
+      .start-plan-card .plan-button{grid-column:1 / -1 !important;width:100% !important;white-space:normal !important}
+      .start-plan-card .plan-badge{position:static !important;transform:none !important;display:inline-block !important;margin-bottom:12px !important}
+      .aware-tool-card{border-left:3px solid var(--sandm) !important;border-top:none !important}
+      .aware-tool-card p{margin-bottom:22px !important;text-wrap:pretty}
+      .aware-tool-card .aware-tool-link{font-size:16px !important;letter-spacing:.08em !important}
+      .aware-next-step{padding:46px 24px !important}
+      .aware-next-step .aware-next-label{font-size:15px !important;color:rgba(250,247,242,.68) !important}
+      .aware-next-step p{color:#FFFFFF !important;font-size:18px !important;line-height:1.9 !important;text-wrap:pretty}
+      .site-footer{background:linear-gradient(155deg,#171412 0%,#25211D 42%,#2D3F35 100%) !important}
+      .site-footer::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 85% 60% at 100% 0%,rgba(184,168,130,.12),transparent 62%);pointer-events:none}
+      .site-footer>.C{position:relative;z-index:1}
+      .site-footer .footer-brand{color:#E8DFD0 !important}
+      .site-footer .footer-tagline{color:#B8A882 !important}
+      .site-footer .footer-copy{color:#C7BBAE !important}
+      .site-footer .footer-heading{color:#B8A882 !important}
+      .site-footer a{color:#D4C8B5 !important}
+      .site-footer .footer-bottom{border-top-color:rgba(250,247,242,.18) !important}
+      .site-footer .footer-bottom div{color:rgba(250,247,242,.5) !important}
     }
     @media(max-width:390px){
       .htit{font-size:28px}.mh-t{font-size:26px}.ctab-t{font-size:24px}.apl-t{font-size:24px}
+    }
+
+    /* UNIFIED SITE TYPE SCALE */
+    .home-hero-title,
+    .frequency-title,
+    .subscribe-hero-title,
+    .short-title,
+    .about-text h1{
+      font-size:var(--type-display) !important;
+      line-height:var(--leading-display) !important;
+      letter-spacing:0 !important;
+    }
+    .htit,
+    .mh-t,
+    .apl-t,
+    .subscribe-start-title,
+    .thanks-title,
+    .about-new-title,
+    .dark-hero h1{
+      font-size:var(--type-page) !important;
+      line-height:1.48 !important;
+      letter-spacing:0 !important;
+    }
+    .home-section-title,
+    .home-large-title,
+    .frequency-heading,
+    .about-new-story h2,
+    .about-new-section-head h2,
+    .about-new-work-copy h2,
+    .ctab-t,
+    .num-section-title,
+    .green-cta-title,
+    .short-price h2,
+    .tone-text{
+      font-size:var(--type-section) !important;
+      line-height:var(--leading-heading) !important;
+      letter-spacing:0 !important;
+    }
+    .home-card-title,
+    .home-start-title,
+    .about-new-card h3,
+    .about-new-start-card h3,
+    .frequency-app-title,
+    .tier-tit,
+    .ct,
+    .short-card h3,
+    .subscribe-copy,
+    .deep-entry-main,
+    .num-cta-text,
+    .about-ability-title{
+      font-size:var(--type-card) !important;
+      line-height:1.65 !important;
+      letter-spacing:0 !important;
+    }
+    .home-hero-body,
+    .home-section-copy,
+    .home-card-copy,
+    .home-body-lines p,
+    .home-start-card p,
+    .about-new-story-copy p,
+    .about-new-card p,
+    .about-new-work-copy p,
+    .frequency-lead,
+    .frequency-principle-copy p,
+    .frequency-faq-answer,
+    .frequency-cta p,
+    .hbo,
+    .mh-x,
+    .apl-x,
+    .ptx,
+    .tier-tx,
+    .cx,
+    .fsx,
+    .art-x,
+    .art-cta p,
+    .testi-text,
+    .subscribe-hero-copy,
+    .subscribe-start-copy,
+    .subscribe-list-item,
+    .short-copy,
+    .short-body,
+    .green-cta-text,
+    .deep-entry-sub,
+    .num-insight-card p,
+    .about-ability-row span:last-child,
+    .ongoing-way-card p,
+    .thanks-copy,
+    .thanks-line-copy{
+      font-size:var(--type-body) !important;
+      line-height:var(--leading-body) !important;
+      letter-spacing:0 !important;
+    }
+    .slb,
+    .slb2,
+    .home-eyebrow,
+    .home-intro-kicker,
+    .about-new-kicker,
+    .frequency-eyebrow,
+    .frequency-label,
+    .short-kicker,
+    .tone-kicker,
+    .hero-kicker,
+    .deep-entry-kicker,
+    .num-cta-kicker,
+    .green-cta-kicker{
+      font-size:var(--type-small) !important;
+      line-height:1.7 !important;
+    }
+    .page :is(.bp,.bg,.pb,.fsb,.home-secondary-btn,.about-new-link){
+      font-size:14px !important;
+      line-height:1.5 !important;
+    }
+    .page :is(p,li,label,input,select,textarea,button){
+      text-wrap:pretty;
+    }
+
+    @media(max-width:768px){
+      :root{
+        --type-display:36px;
+        --type-page:32px;
+        --type-section:27px;
+        --type-card:21px;
+        --type-body:16px;
+        --type-small:13px;
+        --leading-display:1.42;
+        --leading-heading:1.58;
+        --leading-body:1.95;
+      }
+      body{font-size:16px}
+      .page section :is(p,li,label,input,select,textarea){
+        font-size:var(--type-body) !important;
+        line-height:var(--leading-body) !important;
+      }
+      .page .slb{
+        font-size:var(--type-small) !important;
+        letter-spacing:.16em !important;
+      }
+      .home-results>div>div:nth-child(2){
+        font-size:19px !important;
+      }
+      .home-results>div>div:nth-child(3){
+        font-size:14px !important;
+        line-height:1.75 !important;
+      }
+      .green-cta-price{
+        font-size:44px !important;
+      }
+      .short-price .amount{
+        font-size:54px !important;
+      }
+      .thanks-copy,
+      .thanks-line-copy{
+        font-size:15px !important;
+        line-height:1.9 !important;
+      }
+      .page :is(.bp,.bg,.pb,.fsb,.home-secondary-btn,.about-new-link){
+        font-size:15px !important;
+      }
     }
   `}</style>
 );
@@ -394,6 +1111,7 @@ function Faq({ q, a }) {
 
 /* ─── NAV ────────────────────────────────────────────────────────── */
 const NI = [
+  { l: "首頁",           p: "home" },
   { l: "開始這一步",     p: "start" },
   { l: "陪跑計畫",       p: "deep" },
   { l: "自我覺察",       p: "aware" },
@@ -412,7 +1130,7 @@ function Nav({ cur, go }) {
   const nav = p => { go(p); setMob(false); };
   return (
     <>
-      <nav className={sc || mob ? "sc" : ""}>
+      <nav className={[sc || mob ? "sc" : "", !sc && !mob && ["subscribe","subscribeStart","thanks","subscribeThanks","deep","apply","about","short","frequency"].includes(cur) ? "dk" : ""].filter(Boolean).join(" ")}>
         <div className="nl" onClick={() => nav("home")}>
           Sofia
           <span>情緒穩定 × 關係覺察 × 內在主導權</span>
@@ -427,7 +1145,6 @@ function Nav({ cur, go }) {
       </nav>
       <div className={"mo" + (mob ? " op" : "")}>
         <ul>
-          <li onClick={() => nav("home")}>首頁</li>
           {NI.map(i => <li key={i.p} onClick={() => nav(i.p)}>{i.l}</li>)}
         </ul>
         <div className="mo-ft">Sofia — 蘇菲療癒轉化</div>
@@ -439,192 +1156,149 @@ function Nav({ cur, go }) {
 /* ─── HOME ───────────────────────────────────────────────────────── */
 function Home({ go }) {
   useFade();
+  const scenarioCards = [
+    {
+      t: "等一個回覆",
+      x: "明明只是幾分鐘，心裡卻已經演過很多次結果。你開始猜測、開始反覆確認，開始懷疑是不是自己做錯了什麼。",
+      img: HOME_SCENARIO_REPLY,
+    },
+    {
+      t: "很累了\n卻停不下來",
+      x: "事情做完了，腦袋卻沒有停下來。好像只要一放鬆，很多情緒就會突然跑出來。",
+      img: HOME_SCENARIO_TIRED,
+    },
+    {
+      t: "總是在照顧別人",
+      x: "你習慣先理解別人，卻很少有人問：那你呢？",
+      img: HOME_SCENARIO_CARE,
+    },
+  ];
+  const starts = [
+    {
+      t: "先看見自己的狀態",
+      x: "最近有些累、有些卡住，想知道發生什麼事的人。",
+      btn: "開始探索",
+      p: "aware",
+    },
+    {
+      t: "建立每月穩定節奏",
+      x: "想持續理解自己，建立穩定狀態的人。",
+      btn: "了解訂閱",
+      p: "subscribe",
+    },
+    {
+      t: "深度陪跑",
+      x: "準備面對核心議題，想真正產生改變的人。",
+      btn: "申請陪跑",
+      p: "deep",
+    },
+  ];
+
   return (
-    <div className="page">
-
-      {/* ── HERO ── */}
-      <div className="home-mobile-hero" style={{minHeight:"100vh",display:"flex",alignItems:"center",background:"var(--cream)",position:"relative",overflow:"hidden"}}>
-        {/* 背景光暈流動感 */}
-        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 60% 80% at 75% 40%,rgba(232,215,200,.35) 0%,transparent 65%)",pointerEvents:"none",zIndex:0}}/>
-        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 40% 50% at 85% 70%,rgba(212,190,175,.2) 0%,transparent 60%)",pointerEvents:"none",zIndex:0}}/>
-
-        {/* 右側照片 */}
-        <div className="home-mobile-photo" style={{position:"absolute",right:0,top:0,height:"100%",width:"52%",zIndex:1}}>
-          <img src={PHOTO} alt="Sofia" style={{
-            height:"100%", width:"100%",
-            objectFit:"cover", objectPosition:"left top",
-            display:"block",
-          }} />
-          {/* 模糊邊界 — 左側 */}
-          <div style={{position:"absolute",inset:0,background:"linear-gradient(to right, var(--cream) 0%, rgba(245,240,232,0.6) 15%, rgba(245,240,232,0.1) 35%, transparent 55%)"}}/>
-          {/* 模糊邊界 — 底部 */}
-          <div style={{position:"absolute",inset:0,background:"linear-gradient(to top, var(--cream) 0%, rgba(245,240,232,0.5) 12%, transparent 30%)"}}/>
-          {/* 模糊邊界 — 頂部 */}
-          <div style={{position:"absolute",inset:0,background:"linear-gradient(to bottom, var(--cream) 0%, rgba(245,240,232,0.3) 8%, transparent 22%)"}}/>
-        </div>
-
-        {/* 文字區 */}
-        <div className="home-mobile-copy" style={{position:"relative",zIndex:2,maxWidth:"1200px",width:"100%",margin:"0 auto",padding:"140px 60px 100px"}}>
-          <div className="home-mobile-copy-inner" style={{maxWidth:"480px"}}>
-            <div className="slb fi">Sofia · 蘇菲療癒轉化</div>
-            <h1 className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(30px,4vw,54px)",fontWeight:300,color:"var(--text)",lineHeight:1.3,marginBottom:"28px"}}>
-              你不是不會，<br/>你只是一直在用<br/>同一種方式撐。
-            </h1>
-            <p className="fi" style={{fontSize:"clamp(14px,1.4vw,16px)",color:"var(--soft)",lineHeight:2,marginBottom:"44px"}}>
-              我幫助你在情緒與關係中穩住自己，<br/>讓你在關鍵時刻，不再被情緒拉走。
-            </p>
-            <button className="bp fi" onClick={() => go("apply")} style={{fontSize:"14px",padding:"16px 40px"}}>預約初次穩定體驗</button>
+    <div className="page home-shell">
+      <section className="home-quiet-hero">
+        <div className="home-hero-copy">
+          <div className="home-eyebrow fi">Sofia｜情緒穩定 × 關係覺察 × 內在主導權</div>
+          <h1 className="home-hero-title fi">你不是想太多<br/>你只是一直在撐</h1>
+          <p className="home-hero-body fi">
+            當情緒、關係、責任與未來開始一起拉扯，最需要的不是更多建議，而是一個能重新站穩的位置。
+            <br/><br/>
+            我陪你一起看懂正在發生的事，慢慢把主導權拿回來。
+          </p>
+          <div className="home-hero-actions fi">
+            <button className="bp" onClick={() => go("start")}>從這裡開始</button>
+            <button className="home-secondary-btn" onClick={() => go("about")}>認識 Sofia</button>
           </div>
         </div>
-      </div>
-
-      {/* ── 痛點區 ── */}
-      <section style={{background:"var(--w)"}}>
-        <div className="home-mobile-narrow" style={{maxWidth:"560px",margin:"0 auto",padding:"100px 24px"}}>
-          <div className="slb fi">你可能正在這裡</div>
-          {[
-            "你很努力，但還是常常卡住。",
-            "你可以撐很多事，但其實很累。",
-            "你在關係裡習慣讓，卻開始覺得不對。",
-            "你不是不知道怎麼做，只是每次做決定時，又回到原本的方式。",
-          ].map((s,i) => (
-            <div key={i} className="fi" style={{padding:"20px 0",borderBottom:"1px solid var(--div)"}}>
-              <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(16px,1.8vw,20px)",fontWeight:300,color:"var(--text)",lineHeight:1.7}}>{s}</p>
-            </div>
-          ))}
+        <div className="home-portrait-frame fi">
+          <img src={PHOTO} alt="Sofia" />
         </div>
       </section>
 
-      {/* ── 我在做的事 ── */}
-      <section style={{background:"var(--cream)"}}>
-        <div className="home-mobile-narrow" style={{maxWidth:"640px",margin:"0 auto",padding:"100px 24px",textAlign:"center"}}>
-          <div className="slb fi">我在做的事</div>
-          <p className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(18px,2.2vw,24px)",fontWeight:300,color:"var(--text)",lineHeight:1.7,marginBottom:"32px"}}>
-            我不給答案，也不幫你做選擇。
-          </p>
-          <p className="fi" style={{fontSize:"15px",color:"var(--soft)",lineHeight:2,marginBottom:"12px"}}>
-            我幫你看見你為什麼會一直卡在同樣的地方，以及你在壓力與關係中，是怎麼做決定的。
-          </p>
-          <p className="fi" style={{fontSize:"15px",color:"var(--soft)",lineHeight:2}}>
-            讓你慢慢做到：不被情緒拉走、不再過度承擔、做出更清晰的選擇。
-          </p>
-        </div>
-      </section>
-
-      {/* ── 差異對比 ── */}
-      <section style={{background:"var(--w)"}}>
+      <section className="home-section" style={{background:"var(--w)"}}>
         <div className="C">
-          <div className="slb fi">這不是療癒</div>
-          <div className="home-mobile-compare" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px"}}>
-            <div className="fi" style={{padding:"48px 44px",background:"var(--cream)"}}>
-              <div style={{fontSize:"11px",letterSpacing:"0.25em",color:"var(--wg)",marginBottom:"28px",textTransform:"uppercase"}}>一般的方式</div>
-              {["給你方法和建議","告訴你應該怎麼做","幫你在當下好過一點","讓你更努力撐下去"].map((s,i) => (
-                <div key={i} style={{display:"flex",gap:"12px",marginBottom:"14px",opacity:0.6}}>
-                  <span style={{color:"var(--sandm)",flexShrink:0}}>–</span>
-                  <span style={{fontSize:"14px",color:"var(--soft)",lineHeight:1.8}}>{s}</span>
-                </div>
-              ))}
-            </div>
-            <div className="fi" style={{padding:"48px 44px",background:"var(--forest)"}}>
-              <div style={{fontSize:"11px",letterSpacing:"0.25em",color:"rgba(232,223,208,.5)",marginBottom:"28px",textTransform:"uppercase"}}>我在做的</div>
-              {["幫你看見你的模式","讓你理解自己為什麼卡住","建立你的內在穩定能力","讓你在關鍵時刻做出不同的選擇"].map((s,i) => (
-                <div key={i} style={{display:"flex",gap:"12px",marginBottom:"14px"}}>
-                  <span style={{color:"var(--sand)",flexShrink:0}}>—</span>
-                  <span style={{fontSize:"14px",color:"rgba(232,223,208,.85)",lineHeight:1.8}}>{s}</span>
-                </div>
-              ))}
-            </div>
+          <div className="home-intro">
+            <div className="home-intro-kicker fi">Maybe You Know This</div>
+            <h2 className="home-section-title fi">你是不是也有這些時候</h2>
           </div>
-        </div>
-      </section>
-
-      {/* ── 改變結果 ── */}
-      <section style={{background:"var(--cream)"}}>
-        <div className="C">
-          <div className="slb fi">當你開始穩下來</div>
-          <div className="home-mobile-results" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
-            {[
-              { icon:"◎", t:"關係", x:"不再習慣性退讓，開始清楚自己的位置" },
-              { icon:"◎", t:"工作", x:"在壓力下依然能做出清晰的選擇" },
-              { icon:"◎", t:"內在", x:"情緒來了，可以不被拉走" },
-            ].map((s,i) => (
-              <div key={i} className="fi" style={{padding:"44px 36px",background:"var(--w)",textAlign:"center"}}>
-                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"28px",color:"var(--forest)",marginBottom:"20px"}}>{s.icon}</div>
-                <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"18px",fontWeight:300,color:"var(--text)",marginBottom:"12px"}}>{s.t}</div>
-                <div style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9}}>{s.x}</div>
-              </div>
+          <div className="home-scenario-grid">
+            {scenarioCards.map((card, i) => (
+              <article className="home-scenario-card fi" key={card.t}>
+                <div className="home-scenario-img">
+                  <img src={card.img} alt={card.t.replace("\n", "")} />
+                </div>
+                <div className="home-scenario-text">
+                  <h3 className="home-card-title">{card.t.split("\n").map((line, j) => <span key={line}>{line}{j < card.t.split("\n").length - 1 && <br/>}</span>)}</h3>
+                  <p className="home-card-copy">{card.x}</p>
+                </div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── 適合誰 ── */}
-      <section style={{background:"var(--w)"}}>
-        <div className="home-mobile-narrow" style={{maxWidth:"560px",margin:"0 auto",padding:"100px 24px"}}>
-          <div className="slb fi">適合你如果</div>
-          {[
-            "你已經撐很久，開始覺得這樣下去不行",
-            "你試過很多方法，但還是在關鍵時刻回到原本的反應",
-            "你願意面對自己，而不是只想找答案",
-          ].map((s,i) => (
-            <div key={i} className="fi" style={{display:"flex",gap:"16px",alignItems:"flex-start",padding:"22px 0",borderBottom:"1px solid var(--div)"}}>
-              <span style={{color:"var(--forest)",flexShrink:0,fontSize:"18px",lineHeight:1.4,fontFamily:"'Cormorant Garamond',serif"}}>0{i+1}</span>
-              <span style={{fontFamily:"'Noto Serif TC',serif",fontSize:"16px",fontWeight:300,color:"var(--text)",lineHeight:1.8}}>{s}</span>
+      <section className="home-section" style={{background:"var(--cream)"}}>
+        <div className="C home-split">
+          <div className="home-image-card home-work-image fi">
+            <img src={HOME_SOFIA_WORK} alt="Sofia 工作照" />
+          </div>
+          <div className="home-split-copy">
+            <h2 className="home-large-title fi">很多人來找我<br/>不是因為人生出了問題<br/>而是因為撐太久了。</h2>
+            <div className="home-body-lines fi">
+              <p>有些人卡在關係裡。</p>
+              <p>有些人明明努力了很久，卻總覺得自己不夠好。</p>
+              <p>也有人一直往前走，卻不知道自己到底在追什麼。</p>
+              <p>我做的不是告訴你答案，而是陪你一起整理那些混亂，讓你重新看懂自己現在的位置。</p>
             </div>
-          ))}
+            <div className="home-focus-row fi">
+              {["情緒穩定","關係覺察","內在主導權"].map(item => <span className="home-focus-pill" key={item}>{item}</span>)}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ── 中段 CTA ── */}
-      <section style={{background:"var(--forest)",padding:"80px 24px",textAlign:"center"}}>
-        <p className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(18px,2.5vw,26px)",fontWeight:300,color:"var(--sand)",lineHeight:1.7,marginBottom:"36px"}}>
-          你不需要一次改變很多。<br/>你只需要先看清楚。
-        </p>
-        <button className="bp fi" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)",fontSize:"14px",padding:"16px 40px"}}>預約初次穩定體驗</button>
+      <section className="home-section home-report-panel">
+        <div className="C home-split reverse">
+          <div className="home-image-card fi">
+            <img src={HOME_SOUL_REPORT} alt="靈魂狀態紀錄範例" />
+          </div>
+          <div className="home-split-copy">
+            <div className="home-intro-kicker fi">Soul State Report</div>
+            <h2 className="home-large-title fi">每個月<br/>你會收到一份<br/>關於自己的整理。</h2>
+            <div className="home-body-lines fi">
+              <p>透過 TimeWaver 與狀態分析，把那些說不清楚的感受、重複出現的模式，以及正在發生的變化，整理成一份看得懂的紀錄。</p>
+              <p>不是為了預測未來，而是讓你更理解現在。</p>
+            </div>
+            <div className="home-report-list fi">
+              {["整體狀態整理","六大面向分析","生活情境翻譯","本月調整方向","Sofia 個人解讀"].map(item => <div key={item}>✓ {item}</div>)}
+            </div>
+            <button className="home-secondary-btn fi" onClick={() => go("subscribe")}>查看範例</button>
+          </div>
+        </div>
       </section>
 
-      {/* ── 工具入口 ── */}
-      <section style={{background:"var(--cream)"}}>
+      <section className="home-section" style={{background:"var(--w)"}}>
         <div className="C">
-          <div className="slb fi">自我覺察工具</div>
-          <p className="fi" style={{fontSize:"14px",color:"var(--wg)",marginBottom:"32px",lineHeight:1.9}}>不確定從哪裡開始？這兩個工具可以幫你先了解自己現在的狀態。</p>
-          <div className="home-mobile-tools" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px"}}>
-            {[
-              { t:"生命數字", x:"從出生日期了解你的主命數、流年數與挑戰數", p:"aware", btn:"計算我的數字" },
-              { t:"身心平衡檢測", x:"花 3 分鐘，看見自己現在真正的狀態", p:"aware", btn:"開始檢測" },
-            ].map((s,i) => (
-              <div key={i} className="fi" style={{padding:"36px 32px",background:"var(--w)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => go(s.p)}>
-                <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",fontWeight:300,color:"var(--text)",marginBottom:"10px"}}>{s.t}</div>
-                <div style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9,marginBottom:"20px"}}>{s.x}</div>
-                <div style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>{s.btn} →</div>
-              </div>
+          <div className="home-intro">
+            <div className="home-intro-kicker fi">Begin Here</div>
+            <h2 className="home-section-title fi">你可以從這裡開始</h2>
+            <p className="home-section-copy fi">不用急著選方案，先選一個最接近你現在狀態的入口。</p>
+          </div>
+          <div className="home-start-grid">
+            {starts.map((item, i) => (
+              <article className="home-start-card fi" key={item.t}>
+                <div className="home-start-number">0{i + 1}</div>
+                <h3 className="home-start-title">{item.t}</h3>
+                <div className="home-start-fit">適合</div>
+                <p>{item.x}</p>
+                <button className={i === 0 ? "bp" : "home-secondary-btn"} onClick={() => go(item.p)}>{item.btn}</button>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── 見證 ── */}
       <Testimonials go={go} />
-
-      {/* ── 最終 CTA ── */}
-      <div className="ctab fi">
-        <div className="ctab-e es">Begin Here</div>
-        <h2 className="ctab-t">把穩定，慢慢練回來。</h2>
-        <p className="ctab-x">如果你已經走到一個開始覺得「用原本的方式走不下去」的地方，這裡會是一個適合你停下來的地方。</p>
-        <button className="bp" onClick={() => go("start")}>了解初次穩定體驗</button>
-      </div>
-
-      {/* 舊客入口 — 隱藏式 */}
-      <div className="fi" style={{background:"var(--cream)",padding:"40px 0",textAlign:"center",borderTop:"1px solid var(--div)"}}>
-        <p style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9}}>如果你已經走過一段，也可以從這裡繼續。</p>
-        <button onClick={() => go("ongoing")} style={{
-          background:"transparent", border:"none",
-          fontSize:"13px", color:"var(--forest)",
-          letterSpacing:"0.1em", cursor:"pointer",
-          marginTop:"8px", fontFamily:"'Cormorant Garamond',serif",
-          textDecoration:"underline", textUnderlineOffset:"4px",
-        }}>持續中的你 →</button>
-      </div>
     </div>
   );
 }
@@ -632,27 +1306,31 @@ function Home({ go }) {
 
 function About({ go }) {
   useFade();
+  const methods = [
+    { t: "情緒穩定", x: "理解自己的情緒，而不是一直壓抑。" },
+    { t: "關係覺察", x: "重新找到自己在關係中的位置。" },
+    { t: "內在主導權", x: "慢慢做出真正適合自己的選擇。" },
+  ];
+  const starts = [
+    { t: "看見自己的狀態", b: "開始探索 →", p: "aware" },
+    { t: "建立每月穩定節奏", b: "了解訂閱 →", p: "subscribe" },
+    { t: "深度陪跑", b: "申請陪跑 →", p: "deep" },
+  ];
   return (
-    <div className="page">
-
-      {/* HERO — 圖片全版，文字壓在左側 */}
-      <div style={{minHeight:"100vh",position:"relative",overflow:"hidden",display:"flex",alignItems:"center"}}>
-        {/* 圖片水平翻轉，人像在右 */}
-        <div style={{position:"absolute",inset:0,zIndex:0}}>
+    <div className="page about-new">
+      <div className="about-hero" style={{minHeight:"100vh",position:"relative",overflow:"hidden",display:"flex",flexDirection:"column",alignItems:"stretch"}}>
+        <div className="about-hero-photo" style={{position:"absolute",inset:0,zIndex:0}}>
           <img src={PHOTO} alt="Sofia" style={{
             width:"100%", height:"100%",
             objectFit:"cover", objectPosition:"right top",
             transform:"scaleX(-1)",
             display:"block",
           }} />
-          {/* 左側深色漸層讓文字可讀 */}
           <div style={{position:"absolute",inset:0,background:"linear-gradient(to right, rgba(44,40,37,0.82) 0%, rgba(44,40,37,0.6) 35%, rgba(44,40,37,0.15) 65%, transparent 100%)"}}/>
-          {/* 底部漸層 */}
           <div style={{position:"absolute",inset:0,background:"linear-gradient(to top, rgba(44,40,37,0.5) 0%, transparent 40%)"}}/>
         </div>
 
-        {/* 文字壓在圖片左側 */}
-        <div style={{position:"relative",zIndex:1,maxWidth:"1200px",width:"100%",margin:"0 auto",padding:"160px 60px 120px"}}>
+        <div className="about-text" style={{position:"relative",zIndex:1,maxWidth:"1200px",width:"100%",margin:"0 auto",padding:"160px 60px 120px"}}>
           <div style={{maxWidth:"480px"}}>
             <div style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.5)",marginBottom:"28px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}} className="fi">關於 Sofia</div>
             <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(28px,3.8vw,48px)",fontWeight:300,color:"#FAF7F2",lineHeight:1.35,marginBottom:"32px"}} className="fi">
@@ -666,49 +1344,195 @@ function About({ go }) {
         </div>
       </div>
 
-      {/* 主文 */}
-      <section style={{background:"var(--w)"}}>
-        <div style={{maxWidth:"620px",margin:"0 auto",padding:"100px 24px"}}>
-          {[
-            "我做的事情很單純：我幫助你看見，你在情緒與關係中，是怎麼做選擇的。以及，為什麼你會一直卡在同一個地方。",
-            "我不給答案，也不會告訴你應該怎麼做。因為真正影響你人生的，從來不是方法，而是你在什麼狀態下做選擇。",
-            "當這個模式沒有被看見，你再怎麼努力，都會在關鍵時刻，回到原本的選擇。",
-          ].map((s,i) => (
-            <p key={i} className="fi" style={{fontSize:"15px",lineHeight:2.1,color:"var(--soft)",marginBottom:"28px"}}>{s}</p>
-          ))}
+      <section className="about-new-section">
+        <div className="about-new-inner">
+          <div className="about-new-story">
+            <div className="about-new-kicker fi">Why people come</div>
+            <h2 className="fi">很多人來找我，<br/>不是因為人生出了問題。<br/><br/>而是因為，<br/>已經撐了很久。</h2>
+            <div className="about-new-story-copy">
+              <p className="fi">外表看起來很好，卻總是在情緒、關係或選擇裡反覆消耗自己。</p>
+              <p className="fi">我做的，不是替你做決定。而是陪你重新看懂自己。</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* 我在建立的能力 */}
-      <section style={{background:"var(--cream)"}}>
-        <div className="CN">
-          <div className="fi" style={{padding:"52px 56px",background:"var(--forest)"}}>
-            <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(18px,2.2vw,24px)",fontWeight:300,color:"var(--sand)",lineHeight:1.8,marginBottom:"32px"}}>
-              不是讓你變得更好，<br/>而是幫你慢慢建立一種能力。
-            </p>
-            {["你可以在壓力裡，依然穩住自己","你可以在情緒裡，不被拉走","你可以開始做出，不一樣的決定"].map((s,i) => (
-              <div key={i} style={{display:"flex",gap:"14px",marginBottom:"16px"}}>
-                <span style={{color:"rgba(232,223,208,.5)",flexShrink:0}}>—</span>
-                <span style={{fontSize:"15px",color:"rgba(232,223,208,.85)",lineHeight:1.9}}>{s}</span>
-              </div>
+      <section className="about-new-section about-new-methods" id="about-methods">
+        <div className="about-new-inner">
+          <div className="about-new-section-head">
+            <div className="about-new-kicker fi">How I support you</div>
+            <h2 className="fi">我如何陪伴你</h2>
+          </div>
+          <div className="about-new-card-grid">
+            {methods.map((item, i) => (
+              <article className="about-new-card fi" key={item.t}>
+                <div className="about-new-card-num">0{i + 1}</div>
+                <h3>{item.t}</h3>
+                <p>{item.x}</p>
+              </article>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="fi" style={{padding:"40px 56px",background:"var(--w)",borderLeft:"3px solid var(--sandm)",marginTop:"24px"}}>
-            <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"16px",fontWeight:300,color:"var(--text)",lineHeight:1.9}}>
-              如果你已經走到一個階段，開始覺得用原本的方式走不下去，那這裡會是一個適合你停下來的地方。
-            </p>
+      <section className="about-new-section">
+        <div className="about-new-inner about-new-work">
+          <div className="about-new-work-photo fi">
+            <img src={HOME_SOFIA_WORK} alt="Sofia 的陪伴工作方式" />
+          </div>
+          <div className="about-new-work-copy">
+            <div className="about-new-kicker fi">My approach</div>
+            <h2 className="fi">我的工作方式</h2>
+            <p className="fi">我會透過深度對談、狀態整理、以及 TimeWaver 分析支持，陪你理解：</p>
+            <div className="about-new-work-list fi">
+              <div>現在發生了什麼</div>
+              <div>為什麼一直重複</div>
+              <div>下一步可以怎麼走</div>
+            </div>
+            <p className="fi">TimeWaver 是我的工具之一，真正重要的是，陪你一起理解自己。</p>
+            <button className="about-new-link fi" onClick={() => go("frequency")}>了解 TimeWaver →</button>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <div className="ctab fi">
-        <div className="ctab-e es">Begin Here</div>
-        <h2 className="ctab-t">準備好了，可以從這裡開始。</h2>
-        <p className="ctab-x">你不需要準備好。帶著現在這個狀態來就好。</p>
-        <button className="bp" onClick={() => go("apply")}>預約初次穩定體驗</button>
-      </div>
+      <section className="about-new-section about-new-start">
+        <div className="about-new-inner">
+          <div className="about-new-section-head">
+            <div className="about-new-kicker fi">Begin here</div>
+            <h2 className="fi">你可以從這裡開始</h2>
+          </div>
+          <div className="about-new-card-grid">
+            {starts.map((item, i) => (
+              <article className="about-new-start-card fi" key={item.t}>
+                <div className="about-new-card-num">0{i + 1}</div>
+                <h3>{item.t}</h3>
+                <button className={i === 0 ? "bp" : "home-secondary-btn"} onClick={() => go(item.p)}>{item.b}</button>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="about-new-closing fi">
+        <p>你不用急著變好。<br/>你只需要開始看懂自己。</p>
+      </section>
+    </div>
+  );
+}
+
+function Frequency({ go }) {
+  useFade();
+  const [openFaq, setOpenFaq] = useState(null);
+  const applications = [
+    { t:"健康身體與生活", img:"health.webp", x:"專注於壓力、慢性疲勞與生活節奏等常見狀態，作為理解身體需求與日常調整方向的輔助參考。" },
+    { t:"情緒穩定", img:"emotion.webp", x:"協助你看見持續湧現的情緒，以及情緒背後可能需要被理解與整理的內在訊息。" },
+    { t:"改善睡眠", img:"sleep.webp", x:"整理入睡前的壓力、情緒與生活節奏，讓你更清楚哪些因素正在影響休息品質。" },
+    { t:"財富與資源感", img:"wealth.webp", x:"看見自己與金錢、資源及安全感之間的慣性模式，作為重新整理選擇與行動方向的起點。" },
+    { t:"個人目標設定", img:"goal.webp", x:"釐清長期或短期目標，整理目前的阻力與可行方向，讓力氣更集中在真正重要的位置。" },
+    { t:"空間狀態整理", img:"space.webp", x:"從使用者的感受與生活脈絡出發，整理空間帶來的壓力、情緒與習慣連結。" },
+    { t:"壓力舒緩", img:"stress.webp", x:"發掘壓力來源與反覆出現的反應方式，協助你用更清楚的節奏面對每天的生活。" },
+    { t:"關係改善", img:"relation.webp", x:"從親子、伴侶或職場互動中，看見彼此的界線、期待與反覆發生的關係模式。" },
+    { t:"能量與行動補充", img:"energy.webp", x:"透過個人狀態整理，了解目前最需要被支持的面向，找到更貼近自己的行動節奏。" },
+  ];
+  const faqs = [
+    ["什麼是頻率調和？","頻率調和透過 TimeWaver 進行信息場分析與狀態整理，協助使用者從不同角度理解身體、情緒、思維及生活議題。它是一種輔助自我覺察的工具，不是醫療診斷或治療。"],
+    ["頻率如何進行？","你提供基本資料與目前想整理的主題後，我會結合 TimeWaver 分析、生活脈絡與對談內容，整理成可理解的狀態重點與方向。多數流程可以在線上完成。"],
+    ["TimeWaver 的角色是什麼？","TimeWaver 是我工作時使用的工具之一。真正重要的不是機器替你下結論，而是透過資料、對談與你的真實生活互相對照，幫助你理解自己。"],
+    ["是否有風險？","過程不涉及侵入性操作。不過，它不能取代醫療、心理治療或其他專業診斷；若你正面臨健康或心理上的急迫問題，仍應優先尋求合格專業人員協助。"],
+    ["一定要親自到現場嗎？","不一定。多數狀態整理可以在線上進行；如果你希望安排實體對談，也可以另外詢問台北的諮詢空間。"],
+    ["我適合從哪裡開始？","如果你還不確定，可以先預約初次穩定體驗，說說最近最在意的狀態。我們會一起判斷 TimeWaver 是否適合成為這次整理的工具。"],
+  ];
+
+  return (
+    <div className="page frequency-page">
+      <section className="frequency-hero">
+        <div className="frequency-hero-bg"/>
+        <div className="frequency-hero-overlay"/>
+        <div className="frequency-hero-inner">
+          <div className="frequency-eyebrow fi">TimeWaver · 狀態分析與頻率調和</div>
+          <h1 className="frequency-title fi">TimeWaver<br/><em>頻率調和</em></h1>
+          <p className="frequency-lead fi">
+            透過<strong>狀態分析、信息整理</strong>與<strong>深度對談</strong>，<br/>
+            看見那些難以說清楚、卻持續影響生活的內在模式。
+          </p>
+          <div className="frequency-tags fi">
+            {["身心狀態","情緒穩定","睡眠節奏","資源感","關係覺察","空間整理"].map(tag => <span className="frequency-tag" key={tag}>{tag}</span>)}
+          </div>
+        </div>
+      </section>
+
+      <section className="frequency-section">
+        <div className="frequency-inner">
+          <div className="fi">
+            <div className="frequency-label">How it works</div>
+            <h2 className="frequency-heading">運作方式</h2>
+            <div className="frequency-rule"/>
+          </div>
+          <div className="frequency-principle">
+            <div className="frequency-principle-copy fi">
+              <p>我們的身體、情緒、關係與生活經驗彼此相連。有時候，表面上看起來是不同的問題，底下卻可能有同一種反覆發生的模式。</p>
+              <p>TimeWaver 提供一個<strong>整理信息與觀察狀態</strong>的角度，讓原本模糊的感受更容易被說明、比較與理解。</p>
+              <p>我會把分析結果放回你的真實生活裡對照。工具不替你決定答案，而是協助我們更精準地看見：<strong>現在發生了什麼，以及下一步可以怎麼走。</strong></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="frequency-section frequency-apps">
+        <div className="frequency-inner">
+          <div className="fi">
+            <div className="frequency-label">Applications</div>
+            <h2 className="frequency-heading">可以整理的生活面向</h2>
+            <div className="frequency-rule"/>
+          </div>
+          <div className="frequency-app-hint">左右滑動，看更多生活面向 →</div>
+          <div className="frequency-app-list">
+            {applications.map((item, i) => (
+              <article className="frequency-app fi" key={item.t}>
+                <div className="frequency-app-image"><img src={`/frequency/${item.img}`} alt={item.t}/></div>
+                <div className="frequency-app-copy">
+                  <div className="frequency-app-number">{String(i + 1).padStart(2, "0")}</div>
+                  <h3 className="frequency-app-title">{item.t}</h3>
+                  <div className="frequency-app-rule"/>
+                  <p>{item.x}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="frequency-section">
+        <div className="frequency-inner">
+          <div className="fi">
+            <div className="frequency-label">FAQ</div>
+            <h2 className="frequency-heading">常見問答</h2>
+            <div className="frequency-rule"/>
+          </div>
+          <div className="frequency-faq fi">
+            {faqs.map(([q, a], i) => (
+              <div className={`frequency-faq-item${openFaq === i ? " is-open" : ""}`} key={q}>
+                <button className="frequency-faq-button" onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                  <span>{q}</span><span className="frequency-faq-icon">+</span>
+                </button>
+                <div className="frequency-faq-answer">{a}</div>
+              </div>
+            ))}
+            <div className="frequency-note">TimeWaver 與頻率調和屬於自我覺察及生活狀態整理的輔助工具，不取代醫療診斷、心理治療或其他專業服務。</div>
+          </div>
+        </div>
+      </section>
+
+      <section className="frequency-cta">
+        <div className="frequency-cta-bg"/>
+        <div className="frequency-cta-overlay"/>
+        <div className="frequency-cta-inner fi">
+          <div className="frequency-label">Begin here</div>
+          <h2>先看懂現在的自己，<br/>再決定下一步。</h2>
+          <p>如果你想知道 TimeWaver 是否適合你，可以先告訴我最近最想整理的狀態。</p>
+          <button className="bp" onClick={() => go("apply")}>預約初次穩定體驗</button>
+        </div>
+      </section>
     </div>
   );
 }
@@ -743,6 +1567,14 @@ function Start({ go }) {
         </div>
       </section>
 
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">First session</div>
+          <div className="tone-text">第一次不急著解決，<br/>而是先把自己看清楚。</div>
+          <p className="tone-sub">這個空間會讓你把混亂慢慢放下來，看見真正卡住的位置。</p>
+        </div>
+      </section>
+
       {/* 適合誰 */}
       <section style={{background:"var(--cream)"}}>
         <div className="CN">
@@ -752,6 +1584,7 @@ function Start({ go }) {
             "你很努力，但不知道為什麼還是卡在同樣的地方",
             "你在情緒或關係裡很消耗，但說不清楚問題在哪",
             "你已經撐很久，開始覺得需要停下來整理自己",
+            "你明明知道不應該，但卻一直重複發生",
           ].map((s,i) => (
             <div key={i} className="fi" style={{display:"flex",gap:"16px",alignItems:"flex-start",padding:"22px 0",borderBottom:"1px solid var(--div)"}}>
               <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"18px",color:"var(--sandm)",flexShrink:0}}>0{i+1}</span>
@@ -787,7 +1620,8 @@ function Start({ go }) {
           <div className="slb fi">進行方式</div>
           <div className="fi" style={{padding:"44px 52px",background:"var(--w)"}}>
             {[
-              "透過線上視訊進行，你在任何地方都可以",
+              "主要透過線上視訊進行，你在任何地方都可以",
+              "或是另外預約台北市諮詢空間",
               "不需要事前準備，帶著現在的狀態來就好",
               "過程中我不會給你建議或任務，只是幫你看清楚",
               "結束後你會知道自己接下來想怎麼走",
@@ -805,19 +1639,21 @@ function Start({ go }) {
       <section style={{background:"var(--w)"}}>
         <div className="C">
           <div className="slb fi">選擇方案</div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
+          <div className="start-pricing-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
             {plans.map((p,i) => (
-              <div key={i} className="fi" style={{
+              <div key={i} className="start-plan-card fi" style={{
                 padding:"44px 36px",
                 background: p.featured ? "var(--forest)" : "var(--cream)",
                 textAlign:"center",
                 position:"relative",
               }}>
-                {p.featured && <div style={{position:"absolute",top:"16px",left:"50%",transform:"translateX(-50%)",fontSize:"11px",letterSpacing:"0.2em",color:"rgba(232,223,208,.6)",textTransform:"uppercase"}}>最多人選擇</div>}
-                <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",fontWeight:300,color:p.featured?"var(--sand)":"var(--text)",marginBottom:"20px",marginTop:p.featured?"16px":"0"}}>{p.t}</div>
-                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"36px",fontWeight:300,color:p.featured?"var(--sand)":"var(--text)",marginBottom:"16px"}}>{p.p}</div>
-                <div style={{fontSize:"13px",color:p.featured?"rgba(232,223,208,.65)":"var(--soft)",lineHeight:1.8,marginBottom:"28px"}}>{p.x}</div>
-                <button className="bp" onClick={() => go("apply")} style={{
+                <div className="plan-meta">
+                  {p.featured && <div className="plan-badge" style={{position:"absolute",top:"16px",left:"50%",transform:"translateX(-50%)",fontSize:"11px",letterSpacing:"0.2em",color:"rgba(232,223,208,.6)",textTransform:"uppercase"}}>最多人選擇</div>}
+                  <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",fontWeight:300,color:p.featured?"var(--sand)":"var(--text)",marginBottom:"20px",marginTop:p.featured?"16px":"0"}}>{p.t}</div>
+                </div>
+                <div className="plan-price" style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"36px",fontWeight:300,color:p.featured?"var(--sand)":"var(--text)",marginBottom:"16px"}}>{p.p}</div>
+                <div className="plan-desc" style={{fontSize:"13px",color:p.featured?"rgba(232,223,208,.65)":"var(--soft)",lineHeight:1.8,marginBottom:"28px"}}>{p.x}</div>
+                <button className="plan-button bp" onClick={() => go("apply")} style={{
                   background: p.featured ? "var(--sand)" : "var(--forest)",
                   color: p.featured ? "var(--forest)" : "var(--sand)",
                   width:"100%",
@@ -855,23 +1691,31 @@ function Aware({ go }) {
 
       <section style={{background:"var(--w)"}}>
         <div className="CN">
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px",marginBottom:"60px"}}>
+          <div className="aware-tools-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px",marginBottom:"60px"}}>
             {/* 生命數字 */}
-            <div className="fi" style={{padding:"52px 44px",background:"var(--cream)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => go("num")}>
+            <div className="aware-tool-card fi" style={{padding:"52px 44px",background:"var(--cream)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => go("num")}>
               <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"22px",fontWeight:300,color:"var(--text)",marginBottom:"16px"}}>生命數字</div>
               <p style={{fontSize:"14px",color:"var(--soft)",lineHeight:1.9,marginBottom:"28px"}}>從出生日期了解你的主命數、流年數、關係數與挑戰數。看見你這一生最容易反覆面對的主題。</p>
-              <div style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>計算我的數字 →</div>
+              <div className="aware-tool-link" style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>計算我的數字 →</div>
             </div>
             {/* 身心平衡檢測 — 外部連結 */}
-            <div className="fi" style={{padding:"52px 44px",background:"var(--cream)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => window.open("https://sofiacentering.netlify.app/", "_blank")}>
+            <div className="aware-tool-card fi" style={{padding:"52px 44px",background:"var(--cream)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => window.open("https://sofiacentering.netlify.app/", "_blank")}>
               <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"22px",fontWeight:300,color:"var(--text)",marginBottom:"16px"}}>身心平衡檢測</div>
               <p style={{fontSize:"14px",color:"var(--soft)",lineHeight:1.9,marginBottom:"28px"}}>花約 3 分鐘，選擇最接近你近兩週感受的答案，看見自己現在真正的狀態。</p>
-              <div style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>開始檢測 →</div>
+              <div className="aware-tool-link" style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>開始檢測 →</div>
             </div>
           </div>
 
-          <div className="fi" style={{padding:"48px 52px",background:"var(--forest)",textAlign:"center"}}>
-            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"12px",letterSpacing:"0.28em",color:"rgba(232,223,208,.45)",marginBottom:"20px",textTransform:"uppercase"}}>Next Step</div>
+          <div className="tone-panel fi" style={{marginBottom:"60px"}}>
+            <div className="tone-panel-inner">
+              <div className="tone-kicker">Before the next step</div>
+              <div className="tone-text">工具不是答案，<br/>它只是讓你先看見自己在哪裡。</div>
+              <p className="tone-sub">看見當下的狀態，下一步才會變得比較清楚。</p>
+            </div>
+          </div>
+
+          <div className="aware-next-step fi" style={{padding:"48px 52px",background:"var(--forest)",textAlign:"center"}}>
+            <div className="aware-next-label" style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"12px",letterSpacing:"0.28em",color:"rgba(232,223,208,.45)",marginBottom:"20px",textTransform:"uppercase"}}>Next Step</div>
             <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"18px",fontWeight:300,color:"var(--sand)",lineHeight:1.8,marginBottom:"28px"}}>你現在看到的，只是你狀態的一部分。<br/>如果你想更清楚知道這些模式是怎麼影響你的選擇，可以從這裡開始。</p>
             <button className="bp" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>預約初次穩定體驗</button>
           </div>
@@ -889,6 +1733,19 @@ const TESTIMONIALS = [
     text: "一路走來的成長，原生家庭與過往的心路歷程，讓我慢慢變成了一個連自己都不太確定的樣子。在這 90 天的陪伴裡，沒有對錯、沒有批判，只有一次次被溫柔地接住。它讓我明白——我本身的存在，就已經很美好。現在的我，做自己的女王，笑起來都很美麗。",
     name: "S.",
     tag: "深度陪跑 90 天"
+  },
+  {
+    stars: 5,
+    text: "這13週，我最大的轉變是，我開始看見自己的模式，而不只是反應它。",
+    name: "鳳",
+    tag: "深度陪跑 90 天",
+    full: `以前的我，很習慣把時間排滿，覺得只要夠忙、夠努力，就可以不用面對那些不舒服的感覺。
+
+開始陪跑之後，Sofia 幫我看見——我不是不知道自己想要什麼，我只是一直在用「忙碌」來避開那個需要做選擇的時刻。
+
+這 13 週，我最大的改變不是「學到什麼技巧」，而是我開始可以在情緒來的時候，慢下來一點，問自己：這是我真正想要的嗎？
+
+我還在練習，但我知道我已經不一樣了。`
   },
 ];
 
@@ -941,7 +1798,7 @@ function EmailCapture() {
   );
 }
 
-function Apply() {
+function Apply({ go }) {
   const [form, setForm] = useState({
     name:"", email:"", line:"", time:"", stuck:"", hope:"", source:""
   });
@@ -950,31 +1807,32 @@ function Apply() {
   const [err, setErr]       = useState("");
   const h = e => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const FORM_ENDPOINT = "https://formspree.io/f/mrernlwv";
-
   const submitForm = async () => {
     if (!form.name || !form.email || !form.line) { setErr("請填寫姓名、Email 和 Line ID"); return; }
     setErr("");
-    if (FORM_ENDPOINT) {
-      setSending(true);
-      try {
-        await fetch(FORM_ENDPOINT, {
-          method:"POST",
-          headers:{"Content-Type":"application/json","Accept":"application/json"},
-          body:JSON.stringify({
-            姓名: form.name,
-            Email: form.email,
-            LineID: form.line,
-            希望預約時間: form.time,
-            目前最卡的狀態: form.stuck,
-            希望這次幫助的: form.hope,
-            怎麼知道這裡的: form.source,
-          })
-        });
-      } catch(e) { console.error(e); }
+    setSending(true);
+    try {
+      await submitLead({
+        type: "預約表單",
+        name: form.name,
+        email: form.email,
+        contact: form.line,
+        pain: form.stuck,
+        state: form.hope,
+        note: `希望預約時間：${form.time || "未填"}\n怎麼知道這裡的：${form.source || "未填"}`,
+        raw: {
+          希望預約時間: form.time,
+          怎麼知道這裡的: form.source,
+        },
+      });
       setSending(false);
+      setOk(true);
+      go("thanks");
+    } catch(e) {
+      console.error(e);
+      setSending(false);
+      setErr("送出時發生問題，請稍後再試一次");
     }
-    setOk(true);
   };
 
   const IS = {
@@ -993,10 +1851,10 @@ function Apply() {
   return (
     <div className="page">
       {/* HERO */}
-      <div style={{background:"var(--forest)",padding:"140px 0 80px",position:"relative",overflow:"hidden"}}>
+      <div className="dark-hero" style={{background:"var(--forest)",padding:"140px 0 80px",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 60% at 20% 50%,rgba(255,255,255,.04) 0%,transparent 60%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
-          <div style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",textTransform:"uppercase",fontFamily:"'Cormorant Garamond',serif"}}>預約</div>
+          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",textTransform:"uppercase",fontFamily:"'Cormorant Garamond',serif"}}>預約</div>
           <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(26px,3.5vw,44px)",fontWeight:300,color:"var(--sand)",lineHeight:1.4,marginBottom:"20px"}}>
             先讓自己有一個<br/>可以站穩的位置。
           </h1>
@@ -1006,8 +1864,16 @@ function Apply() {
         </div>
       </div>
 
+      <section className="tone-panel apply-tone fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">Before we begin</div>
+          <div className="tone-text">你不需要整理好才來，<br/>現在的狀態就已經足夠。</div>
+          <p className="tone-sub">表單只是讓我先靠近你正在經歷的地方。</p>
+        </div>
+      </section>
+
       {/* FORM */}
-      <section style={{background:"var(--w)"}}>
+      <section className="apply-form-section" style={{background:"var(--w)"}}>
         <div className="CN">
           {ok ? (
             <div style={{padding:"100px 0",textAlign:"center"}}>
@@ -1102,29 +1968,26 @@ function Apply() {
 function Footer({ go }) {
   const SL = { color:"var(--wg)", textDecoration:"none", fontSize:"13px", display:"block", marginBottom:"10px", cursor:"pointer", transition:"color .2s" };
   return (
-    <footer style={{background:"var(--text)",padding:"80px 0 40px"}}>
+    <footer className="site-footer" style={{background:"var(--text)",padding:"80px 0 40px",position:"relative",overflow:"hidden"}}>
       <div className="C">
-        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:"48px",marginBottom:"60px"}}>
+        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:"48px",marginBottom:"60px"}}>
           <div>
-            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"24px",color:"var(--sand)",marginBottom:"12px"}}>Sofia</div>
-            <div style={{fontSize:"12px",letterSpacing:"0.18em",color:"rgba(232,223,208,.4)",marginBottom:"20px"}}>情緒穩定 × 關係覺察 × 內在主導權</div>
-            <p style={{fontSize:"13px",color:"rgba(232,223,208,.45)",lineHeight:1.9}}>以陪伴取代建議，以覺察取代答案。</p>
+            <div className="footer-brand" style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"24px",color:"var(--sand)",marginBottom:"12px"}}>Sofia</div>
+            <div className="footer-tagline" style={{fontSize:"12px",letterSpacing:"0.18em",color:"rgba(232,223,208,.4)",marginBottom:"20px"}}>情緒穩定 × 關係覺察 × 內在主導權</div>
+            <p className="footer-copy" style={{fontSize:"13px",color:"rgba(232,223,208,.45)",lineHeight:1.9}}>以陪伴取代建議，以覺察取代答案。</p>
           </div>
           <div>
-            <div style={{fontSize:"12px",letterSpacing:"0.2em",color:"rgba(232,223,208,.35)",marginBottom:"20px",textTransform:"uppercase"}}>頁面</div>
-            {[{l:"首頁",p:"home"},{l:"開始這一步",p:"start"},{l:"陪跑計畫",p:"deep"},{l:"自我覺察",p:"aware"},{l:"關於 Sofia",p:"about"},{l:"預約",p:"apply"}].map(i => (
-              <a key={i.p} style={SL} onClick={() => go(i.p)}>{i.l}</a>
-            ))}
-          </div>
-          <div>
-            <div style={{fontSize:"12px",letterSpacing:"0.2em",color:"rgba(232,223,208,.35)",marginBottom:"20px",textTransform:"uppercase"}}>聯繫</div>
+            <div className="footer-heading" style={{fontSize:"12px",letterSpacing:"0.2em",color:"rgba(232,223,208,.35)",marginBottom:"20px",textTransform:"uppercase"}}>聯繫</div>
             <a href="mailto:sophibaby@gmail.com" style={SL}>sophibaby@gmail.com</a>
             <a href="https://www.instagram.com/sofia202219101/" target="_blank" rel="noopener" style={SL}>Instagram</a>
             <a href="https://line.me/R/ti/p/@567avtfh" target="_blank" rel="noopener" style={SL}>Line 官方帳號</a>
             <a href="https://www.facebook.com/BelovedSofia" target="_blank" rel="noopener" style={SL}>Facebook</a>
+            <div className="footer-address" style={{fontSize:"13px",color:"rgba(212,200,181,.82)",lineHeight:1.8,marginTop:"18px"}}>
+              引力所 Fold Space<br/>台北市中山區復興北路366號7樓
+            </div>
           </div>
         </div>
-        <div style={{borderTop:"1px solid rgba(232,223,208,.1)",paddingTop:"32px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"12px"}}>
+        <div className="footer-bottom" style={{borderTop:"1px solid rgba(232,223,208,.1)",paddingTop:"32px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"12px"}}>
           <div style={{fontSize:"12px",color:"rgba(232,223,208,.25)",letterSpacing:"0.08em"}}>© 2025 Sofia 蘇菲療癒轉化. All rights reserved.</div>
           <div style={{fontSize:"12px",color:"rgba(232,223,208,.25)",letterSpacing:"0.08em"}}>以陪伴取代建議，以覺察取代答案。</div>
         </div>
@@ -1141,10 +2004,10 @@ function Deep({ go }) {
     <div className="page">
 
       {/* HERO */}
-      <div style={{background:"var(--forest)",padding:"140px 0 100px",position:"relative",overflow:"hidden"}}>
+      <div className="dark-hero" style={{background:"var(--forest)",padding:"140px 0 100px",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 65% at 15% 50%,rgba(255,255,255,.04) 0%,transparent 60%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
-          <div style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>陪跑計畫</div>
+          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>陪跑計畫</div>
           <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(28px,4vw,50px)",fontWeight:300,color:"var(--sand)",lineHeight:1.35,marginBottom:"28px"}} className="fi">
             你其實已經知道很多。
           </h1>
@@ -1167,6 +2030,14 @@ function Deep({ go }) {
           <p className="fi" style={{fontSize:"15px",color:"var(--soft)",lineHeight:2}}>
             這不是因為你不夠努力，而是因為——穩定這件事，需要被練習。
           </p>
+        </div>
+      </section>
+
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">A steady process</div>
+          <div className="tone-text">理解是一個開始，<br/>穩定才是你真正帶回生活的力量。</div>
+          <p className="tone-sub">陪跑不是催促你變快，而是陪你在關鍵時刻不再回到舊路。</p>
         </div>
       </section>
 
@@ -1201,6 +2072,7 @@ function Deep({ go }) {
             "你可以在情緒裡，慢一點",
             "你開始看得見——哪些是你在承擔，哪些其實不需要",
             "你在關係中，開始有位置",
+            "你會發現自己其實可以過得更自在",
           ].map((s,i) => (
             <div key={i} className="fi" style={{display:"flex",gap:"16px",alignItems:"flex-start",padding:"22px 0",borderBottom:"1px solid var(--div)"}}>
               <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"18px",color:"var(--sandm)",flexShrink:0,lineHeight:1.4}}>0{i+1}</span>
@@ -1214,12 +2086,12 @@ function Deep({ go }) {
       <section style={{background:"var(--cream)"}}>
         <div className="CN">
           <div className="slb fi">這適合你，如果</div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px"}}>
+          <div className="deep-fit-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px"}}>
             {[
               "你已經走到一個階段，知道這些事情不是一次理解就會改變",
               "你願意花一段時間，慢慢把這件事情穩下來",
             ].map((s,i) => (
-              <div key={i} className="fi" style={{padding:"44px 40px",background:"var(--w)"}}>
+              <div key={i} className="deep-fit-card fi" style={{padding:"44px 40px",background:"var(--w)"}}>
                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"32px",fontWeight:300,color:"var(--sandm)",marginBottom:"20px",lineHeight:1}}>0{i+1}</div>
                 <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"16px",fontWeight:300,color:"var(--text)",lineHeight:1.9}}>{s}</p>
               </div>
@@ -1247,13 +2119,13 @@ function Deep({ go }) {
       </section>
 
       {/* 如何進入 */}
-      <section style={{background:"var(--forest)",padding:"100px 0"}}>
+      <section className="deep-entry-cta">
         <div style={{maxWidth:"560px",margin:"0 auto",padding:"0 24px",textAlign:"center"}}>
-          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.4)",marginBottom:"24px",textTransform:"uppercase"}}>如何進入</div>
-          <p className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(17px,2vw,22px)",fontWeight:300,color:"var(--sand)",lineHeight:1.9,marginBottom:"20px"}}>
+          <div className="deep-entry-kicker">如何進入</div>
+          <p className="deep-entry-main fi">
             當你開始更清楚自己的狀態，也確認自己想穩定走一段轉變的過程，我們會一起討論這樣的陪伴方式是否適合你。
           </p>
-          <p className="fi" style={{fontSize:"14px",color:"rgba(232,223,208,.65)",lineHeight:2,marginBottom:"40px"}}>
+          <p className="deep-entry-sub fi">
             我會陪伴你一起，慢慢看見自己的模式，再決定下一步要走多深。<br/>如果你還沒有開始，可以先從這裡。
           </p>
           <button className="bp fi" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)",fontSize:"14px",padding:"16px 40px"}}>
@@ -1272,88 +2144,560 @@ function Subscribe({ go }) {
   useFade();
   return (
     <div className="page">
-      <div style={{background:"var(--forest)",padding:"140px 0 100px",position:"relative",overflow:"hidden"}}>
+      <div className="dark-hero" style={{background:"var(--forest)",padding:"140px 0 100px",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 60% at 15% 50%,rgba(255,255,255,.04) 0%,transparent 60%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
-          <div style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>年度調頻訂閱</div>
-          <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(26px,3.8vw,46px)",fontWeight:300,color:"var(--sand)",lineHeight:1.4,marginBottom:"24px"}} className="fi">
-            讓穩定可以持續的方式。
+          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>每月狀態</div>
+          <h1 className="subscribe-hero-title fi">
+            你不是想太多<br/>你只是一直在撐
           </h1>
-          <p style={{fontSize:"15px",color:"rgba(232,223,208,.65)",lineHeight:1.9,maxWidth:"480px"}} className="fi">
-            這個方式不是讓你變更好，而是讓你不要再回到原本那樣。
+          <p className="subscribe-hero-copy fi">
+            這不是一個<br/>讓你變得更好的地方<br/>而是讓你慢慢穩下來
+          </p>
+          <button className="bp fi" onClick={() => go("subscribeStart")} style={{background:"var(--sand)",color:"var(--forest)"}}>開始我的每月狀態</button>
+        </div>
+      </div>
+
+      <section className="subscribe-section">
+        <div className="subscribe-inner">
+          <div className="slb fi">你可能正在經歷</div>
+          <div className="subscribe-copy fi">
+            <p>有些時候</p>
+            <p>你其實沒有發生什麼事</p>
+            <p>但就是覺得有點累</p>
+            <div className="gap"/>
+            <p>你會把事情做好</p>
+            <p>也會把關係顧好</p>
+            <p>但你自己會知道</p>
+            <p>有些地方<br/>一直沒有真正放鬆</p>
+            <div className="gap"/>
+            <p>有時候</p>
+            <p>你會因為一個訊息<br/>想很多</p>
+            <p>或是在關係裡</p>
+            <p>不太確定<br/>自己應該站在哪裡</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">Monthly rhythm</div>
+          <div className="tone-text">每個月回來一次，<br/>不是為了變好，是為了看懂自己。</div>
+          <p className="tone-sub">狀態會變，理解也會慢慢變清楚。</p>
+        </div>
+      </section>
+
+      <section className="subscribe-section alt">
+        <div className="subscribe-inner">
+          <div className="slb fi">這個訂閱在做什麼</div>
+          <div className="subscribe-copy fi">
+            <p>這不是算命</p>
+            <p>也不是給你答案</p>
+            <div className="gap"/>
+            <p>每個月</p>
+            <p>你會收到一份</p>
+            <p>關於你現在狀態的整理</p>
+            <p>它會讓你看見：</p>
+          </div>
+          <div className="subscribe-list fi">
+            <div className="subscribe-list-item">你最近為什麼會卡住</div>
+            <div className="subscribe-list-item">你在關係或壓力裡<br/>是怎麼運作的</div>
+            <div className="subscribe-list-item">哪些地方正在慢慢改變</div>
+          </div>
+        </div>
+      </section>
+
+      <section className="subscribe-section">
+        <div className="subscribe-inner">
+          <div className="slb fi">你會拿到什麼</div>
+          <div className="subscribe-copy fi">
+            <p>每個月一份：</p>
+          </div>
+          <div className="subscribe-preview fi">
+            <img src="/monthly-status-preview.png" alt="本月穩定報告預覽" />
+            <div className="subscribe-preview-caption">
+              這不是分析<br/>是你最近的狀態
+            </div>
+          </div>
+          <div className="subscribe-list fi">
+            <div className="subscribe-list-item">一張狀態圖（幫你看懂整體）</div>
+            <div className="subscribe-list-item">一份報告（讓你對照自己的生活）</div>
+            <div className="subscribe-list-item">一個很小的觀察點（不是任務）</div>
+          </div>
+          <div className="subscribe-copy fi" style={{marginTop:"34px"}}>
+            <p>你不需要做很多</p>
+            <p>你只需要開始看懂自己</p>
+          </div>
+          <div className="subscribe-preview is-muted fi">
+            <img src="/energy-structure-preview.png" alt="個人能量結構與穩定度分析圖預覽" />
+            <div className="subscribe-preview-caption">
+              這不是感覺<br/>是有邏輯的
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="subscribe-section alt">
+        <div className="subscribe-inner">
+          <div className="slb fi">這段時間會發生什麼</div>
+          <div className="subscribe-copy fi">
+            <p>有些人會發現</p>
+            <p>自己比較不會那麼快被拉走</p>
+            <div className="gap"/>
+            <p>有些人會開始注意到</p>
+            <p>原來自己一直在撐</p>
+            <div className="gap"/>
+            <p>也有人會在某些時刻</p>
+            <p>突然停下來</p>
+            <div className="gap"/>
+            <p>這些都不是改變</p>
+            <p>是你開始有空間</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="subscribe-section">
+        <div className="subscribe-inner">
+          <div className="slb fi">這適合誰</div>
+          <div className="subscribe-copy fi">
+            <p>這不是給每個人的</p>
+            <p>如果你只是想找答案</p>
+            <p>這可能不適合你</p>
+            <div className="gap"/>
+            <p>但如果你開始覺得</p>
+            <p>一直用同一種方式撐</p>
+            <p>有點累了</p>
+            <div className="gap"/>
+            <p>這會是一個可以慢慢陪你的地方</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="subscribe-section alt">
+        <div className="subscribe-inner">
+          <div className="slb fi">時間節奏</div>
+          <div className="subscribe-copy fi">
+            <p>每個月</p>
+            <p>只會生成一次你的狀態</p>
+            <p>不是因為稀缺</p>
+            <p>而是因為</p>
+            <p>狀態本來就會改變</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="green-cta">
+        <div style={{maxWidth:"520px",margin:"0 auto",padding:"0 24px"}}>
+          <p className="green-cta-title fi">
+            你不用一次變好<br/>你只需要先看懂自己
+          </p>
+          <div className="green-cta-price fi" style={{fontSize:"42px",marginTop:"18px"}}>一年 NT$12,800</div>
+          <div className="green-cta-meta fi">平均每月不到 1,100</div>
+          <div className="green-cta-actions fi">
+            <button className="bp" onClick={() => go("subscribeStart")} style={{background:"var(--sand)",color:"var(--forest)"}}>開始訂閱我的每月狀態</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function SubscribeStart({ go }) {
+  useFade();
+  const [form, setForm] = useState({
+    name:"", email:"", line:"", pain:"", stuck:"", need:""
+  });
+  const [ok, setOk] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [err, setErr] = useState("");
+  const h = e => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const submitForm = async () => {
+    if (!form.need || !form.name || !form.email || !form.line) {
+      setErr("請填寫第 3 題、姓名、Email 和 LINE / IG");
+      return;
+    }
+    setErr("");
+    setSending(true);
+    try {
+      await submitLead({
+        type: "每月狀態訂閱前理解",
+        name: form.name,
+        email: form.email,
+        contact: form.line,
+        pain: form.pain,
+        state: form.stuck,
+        note: form.need,
+        raw: {
+          現在最需要的是什麼: form.need,
+        },
+      });
+      setSending(false);
+      setOk(true);
+      go("subscribeThanks");
+    } catch(e) {
+      console.error(e);
+      setSending(false);
+      setErr("送出時發生問題，請稍後再試一次");
+    }
+  };
+
+  const IS = {
+    background:"var(--cream)", border:"1px solid var(--div)",
+    borderBottom:"2px solid var(--sandm)",
+    padding:"13px 15px", fontSize:"15px",
+    fontFamily:"'Noto Sans TC',sans-serif",
+    color:"var(--text)", outline:"none",
+    borderRadius:0, width:"100%", WebkitAppearance:"none",
+    transition:"border-color .2s",
+  };
+  const TA = { ...IS, height:"140px", resize:"vertical" };
+  const LS = { fontSize:"12px", letterSpacing:"0.15em", color:"var(--wg)", display:"block", marginBottom:"8px" };
+  const FG = { marginBottom:"28px" };
+
+  return (
+    <div className="page">
+      <div className="dark-hero subscribe-start-hero" style={{background:"var(--forest)",padding:"112px 0 66px",position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 50% 60% at 20% 45%,rgba(255,255,255,.05) 0%,transparent 62%)",pointerEvents:"none"}}/>
+        <div className="CN" style={{position:"relative",zIndex:1}}>
+          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.5)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>Before we begin</div>
+          <h1 className="subscribe-start-title fi">
+            在開始之前<br/>我想先理解你現在的狀態
+          </h1>
+          <p className="subscribe-start-copy fi">
+            這不是一份正式填寫<br/>只是讓我知道<br/>你現在在哪裡
           </p>
         </div>
       </div>
 
-      <section style={{background:"var(--w)"}}>
-        <div style={{maxWidth:"620px",margin:"0 auto",padding:"100px 24px"}}>
-          <div className="slb fi">為什麼需要長期</div>
-          <p className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(17px,2vw,22px)",fontWeight:300,color:"var(--text)",lineHeight:1.8,marginBottom:"28px"}}>
-            當你開始看見自己的模式，也慢慢能在一些時刻不再被情緒拉走，接下來更重要的，不是再做更多，而是讓這個狀態可以留在你的生活裡。
-          </p>
-          <p className="fi" style={{fontSize:"15px",color:"var(--soft)",lineHeight:2,marginBottom:"16px"}}>
-            很多人會在一段時間之後開始變得比較穩，也以為自己已經走出來了。但在忙碌、壓力、關係拉扯之中，很容易又慢慢回到原本的方式。
-          </p>
-          <p className="fi" style={{fontSize:"15px",color:"var(--soft)",lineHeight:2}}>
-            不是因為你不夠努力，而是因為——穩定這件事，需要一個可以持續的節奏。
-          </p>
-        </div>
-      </section>
-
-      <section style={{background:"var(--cream)"}}>
-        <div className="CN">
-          <div className="slb fi">這不是一個課程</div>
-          <div className="fi" style={{padding:"44px 52px",background:"var(--w)",borderLeft:"3px solid var(--forest)",marginBottom:"24px"}}>
-            <p style={{fontSize:"15px",lineHeight:2,color:"var(--soft)",marginBottom:"16px"}}>這裡沒有要你學更多，也不會給你很多需要完成的事情。</p>
-            <p style={{fontSize:"15px",lineHeight:2,color:"var(--soft)"}}>我們做的，是用一個很穩定的頻率，讓你在生活裡，慢慢維持住現在的狀態。</p>
-          </div>
-
-          <div className="slb fi" style={{marginTop:"48px"}}>你會感覺到的</div>
-          {["你比較不容易被情緒拉走","你在壓力來的時候，有空間","你開始可以在生活裡，慢慢穩住自己，而不是每次都回到原本的方式"].map((s,i) => (
-            <div key={i} className="fi" style={{display:"flex",gap:"16px",alignItems:"flex-start",padding:"20px 0",borderBottom:"1px solid var(--div)"}}>
-              <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"18px",color:"var(--sandm)",flexShrink:0}}>0{i+1}</span>
-              <span style={{fontFamily:"'Noto Serif TC',serif",fontSize:"16px",fontWeight:300,color:"var(--text)",lineHeight:1.8}}>{s}</span>
-            </div>
-          ))}
+      <section className="tone-panel subscribe-start-tone fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">Gently</div>
+          <div className="tone-text">你不需要寫很多，<br/>只要寫你此刻最真實的感覺就好。</div>
         </div>
       </section>
 
       <section style={{background:"var(--w)"}}>
-        <div style={{maxWidth:"620px",margin:"0 auto",padding:"80px 24px"}}>
-          <div className="slb fi">這適合你，如果</div>
-          {[
-            "你已經走過一段，開始知道穩定不是一次做到的，而是需要被維持的",
-            "你不想再回到原本那種，一直撐的狀態",
-          ].map((s,i) => (
-            <div key={i} className="fi" style={{display:"flex",gap:"16px",padding:"20px 0",borderBottom:"1px solid var(--div)"}}>
-              <span style={{color:"var(--forest)",flexShrink:0}}>—</span>
-              <span style={{fontSize:"15px",color:"var(--soft)",lineHeight:1.9}}>{s}</span>
+        <div className="CN">
+          {ok ? (
+            <div style={{padding:"100px 0",textAlign:"center"}}>
+              <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"28px",fontWeight:300,color:"var(--text)",marginBottom:"20px"}}>✦</div>
+              <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"22px",fontWeight:300,color:"var(--text)",marginBottom:"16px"}}>我收到你的狀態了。</div>
+              <p style={{fontSize:"14px",color:"var(--soft)",lineHeight:2,maxWidth:"380px",margin:"0 auto"}}>我會先看過你寫下的內容，再透過 Email 或 Line / IG 跟你聯繫。</p>
             </div>
-          ))}
+          ) : (
+            <div style={{maxWidth:"640px"}}>
+              <div style={{marginBottom:"48px"}}>
+                <div className="slb" style={{marginBottom:"32px"}}>讓我先了解你</div>
+
+                <div className="form-question" style={FG}>
+                  <label style={LS}>01 ／ 最近有沒有一件事，你其實一直在想，但沒有真的說出來？</label>
+                  <div className="form-question-note">可以很簡單，一兩句就好</div>
+                  <textarea style={TA} name="pain" placeholder="寫下最近一直在心裡的那件事⋯⋯" value={form.pain} onChange={h} />
+                </div>
+
+                <div className="form-question" style={FG}>
+                  <label style={LS}>02 ／ 在生活或關係裡，你有沒有一種「一直在用同一種方式撐」的感覺？</label>
+                  <div className="form-question-note">如果有，那通常會出現在什麼時候？</div>
+                  <textarea style={TA} name="stuck" placeholder="例如關係、工作、家庭，或某個反覆出現的狀態⋯⋯" value={form.stuck} onChange={h} />
+                </div>
+
+                <div className="form-question" style={FG}>
+                  <label style={LS}>03 ／ 你現在最需要的是什麼？ <span style={{color:"#B85A5A"}}>*</span></label>
+                  <textarea required style={TA} name="need" placeholder="可以很簡單，寫下你現在最需要的支持或感覺⋯⋯" value={form.need} onChange={h} />
+                </div>
+              </div>
+
+              <div style={{marginBottom:"48px"}}>
+                <div className="slb" style={{marginBottom:"32px"}}>基本資料</div>
+                <div style={FG}>
+                  <label style={LS}>姓名 <span style={{color:"#B85A5A"}}>*</span></label>
+                  <input style={IS} type="text" name="name" placeholder="你的名字" value={form.name} onChange={h} />
+                </div>
+                <div style={FG}>
+                  <label style={LS}>Email <span style={{color:"#B85A5A"}}>*</span></label>
+                  <input style={IS} type="email" name="email" placeholder="your@email.com" value={form.email} onChange={h} />
+                </div>
+                <div style={FG}>
+                  <label style={LS}>LINE / IG <span style={{color:"#B85A5A"}}>*</span></label>
+                  <input required style={IS} type="text" name="line" placeholder="方便聯繫你的帳號" value={form.line} onChange={h} />
+                </div>
+              </div>
+
+              <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"18px",fontWeight:300,color:"var(--text)",lineHeight:1.9,marginBottom:"28px"}}>
+                這不是要你準備好<br/>只是讓你開始看見自己
+              </p>
+
+              {err && <div style={{fontSize:"13px",color:"#B85A5A",marginBottom:"18px"}}>⚠ {err}</div>}
+
+              <button
+                onClick={submitForm}
+                disabled={sending}
+                style={{
+                  width:"100%", padding:"18px",
+                  background:"var(--forest)", color:"var(--sand)",
+                  border:"none", fontSize:"14px", letterSpacing:"0.18em",
+                  fontFamily:"'Noto Sans TC',sans-serif",
+                  cursor: sending ? "not-allowed" : "pointer",
+                  opacity: sending ? 0.6 : 1,
+                  transition:"all .22s",
+                }}
+              >
+                {sending ? "送出中⋯⋯" : "送出"}
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function Thanks({ go, subscribe = false }) {
+  useFade();
+  const lineUrl = "https://line.me/R/ti/p/@567avtfh";
+  const title = subscribe ? "我們已經收到你的訂閱了" : "我們已經收到你的預約了";
+  const paragraphs = subscribe ? [
+    "剛剛那個決定\n其實不太小",
+    "你沒有急著解決什麼\n只是想把現在的狀態看清楚一點",
+    "我們會從這裡開始",
+    "第一個月的整理\n已經在幫你進行了",
+    "接下來\n我們會用每個月的方式\n慢慢陪你把狀態看清楚",
+    "有些變化\n不會一下子很明顯",
+    "可能只是某一天\n你比較早發現自己有點累",
+    "或是\n沒有那麼快被情緒帶走\n這些都會慢慢出現",
+    "現在\n你不需要多做什麼\n先讓這段過程開始就好",
+  ] : [
+    "剛剛在填的時候\n你其實已經慢慢把一些狀態說出來了",
+    "有些地方\n你可能平常沒有時間去想\n但它一直都在",
+    "像是\n一邊把事情做好\n一邊其實有點累",
+    "接下來\n我們會先整理你的資料\n再用另一個角度幫你看一次現在的狀態",
+    "你不需要先準備什麼\n這幾天\n只要留意一個很小的瞬間就好",
+    "有沒有哪一刻\n你其實想停一下\n但還是讓自己繼續往前",
+    "先看到這個就夠了\n我們之後會一起看得更清楚",
+  ];
+
+  return (
+    <div className="page">
+      <div className="dark-hero" style={{background:"linear-gradient(145deg,#385B4C 0%,#315143 45%,#24211E 100%)",padding:"118px 0 84px",position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 65% at 18% 48%,rgba(232,223,208,.08) 0%,transparent 64%)",pointerEvents:"none"}}/>
+        <div className="CN" style={{position:"relative",zIndex:1}}>
+          <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.58)",marginBottom:"28px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>Received</div>
+          <h1 className="subscribe-start-title thanks-title fi">
+            {title}
+          </h1>
+          <div className="subscribe-start-copy thanks-copy fi" style={{display:"grid",gap:"22px",marginBottom:"40px"}}>
+            {paragraphs.map((p, i) => <p key={i} style={{margin:0,whiteSpace:"pre-line"}}>{p}</p>)}
+          </div>
+
+          {!subscribe && (
+            <div className="fi" style={{marginTop:"18px",padding:"30px 0 0",borderTop:"1px solid rgba(232,223,208,.22)"}}>
+              <p className="subscribe-start-copy thanks-line-copy" style={{fontSize:"18px",margin:"0 0 24px",color:"rgba(250,247,242,.82)"}}>
+                如果你希望後續安排時間更順一點<br/>
+                可以先加入我們的 LINE<br/>
+                跟我說一聲你的名字<br/>
+                我們會一起找一個適合你的時間
+              </p>
+              <a className="bp" href={lineUrl} target="_blank" rel="noopener" style={{display:"inline-block",background:"var(--sand)",color:"var(--forest)",textDecoration:"none"}}>
+                加入 LINE 官方帳號
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ShortAdjust({ go }) {
+  useFade();
+  const stats = [
+    ["情緒狀態｜77%", "最近比較容易把感受留在心裡。"],
+    ["人際關係｜72%", "有些外在反應會停留比較久。"],
+    ["內在壓力｜81%", "很多事情同時在跑，裡面有點停不下來。"],
+  ];
+  const includes = [
+    "TimeWaver 狀態整理",
+    "每月生活化報告",
+    "六大面向儀表板",
+    "狀態重點回饋",
+  ];
+
+  return (
+    <div className="page">
+      <section className="short-hero">
+        <div className="CN" style={{position:"relative",zIndex:1}}>
+          <div className="hero-kicker fi" style={{fontSize:"12px",letterSpacing:"0.3em",color:"rgba(232,223,208,.62)",marginBottom:"28px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>TimeWaver</div>
+          <h1 className="short-title fi">短期調整｜TimeWaver</h1>
+          <div className="short-copy fi" style={{maxWidth:"620px",marginBottom:"34px"}}>
+            <p>如果最近的你<br/>有點亂了節奏。</p>
+            <p>很多事情都還在進行。<br/>但心裡好像一直沒有真的安靜下來。</p>
+            <p>你不一定需要立刻改變什麼。</p>
+            <p>也許只是需要先把最近的狀態整理一下。</p>
+          </div>
+          <button className="bp fi" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>開始短期調整</button>
         </div>
       </section>
 
-      <section style={{background:"var(--cream)"}}>
-        <div className="CN">
-          <div className="slb fi">這個方式</div>
-          <div className="fi" style={{padding:"44px 52px",background:"var(--w)"}}>
-            <p style={{fontSize:"15px",lineHeight:2,color:"var(--soft)",marginBottom:"12px"}}>每個月會有一次頻率調整，以及一份簡單的回饋，幫助你在生活中慢慢建立屬於自己的節奏。</p>
-            <p style={{fontSize:"15px",lineHeight:2,color:"var(--soft)"}}>這不是強度很高的過程，而是一個可以長期存在的支持。</p>
+      <section className="short-section">
+        <div className="short-inner">
+          <div className="short-body fi">
+            <p>這是一個 2 個月的短期調整方案。</p>
+            <p>透過 TimeWaver 的狀態整理與每月回饋，慢慢把最近混在一起的感受、節奏與拉扯感，重新看清楚。</p>
+            <p>不是療癒。<br/>不是命定。<br/>也不是要你變成另一個人。</p>
+            <p>而是先幫你回到自己的節奏。</p>
           </div>
         </div>
       </section>
 
-      <section style={{background:"var(--forest)",padding:"80px 0",textAlign:"center"}}>
-        <div style={{maxWidth:"480px",margin:"0 auto",padding:"0 24px"}}>
-          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"12px",letterSpacing:"0.28em",color:"rgba(232,223,208,.4)",marginBottom:"20px",textTransform:"uppercase"}}>費用</div>
-          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"52px",fontWeight:300,color:"var(--sand)",marginBottom:"8px"}} className="fi">NT$ 12,800</div>
-          <div style={{fontSize:"13px",color:"rgba(232,223,208,.5)",marginBottom:"40px",letterSpacing:"0.08em"}}>/ 年　（平均每月約 NT$ 1,066）</div>
-          <p className="fi" style={{fontSize:"14px",color:"rgba(232,223,208,.65)",lineHeight:2,marginBottom:"36px"}}>
-            這個方式通常會在你已經有一定基礎之後才會比較適合。如果你不確定現在是否適合，可以先跟我說說你目前的狀態，我們一起看一下。
-          </p>
-          <div style={{display:"flex",gap:"12px",justifyContent:"center",flexWrap:"wrap"}} className="fi">
-            <button className="bp" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>了解這個方式</button>
-            <button className="bp" onClick={() => go("apply")} style={{background:"transparent",border:"1px solid rgba(232,223,208,.4)",color:"var(--sand)"}}>跟我說我適不適合</button>
+      <section className="short-section alt">
+        <div className="short-inner">
+          <div className="short-kicker fi">這段時間的你，可能是這樣</div>
+          <div className="short-body fi">
+            <p>有些事情沒有真的出錯。</p>
+            <p>只是最近的你，好像一直在回應外面的事情。</p>
+            <p>訊息、工作、關係、情緒、安排。</p>
+            <p>一天很快就過去了。</p>
+            <p>但安靜下來的時候，腦袋還是在轉。</p>
+            <p>有些感受不是很大，只是一直放在後面。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="short-section">
+        <div className="short-inner">
+          <div className="short-kicker fi">我們會怎麼幫你整理</div>
+          <div className="short-dashboard fi">
+            <div className="short-dashboard-title">六大面向儀表板</div>
+            <div className="short-dashboard-visual">
+              <div className="short-radar" aria-label="TimeWaver 六大面向儀表板">
+                <svg viewBox="0 0 420 360" role="img">
+                  <polygon points="210,54 320,118 320,246 210,310 100,246 100,118" fill="none" stroke="#D4C8B5" strokeWidth="1.5"/>
+                  <polygon points="210,94 285,137 285,227 210,270 135,227 135,137" fill="none" stroke="#DDD5C8" strokeWidth="1.2"/>
+                  <polygon points="210,134 250,158 250,206 210,230 170,206 170,158" fill="none" stroke="#DDD5C8" strokeWidth="1.2"/>
+                  <line x1="210" y1="54" x2="210" y2="310" stroke="#DDD5C8" strokeWidth="1"/>
+                  <line x1="100" y1="118" x2="320" y2="246" stroke="#DDD5C8" strokeWidth="1"/>
+                  <line x1="320" y1="118" x2="100" y2="246" stroke="#DDD5C8" strokeWidth="1"/>
+                  <polygon points="210,94 284,140 298,228 210,254 136,226 130,136" fill="rgba(72,132,184,.18)" stroke="#4E83B5" strokeWidth="5" strokeLinejoin="round"/>
+                  <circle cx="210" cy="94" r="7" fill="#4E83B5"/>
+                  <circle cx="284" cy="140" r="7" fill="#4E83B5"/>
+                  <circle cx="298" cy="228" r="7" fill="#4E83B5"/>
+                  <circle cx="210" cy="254" r="7" fill="#4E83B5"/>
+                  <circle cx="136" cy="226" r="7" fill="#4E83B5"/>
+                  <circle cx="130" cy="136" r="7" fill="#4E83B5"/>
+                  <text className="short-radar-label" x="210" y="22" textAnchor="middle">情緒狀態</text>
+                  <text className="short-radar-value" x="210" y="50" textAnchor="middle">77%</text>
+                  <text className="short-radar-label" x="345" y="116" textAnchor="start">人際關係</text>
+                  <text className="short-radar-value" x="345" y="145" textAnchor="start">72%</text>
+                  <text className="short-radar-label" x="345" y="238" textAnchor="start">內在壓力</text>
+                  <text className="short-radar-value" x="345" y="267" textAnchor="start">81%</text>
+                  <text className="short-radar-label" x="210" y="334" textAnchor="middle">行動與節奏</text>
+                  <text className="short-radar-value" x="210" y="360" textAnchor="middle">76%</text>
+                  <text className="short-radar-label" x="75" y="238" textAnchor="end">身體感受</text>
+                  <text className="short-radar-value" x="75" y="267" textAnchor="end">73%</text>
+                  <text className="short-radar-label" x="75" y="116" textAnchor="end">自我狀態</text>
+                  <text className="short-radar-value" x="75" y="145" textAnchor="end">70%</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div className="short-stats fi">
+            {stats.map(([title, copy]) => (
+              <div className="short-stat" key={title}>
+                <strong>{title}</strong>
+                <p>{copy}</p>
+              </div>
+            ))}
+          </div>
+          <div className="short-body fi">
+            <p>最近的狀態，其實不一定會立刻說出口。</p>
+            <p>有些節奏、情緒與關係感，會慢慢累積在生活裡。</p>
+            <p>我們會先幫你整理出：</p>
+          </div>
+          <div className="short-checks fi">
+            <div className="short-check">最近整體的狀態輪廓</div>
+            <div className="short-check">哪些地方正在互相影響</div>
+            <div className="short-check">哪兩個部分最需要被看見</div>
+          </div>
+          <div className="short-body fi" style={{marginTop:"30px"}}>
+            <p>讓你不用一直猜自己怎麼了。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="short-section alt">
+        <div className="short-inner">
+          <div className="short-kicker fi">你會收到什麼</div>
+          <div className="short-cards fi">
+            <div className="short-card">
+              <h3>第 1 個月</h3>
+              <p className="short-body" style={{fontSize:"18px"}}>先整理最近混在一起的狀態。看見最近最明顯的節奏、拉扯感與影響來源。</p>
+            </div>
+            <div className="short-card">
+              <h3>第 2 個月</h3>
+              <p className="short-body" style={{fontSize:"18px"}}>開始看見狀態的變化。有些地方會慢慢鬆開，有些地方，也會比較容易回到自己。</p>
+            </div>
+          </div>
+          <div className="short-checks fi">
+            {["六大面向狀態整理", "最近最需要被看見的部分", "生活化回饋報告", "一個很小的提醒"].map(x => (
+              <div className="short-check" key={x}>✔ {x}</div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="short-section">
+        <div className="short-inner">
+          <div className="short-kicker fi">這不是什麼</div>
+          <div className="short-checks fi">
+            {["心理諮商", "命理分析", "心靈雞湯", "要你正向思考"].map(x => (
+              <div className="short-check" key={x}>✘ {x}</div>
+            ))}
+          </div>
+          <div className="short-body fi" style={{marginTop:"34px"}}>
+            <p>我們不會告訴你：「你應該變得更好」</p>
+            <p>而是陪你慢慢看懂：最近的自己，到底正在經歷什麼。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="short-section alt">
+        <div className="short-inner">
+          <div className="short-kicker fi">為什麼建議先做兩個月</div>
+          <div className="short-body fi">
+            <p>很多狀態，不是一天形成的。</p>
+            <p>有些節奏、關係感與內在反應，會慢慢累積在生活裡。</p>
+            <p>所以我們不想只看一次。</p>
+          </div>
+          <div className="short-checks fi">
+            <div className="short-check">最近真正影響你的節奏</div>
+            <div className="short-check">哪些地方開始改變了</div>
+            <div className="short-check">你怎麼慢慢回到自己的步調</div>
+          </div>
+          <div className="short-body fi" style={{marginTop:"30px"}}>
+            <p>兩個月，比較能真正感受到差異。</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="short-price">
+        <div style={{maxWidth:"680px",margin:"0 auto"}}>
+          <div className="short-kicker fi" style={{justifyContent:"center",color:"rgba(232,223,208,.62)"}}>方案資訊</div>
+          <h2 className="fi">短期調整｜2 個月體驗</h2>
+          <div className="short-checks fi" style={{maxWidth:"520px",margin:"0 auto 36px",textAlign:"left"}}>
+            {includes.map(x => <div className="short-check" key={x} style={{background:"rgba(250,247,242,.08)",color:"rgba(250,247,242,.86)",borderColor:"var(--sand)"}}>{x}</div>)}
+          </div>
+          <div className="amount fi">NT$2,999</div>
+          <button className="bp fi" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)",marginTop:"28px"}}>開始短期調整</button>
+        </div>
+      </section>
+
+      <section className="short-section">
+        <div className="short-inner">
+          <div className="short-body fi" style={{textAlign:"center"}}>
+            <p>有些事情，最近一直放在心裡。</p>
+            <p>你不一定要立刻解決它。</p>
+            <p>但也許可以先開始看見它。</p>
           </div>
         </div>
       </section>
@@ -1373,7 +2717,7 @@ function Ongoing({ go }) {
     {
       icon:"◎", t:"我最近開始有點亂",
       x:"有些情緒開始出現，有些狀態變得不太一樣，但還沒有完全失控。這時候，只需要讓自己先穩下來。",
-      cta:"預約短期調整", action:"apply", label:"預約"
+      cta:"預約短期調整", action:"short", label:"預約"
     },
     {
       icon:"◎", t:"我好像又回到原本的狀態",
@@ -1393,7 +2737,7 @@ function Ongoing({ go }) {
       n:"02", t:"短期調整", sub:"TimeWaver",
       x:"如果你最近有些波動，想先讓自己穩一下，不需要進入長期，可以用比較輕的方式，讓狀態回來。",
       note:"",
-      cta:"預約短期調整", action:"apply",
+      cta:"預約短期調整", action:"short",
     },
     {
       n:"03", t:"重新深入", sub:"陪跑計畫",
@@ -1427,6 +2771,14 @@ function Ongoing({ go }) {
         </div>
       </section>
 
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">Return gently</div>
+          <div className="tone-text">回來不是退步，<br/>是你開始知道自己需要什麼。</div>
+          <p className="tone-sub">不同階段會需要不同的支持，你可以慢慢選。</p>
+        </div>
+      </section>
+
       <section style={{background:"var(--cream)"}}>
         <div className="CN">
           <div className="slb fi">你現在比較接近哪一種狀態？</div>
@@ -1448,9 +2800,9 @@ function Ongoing({ go }) {
       <section style={{background:"var(--w)"}}>
         <div className="CN">
           <div className="slb fi">你可以用的三種方式</div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
+          <div className="ongoing-ways-grid" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"2px"}}>
             {ways.map((w,i) => (
-              <div key={i} className="fi" style={{padding:"44px 36px",background:"var(--cream)"}}>
+              <div key={i} className="ongoing-way-card fi" style={{padding:"44px 36px",background:"var(--cream)"}}>
                 <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"28px",color:"var(--sandm)",marginBottom:"16px",lineHeight:1}}>{w.n}</div>
                 <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",color:"var(--text)",marginBottom:"4px"}}>{w.t}</div>
                 <div style={{fontSize:"11px",letterSpacing:"0.15em",color:"var(--forest)",marginBottom:"16px"}}>{w.sub}</div>
@@ -1463,12 +2815,12 @@ function Ongoing({ go }) {
         </div>
       </section>
 
-      <section style={{background:"var(--forest)",padding:"80px 0",textAlign:"center"}}>
+      <section className="green-cta">
         <div style={{maxWidth:"480px",margin:"0 auto",padding:"0 24px"}}>
-          <p className="fi" style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(17px,2vw,22px)",fontWeight:300,color:"var(--sand)",lineHeight:1.9,marginBottom:"16px"}}>
+          <p className="green-cta-title fi">
             你不需要等到很嚴重，才回來。
           </p>
-          <p className="fi" style={{fontSize:"14px",color:"rgba(232,223,208,.65)",lineHeight:2,marginBottom:"36px"}}>
+          <p className="green-cta-text fi">
             很多時候，只是提早一點調整，就會差很多。
           </p>
           <button className="bp fi" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>跟我說說你現在的狀態</button>
@@ -1482,27 +2834,36 @@ function Ongoing({ go }) {
 /* ─── ART PAGE (文章與個案分享) ─────────────────────────────────── */
 function Art({ go }) {
   useFade();
-  const SHEET_URL = "https://docs.google.com/spreadsheets/d/1aQzKf9Pe1lvD4U3UQs5qUuzCgCAObETrZCEeNq5CwE8/gviz/tq?tqx=out:json&sheet=Sheet1";
+  const CSV_URL = "https://docs.google.com/spreadsheets/d/1aQzKf9Pe1lvD4U3UQs5qUuzCgCAObETrZCEeNq5CwE8/export?format=csv&sheet=Sheet1";
 
   const [arts, setArts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(false);
+  const [artExpanded, setArtExpanded] = useState({});
+  const [expanded, setExpanded] = useState({});
 
   useEffect(() => {
-    fetch(SHEET_URL)
+    fetch(CSV_URL)
       .then(r => r.text())
       .then(text => {
-        const json = JSON.parse(text.replace(/^.*?\(/, '').replace(/\);?$/, ''));
-        const rows = json.table.rows;
-        const parsed = rows
-          .filter(row => row.c && row.c[0] && row.c[1])
-          .map(row => ({
-            d:   row.c[0]?.v || '',
-            t:   row.c[1]?.v || '',
-            x:   row.c[2]?.v || '',
-            tg:  row.c[3]?.v || '',
-            url: row.c[4]?.v || '',
-          }));
+        const rows = [];
+        let field = '', row = [], inQ = false;
+        for (let i = 0; i < text.length; i++) {
+          const c = text[i];
+          if (inQ) {
+            if (c === '"' && text[i+1] === '"') { field += '"'; i++; }
+            else if (c === '"') { inQ = false; }
+            else { field += c; }
+          } else {
+            if (c === '"') { inQ = true; }
+            else if (c === ',') { row.push(field); field = ''; }
+            else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+            else if (c !== '\r') { field += c; }
+          }
+        }
+        if (row.length > 0 || field) { row.push(field); rows.push(row); }
+        const parsed = rows.slice(1).filter(r => r[0] && r[1])
+          .map(r => ({ d:r[0]||'', t:r[1]||'', x:r[2]||'', tg:r[3]||'', url:r[4]||'' }));
         setArts(parsed);
         setLoading(false);
       })
@@ -1520,39 +2881,94 @@ function Art({ go }) {
         </div>
       </div>
 
-      <section style={{background:"var(--w)"}}>
+      <section className="tone-panel fi">
+        <div className="tone-panel-inner">
+          <div className="tone-kicker">Read slowly</div>
+          <div className="tone-text">有些句子不是要說服你，<br/>而是讓你在某一刻認出自己。</div>
+          <p className="tone-sub">你可以慢慢讀，不急著立刻知道答案。</p>
+        </div>
+      </section>
+
+      {/* 文章區 — 綠底白字 */}
+      <section style={{background:"var(--forest)",padding:"80px 0"}}>
         <div className="CN">
           {loading && (
-            <div style={{padding:"80px 0",textAlign:"center",color:"var(--wg)",fontSize:"14px",letterSpacing:"0.1em"}}>載入中⋯⋯</div>
+            <div style={{padding:"60px 0",textAlign:"center",color:"rgba(232,223,208,.5)",fontSize:"14px",letterSpacing:"0.1em"}}>載入中⋯⋯</div>
           )}
           {err && (
             <div style={{padding:"60px 0",textAlign:"center"}}>
-              <p style={{fontSize:"14px",color:"var(--wg)",lineHeight:2}}>文章暫時無法載入，請稍後再試。</p>
+              <p style={{fontSize:"14px",color:"rgba(232,223,208,.6)",lineHeight:2}}>文章暫時無法載入，請稍後再試。</p>
             </div>
           )}
           {!loading && !err && arts.length === 0 && (
             <div style={{padding:"60px 0",textAlign:"center"}}>
-              <p style={{fontSize:"14px",color:"var(--wg)",lineHeight:2}}>文章即將發布，敬請期待。</p>
+              <p style={{fontSize:"14px",color:"rgba(232,223,208,.6)",lineHeight:2}}>文章即將發布，敬請期待。</p>
             </div>
           )}
-          {!loading && arts.map((a, i) => (
-            <div key={i} className="fi" style={{
+          {!loading && arts.map((a, i) => {
+            const isOpen = !!artExpanded[i];
+            const shouldClamp = (a.x || "").length > 120 || (a.x || "").includes("\n");
+            return (
+            <div key={i} style={{
               display:"flex", alignItems:"flex-start", gap:"32px",
-              padding:"36px 0", borderBottom:"1px solid var(--div)",
+              padding:"36px 0", borderBottom:"1px solid rgba(255,255,255,.1)",
               cursor: a.url ? "pointer" : "default",
             }}
             onClick={() => a.url && window.open(a.url, '_blank')}>
               <div style={{flexShrink:0,width:"72px"}}>
-                <div style={{fontSize:"11px",letterSpacing:"0.12em",color:"var(--wg)",lineHeight:1.6}}>{a.d}</div>
-                {a.tg && <div style={{fontSize:"11px",letterSpacing:"0.1em",color:"var(--forest)",marginTop:"6px"}}>{"#"+a.tg}</div>}
+                <div style={{fontSize:"11px",letterSpacing:"0.12em",color:"rgba(232,223,208,.5)",lineHeight:1.6}}>{a.d}</div>
+                {a.tg && <div style={{fontSize:"11px",letterSpacing:"0.1em",color:"rgba(232,223,208,.6)",marginTop:"6px"}}>{"#"+a.tg}</div>}
               </div>
               <div style={{flex:1}}>
-                <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",fontWeight:300,color:"var(--text)",marginBottom:"10px",lineHeight:1.6}}>{a.t}</div>
-                {a.x && <div style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9}}>{a.x}</div>}
-                {a.url && <div style={{marginTop:"12px",fontSize:"12px",letterSpacing:"0.12em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>閱讀全文 →</div>}
+                <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"17px",fontWeight:300,color:"#fff",marginBottom:"10px",lineHeight:1.6}}>{a.t}</div>
+                {a.x && <div style={{
+                  fontSize:"13px",color:"rgba(255,255,255,.75)",lineHeight:1.9,whiteSpace:"pre-line",
+                  ...(shouldClamp && !isOpen ? {display:"-webkit-box",WebkitLineClamp:6,WebkitBoxOrient:"vertical",overflow:"hidden"} : {})
+                }}>{a.x}</div>}
+                {shouldClamp && (
+                  <button onClick={e => { e.stopPropagation(); setArtExpanded(ex => ({...ex,[i]:!isOpen})); }} style={{
+                    background:"transparent",border:"none",padding:0,cursor:"pointer",
+                    marginTop:"12px",fontSize:"12px",letterSpacing:"0.15em",
+                    color:"rgba(232,223,208,.78)",fontFamily:"'Cormorant Garamond',serif"
+                  }}>{isOpen ? "收起 ↑" : "展開更多 ↓"}</button>
+                )}
+                {a.url && <div style={{marginTop:"12px",fontSize:"12px",letterSpacing:"0.12em",color:"rgba(232,223,208,.7)",fontFamily:"'Cormorant Garamond',serif"}}>閱讀全文 →</div>}
               </div>
             </div>
-          ))}
+          )})}
+        </div>
+      </section>
+
+      {/* 見證區 */}
+      <section style={{background:"var(--cream)"}}>
+        <div className="CN">
+          <div className="slb fi">學員見證</div>
+          <h2 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(18px,2.2vw,26px)",fontWeight:300,color:"var(--text)",marginBottom:"8px"}} className="fi">真實的整理，會留下真實的改變。</h2>
+          <p style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9,marginBottom:"48px"}} className="fi">以下是學員的回饋，經本人同意後分享。</p>
+          {TESTIMONIALS.map((t, i) => {
+            const isExp = expanded[i];
+            const content = t.full || t.text;
+            const showToggle = !!t.full;
+            return (
+              <div key={i} style={{padding:"36px 0",borderBottom:"1px solid var(--div)"}}>
+                <div style={{fontSize:"13px",color:"var(--gold)",letterSpacing:"3px",marginBottom:"14px"}}>{"★".repeat(t.stars)}</div>
+                <div style={{
+                  fontFamily:"'Noto Serif TC',serif",fontSize:"15px",fontWeight:300,
+                  color:"var(--text)",lineHeight:2,marginBottom:"16px",
+                  ...(showToggle && !isExp ? {display:"-webkit-box",WebkitLineClamp:3,WebkitBoxOrient:"vertical",overflow:"hidden"} : {})
+                }}>「{showToggle ? content : t.text}」</div>
+                {showToggle && (
+                  <button onClick={e => { e.stopPropagation(); setExpanded(ex => ({...ex,[i]:!isExp})); }} style={{
+                    background:"transparent",border:"none",padding:0,cursor:"pointer",
+                    fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",
+                    fontFamily:"'Cormorant Garamond',serif",marginBottom:"12px"
+                  }}>{isExp ? "收起 ↑" : "看更多 ↓"}</button>
+                )}
+                <div style={{fontSize:"13px",color:"var(--soft)",letterSpacing:".1em",marginBottom:"4px"}}>{t.name}</div>
+                <div style={{fontSize:"11px",letterSpacing:"0.2em",color:"var(--forest)",border:"1px solid var(--forest)",display:"inline-block",padding:"3px 12px"}}>{t.tag}</div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -1739,9 +3155,9 @@ function NumCard({ label, lifePath, yrPath, thisYear }) {
       </div>
       {d.sub && <div style={{fontSize:"12px",letterSpacing:"0.15em",color:d.color,marginBottom:"16px",fontFamily:"'Cormorant Garamond',serif"}}>{d.sub}</div>}
       <p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)"}}>{d.x}</p>
-      {d.note && <div style={{marginTop:"20px",paddingTop:"20px",borderTop:"1px solid rgba(0,0,0,0.07)"}}><div style={{fontSize:"11px",letterSpacing:"0.22em",color:d.color,marginBottom:"10px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 靈魂小叮嚀</div><p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)"}}>{d.note}</p></div>}
+      {d.note && <div style={{marginTop:"20px",paddingTop:"20px",borderTop:"1px solid rgba(0,0,0,0.07)"}}><div className="num-mini-label">靈魂小叮嚀</div><p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)"}}>{d.note}</p></div>}
       {yn && NUM_DESC[yn] && <div style={{marginTop:"20px",paddingTop:"20px",borderTop:"1px solid rgba(0,0,0,0.07)"}}><div style={{fontSize:"11px",letterSpacing:"0.25em",color:"var(--forest)",marginBottom:"10px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>流年數 · {thisYear}</div><div style={{display:"flex",alignItems:"baseline",gap:"12px",marginBottom:"12px",flexWrap:"wrap"}}><div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"18px",fontWeight:300,color:"var(--text)"}}>{NUM_DESC[yn].title}</div><div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"18px",color:"var(--forest)",letterSpacing:"0.06em"}}>{yrPath.display}</div></div><p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)"}}>{NUM_DESC[yn].yr}</p></div>}
-      {d.oil && <div style={{marginTop:"20px",paddingTop:"20px",borderTop:"1px solid rgba(0,0,0,0.07)"}}><div style={{fontSize:"11px",letterSpacing:"0.22em",color:d.color,marginBottom:"10px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 精油建議</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)"}}>{d.oil}</p></div>}
+      {d.oil && <div style={{marginTop:"20px",paddingTop:"20px",borderTop:"1px solid rgba(0,0,0,0.07)"}}><div className="num-mini-label">精油建議</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)"}}>{d.oil}</p></div>}
     </div>
   );
 }
@@ -1758,9 +3174,9 @@ function RelCard({ relPath }) {
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"22px",color:"var(--sandm)",letterSpacing:"0.06em"}}>{n}</div>
       </div>
       <p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)",marginBottom:"16px"}}>{d.x}</p>
-      {d.note && <div style={{padding:"16px 20px",background:"rgba(212,200,181,.12)",borderLeft:"2px solid var(--sandm)",marginBottom:"16px"}}><div style={{fontSize:"11px",letterSpacing:"0.2em",color:"var(--sandm)",marginBottom:"6px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 狀態留意</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--soft)",margin:0}}>{d.note}</p></div>}
+      {d.note && <div style={{padding:"16px 20px",background:"rgba(212,200,181,.12)",borderLeft:"2px solid var(--sandm)",marginBottom:"16px"}}><div className="num-mini-label">狀態留意</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--soft)",margin:0}}>{d.note}</p></div>}
       {d.lesson && <div style={{fontSize:"13px",color:"var(--forest)",lineHeight:1.9}}><span style={{letterSpacing:"0.1em",fontFamily:"'Cormorant Garamond',serif"}}>核心功課 → </span>{d.lesson}</div>}
-      {d.oil && <div style={{marginTop:"16px",paddingTop:"16px",borderTop:"1px solid rgba(0,0,0,0.06)"}}><div style={{fontSize:"11px",letterSpacing:"0.22em",color:"var(--sandm)",marginBottom:"8px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 精油建議</div>{d.oil.split("。").filter(s=>s.trim()).map((line,i)=><p key={i} style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)",marginBottom:"4px"}}>{line.trim()}。</p>)}</div>}
+      {d.oil && <div style={{marginTop:"16px",paddingTop:"16px",borderTop:"1px solid rgba(0,0,0,0.06)"}}><div className="num-mini-label">精油建議</div>{d.oil.split("。").filter(s=>s.trim()).map((line,i)=><p key={i} style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)",marginBottom:"4px"}}>{line.trim()}。</p>)}</div>}
     </div>
   );
 }
@@ -1778,9 +3194,9 @@ function ChallengeCard({ sy, sm, sd }) {
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"22px",color:"var(--sandm)",letterSpacing:"0.06em"}}>{n}</div>
       </div>
       <p style={{fontSize:"14px",lineHeight:2,color:"var(--soft)",marginBottom:"20px"}}>{d.x}</p>
-      <div style={{padding:"20px 24px",background:"rgba(212,200,181,.15)",borderLeft:"2px solid var(--sandm)",marginBottom:"16px"}}><div style={{fontSize:"11px",letterSpacing:"0.2em",color:"var(--sandm)",marginBottom:"8px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 狀態留意</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--soft)",margin:0}}>{d.note}</p></div>
+      <div style={{padding:"20px 24px",background:"rgba(212,200,181,.15)",borderLeft:"2px solid var(--sandm)",marginBottom:"16px"}}><div className="num-mini-label">狀態留意</div><p style={{fontSize:"13px",lineHeight:1.9,color:"var(--soft)",margin:0}}>{d.note}</p></div>
       <div style={{fontSize:"13px",color:"var(--forest)",lineHeight:1.9}}><span style={{letterSpacing:"0.1em",fontFamily:"'Cormorant Garamond',serif"}}>核心功課 → </span>{d.lesson}</div>
-      {d.oil && <div style={{marginTop:"16px",paddingTop:"16px",borderTop:"1px solid rgba(0,0,0,0.06)"}}><div style={{fontSize:"11px",letterSpacing:"0.22em",color:"var(--sandm)",marginBottom:"8px",fontFamily:"'Cormorant Garamond',serif"}}>🌿 精油建議</div>{d.oil.split("。").filter(s=>s.trim()).map((line,i)=><p key={i} style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)",marginBottom:"4px"}}>{line.trim()}。</p>)}</div>}
+      {d.oil && <div style={{marginTop:"16px",paddingTop:"16px",borderTop:"1px solid rgba(0,0,0,0.06)"}}><div className="num-mini-label">精油建議</div>{d.oil.split("。").filter(s=>s.trim()).map((line,i)=><p key={i} style={{fontSize:"13px",lineHeight:1.9,color:"var(--wg)",marginBottom:"4px"}}>{line.trim()}。</p>)}</div>}
     </div>
   );
 }
@@ -1799,9 +3215,13 @@ function NumCalc({ go }) {
     const solarYr   = calcPath(sumD(String(thisYear))+sumD(sm)+sumD(sdy));
     // 農曆主命數
     let lunarLife = null;
+    let lunarYr = null;
+    let lunarDate = null;
     try {
       const lDate = solarToLunar(parseInt(sy), parseInt(sm), parseInt(sdy));
+      lunarDate = lDate;
       lunarLife = calcPath(sumD(String(lDate.y))+sumD(String(lDate.m))+sumD(String(lDate.d)));
+      lunarYr = calcPath(sumD(String(thisYear))+sumD(String(lDate.m))+sumD(String(lDate.d)));
     } catch(e) {}
     let relPath = null;
     if (sy2&&sm2&&sd2) {
@@ -1818,7 +3238,15 @@ function NumCalc({ go }) {
       if (rn < 2) rn = 2;
       relPath = { final: rn };
     }
-    setResult({ solarLife, solarYr, lunarLife, relPath });
+    setResult({
+      solarLife,
+      solarYr,
+      lunarLife,
+      lunarYr,
+      relPath,
+      solarDate:{ y:parseInt(sy), m:parseInt(sm), d:parseInt(sdy) },
+      lunarDate
+    });
   };
 
   const IS = { background:"var(--cream)", border:"1px solid var(--div)", borderBottom:"2px solid var(--sandm)", padding:"13px 15px", fontSize:"15px", fontFamily:"'Noto Sans TC',sans-serif", color:"var(--text)", outline:"none", borderRadius:0, width:"100%", WebkitAppearance:"none" };
@@ -1837,15 +3265,15 @@ function NumCalc({ go }) {
       <section style={{background:"var(--w)"}}>
         <div className="CN">
           <div className="slb">你的出生日期</div>
-          <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:"14px",marginBottom:"36px"}}>
+          <div className="num-date-grid" style={{marginBottom:"36px"}}>
             <div><label style={LS}>年份（西元）</label><input style={IS} type="number" placeholder="例：1990" value={sy} onChange={e=>setSy(e.target.value)} /></div>
             <div><label style={LS}>月份</label><input style={IS} type="number" placeholder="8" value={sm} min={1} max={12} onChange={e=>setSm(e.target.value)} /></div>
             <div><label style={LS}>日期</label><input style={IS} type="number" placeholder="15" value={sdy} min={1} max={31} onChange={e=>setSdy(e.target.value)} /></div>
           </div>
-          <div style={{padding:"32px 36px",background:"var(--cream)",marginBottom:"32px",borderLeft:"2px solid var(--sandm)"}}>
+          <div className="num-rel-panel">
             <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"14px",color:"var(--text)",marginBottom:"6px"}}>選填 — 計算關係數</div>
             <div style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9,marginBottom:"20px"}}>輸入對方的出生日期，計算你們之間的關係數。</div>
-            <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:"14px"}}>
+            <div className="num-date-grid">
               <div><label style={LS}>對方年份（西元）</label><input style={IS} type="number" placeholder="例：1988" value={sy2} onChange={e=>setSy2(e.target.value)} /></div>
               <div><label style={LS}>月份</label><input style={IS} type="number" placeholder="3" value={sm2} min={1} max={12} onChange={e=>setSm2(e.target.value)} /></div>
               <div><label style={LS}>日期</label><input style={IS} type="number" placeholder="22" value={sd2} min={1} max={31} onChange={e=>setSd2(e.target.value)} /></div>
@@ -1858,11 +3286,27 @@ function NumCalc({ go }) {
       {result && (
         <section style={{background:"var(--cream)"}}>
           <div className="CN">
+            <div className="num-birthday-panel">
+              <div className="num-birthday-card">
+                <div className="num-birthday-label">Solar Birthday</div>
+                <div className="num-birthday-date">
+                  國曆 {result.solarDate.y} 年 {result.solarDate.m} 月 {result.solarDate.d} 日
+                </div>
+              </div>
+              {result.lunarDate && (
+                <div className="num-birthday-card">
+                  <div className="num-birthday-label">Lunar Birthday</div>
+                  <div className="num-birthday-date">
+                    農曆 {result.lunarDate.y} 年 {result.lunarDate.m} 月 {result.lunarDate.d} 日
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* 說明區塊 */}
-            <div style={{marginBottom:"40px",padding:"36px 44px",background:"var(--w)",borderLeft:"3px solid var(--sandm)"}}>
+            <div className="num-guide-panel" style={{marginBottom:"40px",padding:"36px 44px",background:"var(--w)",borderLeft:"3px solid var(--sandm)"}}>
               <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"16px",color:"var(--text)",marginBottom:"20px"}}>數字怎麼看</div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"32px",marginBottom:"24px"}}>
+              <div className="num-guide-grid">
                 <div>
                   <div style={{fontSize:"11px",letterSpacing:"0.22em",color:"var(--forest)",marginBottom:"10px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>主命數</div>
                   <p style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9}}>你這一生的主要能量方向，像是你天生的底色。來自你的出生日期，代表你在人生裡最核心的課題、天賦與模式。不會改變。</p>
@@ -1875,7 +3319,7 @@ function NumCalc({ go }) {
               <div style={{borderTop:"1px solid var(--div)",paddingTop:"20px"}}>
                 <div style={{fontSize:"11px",letterSpacing:"0.22em",color:"var(--sandm)",marginBottom:"12px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>陽曆 vs 農曆</div>
                 <p style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9,marginBottom:"16px"}}>兩個系統反映的是不同層次的自己，都看才能有更完整的理解。有些人陽曆和農曆的數字相同，有些人不同——不同的人往往會覺得其中一個特別「準」。</p>
-                <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"16px"}}>
+                <div className="num-lunar-grid">
                   <div style={{padding:"14px 18px",background:"var(--cream)",borderLeft:"2px solid var(--sandm)"}}>
                     <div style={{fontSize:"11px",letterSpacing:"0.18em",color:"var(--sandm)",marginBottom:"6px",fontFamily:"'Cormorant Garamond',serif"}}>陽曆</div>
                     <p style={{fontSize:"12px",color:"var(--soft)",lineHeight:1.8}}>工作狀態、初次認識、起心動念——你在外部世界裡行走的節奏與樣貌。</p>
@@ -1890,44 +3334,50 @@ function NumCalc({ go }) {
 
             {/* 陽曆主命數 + 流年數 */}
             <div style={{marginBottom:"32px"}}>
-              <div className="slb" style={{marginBottom:"8px",letterSpacing:"0.2em",color:"var(--sandm)"}}>陽曆</div>
+              <div className="num-section-title">陽曆 <span>Solar</span></div>
               <NumCard label="主命數 · 流年數" lifePath={result.solarLife} yrPath={result.solarYr} thisYear={thisYear} />
             </div>
 
             {/* 農曆主命數 + 流年數 */}
             {result.lunarLife && (
               <div style={{marginBottom:"48px"}}>
-                <div className="slb" style={{marginBottom:"8px",letterSpacing:"0.2em",color:"var(--forest)"}}>農曆</div>
-                <NumCard label="主命數 · 流年數" lifePath={result.lunarLife} yrPath={result.solarYr} thisYear={thisYear} />
+                <div className="num-section-title">農曆 <span>Lunar</span></div>
+                <NumCard label="主命數 · 流年數" lifePath={result.lunarLife} yrPath={result.lunarYr} thisYear={thisYear} />
               </div>
             )}
 
             {/* 關係數 */}
             {result.relPath && (
               <div style={{marginBottom:"48px"}}>
-                <div className="slb" style={{marginBottom:"8px"}}>關係數</div>
+                <div className="num-section-title">關係數 <span>Relation</span></div>
                 <RelCard relPath={result.relPath} />
               </div>
             )}
 
             {/* 挑戰數 */}
             <div style={{marginBottom:"48px"}}>
-              <div className="slb" style={{marginBottom:"8px"}}>挑戰數</div>
+              <div className="num-section-title">挑戰數 <span>Challenge</span></div>
               <div style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9,marginBottom:"20px",padding:"16px 20px",background:"var(--w)",borderLeft:"2px solid var(--sandm)"}}>挑戰數代表你在人生中最容易反覆卡住的內在模式，它不是你的缺點，而是你最容易過度或失衡的那個點。當你開始看懂它，這個挑戰反而會變成你的穩定力。</div>
               <ChallengeCard sy={sy} sm={sm} sd={sdy} />
-              <div style={{marginTop:"20px",padding:"24px 28px",background:"var(--forest)"}}>
-                <p style={{fontSize:"13px",color:"rgba(232,223,208,.8)",lineHeight:2,marginBottom:"10px"}}>✦ 挑戰數不是你哪裡不好，而是你這一生會反覆遇到、也有機會轉化成力量的地方。</p>
-                <p style={{fontSize:"13px",color:"rgba(232,223,208,.8)",lineHeight:2}}>✦ 當你看懂自己的挑戰，你就不會再用錯方式對待自己。</p>
+              <div className="num-insight-panel">
+                <div className="num-insight-card">
+                  <div className="num-insight-mark">01</div>
+                  <p>挑戰數不是你哪裡不好，而是你這一生會反覆遇到、也有機會轉化成力量的地方。</p>
+                </div>
+                <div className="num-insight-card">
+                  <div className="num-insight-mark">02</div>
+                  <p>當你看懂自己的挑戰，你就不會再用錯方式對待自己。</p>
+                </div>
               </div>
             </div>
 
             {/* CTA */}
-            <div style={{padding:"48px 52px",background:"var(--forest)",textAlign:"center"}}>
-              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"13px",letterSpacing:"0.3em",color:"rgba(232,223,208,.48)",marginBottom:"18px"}}>Next Step</div>
-              <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"18px",fontWeight:300,color:"var(--sand)",lineHeight:1.9,marginBottom:"32px"}}>數字是一個起點，真正的整理需要更深一層的陪伴。</p>
-              <div style={{display:"flex",gap:"14px",justifyContent:"center",flexWrap:"wrap"}}>
+            <div className="num-result-cta">
+              <div className="num-cta-kicker">Next Step</div>
+              <p className="num-cta-text">數字是一個起點，<br/>真正的整理需要更深一層的陪伴。</p>
+              <div className="num-cta-actions">
                 <button className="bp" onClick={()=>go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>預約初次穩定體驗</button>
-                <button className="bp" onClick={()=>go("aware")} style={{background:"transparent",border:"1px solid rgba(232,223,208,.6)",color:"var(--sand)"}}>回到自我覺察</button>
+                <button className="bp num-cta-secondary" onClick={()=>go("aware")}>回到自我覺察</button>
               </div>
             </div>
           </div>
@@ -1942,14 +3392,15 @@ function AppInner() {
   const navigate = useNavigate();
   const location = useLocation();
   const go = p => {
-    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/art", apply:"/apply", ongoing:"/ongoing", subscribe:"/subscribe" };
+    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/art", apply:"/apply", ongoing:"/ongoing", short:"/short", frequency:"/frequency", subscribe:"/subscribe", subscribeStart:"/subscribe-start", thanks:"/thanks", subscribeThanks:"/subscribe-thanks" };
     navigate(paths[p] || "/");
     window.scrollTo({ top: 0, behavior: "instant" });
   };
   const cur = {
     "/":"home", "/start":"start", "/aware":"aware", "/num":"num", "/deep":"deep",
     "/about":"about", "/art":"art", "/apply":"apply",
-    "/ongoing":"ongoing", "/subscribe":"subscribe"
+    "/ongoing":"ongoing", "/short":"short", "/frequency":"frequency", "/subscribe":"subscribe", "/subscribe-start":"subscribeStart",
+    "/thanks":"thanks", "/subscribe-thanks":"subscribeThanks"
   }[location.pathname] || "home";
 
   return (
@@ -1965,9 +3416,14 @@ function AppInner() {
           <Route path="/deep" element={<Deep go={go} />} />
           <Route path="/about" element={<About go={go} />} />
           <Route path="/art" element={<Art go={go} />} />
-          <Route path="/apply" element={<Apply />} />
+          <Route path="/apply" element={<Apply go={go} />} />
           <Route path="/ongoing" element={<Ongoing go={go} />} />
+          <Route path="/short" element={<ShortAdjust go={go} />} />
+          <Route path="/frequency" element={<Frequency go={go} />} />
           <Route path="/subscribe" element={<Subscribe go={go} />} />
+          <Route path="/subscribe-start" element={<SubscribeStart go={go} />} />
+          <Route path="/thanks" element={<Thanks go={go} />} />
+          <Route path="/subscribe-thanks" element={<Thanks go={go} subscribe />} />
           <Route path="*" element={<Home go={go} />} />
         </Routes>
       </main>
