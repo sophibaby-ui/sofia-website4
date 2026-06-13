@@ -403,7 +403,7 @@ const Styles = () => (
     /* HOME REFRESH */
     .home-shell{background:#FAF7F2}
     .home-section{padding:118px 0}
-    .home-quiet-hero{min-height:100vh;display:flex;align-items:center;background:#F7F2EA;padding:0;position:relative;overflow:hidden}
+    .home-quiet-hero{min-height:95vh;display:flex;align-items:center;background:#F7F2EA;padding:0;position:relative;overflow:hidden}
     .home-quiet-hero::before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(90deg,#F7F2EA 0%,#F7F2EA 35%,rgba(247,242,234,.96) 42%,rgba(247,242,234,.72) 47%,rgba(247,242,234,.24) 53%,transparent 59%);pointer-events:none}
     .home-quiet-hero::after{content:"";position:absolute;inset:auto -18% -34% auto;width:62vw;height:62vw;z-index:2;background:radial-gradient(ellipse,rgba(184,168,130,.1),transparent 66%);pointer-events:none}
     .home-hero-copy{position:relative;z-index:3;max-width:650px;width:48%;margin-left:max(60px,calc((100vw - 1140px)/2));padding:132px 40px 84px 0}
@@ -443,12 +443,31 @@ const Styles = () => (
     .home-report-list{display:grid;gap:10px;margin:28px 0 34px}
     .home-report-list div{font-size:14px;color:#514941;line-height:1.8}
     .home-start-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    .home-start-card{background:#FFFDF8;border:1px solid rgba(212,200,181,.58);border-radius:22px;padding:34px 32px;box-shadow:0 22px 54px rgba(86,70,50,.07);display:flex;flex-direction:column;min-height:310px}
+    .home-start-card{background:#FFFDF8;border:1px solid rgba(212,200,181,.58);border-radius:22px;padding:34px 32px;box-shadow:0 22px 54px rgba(86,70,50,.07);display:flex;flex-direction:column;min-height:310px;transition:transform .25s ease,box-shadow .25s ease}
+    .home-start-card:hover{transform:translateY(-4px);box-shadow:0 26px 64px rgba(86,70,50,.08)}
     .home-start-number{font-family:'Cormorant Garamond',serif;font-size:28px;color:#C2AF89;margin-bottom:18px;line-height:1}
     .home-start-title{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:300;color:#2C2825;line-height:1.5;margin-bottom:18px}
     .home-start-fit{font-size:12px;letter-spacing:.18em;color:#A19179;margin-bottom:10px;text-transform:uppercase}
     .home-start-card p{font-size:14px;color:#665E56;line-height:2;margin-bottom:28px}
     .home-start-card button{margin-top:auto;align-self:flex-start}
+    .home-v2-story .home-body-lines{gap:10px}
+    .home-v2-story .home-body-lines p:nth-last-child(2){margin-top:18px}
+    .home-v2-quote{padding:148px 24px;text-align:center;background:#2B302C}
+    .home-v2-quote-main{font-family:'Noto Serif TC',serif;font-size:clamp(28px,3.3vw,44px);font-weight:300;line-height:1.8;color:#F1E8DB}
+    .home-v2-quote-rule{width:38px;height:1px;background:rgba(216,201,165,.55);margin:34px auto}
+    .home-v2-quote-sub{font-family:'Noto Serif TC',serif;font-size:clamp(19px,2vw,27px);font-weight:300;line-height:1.85;color:rgba(241,232,219,.72)}
+    .home-v2-testimonials{background:var(--cream)}
+    .home-v2-testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}
+    .home-v2-testimonial{min-height:220px;padding:38px 34px;border-radius:20px;background:rgba(255,253,248,.74);box-shadow:0 20px 52px rgba(86,70,50,.06);display:flex;align-items:center}
+    .home-v2-testimonial p{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:300;line-height:1.9;color:#403A35}
+    .home-v2-faq{background:var(--w)}
+    .home-v2-faq-inner{max-width:760px;margin:0 auto}
+    .home-v2-faq .home-intro{text-align:left;margin-left:0}
+    .home-v2-faq .fqq{font-size:17px;padding:28px 0}
+    .home-v2-faq .fqa{font-size:15px}
+    .home-v2-final{padding:160px 24px;text-align:center;background:#F1E9DE}
+    .home-v2-final h2{font-family:'Noto Serif TC',serif;font-size:clamp(30px,3.8vw,50px);font-weight:300;line-height:1.75;color:#2C2825}
+    .home-v2-final p{font-family:'Noto Serif TC',serif;font-size:clamp(18px,1.8vw,24px);font-weight:300;line-height:1.9;color:#6B6259;margin:34px 0 42px}
 
     /* ABOUT REFRESH */
     .about-new{background:#FAF7F2}
@@ -621,6 +640,18 @@ const Styles = () => (
       .home-start-title{font-size:22px}
       .home-start-card p{font-size:16px;line-height:2;color:#4E4741}
       .home-start-card button{width:100%;align-self:stretch}
+      .home-v2-quote{padding:88px 22px}
+      .home-v2-quote-main{font-size:27px}
+      .home-v2-quote-sub{font-size:20px}
+      .home-v2-testimonial-grid{grid-template-columns:1fr;gap:14px;margin-top:32px}
+      .home-v2-testimonial{min-height:0;padding:30px 26px;border-radius:16px}
+      .home-v2-testimonial p{font-size:19px}
+      .home-v2-faq .home-intro{text-align:left}
+      .home-v2-faq .fqq{font-size:17px;line-height:1.7}
+      .home-v2-faq .fqa{font-size:16px}
+      .home-v2-final{padding:96px 22px}
+      .home-v2-final h2{font-size:29px}
+      .home-v2-final p{font-size:19px;margin:28px 0 34px}
       .about-new-hero{min-height:auto;padding:calc(var(--nav) + 24px) 0 64px}
       .about-new-hero-grid{padding:0 18px;grid-template-columns:1fr;gap:34px}
       .about-new-hero-copy{order:2}
@@ -1156,58 +1187,44 @@ function Nav({ cur, go }) {
 /* ─── HOME ───────────────────────────────────────────────────────── */
 function Home({ go }) {
   useFade();
-  const scenarioCards = [
-    {
-      t: "等一個回覆",
-      x: "明明只是幾分鐘，心裡卻已經演過很多次結果。你開始猜測、開始反覆確認，開始懷疑是不是自己做錯了什麼。",
-      img: HOME_SCENARIO_REPLY,
-    },
-    {
-      t: "很累了\n卻停不下來",
-      x: "事情做完了，腦袋卻沒有停下來。好像只要一放鬆，很多情緒就會突然跑出來。",
-      img: HOME_SCENARIO_TIRED,
-    },
-    {
-      t: "總是在照顧別人",
-      x: "你習慣先理解別人，卻很少有人問：那你呢？",
-      img: HOME_SCENARIO_CARE,
-    },
-  ];
   const starts = [
     {
-      t: "先看見自己的狀態",
-      x: "最近有些累、有些卡住，想知道發生什麼事的人。",
-      btn: "開始探索",
+      t: <>我最近，<br/>好像有點累了。</>,
+      x: <>適合最近一直內耗、<br/>想重新理解自己的人。</>,
+      btn: "看見現在的自己",
       p: "aware",
     },
     {
-      t: "建立每月穩定節奏",
-      x: "想持續理解自己，建立穩定狀態的人。",
-      btn: "了解訂閱",
+      t: "我想慢慢穩定下來。",
+      x: <>想持續整理自己，<br/>建立屬於自己的生活節奏。</>,
+      btn: "了解每月陪伴",
       p: "subscribe",
     },
     {
-      t: "深度陪跑",
-      x: "準備面對核心議題，想真正產生改變的人。",
-      btn: "申請陪跑",
+      t: "我準備好真正改變了。",
+      x: <>願意面對核心議題，<br/>希望有人陪自己走一段路。</>,
+      btn: "了解深度陪伴",
       p: "deep",
     },
+  ];
+  const testimonials = [
+    <>原來我不是脆弱，<br/>我只是一直在撐。</>,
+    <>我第一次知道，<br/>自己為什麼總是在關係裡委屈。</>,
+    <>那份整理，<br/>讓我重新看懂現在的自己。</>,
   ];
 
   return (
     <div className="page home-shell">
       <section className="home-quiet-hero">
         <div className="home-hero-copy">
-          <div className="home-eyebrow fi">Sofia｜情緒穩定 × 關係覺察 × 內在主導權</div>
-          <h1 className="home-hero-title fi">你不是想太多<br/>你只是一直在撐</h1>
+          <div className="home-eyebrow fi">情緒穩定 × 關係覺察 × 內在主導權</div>
+          <h1 className="home-hero-title fi">你不是想太多。<br/>你只是一直在撐。</h1>
           <p className="home-hero-body fi">
-            當情緒、關係、責任與未來開始一起拉扯，最需要的不是更多建議，而是一個能重新站穩的位置。
-            <br/><br/>
-            我陪你一起看懂正在發生的事，慢慢把主導權拿回來。
+            陪你理解那些說不出口的情緒，<br/>
+            重新找回穩定與選擇自己的力量。
           </p>
           <div className="home-hero-actions fi">
-            <button className="bp" onClick={() => go("start")}>從這裡開始</button>
-            <button className="home-secondary-btn" onClick={() => go("about")}>認識 Sofia</button>
+            <button className="bp" onClick={() => go("apply")}>預約初談</button>
           </div>
         </div>
         <div className="home-portrait-frame fi">
@@ -1215,43 +1232,19 @@ function Home({ go }) {
         </div>
       </section>
 
-      <section className="home-section" style={{background:"var(--w)"}}>
-        <div className="C">
-          <div className="home-intro">
-            <div className="home-intro-kicker fi">Maybe You Know This</div>
-            <h2 className="home-section-title fi">你是不是也有這些時候</h2>
-          </div>
-          <div className="home-scenario-grid">
-            {scenarioCards.map((card, i) => (
-              <article className="home-scenario-card fi" key={card.t}>
-                <div className="home-scenario-img">
-                  <img src={card.img} alt={card.t.replace("\n", "")} />
-                </div>
-                <div className="home-scenario-text">
-                  <h3 className="home-card-title">{card.t.split("\n").map((line, j) => <span key={line}>{line}{j < card.t.split("\n").length - 1 && <br/>}</span>)}</h3>
-                  <p className="home-card-copy">{card.x}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="home-section" style={{background:"var(--cream)"}}>
-        <div className="C home-split">
+        <div className="C home-split home-v2-story">
           <div className="home-image-card home-work-image fi">
             <img src={HOME_SOFIA_WORK} alt="Sofia 工作照" />
           </div>
           <div className="home-split-copy">
             <h2 className="home-large-title fi">很多人來找我<br/>不是因為人生出了問題<br/>而是因為撐太久了。</h2>
             <div className="home-body-lines fi">
-              <p>有些人卡在關係裡。</p>
-              <p>有些人明明努力了很久，卻總覺得自己不夠好。</p>
-              <p>也有人一直往前走，卻不知道自己到底在追什麼。</p>
-              <p>我做的不是告訴你答案，而是陪你一起整理那些混亂，讓你重新看懂自己現在的位置。</p>
-            </div>
-            <div className="home-focus-row fi">
-              {["情緒穩定","關係覺察","內在主導權"].map(item => <span className="home-focus-pill" key={item}>{item}</span>)}
+              <p>有人困在關係裡。</p>
+              <p>有人一直責怪自己。</p>
+              <p>有人很努力，<br/>卻不知道自己真正想要什麼。</p>
+              <p>我做的不是給你答案。</p>
+              <p>而是陪你重新理解自己。</p>
             </div>
           </div>
         </div>
@@ -1264,15 +1257,14 @@ function Home({ go }) {
           </div>
           <div className="home-split-copy">
             <div className="home-intro-kicker fi">Soul State Report</div>
-            <h2 className="home-large-title fi">每個月<br/>你會收到一份<br/>關於自己的整理。</h2>
+            <h2 className="home-large-title fi">每個月，<br/>收到一份<br/>關於自己的整理。</h2>
             <div className="home-body-lines fi">
-              <p>透過 TimeWaver 與狀態分析，把那些說不清楚的感受、重複出現的模式，以及正在發生的變化，整理成一份看得懂的紀錄。</p>
-              <p>不是為了預測未來，而是讓你更理解現在。</p>
+              <p>把那些說不清楚的感受、</p>
+              <p>反覆出現的模式，</p>
+              <p>整理成一份</p>
+              <p>看得懂自己的紀錄。</p>
             </div>
-            <div className="home-report-list fi">
-              {["整體狀態整理","六大面向分析","生活情境翻譯","本月調整方向","Sofia 個人解讀"].map(item => <div key={item}>✓ {item}</div>)}
-            </div>
-            <button className="home-secondary-btn fi" onClick={() => go("subscribe")}>查看範例</button>
+            <button className="home-secondary-btn fi" onClick={() => go("subscribe")}>了解 Soul State Report</button>
           </div>
         </div>
       </section>
@@ -1281,24 +1273,63 @@ function Home({ go }) {
         <div className="C">
           <div className="home-intro">
             <div className="home-intro-kicker fi">Begin Here</div>
-            <h2 className="home-section-title fi">你可以從這裡開始</h2>
-            <p className="home-section-copy fi">不用急著選方案，先選一個最接近你現在狀態的入口。</p>
+            <h2 className="home-section-title fi">每個人現在需要的，<br/>都不一樣。</h2>
+            <p className="home-section-copy fi">不用急著找到答案，<br/>先選一個最接近你現在狀態的入口。</p>
           </div>
           <div className="home-start-grid">
             {starts.map((item, i) => (
-              <article className="home-start-card fi" key={item.t}>
+              <article className="home-start-card fi" key={i}>
                 <div className="home-start-number">0{i + 1}</div>
                 <h3 className="home-start-title">{item.t}</h3>
-                <div className="home-start-fit">適合</div>
                 <p>{item.x}</p>
-                <button className={i === 0 ? "bp" : "home-secondary-btn"} onClick={() => go(item.p)}>{item.btn}</button>
+                <button className="home-secondary-btn" onClick={() => go(item.p)}>{item.btn}</button>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <Testimonials go={go} />
+      <section className="home-v2-quote">
+        <div className="home-v2-quote-main fi">療癒不是變成另一個人。<br/>而是停止一直勉強自己。</div>
+        <div className="home-v2-quote-rule fi"/>
+        <div className="home-v2-quote-sub fi">真正的改變，<br/>從理解自己開始。</div>
+      </section>
+
+      <section className="home-section home-v2-testimonials">
+        <div className="C">
+          <div className="home-intro">
+            <div className="home-intro-kicker fi">Their Words</div>
+            <h2 className="home-section-title fi">她們這麼說</h2>
+          </div>
+          <div className="home-v2-testimonial-grid">
+            {testimonials.map((text, i) => (
+              <article className="home-v2-testimonial fi" key={i}><p>{text}</p></article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="home-section home-v2-faq">
+        <div className="C">
+          <div className="home-v2-faq-inner">
+            <div className="home-intro">
+              <div className="home-intro-kicker fi">Questions</div>
+              <h2 className="home-section-title fi">開始以前</h2>
+            </div>
+            <div className="fi">
+              <Faq q="我適合嗎？" a="如果你長期情緒內耗、關係疲憊、不知道自己怎麼了，都可以從初談開始。" />
+              <Faq q="一次就有效嗎？" a="療癒不是一次解決問題，而是慢慢理解自己。" />
+              <Faq q="我不知道怎麼開始？" a="那就先從一次初談開始。" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="home-v2-final">
+        <h2 className="fi">你不是想太多。<br/>你只是一直在撐。</h2>
+        <p className="fi">現在，<br/>可以不用一個人了。</p>
+        <button className="bp fi" onClick={() => go("apply")}>預約初談</button>
+      </section>
     </div>
   );
 }
