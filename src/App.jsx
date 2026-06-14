@@ -454,8 +454,9 @@ const Styles = () => (
     .home-v2-story .home-body-lines{gap:10px}
     .home-v2-story .home-body-lines p:nth-last-child(2){margin-top:18px}
     .home-report-panel .home-split-copy{transform:translateY(-44px)}
-    .home-v2-quote{padding:148px 24px;text-align:center;background:#2B302C}
-    .home-v2-quote-main{font-family:'Noto Serif TC',serif;font-size:clamp(28px,3.3vw,44px);font-weight:300;line-height:1.8;color:#F1E8DB}
+    .home-v2-quote{padding:148px 24px;text-align:center;background:linear-gradient(145deg,#385B4C 0%,#315143 55%,#24211E 100%);position:relative;overflow:hidden}
+    .home-v2-quote::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 75% 62% at 50% 18%,rgba(232,223,208,.13),transparent 65%);pointer-events:none}
+    .home-v2-quote-main{font-family:'Noto Serif TC',serif;font-size:clamp(28px,3.3vw,44px);font-weight:300;line-height:1.8;color:#F1E8DB;position:relative;z-index:1}
     .home-v2-quote-rule{width:38px;height:1px;background:rgba(216,201,165,.55);margin:34px auto}
     .home-v2-quote-sub{font-family:'Noto Serif TC',serif;font-size:clamp(19px,2vw,27px);font-weight:300;line-height:1.85;color:rgba(241,232,219,.72)}
     .home-v2-testimonials{background:var(--cream)}
@@ -614,7 +615,7 @@ const Styles = () => (
       .home-quiet-hero{display:flex;flex-direction:column;padding:calc(var(--nav) + 12px) 18px 28px;gap:16px;min-height:100svh;background:linear-gradient(155deg,#FAF7F2 0%,#F4EEE6 68%,#EDE2D5 100%)}
       .home-quiet-hero::before,.home-quiet-hero::after{display:none}
       .home-portrait-frame{position:relative;order:1;width:100%;inset:auto;min-height:180px;height:46vw;max-height:230px;border-radius:18px;box-shadow:0 18px 44px rgba(72,57,43,.1);background:#EADFD8}
-      .home-portrait-frame img{object-fit:cover;object-position:24% center}
+.home-portrait-frame img{object-fit:cover;object-position:24% 16%}
       .home-portrait-frame::after{background:linear-gradient(to top,rgba(250,247,242,.16),transparent 24%)}
       .home-hero-copy{order:2;width:100%;max-width:100%;margin:0;padding:0;z-index:1}
       .home-eyebrow{font-size:11px;letter-spacing:.1em;line-height:1.7;margin-bottom:12px;color:#5C524A}
@@ -1086,6 +1087,12 @@ const Styles = () => (
         --leading-body:1.95;
       }
       body{font-size:16px}
+      .home-hero-title{
+        line-height:1.3 !important;
+      }
+      .page .home-hero-body{
+        line-height:1.75 !important;
+      }
       .page section :is(p,li,label,input,select,textarea){
         font-size:var(--type-body) !important;
         line-height:var(--leading-body) !important;
@@ -1197,20 +1204,20 @@ function Home({ go }) {
   useFade();
   const starts = [
     {
-      t: <>我最近，<br/>好像有點累了。</>,
-      x: <>適合最近一直內耗，<br/>想知道自己怎麼了的人。</>,
+      t: <>我只是想知道，<br/>自己最近怎麼了</>,
+      x: <>適合最近一直內耗，<br/>想重新理解自己的人</>,
       btn: "看見現在的自己",
       p: "aware",
     },
     {
-      t: "我想慢慢穩定下來。",
-      x: <>把理解自己，<br/>變成生活的一部分。</>,
+      t: <>我想讓生活，<br/>慢慢回到穩定</>,
+      x: <>把理解自己，<br/>變成生活的一部分</>,
       btn: "了解每月陪伴",
       p: "subscribe",
     },
     {
-      t: <>我準備，<br/>走進真正的改變。</>,
-      x: <>願意面對核心議題，<br/>希望有人陪自己走一段路。</>,
+      t: <>我準備好，<br/>面對真正重要的自己</>,
+      x: <>願意看見核心議題，<br/>希望有人陪自己走一段路</>,
       btn: "了解深度陪伴",
       p: "deep",
     },
@@ -1222,10 +1229,10 @@ function Home({ go }) {
       <section className="home-quiet-hero">
         <div className="home-hero-copy">
           <div className="home-eyebrow fi">情緒穩定 × 關係覺察 × 內在主導權</div>
-          <h1 className="home-hero-title fi">你不是想太多。<br/>你只是一直在撐。</h1>
+          <h1 className="home-hero-title fi">你不是想太多<br/>你只是一直在撐</h1>
           <p className="home-hero-body fi">
             陪你理解那些說不出口的情緒，<br/>
-            重新找回自己的力量。
+            重新找回自己的力量
           </p>
           <div className="home-hero-actions fi">
             <button className="bp" onClick={() => go("apply")}>預約初談</button>
@@ -1242,13 +1249,13 @@ function Home({ go }) {
             <img src={HOME_SOFIA_WORK} alt="Sofia 工作照" />
           </div>
           <div className="home-split-copy">
-            <h2 className="home-large-title fi">很多人來找我<br/>不是因為人生出了問題<br/>而是因為撐太久了。</h2>
+            <h2 className="home-large-title fi">很多人來找我<br/>不是因為人生出了問題<br/>而是因為，<br/>他們已經很久沒有好好理解自己</h2>
             <div className="home-body-lines fi">
-              <p>有人困在關係裡。</p>
-              <p>有人一直責怪自己。</p>
-              <p>也有人很努力，<br/>卻不知道自己真正想要什麼。</p>
-              <p>我做的不是給你答案。</p>
-              <p>而是陪你重新理解自己。</p>
+              <p>有人困在關係裡</p>
+              <p>有人一直責怪自己</p>
+              <p>也有人很努力，<br/>卻不知道自己真正想要什麼</p>
+              <p>我做的不是給你答案</p>
+              <p>而是陪你重新理解自己</p>
             </div>
           </div>
         </div>
@@ -1261,12 +1268,12 @@ function Home({ go }) {
           </div>
           <div className="home-split-copy home-report-copy">
             <div className="home-intro-kicker fi">Soul State Report</div>
-            <h2 className="home-large-title fi">每個月，<br/>收到一份<br/>關於自己的整理。</h2>
+            <h2 className="home-large-title fi">有些感受，<br/>無法用一句話說清楚<br/><br/>但可以慢慢整理，<br/>看懂自己</h2>
             <div className="home-body-lines fi">
               <p>把那些說不清楚的感受、</p>
               <p>反覆出現的模式，</p>
               <p>整理成一份</p>
-              <p>看得懂自己的紀錄。</p>
+              <p>看得懂自己的紀錄</p>
             </div>
             <button className="home-secondary-btn fi" onClick={() => go("subscribe")}>看看這份整理</button>
           </div>
@@ -1277,8 +1284,8 @@ function Home({ go }) {
         <div className="C">
           <div className="home-intro">
             <div className="home-intro-kicker fi">Begin Here</div>
-            <h2 className="home-section-title fi">每個人現在需要的，<br/>都不一樣。</h2>
-            <p className="home-section-copy fi">不用急著找到答案，<br/>先選一個最接近你現在狀態的入口。</p>
+            <h2 className="home-section-title fi">每個人現在需要的，<br/>都不一樣</h2>
+            <p className="home-section-copy fi">不用急著找到答案，<br/>先找到最接近你現在狀態的入口</p>
           </div>
           <div className="home-start-grid">
             {starts.map((item, i) => (
@@ -1294,9 +1301,7 @@ function Home({ go }) {
       </section>
 
       <section className="home-v2-quote">
-        <div className="home-v2-quote-main fi">療癒不是變成另一個人。<br/>而是停止一直勉強自己。</div>
-        <div className="home-v2-quote-rule fi"/>
-        <div className="home-v2-quote-sub fi">真正的改變，<br/>不是更努力。<br/>而是更理解自己。</div>
+        <div className="home-v2-quote-main fi">真正的改變，<br/>不是成為另一個人<br/>而是看見那些一直被忽略的自己</div>
       </section>
 
       <section className="home-section home-v2-testimonials">
@@ -1325,19 +1330,20 @@ function Home({ go }) {
             <div className="home-intro">
               <div className="home-intro-kicker fi">Questions</div>
               <h2 className="home-section-title fi">開始以前</h2>
+              <p className="home-section-copy fi">每個人的答案都不同<br/><br/>但理解自己，<br/>永遠都是開始</p>
             </div>
             <div className="fi">
-              <Faq q="我適合嗎？" a={<>如果你長期情緒內耗、<br/>關係疲憊、<br/>不知道自己怎麼了，<br/><br/>都可以從初談開始。</>} />
-              <Faq q="一次就有效嗎？" a={<>一次談話可以幫助你看見現在的狀態。<br/><br/>真正的改變，<br/>通常需要持續理解與練習。</>} />
-              <Faq q="我不知道怎麼開始？" a={<>那就先從一次初談開始。<br/><br/>不用準備好答案，<br/>只需要帶著現在的自己來。</>} />
+              <Faq q="我適合嗎？" a={<>如果你長期情緒內耗、<br/>關係疲憊、<br/>不知道自己怎麼了，<br/><br/>都可以從初談開始</>} />
+              <Faq q="一次就有效嗎？" a={<>一次談話可以幫助你看見現在的狀態<br/><br/>真正的改變，<br/>通常需要持續理解與練習</>} />
+              <Faq q="我不知道怎麼開始？" a={<>那就先從一次初談開始<br/><br/>不用準備好答案，<br/>只需要帶著現在的自己來</>} />
             </div>
           </div>
         </div>
       </section>
 
       <section className="home-v2-final">
-        <h2 className="fi">你不是想太多。<br/>你只是一直在撐。</h2>
-        <p className="fi">現在，<br/>可以不用一個人了。</p>
+        <h2 className="fi">你不用急著變得更好</h2>
+        <p className="fi">先好好理解自己，<br/>就很好</p>
         <button className="bp fi" onClick={() => go("apply")}>預約初談</button>
       </section>
     </div>
@@ -1375,7 +1381,7 @@ function About({ go }) {
           <div style={{maxWidth:"480px"}}>
             <div style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.5)",marginBottom:"28px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}} className="fi">關於 Sofia</div>
             <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(28px,3.8vw,48px)",fontWeight:300,color:"#FAF7F2",lineHeight:1.35,marginBottom:"32px"}} className="fi">
-              我在做的事，<br/>只有一件。
+              我在做的事，<br/>只有一件
             </h1>
             <div style={{width:"32px",height:"1px",background:"rgba(232,223,208,.4)",marginBottom:"32px"}} className="fi"/>
             <p style={{fontSize:"15px",color:"rgba(232,223,208,.78)",lineHeight:2}} className="fi">
@@ -1389,7 +1395,7 @@ function About({ go }) {
         <div className="about-new-inner">
           <div className="about-new-story">
             <div className="about-new-kicker fi">Why people come</div>
-            <h2 className="fi">很多人來找我，<br/>不是因為人生出了問題。<br/><br/>而是因為，<br/>已經撐了很久。</h2>
+            <h2 className="fi">很多人來找我，<br/>不是因為人生出了問題<br/><br/>而是因為，<br/>已經撐了很久</h2>
             <div className="about-new-story-copy">
               <p className="fi">外表看起來很好，卻總是在情緒、關係或選擇裡反覆消耗自己。</p>
               <p className="fi">我做的，不是替你做決定。而是陪你重新看懂自己。</p>
@@ -1455,7 +1461,7 @@ function About({ go }) {
       </section>
 
       <section className="about-new-closing fi">
-        <p>你不用急著變好。<br/>你只需要開始看懂自己。</p>
+        <p>你不用急著變好<br/>你只需要開始看懂自己</p>
       </section>
     </div>
   );
@@ -1569,7 +1575,7 @@ function Frequency({ go }) {
         <div className="frequency-cta-overlay"/>
         <div className="frequency-cta-inner fi">
           <div className="frequency-label">Begin here</div>
-          <h2>先看懂現在的自己，<br/>再決定下一步。</h2>
+          <h2>先看懂現在的自己，<br/>再決定下一步</h2>
           <p>如果你想知道 TimeWaver 是否適合你，可以先告訴我最近最想整理的狀態。</p>
           <button className="bp" onClick={() => go("apply")}>預約初次穩定體驗</button>
         </div>
@@ -1708,7 +1714,7 @@ function Start({ go }) {
       {/* CTA */}
       <div className="ctab fi">
         <div className="ctab-e es">Begin Here</div>
-        <h2 className="ctab-t">你不需要準備好。</h2>
+        <h2 className="ctab-t">你不需要準備好</h2>
         <p className="ctab-x">帶著現在這個狀態來就好。第一次看清楚，是所有改變的開始。</p>
         <button className="bp" onClick={() => go("apply")}>預約初次穩定體驗</button>
       </div>
@@ -1725,7 +1731,7 @@ function Aware({ go }) {
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 60% at 90% 30%,rgba(212,200,181,.28) 0%,transparent 60%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
           <div className="slb fi">自我覺察</div>
-          <h1 className="htit fi" style={{fontSize:"clamp(26px,3.5vw,44px)"}}>先看見，才能改變。</h1>
+          <h1 className="htit fi" style={{fontSize:"clamp(26px,3.5vw,44px)"}}>先看見，才能改變</h1>
           <p className="hbo fi" style={{maxWidth:"500px"}}>這不是要給你答案，而是幫你先看清楚自己現在在哪裡。</p>
         </div>
       </div>
@@ -1795,7 +1801,7 @@ function Testimonials({ go }) {
     <section style={{background:"var(--cream)"}}>
       <div className="C">
         <div className="slb fi">她們說的</div>
-        <h2 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(20px,2.5vw,28px)",fontWeight:300,color:"var(--text)",marginBottom:"8px"}} className="fi">真實的整理，會留下真實的改變。</h2>
+        <h2 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(20px,2.5vw,28px)",fontWeight:300,color:"var(--text)",marginBottom:"8px"}} className="fi">真實的整理，會留下真實的改變</h2>
         <p style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9,marginBottom:"0"}} className="fi">以下是學員的回饋，經本人同意後分享。</p>
         <div className="testi-grid">
           {TESTIMONIALS.map((t, i) => (
@@ -1825,7 +1831,7 @@ function EmailCapture() {
   return (
     <div className="ecap">
       <div className="ecap-e es">Free · 每月一篇</div>
-      <h2 className="ecap-t">訂閱觀點信，<br/>從閱讀開始認識自己。</h2>
+      <h2 className="ecap-t">訂閱觀點信，<br/>從閱讀開始認識自己</h2>
       <p className="ecap-x">每月一篇，寫給那些習慣承擔、卻還沒有機會好好整理自己的女性。</p>
       {done ? (
         <div className="ecap-ok">✦ 已收到，很高興你在這裡。</div>
@@ -1897,7 +1903,7 @@ function Apply({ go }) {
         <div className="CN" style={{position:"relative",zIndex:1}}>
           <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",textTransform:"uppercase",fontFamily:"'Cormorant Garamond',serif"}}>預約</div>
           <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(26px,3.5vw,44px)",fontWeight:300,color:"var(--sand)",lineHeight:1.4,marginBottom:"20px"}}>
-            先讓自己有一個<br/>可以站穩的位置。
+            先讓自己有一個<br/>可以站穩的位置
           </h1>
           <p style={{fontSize:"15px",color:"rgba(232,223,208,.65)",lineHeight:1.9,maxWidth:"440px"}}>
             你不需要準備好。帶著現在這個狀態來就好。<br/>填完表單後，我會在三個工作天內與你聯繫。
@@ -2015,7 +2021,7 @@ function Footer({ go }) {
           <div>
             <div className="footer-brand" style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"24px",color:"var(--sand)",marginBottom:"12px"}}>Sofia</div>
             <div className="footer-tagline" style={{fontSize:"12px",letterSpacing:"0.18em",color:"rgba(232,223,208,.4)",marginBottom:"20px"}}>情緒穩定 × 關係覺察 × 內在主導權</div>
-            <p className="footer-copy" style={{fontSize:"13px",color:"rgba(232,223,208,.45)",lineHeight:1.9}}>以陪伴取代建議，<br/>以覺察取代答案。</p>
+            <p className="footer-copy" style={{fontSize:"13px",color:"rgba(232,223,208,.45)",lineHeight:1.9}}>以陪伴取代建議，<br/>以覺察取代答案</p>
           </div>
           <div>
             <div className="footer-heading" style={{fontSize:"12px",letterSpacing:"0.2em",color:"rgba(232,223,208,.35)",marginBottom:"20px",textTransform:"uppercase"}}>聯繫</div>
@@ -2028,8 +2034,8 @@ function Footer({ go }) {
           </div>
         </div>
         <div className="footer-bottom" style={{borderTop:"1px solid rgba(232,223,208,.1)",paddingTop:"32px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"12px"}}>
-          <div style={{fontSize:"12px",color:"rgba(232,223,208,.25)",letterSpacing:"0.08em"}}>© 2025 Sofia 蘇菲療癒轉化. All rights reserved.</div>
-          <div style={{fontSize:"12px",color:"rgba(232,223,208,.25)",letterSpacing:"0.08em"}}>以陪伴取代建議，以覺察取代答案。</div>
+          <div style={{fontSize:"12px",color:"rgba(232,223,208,.25)",letterSpacing:"0.08em"}}>© 2025 Sofia 蘇菲療癒轉化 All rights reserved</div>
+          <div style={{fontSize:"12px",color:"rgba(232,223,208,.25)",letterSpacing:"0.08em"}}>以陪伴取代建議，以覺察取代答案</div>
         </div>
       </div>
     </footer>
@@ -2049,7 +2055,7 @@ function Deep({ go }) {
         <div className="CN" style={{position:"relative",zIndex:1}}>
           <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>陪跑計畫</div>
           <h1 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(28px,4vw,50px)",fontWeight:300,color:"var(--sand)",lineHeight:1.35,marginBottom:"28px"}} className="fi">
-            你其實已經知道很多。
+            你其實已經知道很多
           </h1>
           <p style={{fontSize:"15px",color:"rgba(232,223,208,.7)",lineHeight:2,maxWidth:"500px"}} className="fi">
             你知道自己會在什麼情況下開始撐，你也知道有些關係，讓你越來越不舒服。你不是沒有嘗試過改變，只是每一次到了關鍵時刻，你還是會回到原本的選擇。
@@ -2189,7 +2195,7 @@ function Subscribe({ go }) {
         <div className="CN" style={{position:"relative",zIndex:1}}>
           <div className="hero-kicker" style={{fontSize:"12px",letterSpacing:"0.32em",color:"rgba(232,223,208,.45)",marginBottom:"24px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>每月狀態</div>
           <h1 className="subscribe-hero-title fi">
-            你不是想太多<br/>你只是一直在撐
+            有些感受<br/>值得被慢慢理解
           </h1>
           <p className="subscribe-hero-copy fi">
             這不是一個<br/>讓你變得更好的地方<br/>而是讓你慢慢穩下來
@@ -2793,7 +2799,7 @@ function Ongoing({ go }) {
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 60% at 90% 30%,rgba(212,200,181,.28) 0%,transparent 60%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
           <div className="slb fi">持續中的你</div>
-          <h1 className="htit fi" style={{fontSize:"clamp(26px,3.5vw,44px)"}}>你不需要一次做對所有事。</h1>
+          <h1 className="htit fi" style={{fontSize:"clamp(26px,3.5vw,44px)"}}>你不需要一次做對所有事</h1>
           <p className="hbo fi" style={{maxWidth:"520px"}}>如果你曾經在這裡停下來過，你應該已經開始看見——有些改變，不是一次完成的，而是在不同階段，會有不同的狀態。</p>
         </div>
       </div>
@@ -2916,7 +2922,7 @@ function Art({ go }) {
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 60% at 90% 30%,rgba(212,200,181,.28) 0%,transparent 60%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
           <div className="slb fi">文章與個案分享</div>
-          <h1 className="htit fi" style={{fontSize:"clamp(26px,3.5vw,44px)"}}>如果你還在認識這裡，<br/>從這裡開始最沒有壓力。</h1>
+          <h1 className="htit fi" style={{fontSize:"clamp(26px,3.5vw,44px)"}}>如果你還在認識這裡，<br/>從這裡開始最沒有壓力</h1>
           <p className="hbo fi" style={{maxWidth:"500px"}}>透過文字先感受這裡的觀點，慢慢看見自己是否和這裡有關。</p>
         </div>
       </div>
@@ -2983,7 +2989,7 @@ function Art({ go }) {
       <section style={{background:"var(--cream)"}}>
         <div className="CN">
           <div className="slb fi">學員見證</div>
-          <h2 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(18px,2.2vw,26px)",fontWeight:300,color:"var(--text)",marginBottom:"8px"}} className="fi">真實的整理，會留下真實的改變。</h2>
+          <h2 style={{fontFamily:"'Noto Serif TC',serif",fontSize:"clamp(18px,2.2vw,26px)",fontWeight:300,color:"var(--text)",marginBottom:"8px"}} className="fi">真實的整理，會留下真實的改變</h2>
           <p style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9,marginBottom:"48px"}} className="fi">以下是學員的回饋，經本人同意後分享。</p>
           {TESTIMONIALS.map((t, i) => {
             const isExp = expanded[i];
@@ -3298,7 +3304,7 @@ function NumCalc({ go }) {
         <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 60% at 90% 30%,rgba(212,200,181,.26) 0%,transparent 65%)",pointerEvents:"none"}}/>
         <div className="CN" style={{position:"relative",zIndex:1}}>
           <div className="slb">生命數字 · Numerology</div>
-          <h1 className="htit" style={{fontSize:"clamp(28px,3.8vw,44px)"}}>認識你的生命數字。</h1>
+          <h1 className="htit" style={{fontSize:"clamp(28px,3.8vw,44px)"}}>認識你的生命數字</h1>
           <p className="hbo" style={{maxWidth:"540px"}}>數字不是命運，而是一個看見自己的角度。輸入你的出生日期，了解你的主命數、流年數與挑戰數。</p>
         </div>
       </div>
