@@ -443,23 +443,28 @@ const Styles = () => (
     .home-report-list{display:grid;gap:10px;margin:28px 0 34px}
     .home-report-list div{font-size:14px;color:#514941;line-height:1.8}
     .home-start-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    .home-start-card{background:#FFFDF8;border:1px solid rgba(212,200,181,.58);border-radius:22px;padding:34px 32px;box-shadow:0 22px 54px rgba(86,70,50,.07);display:flex;flex-direction:column;min-height:310px;transition:transform .25s ease,box-shadow .25s ease}
+    .home-start-card{background:#FFFDF8;border:1px solid rgba(212,200,181,.58);border-radius:22px;padding:22px 26px;box-shadow:0 22px 54px rgba(86,70,50,.07);display:flex;flex-direction:column;min-height:248px;transition:transform .25s ease,box-shadow .25s ease}
     .home-start-card:hover{transform:translateY(-4px);box-shadow:0 26px 64px rgba(86,70,50,.08)}
-    .home-start-number{font-family:'Cormorant Garamond',serif;font-size:28px;color:#C2AF89;margin-bottom:18px;line-height:1}
-    .home-start-title{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:300;color:#2C2825;line-height:1.5;margin-bottom:18px}
+    .home-start-number{font-family:'Cormorant Garamond',serif;font-size:25px;color:#C2AF89;margin-bottom:11px;line-height:1}
+    .home-start-title{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:300;color:#2C2825;line-height:1.45;margin-bottom:10px}
     .home-start-fit{font-size:12px;letter-spacing:.18em;color:#A19179;margin-bottom:10px;text-transform:uppercase}
-    .home-start-card p{font-size:14px;color:#665E56;line-height:2;margin-bottom:28px}
+    .home-start-card p{font-size:13px;color:#665E56;line-height:1.75;margin-bottom:16px}
     .home-start-card button{margin-top:auto;align-self:flex-start}
+    .home-start-card .home-secondary-btn{padding:12px 24px}
     .home-v2-story .home-body-lines{gap:10px}
     .home-v2-story .home-body-lines p:nth-last-child(2){margin-top:18px}
+    .home-report-panel .home-split-copy{transform:translateY(-44px)}
     .home-v2-quote{padding:148px 24px;text-align:center;background:#2B302C}
     .home-v2-quote-main{font-family:'Noto Serif TC',serif;font-size:clamp(28px,3.3vw,44px);font-weight:300;line-height:1.8;color:#F1E8DB}
     .home-v2-quote-rule{width:38px;height:1px;background:rgba(216,201,165,.55);margin:34px auto}
     .home-v2-quote-sub{font-family:'Noto Serif TC',serif;font-size:clamp(19px,2vw,27px);font-weight:300;line-height:1.85;color:rgba(241,232,219,.72)}
     .home-v2-testimonials{background:var(--cream)}
-    .home-v2-testimonial-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:50px}
-    .home-v2-testimonial{min-height:220px;padding:38px 34px;border-radius:20px;background:rgba(255,253,248,.74);box-shadow:0 20px 52px rgba(86,70,50,.06);display:flex;align-items:center}
-    .home-v2-testimonial p{font-family:'Noto Serif TC',serif;font-size:20px;font-weight:300;line-height:1.9;color:#403A35}
+    .home-v2-testimonial-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:50px}
+    .home-v2-testimonial{padding:34px 34px;border-radius:20px;background:rgba(255,253,248,.74);box-shadow:0 20px 52px rgba(86,70,50,.06)}
+    .home-v2-testimonial p{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:300;line-height:2;color:#403A35;margin-bottom:26px}
+    .home-v2-testimonial-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .home-v2-testimonial-name{font-size:13px;color:var(--soft);letter-spacing:.12em}
+    .home-v2-testimonial-tag{font-size:11px;letter-spacing:.16em;color:var(--forest);border:1px solid rgba(56,89,75,.45);padding:4px 10px}
     .home-v2-faq{background:var(--w)}
     .home-v2-faq-inner{max-width:760px;margin:0 auto}
     .home-v2-faq .home-intro{text-align:left;margin-left:0}
@@ -606,15 +611,15 @@ const Styles = () => (
       .C{padding:0 18px}.CN{padding:0 18px}
       section{padding:64px 0}
       .home-section{padding:62px 0}
-      .home-quiet-hero{display:flex;flex-direction:column;padding:calc(var(--nav) + 18px) 18px 48px;gap:24px;min-height:auto;background:linear-gradient(155deg,#FAF7F2 0%,#F4EEE6 68%,#EDE2D5 100%)}
+      .home-quiet-hero{display:flex;flex-direction:column;padding:calc(var(--nav) + 12px) 18px 28px;gap:16px;min-height:100svh;background:linear-gradient(155deg,#FAF7F2 0%,#F4EEE6 68%,#EDE2D5 100%)}
       .home-quiet-hero::before,.home-quiet-hero::after{display:none}
-      .home-portrait-frame{position:relative;order:1;width:100%;inset:auto;min-height:0;height:108vw;max-height:500px;border-radius:18px;box-shadow:0 18px 44px rgba(72,57,43,.1);background:#EADFD8}
+      .home-portrait-frame{position:relative;order:1;width:100%;inset:auto;min-height:180px;height:46vw;max-height:230px;border-radius:18px;box-shadow:0 18px 44px rgba(72,57,43,.1);background:#EADFD8}
       .home-portrait-frame img{object-fit:cover;object-position:24% center}
       .home-portrait-frame::after{background:linear-gradient(to top,rgba(250,247,242,.16),transparent 24%)}
-      .home-hero-copy{order:2;width:100%;max-width:100%;margin:0;z-index:1}
-      .home-eyebrow{font-size:12px;letter-spacing:.12em;line-height:1.8;margin-bottom:22px;color:#5C524A}
-      .home-hero-title{font-size:34px;line-height:1.38;margin-bottom:24px}
-      .home-hero-body{font-size:16px;line-height:2;color:#4E4741;margin-bottom:32px}
+      .home-hero-copy{order:2;width:100%;max-width:100%;margin:0;padding:0;z-index:1}
+      .home-eyebrow{font-size:11px;letter-spacing:.1em;line-height:1.7;margin-bottom:12px;color:#5C524A}
+      .home-hero-title{font-size:32px;line-height:1.36;margin-bottom:14px}
+      .home-hero-body{font-size:15px;line-height:1.85;color:#4E4741;margin-bottom:18px}
       .home-hero-actions{flex-direction:column;align-items:stretch;gap:12px}
       .home-secondary-btn{width:100%;text-align:center}
       .home-intro{margin-bottom:34px;text-align:left}
@@ -629,6 +634,8 @@ const Styles = () => (
       .home-card-copy{font-size:16px;line-height:2;color:#4E4741}
       .home-split,.home-split.reverse{grid-template-columns:1fr;gap:32px}
       .home-split-copy{max-width:100%}
+      .home-report-panel .home-split{gap:22px}
+      .home-report-panel .home-split-copy{transform:none}
       .home-large-title{font-size:28px;line-height:1.62;margin-bottom:22px}
       .home-body-lines{gap:12px;margin-bottom:26px}
       .home-body-lines p{font-size:16px;line-height:2;color:#4E4741}
@@ -636,22 +643,23 @@ const Styles = () => (
       .home-focus-pill{font-size:13px;padding:9px 15px}
       .home-image-card{border-radius:18px}
       .home-start-grid{grid-template-columns:1fr;gap:16px}
-      .home-start-card{min-height:auto;padding:30px 26px;border-radius:18px}
-      .home-start-title{font-size:22px}
-      .home-start-card p{font-size:16px;line-height:2;color:#4E4741}
+      .home-start-card{min-height:auto;padding:22px 22px;border-radius:18px}
+      .home-start-title{font-size:20px}
+      .home-start-card p{font-size:15px !important;line-height:1.75 !important;color:#4E4741;margin-bottom:16px}
       .home-start-card button{width:100%;align-self:stretch}
       .home-v2-quote{padding:88px 22px}
       .home-v2-quote-main{font-size:27px}
       .home-v2-quote-sub{font-size:20px}
       .home-v2-testimonial-grid{grid-template-columns:1fr;gap:14px;margin-top:32px}
-      .home-v2-testimonial{min-height:0;padding:30px 26px;border-radius:16px}
-      .home-v2-testimonial p{font-size:19px}
+      .home-v2-testimonial{padding:24px 24px;border-radius:16px}
+      .home-v2-testimonial p{font-size:16px;line-height:1.95}
       .home-v2-faq .home-intro{text-align:left}
       .home-v2-faq .fqq{font-size:17px;line-height:1.7}
       .home-v2-faq .fqa{font-size:16px}
       .home-v2-final{padding:96px 22px}
       .home-v2-final h2{font-size:29px}
       .home-v2-final p{font-size:19px;margin:28px 0 34px}
+      .footer-main{grid-template-columns:1fr !important;gap:32px !important;margin-bottom:40px !important}
       .about-new-hero{min-height:auto;padding:calc(var(--nav) + 24px) 0 64px}
       .about-new-hero-grid{padding:0 18px;grid-template-columns:1fr;gap:34px}
       .about-new-hero-copy{order:2}
@@ -1190,28 +1198,24 @@ function Home({ go }) {
   const starts = [
     {
       t: <>我最近，<br/>好像有點累了。</>,
-      x: <>適合最近一直內耗、<br/>想重新理解自己的人。</>,
+      x: <>適合最近一直內耗，<br/>想知道自己怎麼了的人。</>,
       btn: "看見現在的自己",
       p: "aware",
     },
     {
       t: "我想慢慢穩定下來。",
-      x: <>想持續整理自己，<br/>建立屬於自己的生活節奏。</>,
+      x: <>把理解自己，<br/>變成生活的一部分。</>,
       btn: "了解每月陪伴",
       p: "subscribe",
     },
     {
-      t: "我準備好真正改變了。",
+      t: <>我準備，<br/>走進真正的改變。</>,
       x: <>願意面對核心議題，<br/>希望有人陪自己走一段路。</>,
       btn: "了解深度陪伴",
       p: "deep",
     },
   ];
-  const testimonials = [
-    <>原來我不是脆弱，<br/>我只是一直在撐。</>,
-    <>我第一次知道，<br/>自己為什麼總是在關係裡委屈。</>,
-    <>那份整理，<br/>讓我重新看懂現在的自己。</>,
-  ];
+  const testimonials = TESTIMONIALS;
 
   return (
     <div className="page home-shell">
@@ -1221,7 +1225,7 @@ function Home({ go }) {
           <h1 className="home-hero-title fi">你不是想太多。<br/>你只是一直在撐。</h1>
           <p className="home-hero-body fi">
             陪你理解那些說不出口的情緒，<br/>
-            重新找回穩定與選擇自己的力量。
+            重新找回自己的力量。
           </p>
           <div className="home-hero-actions fi">
             <button className="bp" onClick={() => go("apply")}>預約初談</button>
@@ -1242,7 +1246,7 @@ function Home({ go }) {
             <div className="home-body-lines fi">
               <p>有人困在關係裡。</p>
               <p>有人一直責怪自己。</p>
-              <p>有人很努力，<br/>卻不知道自己真正想要什麼。</p>
+              <p>也有人很努力，<br/>卻不知道自己真正想要什麼。</p>
               <p>我做的不是給你答案。</p>
               <p>而是陪你重新理解自己。</p>
             </div>
@@ -1255,7 +1259,7 @@ function Home({ go }) {
           <div className="home-image-card fi">
             <img src={HOME_SOUL_REPORT} alt="靈魂狀態紀錄範例" />
           </div>
-          <div className="home-split-copy">
+          <div className="home-split-copy home-report-copy">
             <div className="home-intro-kicker fi">Soul State Report</div>
             <h2 className="home-large-title fi">每個月，<br/>收到一份<br/>關於自己的整理。</h2>
             <div className="home-body-lines fi">
@@ -1264,7 +1268,7 @@ function Home({ go }) {
               <p>整理成一份</p>
               <p>看得懂自己的紀錄。</p>
             </div>
-            <button className="home-secondary-btn fi" onClick={() => go("subscribe")}>了解 Soul State Report</button>
+            <button className="home-secondary-btn fi" onClick={() => go("subscribe")}>看看這份整理</button>
           </div>
         </div>
       </section>
@@ -1292,7 +1296,7 @@ function Home({ go }) {
       <section className="home-v2-quote">
         <div className="home-v2-quote-main fi">療癒不是變成另一個人。<br/>而是停止一直勉強自己。</div>
         <div className="home-v2-quote-rule fi"/>
-        <div className="home-v2-quote-sub fi">真正的改變，<br/>從理解自己開始。</div>
+        <div className="home-v2-quote-sub fi">真正的改變，<br/>不是更努力。<br/>而是更理解自己。</div>
       </section>
 
       <section className="home-section home-v2-testimonials">
@@ -1302,8 +1306,14 @@ function Home({ go }) {
             <h2 className="home-section-title fi">她們這麼說</h2>
           </div>
           <div className="home-v2-testimonial-grid">
-            {testimonials.map((text, i) => (
-              <article className="home-v2-testimonial fi" key={i}><p>{text}</p></article>
+            {testimonials.map((item, i) => (
+              <article className="home-v2-testimonial fi" key={i}>
+                <p>「{item.text}」</p>
+                <div className="home-v2-testimonial-meta">
+                  <span className="home-v2-testimonial-name">{item.name}</span>
+                  <span className="home-v2-testimonial-tag">{item.tag}</span>
+                </div>
+              </article>
             ))}
           </div>
         </div>
@@ -1317,9 +1327,9 @@ function Home({ go }) {
               <h2 className="home-section-title fi">開始以前</h2>
             </div>
             <div className="fi">
-              <Faq q="我適合嗎？" a="如果你長期情緒內耗、關係疲憊、不知道自己怎麼了，都可以從初談開始。" />
-              <Faq q="一次就有效嗎？" a="療癒不是一次解決問題，而是慢慢理解自己。" />
-              <Faq q="我不知道怎麼開始？" a="那就先從一次初談開始。" />
+              <Faq q="我適合嗎？" a={<>如果你長期情緒內耗、<br/>關係疲憊、<br/>不知道自己怎麼了，<br/><br/>都可以從初談開始。</>} />
+              <Faq q="一次就有效嗎？" a={<>一次談話可以幫助你看見現在的狀態。<br/><br/>真正的改變，<br/>通常需要持續理解與練習。</>} />
+              <Faq q="我不知道怎麼開始？" a={<>那就先從一次初談開始。<br/><br/>不用準備好答案，<br/>只需要帶著現在的自己來。</>} />
             </div>
           </div>
         </div>
@@ -2001,19 +2011,18 @@ function Footer({ go }) {
   return (
     <footer className="site-footer" style={{background:"var(--text)",padding:"80px 0 40px",position:"relative",overflow:"hidden"}}>
       <div className="C">
-        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:"48px",marginBottom:"60px"}}>
+        <div className="footer-main" style={{display:"grid",gridTemplateColumns:"2fr 1fr",gap:"48px",marginBottom:"52px"}}>
           <div>
             <div className="footer-brand" style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"24px",color:"var(--sand)",marginBottom:"12px"}}>Sofia</div>
             <div className="footer-tagline" style={{fontSize:"12px",letterSpacing:"0.18em",color:"rgba(232,223,208,.4)",marginBottom:"20px"}}>情緒穩定 × 關係覺察 × 內在主導權</div>
-            <p className="footer-copy" style={{fontSize:"13px",color:"rgba(232,223,208,.45)",lineHeight:1.9}}>以陪伴取代建議，以覺察取代答案。</p>
+            <p className="footer-copy" style={{fontSize:"13px",color:"rgba(232,223,208,.45)",lineHeight:1.9}}>以陪伴取代建議，<br/>以覺察取代答案。</p>
           </div>
           <div>
             <div className="footer-heading" style={{fontSize:"12px",letterSpacing:"0.2em",color:"rgba(232,223,208,.35)",marginBottom:"20px",textTransform:"uppercase"}}>聯繫</div>
-            <a href="mailto:sophibaby@gmail.com" style={SL}>sophibaby@gmail.com</a>
             <a href="https://www.instagram.com/sofia202219101/" target="_blank" rel="noopener" style={SL}>Instagram</a>
-            <a href="https://line.me/R/ti/p/@567avtfh" target="_blank" rel="noopener" style={SL}>Line 官方帳號</a>
-            <a href="https://www.facebook.com/BelovedSofia" target="_blank" rel="noopener" style={SL}>Facebook</a>
-            <div className="footer-address" style={{fontSize:"13px",color:"rgba(212,200,181,.82)",lineHeight:1.8,marginTop:"18px"}}>
+            <a href="https://line.me/R/ti/p/@567avtfh" target="_blank" rel="noopener" style={SL}>LINE</a>
+            <a href="mailto:sophibaby@gmail.com" style={SL}>Email</a>
+            <div className="footer-address" style={{fontSize:"11px",color:"rgba(212,200,181,.42)",lineHeight:1.8,marginTop:"22px"}}>
               引力所 Fold Space<br/>台北市中山區復興北路366號7樓
             </div>
           </div>
