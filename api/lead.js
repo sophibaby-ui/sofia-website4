@@ -7,6 +7,7 @@ const escapeHtml = (value = "") =>
 const formatEmailHtml = (lead) => {
   const rows = [
     ["表單類型", lead.type],
+    ["方案選擇", lead.plan],
     ["姓名", lead.name],
     ["Email", lead.email],
     ["LINE / IG", lead.contact],
@@ -34,6 +35,7 @@ const formatEmailHtml = (lead) => {
 const formatTelegramText = (lead) => [
   `<b>Sofia 新表單通知</b>`,
   `<b>表單類型</b>\n${escapeHtml(lead.type)}`,
+  lead.plan ? `<b>方案選擇</b>\n${escapeHtml(lead.plan)}` : "",
   `<b>姓名</b>\n${escapeHtml(lead.name)}`,
   `<b>Email</b>\n${escapeHtml(lead.email)}`,
   lead.contact ? `<b>LINE / IG</b>\n${escapeHtml(lead.contact)}` : "",
@@ -149,6 +151,7 @@ export default async function handler(req, res) {
 
     const lead = {
       type: req.body?.type || "表單",
+      plan: req.body?.plan || req.body?.raw?.["方案選擇"] || "",
       name: req.body?.name || "",
       email: req.body?.email || "",
       contact: req.body?.contact || "",

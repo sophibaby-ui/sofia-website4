@@ -569,6 +569,35 @@ const Styles = () => (
     .frequency-principle-copy{position:relative;z-index:1}
     .frequency-principle-copy p{font-size:15px;line-height:2.15;color:var(--soft);margin-bottom:20px}
     .frequency-principle-copy strong{font-weight:400;color:var(--forest)}
+    .frequency-support-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:0;margin-top:48px;align-items:stretch;overflow:hidden;background:linear-gradient(135deg,#F7F2EA 0%,#FBF8F3 48%,rgba(61,90,76,.08) 100%);border:1px solid var(--div);border-radius:8px;box-shadow:0 22px 55px rgba(80,60,50,.055)}
+    .frequency-support-card{position:relative;background:transparent;border:0;border-right:1px solid var(--div);border-radius:0;padding:54px 50px;box-shadow:none}
+    .frequency-support-card-mark{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:26px}
+    .frequency-support-card h3{font-family:'Noto Serif TC',serif;font-size:clamp(24px,2.4vw,32px);font-weight:300;line-height:1.55;color:var(--text);margin-bottom:14px}
+    .frequency-support-card .sub{font-size:16px;line-height:1.9;color:var(--forest);margin-bottom:24px}
+    .frequency-support-card p{font-size:15px;line-height:2.05;color:var(--soft);margin-bottom:18px}
+    .frequency-timeline{position:relative;display:grid;gap:0;padding:42px 42px}
+    .frequency-timeline::before{content:"";position:absolute;left:62px;top:86px;bottom:58px;width:1px;background:linear-gradient(180deg,rgba(186,158,110,.18),rgba(61,90,76,.38),rgba(186,158,110,.18))}
+    .frequency-timeline-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--wg);margin:0 0 10px 72px}
+    .frequency-timeline-step{position:relative;background:transparent;border:0;border-bottom:1px solid rgba(212,200,181,.62);border-radius:0;padding:24px 0 24px 72px}
+    .frequency-timeline-step:last-child{border-bottom:0}
+    .frequency-timeline-step::before{content:attr(data-step);position:absolute;left:0;top:27px;width:42px;height:42px;border-radius:50%;border:1px solid var(--gold);background:rgba(250,247,242,.9);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--forest);letter-spacing:.08em;z-index:1}
+    .frequency-timeline-step h3{font-family:'Noto Serif TC',serif;font-size:19px;font-weight:300;color:var(--text);line-height:1.5;margin-bottom:8px}
+    .frequency-timeline-step p{font-size:14px;line-height:1.9;color:var(--soft)}
+    .frequency-feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:42px}
+    .frequency-feature{position:relative;min-height:260px;overflow:hidden;background:linear-gradient(180deg,#FBF8F3 0%,#F5F0E8 100%);border:1px solid rgba(212,200,181,.78);border-radius:8px;padding:34px 28px;box-shadow:0 18px 42px rgba(80,60,50,.05);transition:transform .25s,box-shadow .25s}
+    .frequency-feature::before{content:"";position:absolute;inset:auto -20% -45% -20%;height:55%;background:radial-gradient(ellipse at center,rgba(61,90,76,.13),transparent 62%);opacity:.72;pointer-events:none}
+    .frequency-feature:hover{transform:translateY(-4px);box-shadow:0 22px 44px rgba(80,60,50,.085)}
+    .frequency-feature.is-accent{background:linear-gradient(145deg,var(--forest),#26332D);border-color:transparent}
+    .frequency-feature.is-accent::before{background:radial-gradient(ellipse at center,rgba(232,223,208,.18),transparent 62%)}
+    .frequency-feature.is-accent .frequency-feature-icon{color:rgba(232,223,208,.74)}
+    .frequency-feature.is-accent h3{color:var(--sand)}
+    .frequency-feature.is-accent p{color:rgba(232,223,208,.74)}
+    .frequency-feature-icon{position:relative;z-index:1;font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:13px;letter-spacing:.28em;margin-bottom:30px}
+    .frequency-feature h3{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:300;color:var(--text);line-height:1.5;margin-bottom:12px}
+    .frequency-feature p{font-size:13px;line-height:1.9;color:var(--soft)}
+    .frequency-feature h3,.frequency-feature p{position:relative;z-index:1}
+    .frequency-highlight{margin-top:54px;padding:48px 56px;text-align:center;background:linear-gradient(135deg,var(--forest),#26332D);color:var(--sand);border-radius:8px;box-shadow:0 18px 42px rgba(40,48,42,.12)}
+    .frequency-highlight p{font-family:'Noto Serif TC',serif;font-size:clamp(22px,2.5vw,31px);font-weight:300;line-height:1.75;letter-spacing:.03em}
     .frequency-apps{background:var(--cream)}
     .frequency-app-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:48px}
     .frequency-app-hint{display:none}
@@ -587,7 +616,7 @@ const Styles = () => (
     .frequency-faq-icon{width:24px;height:24px;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:16px;flex-shrink:0;transition:transform .25s}
     .frequency-faq-item.is-open .frequency-faq-icon{transform:rotate(45deg)}
     .frequency-faq-answer{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;font-size:14px;line-height:2;color:var(--soft)}
-    .frequency-faq-item.is-open .frequency-faq-answer{max-height:340px;padding-bottom:24px}
+    .frequency-faq-item.is-open .frequency-faq-answer{max-height:520px;padding-bottom:24px}
     .frequency-note{margin-top:32px;padding:24px 28px;border-left:2px solid var(--forest);background:var(--cream);font-size:13px;line-height:2;color:var(--soft)}
     .frequency-cta{position:relative;overflow:hidden;text-align:center;background:var(--forest)}
     .frequency-cta-bg{position:absolute;inset:0;background:url('/frequency/cta-bg.jpg') center 30%/cover no-repeat;opacity:.16}
@@ -619,6 +648,9 @@ const Styles = () => (
       .about-new-work-photo{height:560px}
       .frequency-inner{padding:0 32px}
       .frequency-principle{padding-right:48%;padding-left:48px}
+      .frequency-support-grid{grid-template-columns:1fr}
+      .frequency-support-card{border-right:0;border-bottom:1px solid var(--div)}
+      .frequency-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
     }
 
     /* NAV DARK */
@@ -735,6 +767,19 @@ const Styles = () => (
       .frequency-principle::before{background-position:center 66%;background-size:cover;transform:scale(1.04);-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 78%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 78%,transparent 100%)}
       .frequency-principle::after{background:linear-gradient(180deg,rgba(247,243,237,.98) 0%,rgba(247,243,237,.95) 47%,rgba(247,243,237,.72) 61%,rgba(247,243,237,.12) 86%,rgba(247,243,237,.03) 100%)}
       .frequency-principle-copy p{font-size:16px;line-height:2.05}
+      .frequency-support-grid{gap:0;margin:30px -18px 0;border-radius:0}
+      .frequency-support-card{padding:34px 24px;border-right:0;border-bottom:1px solid var(--div)}
+      .frequency-support-card-mark{margin-bottom:18px}
+      .frequency-support-card p{font-size:16px;line-height:2}
+      .frequency-timeline{padding:28px 22px}
+      .frequency-timeline::before{left:43px;top:72px;bottom:50px}
+      .frequency-timeline-label{margin-left:58px}
+      .frequency-timeline-step{padding:20px 0 20px 58px}
+      .frequency-timeline-step::before{width:34px;height:34px;top:22px;font-size:13px}
+      .frequency-feature-grid{grid-template-columns:1fr;gap:12px;margin-top:30px}
+      .frequency-feature{min-height:auto;padding:28px 24px}
+      .frequency-feature p{font-size:15px;line-height:1.9}
+      .frequency-highlight{margin-top:36px;padding:34px 24px}
       .frequency-app-hint{display:block;margin-top:20px;font-size:12px;letter-spacing:.16em;color:var(--wg)}
       .frequency-app-list{display:grid;grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:minmax(246px,72vw);gap:14px;margin-top:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 18px 16px;margin-left:-18px;margin-right:-18px;scrollbar-width:none}
       .frequency-app-list::-webkit-scrollbar{display:none}
@@ -1519,6 +1564,12 @@ function About({ go }) {
 function Frequency({ go }) {
   useFade();
   const [openFaq, setOpenFaq] = useState(null);
+  const features = [
+    { t:"找出核心議題", x:"透過 TimeWaver 分析目前真正影響你的核心問題，幫助你把改變的力量放在最重要的地方。" },
+    { t:"持續頻率調整", x:"依照分析結果，在陪伴期間持續進行頻率調整，提供穩定而持續的支持。" },
+    { t:"持續追蹤與優化", x:"根據你的變化，持續調整下一階段最值得優先改善的方向，讓陪伴更貼近你當下真正的需求。" },
+    { t:"Sofia 專業陪伴", x:"除了 TimeWaver 的分析與頻率調整，更重要的是 Sofia 會陪伴你理解自己、整理情緒，協助你把改變落實到生活中。" },
+  ];
   const applications = [
     { t:"健康身體與生活", img:"health.webp", x:"專注於壓力、慢性疲勞與生活節奏等常見狀態，作為理解身體需求與日常調整方向的輔助參考。" },
     { t:"情緒穩定", img:"emotion.webp", x:"協助你看見持續湧現的情緒，以及情緒背後可能需要被理解與整理的內在訊息。" },
@@ -1531,12 +1582,13 @@ function Frequency({ go }) {
     { t:"能量與行動補充", img:"energy.webp", x:"透過個人狀態整理，了解目前最需要被支持的面向，找到更貼近自己的行動節奏。" },
   ];
   const faqs = [
-    ["什麼是頻率調和？","頻率調和透過 TimeWaver 進行信息場分析與狀態整理，協助使用者從不同角度理解身體、情緒、思維及生活議題。它是一種輔助自我覺察的工具，不是醫療診斷或治療。"],
-    ["頻率如何進行？","你提供基本資料與目前想整理的主題後，我會結合 TimeWaver 分析、生活脈絡與對談內容，整理成可理解的狀態重點與方向。多數流程可以在線上完成。"],
+    ["什麼是頻率調整？","TimeWaver 會先透過分析，找出目前最值得關注的核心議題與優先方向。接著，依據分析結果建立專屬的頻率調整方案，在陪伴期間持續提供支持。"],
+    ["頻率調整需要做什麼嗎？","不需要。完成分析後，系統會依照你的專屬設定，在陪伴期間持續進行頻率調整。你不需要配戴任何設備，也不需要固定在線。Sofia 會依照方案內容持續追蹤你的變化，並適時調整協助方向。"],
+    ["我會怎麼知道自己正在改變？","每個人的改變速度都不同。有些人會先感受到情緒變得比較穩定，有些人則是在關係、工作、睡眠、行動力或生活狀態上，慢慢出現新的變化。我們會透過定期分析與追蹤，陪伴你觀察自己的變化。"],
     ["TimeWaver 的角色是什麼？","TimeWaver 是我工作時使用的工具之一。真正重要的不是機器替你下結論，而是透過資料、對談與你的真實生活互相對照，幫助你理解自己。"],
     ["是否有風險？","過程不涉及侵入性操作。不過，它不能取代醫療、心理治療或其他專業診斷；若你正面臨健康或心理上的急迫問題，仍應優先尋求合格專業人員協助。"],
     ["一定要親自到現場嗎？","不一定。多數狀態整理可以在線上進行；如果你希望安排實體對談，也可以另外詢問台北的諮詢空間。"],
-    ["我適合從哪裡開始？","如果你還不確定，可以先預約初次穩定體驗，說說最近最在意的狀態。我們會一起判斷 TimeWaver 是否適合成為這次整理的工具。"],
+    ["我適合從哪裡開始？","如果你還不確定，可以先預約初次穩定體驗，說說最近最在意的狀態。我們會一起判斷 TimeWaver 頻率調整是否適合成為這次陪伴的工具。"],
   ];
 
   return (
@@ -1545,11 +1597,11 @@ function Frequency({ go }) {
         <div className="frequency-hero-bg"/>
         <div className="frequency-hero-overlay"/>
         <div className="frequency-hero-inner">
-          <div className="frequency-eyebrow fi">TimeWaver · 狀態分析與頻率調和</div>
-          <h1 className="frequency-title fi">TimeWaver<br/><em>頻率調和</em></h1>
+          <div className="frequency-eyebrow fi">TimeWaver 頻率調整（Frequency）</div>
+          <h1 className="frequency-title fi">TimeWaver<br/><em>頻率調整</em></h1>
           <p className="frequency-lead fi">
-            透過<strong>狀態分析、信息整理</strong>與<strong>深度對談</strong>，<br/>
-            看見那些難以說清楚、卻持續影響生活的內在模式。
+            透過<strong>狀態分析、持續頻率調整</strong>與<strong>專業陪伴</strong>，<br/>
+            看見核心議題，並在日常裡一步一步靠近更穩定的自己。
           </p>
           <div className="frequency-tags fi">
             {["身心狀態","情緒穩定","睡眠節奏","資源感","關係覺察","空間整理"].map(tag => <span className="frequency-tag" key={tag}>{tag}</span>)}
@@ -1561,15 +1613,63 @@ function Frequency({ go }) {
         <div className="frequency-inner">
           <div className="fi">
             <div className="frequency-label">How it works</div>
-            <h2 className="frequency-heading">運作方式</h2>
+            <h2 className="frequency-heading">什麼是頻率調整？</h2>
             <div className="frequency-rule"/>
           </div>
           <div className="frequency-principle">
             <div className="frequency-principle-copy fi">
-              <p>我們的身體、情緒、關係與生活經驗彼此相連。有時候，表面上看起來是不同的問題，底下卻可能有同一種反覆發生的模式。</p>
-              <p>TimeWaver 提供一個<strong>整理信息與觀察狀態</strong>的角度，讓原本模糊的感受更容易被說明、比較與理解。</p>
-              <p>我會把分析結果放回你的真實生活裡對照。工具不替你決定答案，而是協助我們更精準地看見：<strong>現在發生了什麼，以及下一步可以怎麼走。</strong></p>
+              <p><strong>根據分析結果，持續提供個人化支持與陪伴。</strong></p>
+              <p>TimeWaver 會先透過分析，找出目前最值得關注的核心議題與優先方向。</p>
+              <p>接著，依據分析結果建立專屬的頻率調整方案，在陪伴期間持續提供支持。</p>
+              <p>對許多人而言，這個過程就像持續整理與校準自己的生活節奏，讓情緒、思考、關係、工作與生活，有機會逐步回到更平衡的狀態。</p>
+              <p>每個人的狀態、感受與改變速度都不同，因此 Sofia 會結合 TimeWaver 的分析結果與專業陪伴，陪你一步一步調整，而不是只提供一次性的建議。</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="frequency-section">
+        <div className="frequency-inner">
+          <div className="fi">
+            <div className="frequency-label">Ongoing support</div>
+            <h2 className="frequency-heading">持續的頻率調整，讓改變真正發生</h2>
+            <div className="frequency-rule"/>
+          </div>
+          <div className="frequency-support-grid">
+            <div className="frequency-support-card fi">
+              <div className="frequency-support-card-mark">Ongoing support</div>
+              <h3>分析不是結束，<br/>而是陪伴的開始。</h3>
+              <div className="sub">真正的改變，不是發生在諮詢當天，而是在之後持續累積的每一天。</div>
+              <p>陪伴期間，Sofia 會依據你的分析結果，持續進行頻率調整，並根據你的變化持續優化協助方向。</p>
+              <p>依照不同的陪伴方案，會有不同的調整頻率與追蹤方式，讓支持不只停留在諮詢當天，而是延續到你的日常生活。</p>
+            </div>
+            <div className="frequency-timeline fi">
+              <div className="frequency-timeline-label">一段陪伴的節奏</div>
+              <div className="frequency-timeline-step" data-step="01">
+                <h3>看見核心議題</h3>
+                <p>先透過分析，整理目前最值得被看見的方向。</p>
+              </div>
+              <div className="frequency-timeline-step" data-step="02">
+                <h3>建立頻率調整</h3>
+                <p>依照分析結果，設定專屬於你的支持節奏。</p>
+              </div>
+              <div className="frequency-timeline-step" data-step="03">
+                <h3>持續追蹤變化</h3>
+                <p>Sofia 會依照你的狀態，調整下一階段陪伴重點。</p>
+              </div>
+            </div>
+          </div>
+          <div className="frequency-feature-grid">
+            {features.map((item, i) => (
+              <article className={`frequency-feature fi ${i === 1 ? "is-accent" : ""}`} key={item.t}>
+                <div className="frequency-feature-icon">{String(i + 1).padStart(2, "0")}</div>
+                <h3>{item.t}</h3>
+                <p>{item.x}</p>
+              </article>
+            ))}
+          </div>
+          <div className="frequency-highlight fi">
+            <p>分析讓你看見方向，<br/>持續的頻率調整與陪伴，讓改變真正發生。</p>
           </div>
         </div>
       </section>
@@ -1614,7 +1714,7 @@ function Frequency({ go }) {
                 <div className="frequency-faq-answer">{a}</div>
               </div>
             ))}
-            <div className="frequency-note">TimeWaver 與頻率調和屬於自我覺察及生活狀態整理的輔助工具，不取代醫療診斷、心理治療或其他專業服務。</div>
+            <div className="frequency-note">TimeWaver 與頻率調整屬於自我覺察及生活狀態整理的輔助工具，不取代醫療診斷、心理治療或其他專業服務。</div>
           </div>
         </div>
       </section>
@@ -1625,7 +1725,7 @@ function Frequency({ go }) {
         <div className="frequency-cta-inner fi">
           <div className="frequency-label">Begin here</div>
           <h2>先看懂現在的自己，<br/>再決定下一步</h2>
-          <p>如果你想知道 TimeWaver 是否適合你，可以先告訴我最近最想整理的狀態。</p>
+          <p>如果你想知道 TimeWaver 頻率調整是否適合你，可以先告訴我最近最想整理的狀態。</p>
           <button className="bp" onClick={() => go("apply")}>預約初次穩定體驗</button>
         </div>
       </section>
@@ -2572,6 +2672,7 @@ function Register({ go }) {
     try {
       await submitLead({
         type: "Soul State Report 個人狀態整理登記",
+        plan: planLabels[form.plan],
         name: form.name,
         email: form.email,
         contact: form.line,

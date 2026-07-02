@@ -6,6 +6,7 @@ function buildEmailBody(data) {
     "Sofia 新表單通知",
     "",
     "表單類型：" + (data.type || ""),
+    "方案選擇：" + (data.plan || (data.raw && data.raw["方案選擇"]) || ""),
     "姓名：" + (data.name || ""),
     "Email：" + (data.email || ""),
     "LINE / IG：" + (data.contact || ""),
@@ -45,6 +46,7 @@ function testNotifyEmail() {
   sendNotifyEmail({
     type: "Apps Script 測試",
     name: "測試通知",
+    plan: "先嘗試兩個月｜NT$2,999",
     email: NOTIFY_EMAIL,
     contact: "test",
     pain: "測試痛點",
@@ -68,6 +70,7 @@ function doPost(e) {
     sheet.appendRow([
       "送出時間",
       "表單類型",
+      "方案選擇",
       "姓名",
       "Email",
       "LINE / IG",
@@ -80,6 +83,7 @@ function doPost(e) {
   sheet.appendRow([
     data.submittedAt || new Date(),
     data.type || "",
+    data.plan || (data.raw && data.raw["方案選擇"]) || "",
     data.name || "",
     data.email || "",
     data.contact || "",
