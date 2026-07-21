@@ -1,0 +1,1793 @@
+.soul-garden-page {
+  min-height: 100vh;
+  padding: 18px 0 42px;
+  background:
+    radial-gradient(circle at 50% 8%, rgba(232, 223, 208, 0.72), transparent 34%),
+    linear-gradient(180deg, #faf7f2 0%, #f0e8dc 100%);
+  display: grid;
+  place-items: start center;
+}
+
+.soul-phone {
+  width: min(100vw, 430px);
+  min-height: min(844px, calc(100vh - var(--nav) - 22px));
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255, 255, 255, .58), transparent 28%),
+    linear-gradient(180deg, #f8f2e8 0%, #e7d9cc 100%);
+  border: 1px solid rgba(212, 200, 181, .9);
+  box-shadow: 0 28px 80px rgba(80, 65, 49, .18);
+  font-family: "Noto Sans TC", sans-serif;
+  color: #2f352f;
+}
+
+.soul-top {
+  height: 68px;
+  padding: 14px 16px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: rgba(250, 247, 242, .75);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(212, 200, 181, .55);
+  position: relative;
+  z-index: 5;
+}
+
+.soul-top strong {
+  display: block;
+  font-family: "Noto Serif TC", serif;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: .05em;
+}
+
+.soul-top span {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  color: #7b6f66;
+  letter-spacing: .08em;
+}
+
+.soul-top button {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(184, 168, 130, .45);
+  background: rgba(255, 255, 255, .52);
+  border-radius: 50%;
+  position: relative;
+}
+
+.soul-settings-btn::before,
+.soul-settings-btn::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 2px solid #6d7a65;
+  border-radius: 50%;
+}
+
+.soul-settings-btn::after {
+  inset: 16px;
+  background: #6d7a65;
+  border: 0;
+}
+
+.soul-status {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  padding: 10px 12px;
+}
+
+.soul-status div {
+  border: 1px solid rgba(212, 200, 181, .56);
+  background: rgba(255, 255, 255, .55);
+  border-radius: 999px;
+  padding: 7px 8px;
+  font-size: 12px;
+  text-align: center;
+  color: #3d5a4c;
+  box-shadow: 0 8px 18px rgba(79, 62, 44, .06);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.soul-map {
+  width: calc(100% - 24px);
+  height: min(610px, calc(100svh - 256px));
+  min-height: 470px;
+  margin: 0 12px;
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 200, 181, .75);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(247, 197, 204, .32), transparent 26%),
+    radial-gradient(circle at 82% 18%, rgba(190, 213, 226, .52), transparent 26%),
+    radial-gradient(circle at 64% 78%, rgba(244, 217, 152, .28), transparent 28%),
+    linear-gradient(145deg, #e9eadc 0%, #d7e0d5 48%, #e8d6d7 100%);
+  box-shadow: inset 0 0 60px rgba(255, 255, 255, .42);
+}
+
+.soul-map::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(255, 255, 255, .45);
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.soul-region {
+  position: absolute;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(250, 247, 242, .55);
+  color: rgba(61, 90, 76, .78);
+  font-size: 11px;
+  letter-spacing: .12em;
+  border: 1px solid rgba(255, 255, 255, .58);
+  z-index: 2;
+}
+
+.soul-seed { left: 18px; top: 18px; }
+.soul-moon { right: 18px; top: 18px; }
+.soul-butterfly { left: 18px; bottom: 112px; }
+
+.soul-region.locked {
+  background: rgba(50, 51, 46, .22);
+  color: rgba(255, 255, 255, .86);
+}
+
+.soul-region button {
+  display: block;
+  margin-top: 5px;
+  border: 0;
+  background: rgba(250, 247, 242, .85);
+  color: #3d5a4c;
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 10px;
+}
+
+.soul-resource,
+.soul-machine,
+.soul-shop,
+.soul-player {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  user-select: none;
+  touch-action: none;
+}
+
+.soul-resource {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(255,255,255,.88), rgba(239,232,219,.58));
+  border: 1px solid rgba(255, 255, 255, .72);
+  box-shadow: 0 8px 18px rgba(58, 83, 72, .14), inset 0 0 12px rgba(255,255,255,.52);
+  animation: soulFloat 2.4s ease-in-out infinite;
+}
+
+.soul-resource.is-hidden,
+.soul-machine.is-hidden {
+  opacity: .14;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+.soul-machine,
+.soul-shop {
+  width: 70px;
+  min-height: 64px;
+  display: grid;
+  place-items: center;
+  gap: 1px;
+  padding: 8px 6px;
+  border-radius: 18px;
+  background: rgba(250, 247, 242, .7);
+  border: 1px solid rgba(255, 255, 255, .56);
+  box-shadow: 0 14px 26px rgba(64, 75, 58, .1);
+}
+
+.soul-machine span,
+.soul-shop span {
+  flex: 0 0 auto;
+}
+
+.soul-machine small,
+.soul-shop small {
+  font-size: 10px;
+  line-height: 1.2;
+  color: #617066;
+  text-align: center;
+}
+
+.soul-progress {
+  width: 48px;
+  height: 5px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(212, 200, 181, .55);
+}
+
+.soul-progress i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #d5c28d, #f8e9bb);
+}
+
+.soul-ready {
+  position: absolute;
+  right: -8px;
+  top: -8px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 8px 20px rgba(61, 90, 76, .14);
+}
+
+.soul-player {
+  width: 48px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 48% 48% 42% 42%;
+  background:
+    radial-gradient(circle at 50% 18%, #f3d7c7 0 12px, transparent 13px),
+    radial-gradient(circle at 41% 15%, #654534 0 3px, transparent 4px),
+    radial-gradient(circle at 59% 15%, #654534 0 3px, transparent 4px),
+    linear-gradient(180deg, transparent 0 21px, #f7eee4 22px 39px, #d9b7a5 40px 46px, transparent 47px),
+    radial-gradient(ellipse at 50% 28%, #4f352c 0 19px, transparent 20px);
+  border: 2px solid rgba(255,255,255,.64);
+  box-shadow: 0 0 24px rgba(255, 255, 255, .8), 0 12px 22px rgba(59, 76, 66, .14);
+  z-index: 7;
+}
+
+.soul-player::before,
+.soul-player::after {
+  content: "";
+  position: absolute;
+  top: 28px;
+  width: 12px;
+  height: 20px;
+  border-radius: 12px 12px 3px 3px;
+  background: rgba(227, 203, 181, .88);
+  border: 1px solid rgba(255,255,255,.42);
+}
+
+.soul-player::before { left: 4px; transform: rotate(25deg); }
+.soul-player::after { right: 4px; transform: rotate(-25deg); }
+
+.soul-icon {
+  --c1: #d5c28d;
+  --c2: #f7ead4;
+  --c3: #3d5a4c;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+.soul-status .soul-icon {
+  width: 17px;
+  height: 17px;
+}
+
+.soul-resource .soul-icon,
+.soul-ready .soul-icon {
+  width: 26px;
+  height: 26px;
+}
+
+.soul-machine .soul-icon,
+.soul-shop .soul-icon {
+  width: 34px;
+  height: 34px;
+}
+
+.soul-inventory .soul-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 7px;
+}
+
+.soul-icon-coin {
+  background: radial-gradient(circle at 35% 30%, #fff5c9 0 18%, #e7bd58 20% 65%, #b47b25 66% 100%);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.34);
+}
+
+.soul-icon-coin::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border: 2px solid rgba(130, 82, 25, .45);
+  border-radius: 50%;
+}
+
+.soul-icon-bag {
+  border-radius: 6px 6px 9px 9px;
+  background: linear-gradient(180deg, #c8a273, #8c6a4d);
+}
+
+.soul-icon-bag::before {
+  content: "";
+  width: 9px;
+  height: 7px;
+  border: 2px solid rgba(255,255,255,.68);
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  position: absolute;
+  top: 1px;
+}
+
+.soul-icon-streak {
+  background: radial-gradient(circle at 50% 62%, #f3a45f 0 25%, #db7040 28% 48%, transparent 50%);
+  clip-path: polygon(52% 0, 68% 30%, 91% 44%, 71% 100%, 28% 100%, 9% 44%, 34% 30%);
+}
+
+.soul-icon-weeds {
+  background: transparent;
+}
+
+.soul-icon-weeds::before,
+.soul-icon-weeds::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  width: 8px;
+  height: 22px;
+  background: linear-gradient(180deg, #86a77d, #3d6b52);
+  border-radius: 90% 10% 80% 20%;
+  transform-origin: bottom;
+}
+
+.soul-icon-weeds::before { transform: rotate(-32deg); left: 6px; }
+.soul-icon-weeds::after { transform: rotate(26deg); right: 6px; }
+
+.soul-icon-seeds {
+  background: radial-gradient(circle, #fff8cd 0 14%, transparent 16%);
+}
+
+.soul-icon-seeds::before,
+.soul-icon-seeds::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: linear-gradient(135deg, transparent 39%, #e3bc55 40% 58%, transparent 59%);
+  transform: rotate(45deg);
+}
+
+.soul-icon-seeds::after {
+  transform: rotate(-45deg);
+}
+
+.soul-icon-dew,
+.soul-icon-dewPearl {
+  border-radius: 50% 50% 52% 52%;
+  background: linear-gradient(160deg, #e7fbff 8%, #82c7da 48%, #5f95c1 100%);
+  clip-path: path("M12 1 C18 9 22 15 22 20 C22 27 17 31 12 31 C7 31 2 27 2 20 C2 15 6 9 12 1 Z");
+}
+
+.soul-icon-petals,
+.soul-icon-soulFlower {
+  background: radial-gradient(circle, #f3cf8b 0 18%, transparent 19%);
+}
+
+.soul-icon-petals::before,
+.soul-icon-petals::after,
+.soul-icon-soulFlower::before,
+.soul-icon-soulFlower::after {
+  content: "";
+  position: absolute;
+  inset: 4px 8px;
+  border-radius: 90% 10% 90% 10%;
+  background: linear-gradient(180deg, #f6c5cf, #d58a9d);
+  transform-origin: center;
+}
+
+.soul-icon-petals::after,
+.soul-icon-soulFlower::after {
+  transform: rotate(90deg);
+}
+
+.soul-icon-lightOrb {
+  background: radial-gradient(circle at 42% 34%, #fff 0 13%, #c9b4f0 19% 54%, #8a70bc 78%);
+  box-shadow: 0 0 12px rgba(213, 194, 141, .42);
+}
+
+.soul-icon-wishBouquet {
+  background: transparent;
+}
+
+.soul-icon-wishBouquet::before {
+  content: "";
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 35%, #f5aebf 0 18%, transparent 20%),
+    radial-gradient(circle at 55% 28%, #f7d3da 0 18%, transparent 20%),
+    radial-gradient(circle at 68% 52%, #d99aa8 0 18%, transparent 20%),
+    linear-gradient(135deg, transparent 0 55%, #5f7d61 56% 62%, transparent 63%);
+}
+
+.soul-icon-butterflyBlessing,
+.soul-icon-butterflyMachine {
+  background: transparent;
+}
+
+.soul-icon-butterflyBlessing::before,
+.soul-icon-butterflyBlessing::after,
+.soul-icon-butterflyMachine::before,
+.soul-icon-butterflyMachine::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 17px;
+  top: 3px;
+  border-radius: 80% 20% 80% 20%;
+  background: linear-gradient(160deg, #d8c1f0, #85bcd0);
+}
+
+.soul-icon-butterflyBlessing::before,
+.soul-icon-butterflyMachine::before { left: 2px; transform: rotate(-22deg); }
+.soul-icon-butterflyBlessing::after,
+.soul-icon-butterflyMachine::after { right: 2px; transform: scaleX(-1) rotate(-22deg); }
+
+.soul-icon-purifier,
+.soul-icon-flowerMachine,
+.soul-icon-dewMachine,
+.soul-icon-blessingMachine {
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.54), transparent 42%),
+    linear-gradient(145deg, #718c77, #d4bf8d);
+  box-shadow: inset 0 -4px 0 rgba(76, 81, 63, .18), 0 0 12px rgba(255,255,255,.45);
+}
+
+.soul-icon-purifier::after,
+.soul-icon-flowerMachine::after,
+.soul-icon-dewMachine::after,
+.soul-icon-blessingMachine::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 45% 35%, #fff 0 16%, var(--c2) 20% 56%, var(--c1) 66%);
+  box-shadow: 0 0 10px rgba(248, 232, 186, .7);
+}
+
+.soul-icon-flowerMachine::after { --c1: #84a779; --c2: #eff6cf; }
+.soul-icon-dewMachine::after { --c1: #78b9d1; --c2: #e9fbff; }
+.soul-icon-blessingMachine::after { --c1: #b998d6; --c2: #fff0f5; }
+
+.soul-icon-shop {
+  border-radius: 9px 9px 12px 12px;
+  background: linear-gradient(180deg, #eeb4a5 0 28%, #fff5e4 29% 35%, #c89a6b 36% 100%);
+  box-shadow: inset 0 -5px 0 rgba(94, 64, 39, .15);
+}
+
+.soul-icon-shop::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 4px;
+  right: 4px;
+  height: 9px;
+  border-radius: 9px 9px 3px 3px;
+  background: repeating-linear-gradient(90deg, #f3d6bd 0 7px, #c87663 7px 14px);
+}
+
+.soul-sparkles {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.9) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(248,232,186,.75) 0 1px, transparent 2px);
+  background-size: 66px 72px, 94px 86px;
+  opacity: .46;
+  animation: soulDrift 8s linear infinite;
+  pointer-events: none;
+}
+
+.soul-bottom {
+  position: relative;
+  z-index: 6;
+  padding: 10px 12px 88px;
+}
+
+.soul-tasks {
+  border: 1px solid rgba(212, 200, 181, .7);
+  border-radius: 22px;
+  background: rgba(250, 247, 242, .74);
+  box-shadow: 0 12px 30px rgba(87, 66, 43, .08);
+  padding: 14px 16px;
+}
+
+.soul-tasks div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.soul-tasks strong {
+  font-family: "Noto Serif TC", serif;
+  font-size: 17px;
+  font-weight: 300;
+}
+
+.soul-tasks span {
+  font-size: 11px;
+  color: #8a7b6d;
+}
+
+.soul-tasks p {
+  font-size: 12px;
+  color: #5f645c;
+  margin: 3px 0;
+}
+
+.soul-joystick {
+  --jx: 0px;
+  --jy: 0px;
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .38);
+  border: 1px solid rgba(255, 255, 255, .62);
+  box-shadow: inset 0 0 22px rgba(255,255,255,.45), 0 12px 30px rgba(61,90,76,.12);
+  z-index: 15;
+  touch-action: none;
+}
+
+.soul-joystick i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  transform: translate(calc(-50% + var(--jx)), calc(-50% + var(--jy)));
+  background: linear-gradient(145deg, #3d5a4c, #6f927e);
+  box-shadow: 0 8px 18px rgba(61,90,76,.24);
+}
+
+.soul-actions {
+  position: absolute;
+  right: 18px;
+  bottom: 22px;
+  display: grid;
+  gap: 10px;
+  z-index: 15;
+}
+
+.soul-actions button,
+.soul-soft-btn,
+.soul-cta-list button,
+.soul-upgrade-row button {
+  border: 1px solid rgba(61, 90, 76, .45);
+  background: #3d5a4c;
+  color: #faf7f2;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 13px;
+  letter-spacing: .08em;
+}
+
+.soul-actions button:nth-child(2) {
+  background: rgba(250, 247, 242, .85);
+  color: #3d5a4c;
+}
+
+.soul-toast {
+  position: absolute;
+  left: 50%;
+  bottom: 124px;
+  transform: translateX(-50%);
+  z-index: 20;
+  background: rgba(38, 44, 38, .78);
+  color: #faf7f2;
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.18);
+}
+
+.soul-modal {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(41, 44, 39, .28);
+  backdrop-filter: blur(8px);
+}
+
+.soul-modal-card {
+  width: 100%;
+  max-width: 360px;
+  position: relative;
+  border-radius: 28px;
+  padding: 28px 24px 24px;
+  background:
+    radial-gradient(circle at 92% 8%, rgba(248, 218, 229, .45), transparent 28%),
+    #faf7f2;
+  border: 1px solid rgba(255,255,255,.72);
+  box-shadow: 0 24px 70px rgba(36, 38, 33, .22);
+}
+
+.soul-modal-card h2 {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.soul-modal-card p {
+  white-space: pre-line;
+  color: #665d55;
+  font-size: 14px;
+  line-height: 1.9;
+  margin: 8px 0;
+}
+
+.soul-close {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  border: 0;
+  background: transparent;
+  color: #7f746a;
+  font-size: 26px;
+}
+
+.soul-upgrade-row,
+.soul-inventory div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(212, 200, 181, .62);
+}
+
+.soul-upgrade-row strong,
+.soul-inventory h3 {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 300;
+}
+
+.soul-upgrade-row span {
+  display: block;
+  font-size: 11px;
+  color: #8f8175;
+}
+
+.soul-upgrade-row button:disabled {
+  opacity: .45;
+}
+
+.soul-inventory {
+  margin-top: 16px;
+}
+
+.soul-inventory h3 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.soul-inventory div span {
+  color: #5d625a;
+  font-size: 14px;
+}
+
+.soul-cta-list {
+  display: grid;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.soul-cta-list button {
+  width: 100%;
+  border-radius: 0;
+  background: transparent;
+  color: #3d5a4c;
+}
+
+@keyframes soulFloat {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-5px); }
+}
+
+@keyframes soulDrift {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 66px 72px, -94px 86px; }
+}
+
+@media (min-width: 769px) {
+  .soul-garden-page {
+    padding-top: 18px;
+  }
+
+  .soul-phone {
+    border-radius: 34px;
+  }
+}
+
+@media (max-width: 768px) {
+  .soul-garden-page {
+    padding: 0;
+    min-height: 100svh;
+    place-items: stretch;
+  }
+
+  .soul-phone {
+    width: 100vw;
+    min-height: calc(100svh - var(--nav));
+    border-left: 0;
+    border-right: 0;
+    box-shadow: none;
+  }
+}
+
+/* Tycoon map expansion */
+.soul-status {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.soul-status div {
+  padding: 7px 5px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.soul-map {
+  touch-action: none;
+  cursor: grab;
+}
+
+.soul-map:active {
+  cursor: grabbing;
+}
+
+.soul-world {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 840px;
+  height: 1160px;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.soul-area {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 34px;
+  border: 1px solid rgba(255, 255, 255, .58);
+  box-shadow: inset 0 0 42px rgba(255,255,255,.38), 0 12px 28px rgba(61,90,76,.06);
+}
+
+.soul-area::before,
+.soul-area::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.soul-area::before {
+  inset: 10px;
+  border: 1px solid rgba(255,255,255,.32);
+  border-radius: 28px;
+}
+
+.soul-area::after {
+  width: 220px;
+  height: 220px;
+  right: -54px;
+  bottom: -58px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.36) 0 2px, transparent 3px),
+    radial-gradient(circle at 48% 48%, rgba(248,232,186,.32), transparent 62%);
+  background-size: 32px 32px, 100% 100%;
+}
+
+.soul-area span {
+  position: absolute;
+  left: 20px;
+  top: 18px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(250,247,242,.58);
+  color: rgba(61,90,76,.8);
+  font-size: 12px;
+  letter-spacing: .16em;
+  border: 1px solid rgba(255,255,255,.48);
+}
+
+.soul-area span::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d5c28d;
+  box-shadow: 0 0 12px rgba(213,194,141,.7);
+}
+
+.soul-area button {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  z-index: 4;
+  border: 1px solid rgba(61,90,76,.28);
+  background: rgba(250,247,242,.88);
+  color: #3d5a4c;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 11px;
+  letter-spacing: .06em;
+}
+
+.soul-area-seed {
+  background:
+    radial-gradient(circle at 24% 68%, rgba(247,197,204,.48), transparent 22%),
+    radial-gradient(circle at 76% 30%, rgba(248,232,186,.36), transparent 24%),
+    linear-gradient(145deg, #dce7d3, #e9dfd1);
+}
+
+.soul-area-moon {
+  background:
+    radial-gradient(circle at 70% 24%, rgba(229,239,247,.58), transparent 25%),
+    radial-gradient(circle at 28% 74%, rgba(203,215,232,.52), transparent 28%),
+    linear-gradient(145deg, #d8e5e5, #c8d0e4);
+}
+
+.soul-area-crystal {
+  background:
+    radial-gradient(circle at 24% 74%, rgba(188,165,222,.36), transparent 28%),
+    radial-gradient(circle at 74% 34%, rgba(211,242,239,.5), transparent 25%),
+    linear-gradient(145deg, #e7e2da, #d7e6e1);
+}
+
+.soul-area-butterfly {
+  background:
+    radial-gradient(circle at 35% 70%, rgba(248,203,217,.5), transparent 27%),
+    radial-gradient(circle at 78% 35%, rgba(210,230,235,.5), transparent 23%),
+    linear-gradient(145deg, #e8d9dc, #dce7d3);
+}
+
+.soul-area-altar {
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255,255,255,.42), transparent 25%),
+    radial-gradient(circle at 18% 72%, rgba(214,199,232,.5), transparent 24%),
+    linear-gradient(145deg, #d0d9e7, #e4ddd2);
+}
+
+.soul-area-forest {
+  background:
+    radial-gradient(circle at 74% 70%, rgba(248,232,186,.34), transparent 24%),
+    radial-gradient(circle at 22% 32%, rgba(222,240,212,.45), transparent 26%),
+    linear-gradient(145deg, #ccd9c6, #e7d9cd);
+}
+
+.soul-area.is-locked {
+  filter: saturate(.68);
+}
+
+.soul-area.is-locked::before {
+  background: rgba(40, 45, 38, .32);
+  border-color: rgba(255,255,255,.2);
+  z-index: 2;
+}
+
+.soul-area.is-locked span {
+  color: rgba(255,255,255,.88);
+  background: rgba(36, 42, 36, .32);
+}
+
+.soul-path {
+  position: absolute;
+  z-index: 1;
+  height: 34px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.45) 0 2px, transparent 3px),
+    linear-gradient(90deg, rgba(224,210,188,.75), rgba(250,247,242,.58));
+  background-size: 28px 22px, 100% 100%;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.45);
+}
+
+.soul-path-a {
+  width: 250px;
+  left: 290px;
+  top: 332px;
+  transform: rotate(8deg);
+}
+
+.soul-path-b {
+  width: 330px;
+  left: 245px;
+  top: 595px;
+  transform: rotate(-4deg);
+}
+
+.soul-path-c {
+  width: 360px;
+  left: 240px;
+  top: 820px;
+  transform: rotate(10deg);
+}
+
+.soul-shop {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.68), rgba(250,247,242,.54)),
+    linear-gradient(145deg, #f5dccb, #d9c5a5);
+}
+
+.soul-hud {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 136px;
+  z-index: 16;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.soul-chapter,
+.soul-hud button {
+  pointer-events: auto;
+  border: 1px solid rgba(255,255,255,.6);
+  background: rgba(250,247,242,.68);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 26px rgba(61,90,76,.09);
+}
+
+.soul-chapter {
+  flex: 1;
+  min-width: 0;
+  border-radius: 18px;
+  padding: 9px 12px;
+}
+
+.soul-chapter strong {
+  display: block;
+  color: #3d5a4c;
+  font-size: 12px;
+  letter-spacing: .05em;
+}
+
+.soul-chapter span {
+  display: block;
+  margin-top: 4px;
+  color: #7c746c;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.soul-hud button {
+  border-radius: 18px;
+  padding: 0 12px;
+  color: #3d5a4c;
+  font-size: 12px;
+  letter-spacing: .08em;
+}
+
+.soul-bottom {
+  padding-bottom: 118px;
+}
+
+.soul-tasks p {
+  display: inline-block;
+  margin: 5px 5px 0 0;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.5);
+  border: 1px solid rgba(212,200,181,.46);
+}
+
+.soul-actions {
+  grid-template-columns: repeat(2, auto);
+  right: 16px;
+  bottom: 20px;
+  gap: 8px;
+}
+
+.soul-actions button {
+  padding: 9px 12px;
+  font-size: 11px;
+}
+
+.soul-actions button:nth-child(2),
+.soul-actions button:nth-child(3) {
+  background: rgba(250, 247, 242, .85);
+  color: #3d5a4c;
+}
+
+.soul-order-card {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 12px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(212,200,181,.62);
+}
+
+.soul-order-card strong {
+  display: block;
+  font-family: "Noto Serif TC", serif;
+  font-size: 17px;
+  font-weight: 300;
+}
+
+.soul-order-card span,
+.soul-order-card p {
+  color: #776c62;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.soul-order-card p {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+/* Soul Garden game-skin pass: closer to a vertical idle tycoon HUD. */
+.soul-garden-page {
+  min-height: 100svh;
+  padding: 10px 0;
+  background:
+    radial-gradient(circle at 50% 4%, rgba(255, 246, 227, .86), transparent 34%),
+    linear-gradient(180deg, #fff9ef 0%, #efe3d2 100%);
+}
+
+.soul-phone {
+  height: min(100svh - 20px, 884px);
+  min-height: 760px;
+  border-radius: 28px;
+  background: #f8efdF;
+  border: 1px solid rgba(127, 103, 72, .22);
+  box-shadow: 0 28px 82px rgba(71, 51, 31, .22);
+}
+
+.soul-top {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  height: 54px;
+  z-index: 30;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(58, 67, 49, .68), rgba(38, 45, 36, .46));
+  color: #fff7e9;
+  box-shadow: 0 12px 28px rgba(38, 45, 36, .22);
+}
+
+.soul-top strong {
+  font-size: 15px;
+  letter-spacing: .03em;
+  color: #fff8e9;
+  text-shadow: 0 1px 8px rgba(0,0,0,.22);
+}
+
+.soul-top span {
+  margin-top: 1px;
+  font-size: 10px;
+  color: rgba(255, 248, 233, .82);
+}
+
+.soul-top button {
+  width: 38px;
+  height: 38px;
+  background: rgba(255, 248, 233, .92);
+  border-color: rgba(103, 82, 50, .18);
+  box-shadow: 0 8px 18px rgba(37, 42, 32, .16);
+}
+
+.soul-status {
+  position: absolute;
+  top: 68px;
+  left: 12px;
+  right: 12px;
+  z-index: 31;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding: 0;
+  gap: 6px;
+}
+
+.soul-status div {
+  min-height: 34px;
+  padding: 6px 7px;
+  background: linear-gradient(180deg, rgba(61, 48, 35, .84), rgba(35, 42, 33, .76));
+  border: 1px solid rgba(255, 242, 210, .22);
+  color: #fff6df;
+  box-shadow: 0 8px 16px rgba(37, 42, 32, .22);
+  font-weight: 600;
+}
+
+.soul-map {
+  width: calc(100% - 18px);
+  height: calc(100% - 126px);
+  min-height: 0;
+  margin: 9px;
+  border-radius: 24px;
+  border: 1px solid rgba(83, 96, 72, .4);
+  background:
+    radial-gradient(circle at 16% 18%, rgba(255, 207, 213, .68), transparent 18%),
+    radial-gradient(circle at 80% 15%, rgba(246, 226, 170, .56), transparent 18%),
+    radial-gradient(circle at 72% 82%, rgba(170, 143, 219, .32), transparent 22%),
+    linear-gradient(145deg, #b8c9a3 0%, #78946d 35%, #d6c9a9 66%, #9db57f 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.24),
+    inset 0 -80px 130px rgba(55, 70, 48, .3),
+    0 18px 52px rgba(69, 54, 34, .2);
+}
+
+.soul-map::before {
+  inset: 0;
+  border-radius: 24px;
+  border: 0;
+  background:
+    radial-gradient(circle at 8% 10%, rgba(255,255,255,.46) 0 2px, transparent 3px),
+    radial-gradient(circle at 32% 22%, rgba(255,221,228,.72) 0 5px, transparent 6px),
+    radial-gradient(circle at 58% 16%, rgba(255,246,190,.6) 0 4px, transparent 5px),
+    radial-gradient(circle at 88% 30%, rgba(222,205,255,.55) 0 5px, transparent 6px),
+    radial-gradient(circle at 68% 76%, rgba(255,210,228,.62) 0 5px, transparent 6px),
+    linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 28%, rgba(42,52,40,.28));
+  background-size: 72px 72px, 118px 118px, 132px 132px, 146px 146px, 126px 126px, 100% 100%;
+  z-index: 2;
+}
+
+.soul-world {
+  background:
+    radial-gradient(ellipse at 24% 26%, rgba(255, 224, 230, .56), transparent 22%),
+    radial-gradient(ellipse at 70% 36%, rgba(255, 244, 189, .38), transparent 18%),
+    radial-gradient(ellipse at 46% 74%, rgba(184, 160, 223, .34), transparent 24%),
+    linear-gradient(135deg, rgba(166, 190, 139, .3), rgba(244, 221, 196, .26));
+}
+
+.soul-area {
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,.24);
+  box-shadow:
+    inset 0 0 55px rgba(255,255,255,.26),
+    inset 0 -28px 70px rgba(57,72,50,.08),
+    0 12px 24px rgba(43,55,40,.07);
+}
+
+.soul-area::before {
+  inset: 0;
+  border: 0;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255,255,255,.18), transparent 28%),
+    radial-gradient(circle at 78% 76%, rgba(255,232,174,.18), transparent 26%);
+}
+
+.soul-area::after {
+  width: 320px;
+  height: 280px;
+  right: -70px;
+  bottom: -65px;
+  opacity: .82;
+  background:
+    radial-gradient(circle, rgba(255,244,216,.7) 0 2px, transparent 3px),
+    radial-gradient(circle at 28% 60%, rgba(247,190,203,.38), transparent 18%),
+    radial-gradient(circle at 70% 35%, rgba(197,228,195,.34), transparent 20%);
+  background-size: 34px 34px, 100% 100%, 100% 100%;
+}
+
+.soul-area span {
+  top: 12px;
+  left: 14px;
+  background: rgba(44, 55, 40, .5);
+  color: rgba(255, 249, 234, .94);
+  border-color: rgba(255,255,255,.2);
+  box-shadow: 0 8px 18px rgba(43,55,40,.12);
+  backdrop-filter: blur(8px);
+}
+
+.soul-area button {
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 246, 225, .95);
+  color: #4a6747;
+  box-shadow: 0 8px 18px rgba(43,55,40,.14);
+}
+
+.soul-path {
+  height: 48px;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.58) 0 3px, transparent 4px),
+    linear-gradient(90deg, rgba(218, 199, 163, .88), rgba(255, 244, 221, .68));
+  background-size: 32px 24px, 100% 100%;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.5),
+    0 10px 20px rgba(65, 75, 52, .08);
+}
+
+.soul-resource {
+  width: 46px;
+  height: 46px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255,255,255,.95), rgba(255,255,255,.42) 46%, transparent 47%),
+    linear-gradient(145deg, rgba(255,248,228,.96), rgba(229,213,181,.82));
+  border: 1px solid rgba(255,255,255,.72);
+  box-shadow:
+    0 10px 20px rgba(33, 42, 34, .2),
+    0 0 18px rgba(255, 239, 170, .45),
+    inset 0 0 12px rgba(255,255,255,.72);
+}
+
+.soul-machine,
+.soul-shop {
+  width: 74px;
+  height: 74px;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255,255,255,.95), transparent 24%),
+    radial-gradient(circle at 50% 48%, rgba(156, 229, 184, .8), transparent 28%),
+    linear-gradient(160deg, #f2e4ca, #9ba889 52%, #6b775f);
+  border: 2px solid rgba(255,244,219,.72);
+  box-shadow:
+    0 18px 28px rgba(31, 39, 31, .22),
+    inset 0 -10px 18px rgba(44, 50, 38, .18),
+    0 0 22px rgba(151, 224, 177, .28);
+}
+
+.soul-machine::before,
+.soul-shop::before {
+  content: "";
+  position: absolute;
+  left: 11px;
+  right: 11px;
+  bottom: -9px;
+  height: 17px;
+  border-radius: 50%;
+  background: rgba(40, 52, 38, .18);
+  filter: blur(3px);
+  z-index: -1;
+}
+
+.soul-machine small,
+.soul-shop small {
+  top: -31px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: max-content;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(39, 46, 36, .78);
+  color: #fff8e8;
+  border: 1px solid rgba(255,255,255,.18);
+  font-size: 11px;
+  letter-spacing: .06em;
+  box-shadow: 0 8px 16px rgba(33, 42, 34, .18);
+}
+
+.soul-progress {
+  left: 7px;
+  right: 7px;
+  bottom: -20px;
+  height: 8px;
+  background: rgba(40, 45, 35, .35);
+  border: 1px solid rgba(255, 246, 218, .42);
+}
+
+.soul-progress i {
+  background: linear-gradient(90deg, #f8dc92, #89c58b);
+}
+
+.soul-ready {
+  right: -8px;
+  top: -8px;
+  border-color: rgba(255, 244, 216, .9);
+  box-shadow: 0 0 22px rgba(255, 232, 158, .7);
+}
+
+.soul-shop {
+  background:
+    linear-gradient(180deg, #f2b9a6 0 24%, transparent 25%),
+    radial-gradient(circle at 50% 46%, rgba(255, 231, 166, .9), transparent 28%),
+    linear-gradient(145deg, #f7e5c8, #b88965 60%, #75604a);
+}
+
+.soul-player {
+  width: 48px;
+  height: 58px;
+  z-index: 12;
+  filter: drop-shadow(0 10px 8px rgba(31,39,31,.22));
+}
+
+.soul-player::before {
+  width: 34px;
+  height: 34px;
+  left: 7px;
+  top: 0;
+  background:
+    radial-gradient(circle at 36% 38%, #f9e1cf 0 6px, transparent 7px),
+    radial-gradient(circle at 64% 38%, #f9e1cf 0 6px, transparent 7px),
+    linear-gradient(180deg, #5e3d31 0 42%, #f6d5c4 43% 100%);
+  border: 2px solid rgba(255,255,255,.72);
+  box-shadow: inset 0 -10px 0 rgba(89,55,41,.56);
+}
+
+.soul-player::after {
+  width: 30px;
+  height: 31px;
+  left: 9px;
+  top: 30px;
+  border-radius: 45% 45% 36% 36%;
+  background:
+    radial-gradient(circle at 28% 23%, rgba(255,255,255,.75), transparent 12%),
+    linear-gradient(180deg, #fff2e5, #d8b495);
+  border: 2px solid rgba(255,255,255,.64);
+}
+
+.soul-side-tabs {
+  position: absolute;
+  left: 14px;
+  top: 114px;
+  z-index: 32;
+  display: grid;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.soul-side-tabs button {
+  width: 48px;
+  min-height: 58px;
+  display: grid;
+  place-items: center;
+  gap: 2px;
+  border: 1px solid rgba(116, 88, 52, .18);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,250,236,.95), rgba(240,225,202,.94));
+  color: #6b5035;
+  box-shadow: 0 9px 18px rgba(36, 45, 34, .18);
+  font-size: 10px;
+  letter-spacing: .04em;
+}
+
+.soul-side-tabs .soul-icon {
+  width: 22px;
+  height: 22px;
+}
+
+.soul-hud {
+  left: 74px;
+  right: 16px;
+  top: 114px;
+}
+
+.soul-chapter,
+.soul-hud button {
+  background: linear-gradient(180deg, rgba(255, 250, 236, .9), rgba(238, 222, 199, .82));
+  border-color: rgba(116, 88, 52, .16);
+  box-shadow: 0 9px 18px rgba(36, 45, 34, .15);
+}
+
+.soul-bottom {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 28;
+  padding: 0;
+}
+
+.soul-tasks {
+  padding: 9px;
+  border-radius: 16px;
+  background: rgba(255, 247, 229, .94);
+  border: 1px solid rgba(116, 88, 52, .16);
+  box-shadow: 0 12px 26px rgba(38, 45, 34, .18);
+}
+
+.soul-tasks > div {
+  margin-bottom: 6px;
+}
+
+.soul-tasks p {
+  display: inline-flex;
+  align-items: center;
+  margin: 4px 4px 0 0;
+  padding: 5px 8px;
+  max-width: calc(50% - 5px);
+  min-height: 28px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.68);
+  color: #5d6754;
+  font-size: 10px;
+  line-height: 1.35;
+  white-space: normal;
+}
+
+.soul-actions {
+  right: 15px;
+  bottom: 108px;
+  z-index: 32;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.soul-actions button {
+  width: 52px;
+  min-height: 44px;
+  padding: 8px 7px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,250,236,.96), rgba(236,219,195,.94));
+  color: #6b5035;
+  border-color: rgba(116, 88, 52, .18);
+  box-shadow: 0 9px 18px rgba(36, 45, 34, .18);
+  font-size: 11px;
+}
+
+.soul-actions button:first-child {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #f4d7a7, #b98554);
+  color: #fff8e8;
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow: 0 1px 6px rgba(73, 48, 29, .24);
+}
+
+.soul-joystick {
+  left: 18px;
+  bottom: 118px;
+  z-index: 32;
+  width: 94px;
+  height: 94px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,.88), rgba(255,255,255,.38) 34%, transparent 35%),
+    rgba(58, 49, 39, .34);
+  border: 1px solid rgba(255,255,255,.42);
+  box-shadow: 0 12px 26px rgba(31,39,31,.24), inset 0 0 18px rgba(255,255,255,.18);
+}
+
+.soul-joystick::before,
+.soul-joystick::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 50%;
+}
+
+.soul-joystick i {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(180deg, #fffdf5, #d8d0c2);
+  box-shadow: 0 8px 14px rgba(31,39,31,.2);
+}
+
+.soul-toast {
+  z-index: 45;
+  background: rgba(43, 53, 41, .88);
+  color: #fff8e8;
+}
+
+.soul-icon-gift::before {
+  background: linear-gradient(180deg, #f6c79d, #d88775);
+  clip-path: polygon(8% 35%, 92% 35%, 92% 92%, 8% 92%);
+}
+
+.soul-icon-gift::after {
+  content: "";
+  position: absolute;
+  left: 46%;
+  top: 28%;
+  width: 8%;
+  height: 64%;
+  background: rgba(255,255,255,.72);
+  box-shadow: -8px -4px 0 -2px rgba(255,255,255,.72), 8px -4px 0 -2px rgba(255,255,255,.72);
+}
+
+.soul-icon-task::before {
+  background: linear-gradient(180deg, #f8f1df, #d9c7a5);
+  clip-path: inset(10% 16% 8% 16% round 10%);
+}
+
+.soul-icon-task::after {
+  content: "";
+  position: absolute;
+  left: 32%;
+  right: 28%;
+  top: 30%;
+  height: 3px;
+  background: #6d7a65;
+  box-shadow: 0 8px 0 #6d7a65, 0 16px 0 #6d7a65;
+}
+
+@media (max-width: 520px) {
+  .soul-garden-page {
+    padding: 0;
+    background: #f8efdf;
+  }
+
+  .soul-phone {
+    width: 100vw;
+    height: 100svh;
+    min-height: 720px;
+    border-radius: 0;
+    border: 0;
+  }
+
+  .soul-map {
+    width: calc(100% - 14px);
+    height: calc(100% - 112px);
+    margin: 7px;
+    border-radius: 20px;
+  }
+
+  .soul-top {
+    top: 8px;
+    left: 8px;
+    right: 8px;
+  }
+
+  .soul-status {
+    top: 66px;
+    left: 10px;
+    right: 10px;
+  }
+
+  .soul-status div {
+    font-size: 10px;
+    padding-inline: 4px;
+  }
+
+  .soul-hud {
+    top: 108px;
+    left: 68px;
+    right: 12px;
+  }
+
+  .soul-side-tabs {
+    top: 108px;
+    left: 10px;
+  }
+
+  .soul-actions {
+    right: 12px;
+    bottom: 106px;
+  }
+
+  .soul-joystick {
+    left: 14px;
+    bottom: 112px;
+  }
+}
+
+.soul-order-card button {
+  border: 1px solid rgba(61,90,76,.42);
+  background: #3d5a4c;
+  color: #faf7f2;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+.soul-order-card button:disabled {
+  opacity: .42;
+}
+
+.soul-note {
+  color: #766d65;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.soul-upgrade-row.is-muted {
+  opacity: .58;
+}
+
+.soul-fairy {
+  position: absolute;
+  z-index: 6;
+  width: 26px;
+  height: 26px;
+  transform: translate(-50%, -50%);
+  border-radius: 50% 50% 45% 45%;
+  background:
+    radial-gradient(circle at 50% 32%, #f7d9ca 0 7px, transparent 8px),
+    linear-gradient(180deg, transparent 0 12px, #e9f0d7 13px 24px);
+  border: 1px solid rgba(255,255,255,.8);
+  box-shadow: 0 0 14px rgba(255,255,255,.9);
+  animation: fairyBob 2s ease-in-out infinite;
+}
+
+.soul-fairy::before,
+.soul-fairy::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  width: 12px;
+  height: 16px;
+  border-radius: 90% 10% 90% 10%;
+  background: rgba(219,235,242,.78);
+  z-index: -1;
+}
+
+.soul-fairy::before {
+  left: -8px;
+  transform: rotate(-22deg);
+}
+
+.soul-fairy::after {
+  right: -8px;
+  transform: scaleX(-1) rotate(-22deg);
+}
+
+.soul-decor {
+  position: absolute;
+  z-index: 2;
+  width: 46px;
+  height: 46px;
+  transform: translate(-50%, -50%);
+  border-radius: 16px;
+  background: rgba(255,255,255,.45);
+  border: 1px solid rgba(255,255,255,.58);
+  box-shadow: 0 10px 20px rgba(61,90,76,.08);
+}
+
+.soul-decor::before {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border-radius: inherit;
+}
+
+.soul-decor-moonLamp::before {
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 34%, #fff7cf 0 38%, #d8c38d 40% 65%, transparent 66%);
+}
+
+.soul-decor-crystalPillar::before {
+  clip-path: polygon(50% 0, 88% 30%, 70% 100%, 30% 100%, 12% 30%);
+  background: linear-gradient(155deg, #b9e3e6, #b9a1d8);
+}
+
+.soul-decor-butterflyChair::before {
+  background:
+    radial-gradient(ellipse at 28% 48%, #d8c1f0 0 34%, transparent 36%),
+    radial-gradient(ellipse at 72% 48%, #8ec6d2 0 34%, transparent 36%);
+}
+
+.soul-decor-flowerArch::before {
+  border: 4px solid #8da77e;
+  border-bottom: 0;
+  border-radius: 24px 24px 0 0;
+  background:
+    radial-gradient(circle at 18% 50%, #e9a7b5 0 4px, transparent 5px),
+    radial-gradient(circle at 78% 32%, #f2ccd4 0 4px, transparent 5px);
+}
+
+.soul-decor-starPond::before {
+  border-radius: 50%;
+  background: radial-gradient(circle, #eef8ff 0 20%, #83bad2 21% 64%, #6d8fb0 65%);
+}
+
+.soul-decor-quietPavilion::before {
+  background:
+    linear-gradient(135deg, transparent 0 35%, #8b6c4d 36% 42%, transparent 43%),
+    linear-gradient(45deg, transparent 0 35%, #8b6c4d 36% 42%, transparent 43%),
+    linear-gradient(180deg, #e9d7bc 0 24%, #b79064 25% 100%);
+  clip-path: polygon(50% 0, 96% 32%, 80% 100%, 20% 100%, 4% 32%);
+}
+
+.soul-icon-reputation {
+  background: transparent;
+}
+
+.soul-icon-reputation::before,
+.soul-icon-reputation::after {
+  content: "";
+  position: absolute;
+  width: 13px;
+  height: 20px;
+  border-radius: 90% 10% 90% 10%;
+  background: linear-gradient(180deg, #a8bd8d, #5c7e61);
+}
+
+.soul-icon-reputation::before {
+  left: 3px;
+  transform: rotate(-28deg);
+}
+
+.soul-icon-reputation::after {
+  right: 3px;
+  transform: scaleX(-1) rotate(-28deg);
+}
+
+.soul-icon-stardust,
+.soul-icon-innerLight {
+  background: radial-gradient(circle at 50% 50%, #fff7c9 0 18%, #d5c28d 20% 48%, transparent 50%);
+}
+
+.soul-icon-stardust::before,
+.soul-icon-stardust::after,
+.soul-icon-innerLight::before,
+.soul-icon-innerLight::after {
+  content: "";
+  position: absolute;
+  inset: 1px 10px;
+  border-radius: 999px;
+  background: #f1dc93;
+}
+
+.soul-icon-stardust::after,
+.soul-icon-innerLight::after {
+  transform: rotate(90deg);
+}
+
+.soul-icon-moonPearl {
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff 0 17%, #dfeeff 20% 54%, #82a8d0 76%);
+  box-shadow: 0 0 12px rgba(188,214,235,.7);
+}
+
+.soul-icon-bouquetMachine,
+.soul-icon-lightMachine {
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.54), transparent 42%),
+    linear-gradient(145deg, #718c77, #d4bf8d);
+  box-shadow: inset 0 -4px 0 rgba(76, 81, 63, .18), 0 0 12px rgba(255,255,255,.45);
+}
+
+.soul-icon-bouquetMachine::after,
+.soul-icon-lightMachine::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 45% 35%, #fff 0 16%, #fff0f5 20% 56%, #d6a4b7 66%);
+  box-shadow: 0 0 10px rgba(248, 232, 186, .7);
+}
+
+.soul-icon-lightMachine::after {
+  background: radial-gradient(circle at 45% 35%, #fff 0 16%, #fff7c9 20% 56%, #d5c28d 66%);
+}
+
+@keyframes fairyBob {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-8px); }
+}

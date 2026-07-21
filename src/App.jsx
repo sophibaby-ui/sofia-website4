@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import SoulGarden from "./SoulGarden.jsx";
+import Becoming from "./Becoming.jsx";
 
 const PHOTO = "https://raw.githubusercontent.com/sophibaby-ui/sofia-website4/main/public/sofia.png";
 const HOME_SCENARIO_REPLY = "/home-scenario-reply.png";
@@ -569,30 +571,34 @@ const Styles = () => (
     .frequency-principle-copy{position:relative;z-index:1}
     .frequency-principle-copy p{font-size:15px;line-height:2.15;color:var(--soft);margin-bottom:20px}
     .frequency-principle-copy strong{font-weight:400;color:var(--forest)}
-    .frequency-support-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:0;margin-top:48px;align-items:stretch;overflow:hidden;background:linear-gradient(135deg,#F7F2EA 0%,#FBF8F3 48%,rgba(61,90,76,.08) 100%);border:1px solid var(--div);border-radius:8px;box-shadow:0 22px 55px rgba(80,60,50,.055)}
-    .frequency-support-card{position:relative;background:transparent;border:0;border-right:1px solid var(--div);border-radius:0;padding:54px 50px;box-shadow:none}
-    .frequency-support-card-mark{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:26px}
-    .frequency-support-card h3{font-family:'Noto Serif TC',serif;font-size:clamp(24px,2.4vw,32px);font-weight:300;line-height:1.55;color:var(--text);margin-bottom:14px}
-    .frequency-support-card .sub{font-size:16px;line-height:1.9;color:var(--forest);margin-bottom:24px}
-    .frequency-support-card p{font-size:15px;line-height:2.05;color:var(--soft);margin-bottom:18px}
-    .frequency-timeline{position:relative;display:grid;gap:0;padding:42px 42px}
-    .frequency-timeline::before{content:"";position:absolute;left:62px;top:86px;bottom:58px;width:1px;background:linear-gradient(180deg,rgba(186,158,110,.18),rgba(61,90,76,.38),rgba(186,158,110,.18))}
-    .frequency-timeline-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--wg);margin:0 0 10px 72px}
-    .frequency-timeline-step{position:relative;background:transparent;border:0;border-bottom:1px solid rgba(212,200,181,.62);border-radius:0;padding:24px 0 24px 72px}
-    .frequency-timeline-step:last-child{border-bottom:0}
-    .frequency-timeline-step::before{content:attr(data-step);position:absolute;left:0;top:27px;width:42px;height:42px;border-radius:50%;border:1px solid var(--gold);background:rgba(250,247,242,.9);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--forest);letter-spacing:.08em;z-index:1}
+    .frequency-support-grid{display:grid;grid-template-columns:.88fr 1.12fr;gap:0;margin-top:48px;align-items:stretch;overflow:hidden;background:linear-gradient(145deg,var(--forest) 0%,#26332D 58%,#1F211E 100%);border:1px solid rgba(212,200,181,.28);border-radius:8px;box-shadow:0 26px 62px rgba(44,50,43,.13)}
+    .frequency-support-card{position:relative;background:radial-gradient(circle at 20% 0%,rgba(232,223,208,.12),transparent 34%);border:0;border-right:1px solid rgba(232,223,208,.16);border-radius:0;padding:60px 52px;box-shadow:none}
+    .frequency-support-card::after{content:"";position:absolute;left:52px;bottom:48px;width:72px;height:1px;background:rgba(232,223,208,.45)}
+    .frequency-support-card-mark{font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:rgba(232,223,208,.62);margin-bottom:28px}
+    .frequency-support-card h3{font-family:'Noto Serif TC',serif;font-size:clamp(24px,2.4vw,32px);font-weight:300;line-height:1.55;color:var(--sand);margin-bottom:16px}
+    .frequency-support-card .sub{font-size:16px;line-height:1.9;color:rgba(232,223,208,.82);margin-bottom:24px}
+    .frequency-support-card p{font-size:15px;line-height:2.05;color:rgba(232,223,208,.68);margin-bottom:18px}
+    .frequency-timeline{position:relative;display:grid;gap:14px;padding:44px;background:linear-gradient(140deg,rgba(250,247,242,.97),rgba(245,240,232,.92));border-radius:0}
+    .frequency-timeline::before{content:"";position:absolute;left:74px;top:104px;bottom:64px;width:1px;background:linear-gradient(180deg,rgba(186,158,110,.22),rgba(61,90,76,.36),rgba(186,158,110,.18))}
+    .frequency-timeline-label{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--wg);margin:0 0 4px 74px}
+    .frequency-timeline-step{position:relative;background:rgba(255,253,249,.72);border:1px solid rgba(212,200,181,.62);border-radius:8px;padding:24px 26px 24px 88px;box-shadow:0 14px 34px rgba(80,60,50,.045)}
+    .frequency-timeline-step:last-child{border-bottom:1px solid rgba(212,200,181,.62)}
+    .frequency-timeline-step::before{content:attr(data-step);position:absolute;left:24px;top:25px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(186,158,110,.78);background:linear-gradient(180deg,#FBF8F3,#EFE6D8);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--forest);letter-spacing:.08em;z-index:1;box-shadow:0 8px 20px rgba(80,60,50,.06)}
     .frequency-timeline-step h3{font-family:'Noto Serif TC',serif;font-size:19px;font-weight:300;color:var(--text);line-height:1.5;margin-bottom:8px}
     .frequency-timeline-step p{font-size:14px;line-height:1.9;color:var(--soft)}
-    .frequency-feature-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:42px}
-    .frequency-feature{position:relative;min-height:260px;overflow:hidden;background:linear-gradient(180deg,#FBF8F3 0%,#F5F0E8 100%);border:1px solid rgba(212,200,181,.78);border-radius:8px;padding:34px 28px;box-shadow:0 18px 42px rgba(80,60,50,.05);transition:transform .25s,box-shadow .25s}
-    .frequency-feature::before{content:"";position:absolute;inset:auto -20% -45% -20%;height:55%;background:radial-gradient(ellipse at center,rgba(61,90,76,.13),transparent 62%);opacity:.72;pointer-events:none}
+    .frequency-feature-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:42px}
+    .frequency-feature{position:relative;min-height:218px;overflow:hidden;background:linear-gradient(135deg,#FBF8F3 0%,#F4EEE5 100%);border:1px solid rgba(212,200,181,.78);border-radius:8px;padding:36px 34px 34px;box-shadow:0 18px 42px rgba(80,60,50,.05);transition:transform .25s,box-shadow .25s}
+    .frequency-feature::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:linear-gradient(180deg,var(--forest),rgba(186,158,110,.48));opacity:.88;pointer-events:none}
+    .frequency-feature::after{content:"";position:absolute;right:-10%;bottom:-55%;width:55%;height:90%;background:radial-gradient(ellipse at center,rgba(61,90,76,.12),transparent 64%);opacity:.8;pointer-events:none}
     .frequency-feature:hover{transform:translateY(-4px);box-shadow:0 22px 44px rgba(80,60,50,.085)}
+    .frequency-feature:nth-child(3){background:linear-gradient(145deg,#F7F2EA 0%,rgba(61,90,76,.09) 100%)}
     .frequency-feature.is-accent{background:linear-gradient(145deg,var(--forest),#26332D);border-color:transparent}
-    .frequency-feature.is-accent::before{background:radial-gradient(ellipse at center,rgba(232,223,208,.18),transparent 62%)}
-    .frequency-feature.is-accent .frequency-feature-icon{color:rgba(232,223,208,.74)}
+    .frequency-feature.is-accent::before{background:linear-gradient(180deg,var(--gold),rgba(232,223,208,.58))}
+    .frequency-feature.is-accent::after{background:radial-gradient(ellipse at center,rgba(232,223,208,.18),transparent 62%)}
+    .frequency-feature.is-accent .frequency-feature-icon{color:rgba(232,223,208,.82);border-color:rgba(232,223,208,.32)}
     .frequency-feature.is-accent h3{color:var(--sand)}
     .frequency-feature.is-accent p{color:rgba(232,223,208,.74)}
-    .frequency-feature-icon{position:relative;z-index:1;font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:13px;letter-spacing:.28em;margin-bottom:30px}
+    .frequency-feature-icon{position:relative;z-index:1;width:46px;height:46px;border-radius:50%;border:1px solid rgba(186,158,110,.62);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;color:var(--forest);font-size:14px;letter-spacing:.12em;margin-bottom:28px}
     .frequency-feature h3{font-family:'Noto Serif TC',serif;font-size:18px;font-weight:300;color:var(--text);line-height:1.5;margin-bottom:12px}
     .frequency-feature p{font-size:13px;line-height:1.9;color:var(--soft)}
     .frequency-feature h3,.frequency-feature p{position:relative;z-index:1}
@@ -774,8 +780,8 @@ const Styles = () => (
       .frequency-timeline{padding:28px 22px}
       .frequency-timeline::before{left:43px;top:72px;bottom:50px}
       .frequency-timeline-label{margin-left:58px}
-      .frequency-timeline-step{padding:20px 0 20px 58px}
-      .frequency-timeline-step::before{width:34px;height:34px;top:22px;font-size:13px}
+      .frequency-timeline-step{padding:20px 18px 20px 70px}
+      .frequency-timeline-step::before{left:20px;width:34px;height:34px;top:22px;font-size:13px}
       .frequency-feature-grid{grid-template-columns:1fr;gap:12px;margin-top:30px}
       .frequency-feature{min-height:auto;padding:28px 24px}
       .frequency-feature p{font-size:15px;line-height:1.9}
@@ -2428,7 +2434,7 @@ function Subscribe({ go }) {
         <div className="subscribe-inner">
           <div className="slb fi">每個月，你會收到什麼？</div>
           <div className="subscribe-preview fi">
-            <img src="/monthly-status-preview.png" alt="本月穩定報告預覽" />
+            <img src="/subscribe-report-monthly.jpg" alt="Soul State Report 個人狀態整理月度報告預覽" />
             <div className="subscribe-preview-caption">
               這不是分析<br/>是你最近的狀態
             </div>
@@ -2441,7 +2447,7 @@ function Subscribe({ go }) {
             ))}
           </div>
           <div className="subscribe-preview is-muted fi">
-            <img src="/energy-structure-preview.png" alt="個人能量結構與穩定度分析圖預覽" />
+            <img src="/subscribe-report-comparison.jpg" alt="Soul State Report 個人狀態整理比較報告預覽" />
             <div className="subscribe-preview-caption">
               這不是感覺<br/>是有邏輯的
             </div>
@@ -2581,13 +2587,13 @@ function SubscribeTest() {
         </div>
         <div className="subscribe-test-preview-grid">
           <div className="subscribe-preview fi">
-            <img src="/monthly-status-preview.png" alt="本月穩定報告預覽" />
+            <img src="/subscribe-report-monthly.jpg" alt="Soul State Report 個人狀態整理月度報告預覽" />
             <div className="subscribe-preview-caption">
               這不是分析<br/>是你最近的狀態
             </div>
           </div>
           <div className="subscribe-preview is-muted fi">
-            <img src="/energy-structure-preview.png" alt="個人能量結構與穩定度分析圖預覽" />
+            <img src="/subscribe-report-comparison.jpg" alt="Soul State Report 個人狀態整理比較報告預覽" />
             <div className="subscribe-preview-caption">
               這不是感覺<br/>是有邏輯的
             </div>
@@ -3889,21 +3895,22 @@ function AppInner() {
   const navigate = useNavigate();
   const location = useLocation();
   const go = p => {
-    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/art", apply:"/apply", ongoing:"/ongoing", short:"/short", frequency:"/frequency", subscribe:"/subscribe", subscribeTest:"/subscribe-test", subscribeStart:"/subscribe-start", register:"/register", thanks:"/thanks", subscribeThanks:"/subscribe-thanks" };
+    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/art", apply:"/apply", ongoing:"/ongoing", short:"/short", frequency:"/frequency", subscribe:"/subscribe", subscribeTest:"/subscribe-test", subscribeStart:"/subscribe-start", register:"/register", soulGarden:"/soul-garden", becoming:"/becoming", thanks:"/thanks", subscribeThanks:"/subscribe-thanks" };
     navigate(paths[p] || "/");
     window.scrollTo({ top: 0, behavior: "instant" });
   };
   const cur = {
     "/":"home", "/start":"start", "/aware":"aware", "/num":"num", "/deep":"deep",
     "/about":"about", "/art":"art", "/apply":"apply",
-    "/ongoing":"ongoing", "/short":"short", "/frequency":"frequency", "/subscribe":"subscribe", "/subscribe-test":"subscribeTest", "/subscribe-start":"subscribeStart", "/register":"register",
+    "/ongoing":"ongoing", "/short":"short", "/frequency":"frequency", "/subscribe":"subscribe", "/subscribe-test":"subscribeTest", "/subscribe-start":"subscribeStart", "/register":"register", "/soul-garden":"soulGarden", "/becoming":"becoming",
     "/thanks":"thanks", "/subscribe-thanks":"subscribeThanks"
   }[location.pathname] || "home";
+  const isExperiencePage = ["/soul-garden", "/becoming"].includes(location.pathname);
 
   return (
     <>
       <Styles />
-      <Nav cur={cur} go={go} />
+      {!isExperiencePage && <Nav cur={cur} go={go} />}
       <main>
         <Routes>
           <Route path="/" element={<Home go={go} />} />
@@ -3921,12 +3928,14 @@ function AppInner() {
           <Route path="/subscribe-test" element={<SubscribeTest />} />
           <Route path="/subscribe-start" element={<SubscribeStart go={go} />} />
           <Route path="/register" element={<Register go={go} />} />
+          <Route path="/soul-garden" element={<SoulGarden go={go} />} />
+          <Route path="/becoming" element={<Becoming />} />
           <Route path="/thanks" element={<Thanks go={go} />} />
           <Route path="/subscribe-thanks" element={<Thanks go={go} subscribe />} />
           <Route path="*" element={<Home go={go} />} />
         </Routes>
       </main>
-      <Footer go={go} />
+      {!isExperiencePage && <Footer go={go} />}
     </>
   );
 }
