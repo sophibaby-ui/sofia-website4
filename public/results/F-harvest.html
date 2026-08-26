@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>收穫與享受期｜Sofia 情緒關係教練</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest:#3D5A4C; --w:#FFFDF9; --cream:#F5F0E8; --sand:#E8DFD0; --sandm:#D4C8B5; --text:#2C2825;
+    --accent:#F0AC2E; --accent2:#E0708C; --accent-deep:#C4841A; --tint:#FFF6E0;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body {
+    font-family:'Noto Sans TC', sans-serif;
+    color:var(--text);
+    background:var(--w);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:6vh 6vw;
+    position:relative;
+    overflow-x:hidden;
+  }
+  .wash {
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+  }
+  .card {
+    position:relative;
+    z-index:1;
+    max-width:640px;
+    width:100%;
+    animation:rise 0.9s ease both;
+    background:color-mix(in srgb, var(--w) 80%, transparent);
+    backdrop-filter:blur(6px);
+    border-radius:28px;
+    padding:48px 44px;
+    box-shadow:0 20px 60px -25px color-mix(in srgb, var(--accent-deep) 45%, transparent);
+    border:1px solid color-mix(in srgb, white 70%, transparent);
+  }
+  @keyframes rise {
+    from { opacity:0; transform:translateY(14px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .eyebrow {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    color:var(--accent-deep);
+    margin-bottom:30px;
+    opacity:0.9;
+  }
+  .eyebrow .brand {
+    font-family:'Noto Serif TC', serif;
+    font-weight:500;
+  }
+  .eyebrow .divider {
+    width:1px; height:12px; background:var(--sandm);
+  }
+  .chip {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Noto Serif TC', serif;
+    font-weight:500;
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:white;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+    padding:6px 16px 6px 12px;
+    border-radius:999px;
+    margin-bottom:24px;
+    box-shadow:0 6px 16px -6px color-mix(in srgb, var(--accent-deep) 60%, transparent);
+  }
+  .chip .dot {
+    width:6px; height:6px; border-radius:50%; background:white;
+  }
+  h1 {
+    font-family:'Noto Serif TC', serif;
+    font-weight:600;
+    font-size:clamp(34px, 6vw, 46px);
+    line-height:1.25;
+    margin:0 0 14px;
+    background:linear-gradient(100deg, var(--accent-deep), var(--accent), var(--accent2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .subtitle {
+    font-size:16.5px;
+    line-height:1.75;
+    color:var(--accent-deep);
+    font-weight:500;
+    margin:0 0 30px;
+    max-width:520px;
+  }
+  .body p {
+    font-size:15.5px;
+    line-height:2.05;
+    color:var(--text);
+    opacity:0.92;
+    margin:0 0 18px;
+  }
+  .action-card {
+    margin:34px 0 30px;
+    padding:2px;
+    border-radius:20px;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+  }
+  .action-card-inner {
+    padding:24px 26px;
+    border-radius:18px;
+    background:color-mix(in srgb, var(--tint) 70%, var(--w));
+  }
+  .action-label {
+    font-family:'Noto Serif TC', serif;
+    font-size:13.5px;
+    letter-spacing:0.06em;
+    color:var(--accent-deep);
+    margin:0 0 10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .action-label::before {
+    content:'';
+    width:14px; height:1px;
+    background:var(--accent-deep);
+  }
+  .action-text {
+    font-size:17px;
+    line-height:1.75;
+    color:var(--text);
+    font-weight:500;
+    margin:0;
+  }
+  .signs-title, .myth-label {
+    font-family:'Noto Serif TC', serif;
+    font-size:13.5px;
+    letter-spacing:0.06em;
+    color:var(--accent-deep);
+    margin:0 0 12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .signs-title::before, .myth-label::before {
+    content:'';
+    width:14px; height:1px;
+    background:var(--accent-deep);
+  }
+  .signs-section {
+    margin:8px 0 28px;
+  }
+  .signs-list {
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .signs-list li {
+    position:relative;
+    padding-left:22px;
+    font-size:15px;
+    line-height:1.9;
+    color:var(--text);
+    opacity:0.9;
+    margin-bottom:9px;
+  }
+  .signs-list li::before {
+    content:'';
+    position:absolute;
+    left:0; top:9px;
+    width:7px; height:7px;
+    border-radius:50%;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+  }
+  .myth-section {
+    margin:0 0 30px;
+    padding:20px 24px;
+    border-left:3px solid var(--accent2);
+    background:color-mix(in srgb, var(--tint) 45%, transparent);
+    border-radius:0 14px 14px 0;
+  }
+  .myth-section p {
+    margin:0;
+    font-size:15px;
+    line-height:1.95;
+    color:var(--text);
+    opacity:0.9;
+  }
+  .action-note {
+    margin:10px 0 0;
+    font-size:13.5px;
+    line-height:1.7;
+    color:var(--accent-deep);
+    opacity:0.85;
+  }
+  hr {
+    border:none;
+    border-top:1px solid var(--sandm);
+    margin:30px 0 22px;
+    opacity:0.7;
+  }
+  .footnote {
+    font-size:13px;
+    line-height:1.9;
+    color:var(--text);
+    opacity:0.55;
+    font-style:italic;
+    margin:0 0 32px;
+  }
+  .links {
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .links a {
+    flex:1 1 200px;
+    text-align:center;
+    text-decoration:none;
+    font-family:'Noto Serif TC', serif;
+    font-size:14.5px;
+    letter-spacing:0.03em;
+    padding:14px 18px;
+    border-radius:14px;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .links a:hover {
+    transform:translateY(-2px);
+  }
+  .links a.primary {
+    color:white;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+    box-shadow:0 10px 22px -10px color-mix(in srgb, var(--accent-deep) 65%, transparent);
+  }
+  .links a.secondary {
+    color:var(--accent-deep);
+    background:color-mix(in srgb, var(--tint) 60%, var(--w));
+    border:1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  @media (max-width:480px) {
+    body { padding:8vh 7vw; }
+    .action-card-inner { padding:20px 20px; }
+    .links a { flex:1 1 100%; }
+  }
+</style>
+</head>
+<body>
+  <svg class="wash" viewBox="0 0 900 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path id="bg-66-A" d="M50 4C68 2 88 10 94 28C100 46 96 66 80 80C64 94 40 96 22 84C4 72 -2 48 6 30C13 14 32 6 50 4Z"/>
+    <path id="bg-66-B" d="M48 8C62 -2 84 4 92 22C100 40 94 62 78 76C62 90 38 92 22 78C6 64 2 42 12 26C20 12 34 18 48 8Z"/>
+    <path id="bg-66-C" d="M52 2C70 6 90 20 90 40C90 60 74 78 54 84C34 90 12 82 6 62C0 42 8 20 26 10C34 5 44 -2 52 2Z"/>
+    <filter id="wcbg-66" x="-80%" y="-80%" width="260%" height="260%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="3" seed="66" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="60" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+      <feGaussianBlur in="disp" stdDeviation="1.6"/>
+    </filter>
+    <filter id="grain-66">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="66" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.6 0 0 0 0"/>
+    </filter>
+  </defs>
+  <g transform="scale(9)">
+    <use href="#bg-66-A" transform="translate(20,-8) rotate(0,50,50) scale(1.829)" fill="#F0AC2E" opacity="0.33" filter="url(#wcbg-66)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-66-A" transform="translate(24,-5) rotate(4,50,50) scale(1.55)" fill="#F0AC2E" opacity="0.6" filter="url(#wcbg-66)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-66-B" transform="translate(-8,40) rotate(10,50,50) scale(1.2389999999999999)" fill="#E0708C" opacity="0.24750000000000003" filter="url(#wcbg-66)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-66-B" transform="translate(-4,43) rotate(14,50,50) scale(1.05)" fill="#E0708C" opacity="0.45" filter="url(#wcbg-66)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-66-C" transform="translate(60,-4) rotate(-10,50,50) scale(1.298)" fill="#3FB3A9" opacity="0.24750000000000003" filter="url(#wcbg-66)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-66-C" transform="translate(64,-1) rotate(-6,50,50) scale(1.1)" fill="#3FB3A9" opacity="0.45" filter="url(#wcbg-66)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-66-B" transform="translate(10,76) rotate(5,50,50) scale(1.003)" fill="#5B9EF0" opacity="0.1925" filter="url(#wcbg-66)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-66-B" transform="translate(14,79) rotate(9,50,50) scale(0.85)" fill="#5B9EF0" opacity="0.35" filter="url(#wcbg-66)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-66-A" transform="translate(54,44) rotate(6,50,50) scale(0.826)" fill="#F0AC2E" opacity="0.17600000000000002" filter="url(#wcbg-66)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-66-A" transform="translate(58,47) rotate(10,50,50) scale(0.7)" fill="#F0AC2E" opacity="0.32" filter="url(#wcbg-66)" style="mix-blend-mode:multiply"/>
+  </g>
+  <rect width="100%" height="100%" filter="url(#grain-66)" opacity="0.045"/>
+</svg>
+  <div class="card">
+    <div class="eyebrow">
+      <span class="brand">Sofia 情緒關係教練</span>
+      <span class="divider"></span>
+      <span>人生階段測驗結果</span>
+    </div>
+    <div class="chip"><span class="dot"></span>選擇 F</div>
+    <h1>收穫與享受期</h1>
+    <p class="subtitle">你正進入一個可以好好接住成果的階段</p>
+    <div class="body">
+      <p>過去累積的經驗、關係或努力，開始慢慢長出結果。你現在的功課不是立刻尋找下一個挑戰，而是感受自己已經擁有什麼，並允許生活對你好一點。</p>
+      <p>收穫期最常被忽略的，不是成果本身，而是「允許自己好好接受」這件事。很多人習慣把功勞歸給運氣或別人，卻很少停下來，真心承認自己值得這一切。</p>
+      <p>這個階段也是重新校準你與「休息」關係的好時機。你不需要用下一個目標，來證明這段安穩是合理的；享受本身，就是這個階段最重要的任務。</p>
+      <p>如果你發現自己在成果面前反而感到不安，或急著找下一件事來忙，可以留意這是否是一種不允許自己停下來的習慣，而不是真正的需要。</p>
+    </div>
+    <div class="signs-section">
+      <p class="signs-title">你可能正在經歷</p>
+      <ul class="signs-list">
+        <li>過去的努力開始看見具體的成果或回饋</li>
+        <li>對「休息」或「慶祝」感到不習慣，甚至有點心虛</li>
+        <li>急著想找下一個目標，卻說不出真正的理由</li>
+        <li>開始有餘裕，能關注過去沒空顧及的事</li>
+      </ul>
+    </div>
+    <div class="myth-section">
+      <p class="myth-label" style="margin-bottom:8px;">這個階段常見的誤解</p>
+      <p>很多人以為收穫期應該立刻規劃下一步，才算積極。但沒有真正被接住的成果，很容易在下一次挑戰來臨時被輕易遺忘——好好收下，才是為下一段旅程儲備力量。</p>
+    </div>
+    <div class="action-card">
+      <div class="action-card-inner">
+        <p class="action-label">你現在最適合做的事</p>
+        <p class="action-text">為已經完成的事情慶祝一次，讓自己真正收到這份成果</p>
+        <p class="action-note">儀式感不需要盛大，一頓好好吃的飯、一句對自己說的謝謝，都可以。</p>
+      </div>
+    </div>
+    <hr>
+    <p class="footnote">這個結果描述的是你「此刻所處的位置」，人生階段會隨著經歷與選擇改變，過一段時間再回來測，也許你會想走進另一個地方。</p>
+    <div class="links">
+      <a class="secondary" href="https://www.sofiahealing.com/" target="_blank" rel="noopener">回到官方網站</a>
+      <a class="primary" href="https://www.sofiahealing.com/apply" target="_blank" rel="noopener">預約流年諮詢送個人頻率檢測</a>
+    </div>
+  </div>
+</body>
+</html>
