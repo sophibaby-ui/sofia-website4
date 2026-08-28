@@ -1223,6 +1223,97 @@ const Styles = () => (
         font-size:15px !important;
       }
     }
+  /* ������ AWARE PAGE �寧�璅�� ��������������������������������������������������������������������������������������
+   鞎潮�� src/App.jsx �� Styles ��辣璅�踎摮𦯀葡鋆∴��曉銁��敺�朖�荔���
+   ���� class �� keyframes �賢�鈭� aw- �滨韌嚗䔶�����暹�璅��銵萘���
+------------------------------------------------------------------ */
+
+@keyframes aw-fup{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes aw-drift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(-4%,3%) scale(1.09)}}
+@keyframes aw-drift2{0%{transform:translate(0,0) scale(1.04)}100%{transform:translate(5%,-3%) scale(1)}}
+@keyframes aw-ray{0%{background-position:200% 200%;opacity:0}40%{opacity:1}100%{background-position:-100% -100%;opacity:0}}
+@keyframes aw-breathe{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
+@keyframes aw-sl{0%,100%{transform:scaleX(1);opacity:.4}50%{transform:scaleX(.4);opacity:.85}}
+
+.aw{background:#FDFBF7;overflow:hidden}
+.aw-fade{animation:aw-fup .8s ease both}
+.aw-fade.aw-d1{animation-delay:.08s}
+.aw-fade.aw-d2{animation-delay:.16s}
+.aw-fade.aw-d3{animation-delay:.24s}
+
+/* HERO */
+.aw-hero{position:relative;min-height:88vh;display:flex;align-items:center;padding:clamp(120px,15vh,180px) 0 clamp(64px,9vh,110px);background:linear-gradient(155deg,#FDF6EE 0%,#FBEDE4 38%,#F6EFF2 70%,#EFF4F3 100%);overflow:hidden}
+.aw-hero-wash{position:absolute;inset:-18% -12%;pointer-events:none;animation:aw-drift 22s ease-in-out infinite alternate;background:radial-gradient(ellipse 46% 40% at 84% 18%,rgba(247,201,164,.62) 0%,transparent 66%),radial-gradient(ellipse 40% 44% at 12% 76%,rgba(216,203,234,.5) 0%,transparent 64%),radial-gradient(ellipse 36% 32% at 52% 96%,rgba(201,225,234,.5) 0%,transparent 62%)}
+.aw-hero-photo{position:absolute;top:-4%;right:-4%;width:62%;height:108%;pointer-events:none;opacity:.9;animation:aw-drift2 26s ease-in-out infinite alternate}
+.aw-hero-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.aw-hero-ray{position:absolute;inset:0;pointer-events:none;background:linear-gradient(125deg,transparent 32%,rgba(255,248,235,.5) 50%,transparent 68%);background-size:200% 200%;animation:aw-ray 11s ease-in-out infinite}
+.aw-hero-scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(253,247,240,.96) 0%,rgba(253,247,240,.9) 30%,rgba(253,247,240,.42) 48%,transparent 68%)}
+.aw-hero-inner{position:relative;z-index:2;width:100%;max-width:1180px;margin:0 auto;padding:0 clamp(24px,5vw,60px)}
+.aw-hero-copy{max-width:620px}
+.aw-h1{font-family:'Noto Serif TC',serif;font-size:clamp(34px,4.6vw,62px);font-weight:200;line-height:1.34;letter-spacing:.03em;color:#2A2723;margin-bottom:26px;text-wrap:balance}
+.aw-h1 em{font-style:normal;background:linear-gradient(100deg,#E2825C,#C97BA8 52%,#5A8A8E);-webkit-background-clip:text;background-clip:text;color:transparent}
+.aw-lead{font-size:clamp(16px,1.15vw,18px);line-height:2.05;color:#5F564E;max-width:480px;margin-bottom:44px;text-wrap:pretty}
+.aw-hero-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.aw-btn-primary{display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:999px;background:linear-gradient(120deg,#3D5A4C,#4F7361);color:#FDF6EE;font-size:13px;letter-spacing:.14em;text-decoration:none;box-shadow:0 14px 34px rgba(61,90,76,.24);transition:box-shadow .25s}
+.aw-btn-primary:hover{box-shadow:0 18px 42px rgba(61,90,76,.32);color:#FFF8EC}
+.aw-btn-ghost{display:inline-flex;align-items:center;gap:10px;padding:15px 32px;border-radius:999px;background:rgba(255,253,248,.72);border:1px solid rgba(226,130,92,.34);color:#B4693F;font-size:13px;letter-spacing:.14em;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all .25s}
+.aw-btn-ghost:hover{background:#FFFDF8;color:#8F4F2C}
+.aw-scroll{position:absolute;bottom:clamp(24px,4vh,46px);left:clamp(24px,5vw,60px);z-index:3;display:flex;align-items:center;gap:14px;font-family:'Cormorant Garamond',serif;font-size:11px;letter-spacing:.28em;color:#7B6A57;text-transform:uppercase}
+.aw-scroll span{display:block;width:44px;height:1px;background:linear-gradient(90deg,#9C8468,transparent);animation:aw-sl 2.4s ease-in-out infinite;transform-origin:left center}
+
+/* KICKER / RULE */
+.aw-kicker{display:flex;align-items:center;gap:16px;font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:.32em;color:#A88763;text-transform:uppercase;margin-bottom:30px}
+.aw-kicker-rule{display:block;width:44px;height:1px;background:linear-gradient(90deg,#F2A183,#D8CBEA)}
+.aw-kicker-center{justify-content:center;letter-spacing:.34em;margin-bottom:26px}
+.aw-kicker-light{justify-content:center;letter-spacing:.34em;color:rgba(247,224,199,.7);margin-bottom:26px}
+.aw-rule{width:40px;height:1px;background:rgba(168,135,99,.5);margin:32px auto}
+.aw-rule-light{background:rgba(247,224,199,.34);margin:0 auto 42px}
+
+/* TOOLS */
+.aw-tools{padding:clamp(72px,11vh,132px) clamp(24px,5vw,60px);max-width:1180px;margin:0 auto}
+.aw-tools-head{display:flex;align-items:baseline;gap:20px;margin-bottom:clamp(34px,5vh,54px);flex-wrap:wrap}
+.aw-tools-head h2{font-family:'Noto Serif TC',serif;font-size:clamp(24px,2.6vw,34px);font-weight:300;letter-spacing:.04em;color:#2A2723}
+.aw-tools-head span{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.24em;color:#A88763;text-transform:uppercase}
+.aw-tools-row{display:flex;gap:clamp(18px,2vw,28px);flex-wrap:wrap;align-items:stretch}
+.aw-card{min-width:290px;display:flex;flex-direction:column;border-radius:26px;overflow:hidden;background:#FFFDF8;cursor:pointer;text-decoration:none;color:inherit;transition:transform .3s ease,box-shadow .3s ease;animation:aw-fup .8s ease both}
+.aw-card:hover{transform:translateY(-6px)}
+.aw-card-num{flex:1 1 460px;border:1px solid rgba(233,197,168,.5);box-shadow:0 26px 62px rgba(122,82,52,.1)}
+.aw-card-num:hover{box-shadow:0 34px 76px rgba(122,82,52,.16)}
+.aw-card-balance{flex:1 1 330px;border:1px solid rgba(160,200,205,.5);box-shadow:0 26px 62px rgba(58,100,105,.1)}
+.aw-card-balance:hover{box-shadow:0 34px 76px rgba(58,100,105,.16)}
+.aw-meta{display:flex;align-items:center;gap:10px;margin-bottom:28px;font-size:12px;letter-spacing:.1em;color:#3E7B80}
+.aw-dot{width:7px;height:7px;border-radius:50%;background:#8FC2C8;animation:aw-breathe 3.4s ease-in-out infinite}
+.aw-cta-warm{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;padding:14px 30px;border-radius:999px;background:linear-gradient(120deg,#E07449,#D99A6E);color:#FFF9F2;font-size:17px;letter-spacing:.14em;box-shadow:0 12px 28px rgba(200,110,70,.26)}
+.aw-cta-cool{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;padding:14px 30px;border-radius:999px;border:1px solid rgba(62,123,128,.42);background:linear-gradient(70deg,rgba(78,140,220,.9),#8FBDDB);color:#F3F7F8;font-size:17px;letter-spacing:.14em}
+
+/* QUOTE */
+.aw-quote{position:relative;margin:0 clamp(16px,3vw,40px);border-radius:32px;overflow:hidden;padding:clamp(64px,10vh,116px) clamp(28px,6vw,80px);background:linear-gradient(140deg,#FBEFE6 0%,#F6E9F0 44%,#E9F1F0 100%)}
+.aw-quote-img{position:absolute;inset:-10%;pointer-events:none;opacity:.34;mix-blend-mode:soft-light;animation:aw-drift 28s ease-in-out infinite alternate}
+.aw-quote-img img{width:100%;height:100%;object-fit:cover;display:block}
+.aw-quote-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 60% 70% at 50% 8%,rgba(255,255,255,.6),transparent 62%)}
+.aw-quote-inner{position:relative;z-index:1;max-width:760px;margin:0 auto;text-align:center}
+.aw-quote-text{font-family:'Noto Serif TC',serif;font-size:clamp(22px,3vw,38px);font-weight:200;line-height:1.85;color:#33443B;text-wrap:balance}
+.aw-quote-sub{font-size:15px;line-height:2.1;color:#5F5A52}
+
+/* NEXT STEP */
+.aw-next{position:relative;margin:clamp(56px,9vh,104px) 0 0;padding:clamp(76px,12vh,132px) clamp(24px,5vw,60px);overflow:hidden;background:linear-gradient(150deg,#3D5A4C 0%,#33513F 46%,#24312A 100%)}
+.aw-next-glow{position:absolute;inset:-20%;pointer-events:none;animation:aw-drift2 24s ease-in-out infinite alternate;background:radial-gradient(ellipse 44% 40% at 76% 12%,rgba(247,201,164,.3) 0%,transparent 64%),radial-gradient(ellipse 40% 40% at 16% 88%,rgba(201,225,234,.2) 0%,transparent 62%)}
+.aw-next-inner{position:relative;z-index:1;max-width:720px;margin:0 auto;text-align:center}
+.aw-next-text{font-family:'Noto Serif TC',serif;font-size:clamp(19px,2.2vw,27px);font-weight:200;color:#F7EFE3;line-height:1.95;margin-bottom:20px;text-wrap:balance}
+.aw-cta-final{display:inline-flex;align-items:center;gap:12px;padding:18px 44px;border:none;border-radius:999px;background:linear-gradient(120deg,#E29E49,#EFC49C);color:#3A4F42;font-size:14px;letter-spacing:.16em;cursor:pointer;font-family:'Noto Sans TC',sans-serif;box-shadow:0 18px 44px rgba(0,0,0,.24);transition:all .25s}
+.aw-cta-final:hover{background:linear-gradient(120deg,#FFE7C9,#F6D2AC);color:#2E4136}
+
+/* MOBILE */
+@media(max-width:768px){
+  .aw-hero{min-height:auto;padding:calc(var(--nav) + 48px) 0 64px}
+  .aw-hero-photo{width:100%;opacity:.55}
+  .aw-hero-scrim{background:linear-gradient(180deg,rgba(253,247,240,.9) 0%,rgba(253,247,240,.55) 55%,rgba(253,247,240,.9) 100%)}
+  .aw-scroll{display:none}
+  .aw-card{flex:1 1 100%}
+  .aw-cta-warm,.aw-cta-cool{font-size:15px;padding:14px 26px;width:100%;justify-content:center}
+  .aw-cta-final{width:100%;justify-content:center;padding:18px 26px;font-size:13px}
+  .aw-quote{margin:0 16px;padding:56px 24px}
+}
   `}</style>
 );
 
@@ -1877,56 +1968,186 @@ function Start({ go }) {
   );
 }
 
-/* ─── AWARE PAGE (自我覺察) ──────────────────────────────────────── */
+/* ─── AWARE PAGE (自我覺察) — 改版 ────────────────────────────────
+   取代 src/App.jsx 中原本的 function Aware({ go }) { ... }
+   需要搭配 aware-styles.css 內的 keyframes（貼進 Styles 的樣板字串）
+   圖片請放到 public/aware/
+------------------------------------------------------------------ */
 function Aware({ go }) {
   useFade();
+
+  const AW = {
+    heroImgMask:
+      "linear-gradient(90deg,transparent 0%,rgba(0,0,0,.55) 24%,#000 56%),linear-gradient(to top,transparent 0%,#000 20%,#000 84%,transparent 100%)",
+    tag: {
+      padding: "6px 14px", borderRadius: "999px", fontSize: "12px",
+      letterSpacing: ".08em", color: "#B4693F", background: "rgba(247,201,164,.34)",
+    },
+    badge: {
+      position: "absolute", top: "20px", left: "22px", display: "inline-flex",
+      alignItems: "center", gap: "8px", padding: "7px 15px", borderRadius: "999px",
+      background: "rgba(255,253,248,.82)", backdropFilter: "blur(6px)",
+      fontFamily: "'Cormorant Garamond',serif", fontSize: "12px", letterSpacing: ".2em",
+    },
+    cover: { position: "relative", height: "clamp(180px,22vh,248px)", overflow: "hidden" },
+    coverImg: { width: "100%", height: "100%", objectFit: "cover", display: "block" },
+    cardBody: {
+      padding: "clamp(28px,3vw,42px) clamp(26px,3vw,44px) clamp(30px,3vw,44px)",
+      display: "flex", flexDirection: "column", flex: 1,
+    },
+    cardTitle: {
+      fontFamily: "'Noto Serif TC',serif", fontSize: "clamp(22px,2vw,28px)",
+      fontWeight: 300, color: "#2A2723", lineHeight: 1.5, marginBottom: "16px",
+    },
+    cardText: {
+      fontSize: "15px", color: "#5F564E", lineHeight: 2,
+      marginBottom: "30px", textWrap: "pretty", flex: 1,
+    },
+    arrow: { fontFamily: "'Cormorant Garamond',serif", fontSize: "16px" },
+  };
+
   return (
-    <div className="page">
-      <div style={{background:"var(--cream)",padding:"140px 0 80px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 60% at 90% 30%,rgba(212,200,181,.28) 0%,transparent 60%)",pointerEvents:"none"}}/>
-        <div className="CN" style={{position:"relative",zIndex:1}}>
-          <div className="slb fi">自我覺察</div>
-          <h1 className="htit fi" style={{fontSize:"clamp(26px,3.5vw,44px)"}}>先看見，才能改變</h1>
-          <p className="hbo fi" style={{maxWidth:"500px"}}>這不是要給你答案，而是幫你先看清楚自己現在在哪裡。</p>
+    <div className="aw">
+
+      {/* HERO */}
+      <section className="aw-hero">
+        <div className="aw-hero-wash" />
+        <div className="aw-hero-photo" style={{
+          WebkitMaskImage: AW.heroImgMask, maskImage: AW.heroImgMask,
+          WebkitMaskComposite: "source-in", maskComposite: "intersect",
+        }}>
+          <img src="/aware/hero-light.jpeg" alt="" />
         </div>
-      </div>
+        <div className="aw-hero-ray" />
+        <div className="aw-hero-scrim" />
 
-      <section style={{background:"var(--w)"}}>
-        <div className="CN">
-          <div className="aware-tools-grid" style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2px",marginBottom:"60px"}}>
-            {/* 生命數字 */}
-            <div className="aware-tool-card fi" style={{padding:"52px 44px",background:"var(--cream)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => go("num")}>
-              <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"22px",fontWeight:300,color:"var(--text)",marginBottom:"16px"}}>生命數字</div>
-              <p style={{fontSize:"14px",color:"var(--soft)",lineHeight:1.9,marginBottom:"28px"}}>從出生日期了解你的主命數、流年數、關係數與挑戰數。看見你這一生最容易反覆面對的主題。</p>
-              <div className="aware-tool-link" style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>計算我的數字 →</div>
+        <div className="aw-hero-inner">
+          <div className="aw-hero-copy">
+            <div className="aw-kicker aw-fade">
+              <span className="aw-kicker-rule" />Awareness
             </div>
-            {/* 身心平衡檢測 — 外部連結 */}
-            <div className="aware-tool-card fi" style={{padding:"52px 44px",background:"var(--cream)",borderTop:"2px solid var(--sandm)",cursor:"pointer"}} onClick={() => window.open("https://sofiacentering.netlify.app/", "_blank")}>
-              <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"22px",fontWeight:300,color:"var(--text)",marginBottom:"16px"}}>身心平衡檢測</div>
-              <p style={{fontSize:"14px",color:"var(--soft)",lineHeight:1.9,marginBottom:"28px"}}>花約 3 分鐘，選擇最接近你近兩週感受的答案，看見自己現在真正的狀態。</p>
-              <div className="aware-tool-link" style={{fontSize:"12px",letterSpacing:"0.15em",color:"var(--forest)",fontFamily:"'Cormorant Garamond',serif"}}>開始檢測 →</div>
+            <h1 className="aw-h1 aw-fade aw-d1">
+              先看見，<br />才能<em>改變</em>
+            </h1>
+            <p className="aw-lead aw-fade aw-d2">
+              這不是要給你答案，而是幫你先看清楚自己現在在哪裡。
+            </p>
+            <div className="aw-hero-actions aw-fade aw-d3">
+              <a href="#aw-tools" className="aw-btn-primary">
+                兩個免費工具<span style={AW.arrow}>→</span>
+              </a>
+              <button type="button" className="aw-btn-ghost" onClick={() => go("apply")}>
+                預約 1 對 1
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="aw-scroll">Scroll<span /></div>
+      </section>
+
+      {/* TOOLS */}
+      <section id="aw-tools" className="aw-tools">
+        <div className="aw-tools-head">
+          <h2>從這裡開始看見自己</h2>
+          <span>Two free tools</span>
+        </div>
+
+        <div className="aw-tools-row">
+
+          {/* 生命數字 */}
+          <div
+            className="aw-card aw-card-num aw-fade"
+            role="button"
+            tabIndex={0}
+            onClick={() => go("num")}
+            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") go("num"); }}
+          >
+            <div style={{ ...AW.cover, background: "#F7E4D6" }}>
+              <img src="/aware/tool-numbers.jpeg" alt=""
+                style={{ ...AW.coverImg, objectPosition: "center 30%" }} />
+              <div style={{
+                position: "absolute", inset: 0,
+                background: "linear-gradient(to top,rgba(255,253,248,.9) 0%,rgba(255,253,248,.16) 44%,transparent 72%)",
+              }} />
+              <div style={{ ...AW.badge, color: "#B4693F" }}>01 · NUMBERS</div>
+            </div>
+            <div style={AW.cardBody}>
+              <div style={AW.cardTitle}>生命數字</div>
+              <p style={AW.cardText}>
+                從出生日期了解你的主命數、流年數、關係數與挑戰數。看見你這一生最容易反覆面對的主題。
+              </p>
+              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "28px" }}>
+                {["主命數", "流年數", "關係數", "挑戰數"].map((t) => (
+                  <span key={t} style={AW.tag}>{t}</span>
+                ))}
+              </div>
+              <div className="aw-cta-warm">計算我的數字<span style={AW.arrow}>→</span></div>
             </div>
           </div>
 
-          <div className="tone-panel fi" style={{marginBottom:"60px"}}>
-            <div className="tone-panel-inner">
-              <div className="tone-kicker">Before the next step</div>
-              <div className="tone-text">工具不是答案，<br/>它只是讓你先看見自己在哪裡。</div>
-              <p className="tone-sub">看見當下的狀態，下一步才會變得比較清楚。</p>
+          {/* 身心平衡檢測 */}
+          <a
+            className="aw-card aw-card-balance aw-fade aw-d1"
+            href="https://sofiacentering.netlify.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <div style={{ ...AW.cover, background: "#E3EEF0" }}>
+              <img src="/aware/tool-balance.jpeg" alt=""
+                style={{ ...AW.coverImg, objectPosition: "8% center" }} />
+              <div style={{
+                position: "absolute", inset: 0,
+                background: "linear-gradient(to top,rgba(255,253,248,.9) 0%,rgba(255,253,248,.18) 46%,rgba(214,236,238,.22) 100%)",
+              }} />
+              <div style={{ ...AW.badge, color: "#3E7B80" }}>02 · BALANCE</div>
             </div>
-          </div>
+            <div style={AW.cardBody}>
+              <div style={AW.cardTitle}>身心平衡檢測</div>
+              <p style={AW.cardText}>
+                花約 3 分鐘，選擇最接近你近兩週感受的答案，看見自己現在真正的狀態。
+              </p>
+              <div className="aw-meta">
+                <span className="aw-dot" />約 3 分鐘 · 另開新視窗
+              </div>
+              <div className="aw-cta-cool">開始檢測<span style={AW.arrow}>→</span></div>
+            </div>
+          </a>
 
-          <div className="aware-next-step fi" style={{padding:"48px 52px",background:"var(--forest)",textAlign:"center"}}>
-            <div className="aware-next-label" style={{fontFamily:"'Cormorant Garamond',serif",fontSize:"12px",letterSpacing:"0.28em",color:"rgba(232,223,208,.45)",marginBottom:"20px",textTransform:"uppercase"}}>Next Step</div>
-            <p style={{fontFamily:"'Noto Serif TC',serif",fontSize:"18px",fontWeight:300,color:"var(--sand)",lineHeight:1.8,marginBottom:"28px"}}>你現在看到的，只是你狀態的一部分。<br/>如果你想更清楚知道這些模式是怎麼影響你的選擇，可以從這裡開始。</p>
-            <button className="bp" onClick={() => go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>預約初次穩定體驗</button>
-          </div>
         </div>
       </section>
+
+      {/* QUOTE */}
+      <section className="aw-quote">
+        <div className="aw-quote-img"><img src="/aware/quote-wings.jpeg" alt="" /></div>
+        <div className="aw-quote-glow" />
+        <div className="aw-quote-inner">
+          <div className="aw-kicker aw-kicker-center">Before the next step</div>
+          <p className="aw-quote-text">工具不是答案，<br />它只是讓你先看見自己在哪裡。</p>
+          <div className="aw-rule" />
+          <p className="aw-quote-sub">看見當下的狀態，下一步才會變得比較清楚。</p>
+        </div>
+      </section>
+
+      {/* NEXT STEP */}
+      <section className="aw-next">
+        <div className="aw-next-glow" />
+        <div className="aw-next-inner">
+          <div className="aw-kicker aw-kicker-light">Next Step</div>
+          <p className="aw-next-text">
+            你現在看到的，只是你狀態的一部分。<br />
+            如果你想更清楚知道這些模式是怎麼影響你的選擇，可以從這裡開始。
+          </p>
+          <div className="aw-rule aw-rule-light" />
+          <button type="button" className="aw-cta-final" onClick={() => go("apply")}>
+            預約諮詢送頻率檢測報告<span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "17px" }}>→</span>
+          </button>
+        </div>
+      </section>
+
     </div>
   );
 }
-
 
 /* ─── TESTIMONIALS + EMAIL + APPLY + FOOTER ─────────────────────── */
 const TESTIMONIALS = [
