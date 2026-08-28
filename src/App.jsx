@@ -1971,7 +1971,7 @@ function Start({ go }) {
 /* ─── AWARE PAGE (自我覺察) — 改版 ────────────────────────────────
    取代 src/App.jsx 中原本的 function Aware({ go }) { ... }
    需要搭配 aware-styles.css 內的 keyframes（貼進 Styles 的樣板字串）
-   圖片請放到 public/aware/
+   圖片請放到 public/
 ------------------------------------------------------------------ */
 function Aware({ go }) {
   useFade();
@@ -2016,7 +2016,7 @@ function Aware({ go }) {
           WebkitMaskImage: AW.heroImgMask, maskImage: AW.heroImgMask,
           WebkitMaskComposite: "source-in", maskComposite: "intersect",
         }}>
-          <img src="/aware/hero-light.jpeg" alt="" />
+          <img src="/hero-light.jpeg" alt="" />
         </div>
         <div className="aw-hero-ray" />
         <div className="aw-hero-scrim" />
@@ -2064,7 +2064,7 @@ function Aware({ go }) {
             onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") go("num"); }}
           >
             <div style={{ ...AW.cover, background: "#F7E4D6" }}>
-              <img src="/aware/tool-numbers.jpeg" alt=""
+              <img src="/tool-numbers.jpeg" alt=""
                 style={{ ...AW.coverImg, objectPosition: "center 30%" }} />
               <div style={{
                 position: "absolute", inset: 0,
@@ -2094,7 +2094,7 @@ function Aware({ go }) {
             rel="noopener noreferrer"
           >
             <div style={{ ...AW.cover, background: "#E3EEF0" }}>
-              <img src="/aware/tool-balance.jpeg" alt=""
+              <img src="/tool-balance.jpeg" alt=""
                 style={{ ...AW.coverImg, objectPosition: "8% center" }} />
               <div style={{
                 position: "absolute", inset: 0,
@@ -2119,7 +2119,7 @@ function Aware({ go }) {
 
       {/* QUOTE */}
       <section className="aw-quote">
-        <div className="aw-quote-img"><img src="/aware/quote-wings.jpeg" alt="" /></div>
+        <div className="aw-quote-img"><img src="/quote-wings.jpeg" alt="" /></div>
         <div className="aw-quote-glow" />
         <div className="aw-quote-inner">
           <div className="aw-kicker aw-kicker-center">Before the next step</div>
