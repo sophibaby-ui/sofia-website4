@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import SoulGarden from "./SoulGarden.jsx";
 import Becoming from "./Becoming.jsx";
+import { calcPersonalYear, calcLunarYearNumber, buildYearMix } from "./personalYear.js";
 
 const PHOTO = "https://raw.githubusercontent.com/sophibaby-ui/sofia-website4/main/public/sofia.png";
 const HOME_SCENARIO_REPLY = "/home-scenario-reply.png";
