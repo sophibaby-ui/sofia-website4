@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-ro
 import SoulGarden from "./SoulGarden.jsx";
 import Becoming from "./Becoming.jsx";
 import { calcPersonalYear, calcLunarYearNumber, buildYearMix } from "./personalYear.js";
+import { Journal, JournalPost } from "./Journal.jsx";
 
 const PHOTO = "https://raw.githubusercontent.com/sophibaby-ui/sofia-website4/main/public/sofia.png";
 const HOME_SCENARIO_REPLY = "/home-scenario-reply.png";
@@ -4336,6 +4337,8 @@ function AppInner() {
           <Route path="/deep" element={<Deep go={go} />} />
           <Route path="/about" element={<About go={go} />} />
           <Route path="/art" element={<Art go={go} />} />
+          <Route path="/journal" element={<Journal go={go} />} />
+          <Route path="/journal/:id" element={<JournalPost go={go} />} />
           <Route path="/apply" element={<Apply go={go} />} />
           <Route path="/ongoing" element={<Ongoing go={go} />} />
           <Route path="/short" element={<ShortAdjust go={go} />} />
