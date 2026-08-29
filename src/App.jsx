@@ -4307,6 +4307,7 @@ function NumCalc({ go }) {
   );
 }
 
+function AppInner() {
   const navigate = useNavigate();
   const location = useLocation();
   const go = p => {
