@@ -3926,7 +3926,7 @@ function ChallengeCard({ sy, sm, sd }) {
   );
 }
 
-f/* ─── NUM PAGE (生命數字 × 個人流年) — 改版 ────────────────────────
+/* ─── NUM PAGE (生命數字 × 個人流年) — 改版 ────────────────────────
    取代 src/App.jsx 中原本的 function NumCalc({ go }) { ... }（約 3707–3892 行）
    需要在 App.jsx 最上方加一行：
      import { calcPersonalYear, calcLunarYearNumber, buildYearMix } from "./personalYear.js";
