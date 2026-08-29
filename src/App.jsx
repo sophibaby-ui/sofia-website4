@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import SoulGarden from "./SoulGarden.jsx";
 import Becoming from "./Becoming.jsx";
+import { calcPersonalYear, calcLunarYearNumber, buildYearMix } from "./personalYear.js";
 
 const PHOTO = "https://raw.githubusercontent.com/sophibaby-ui/sofia-website4/main/public/sofia.png";
 const HOME_SCENARIO_REPLY = "/home-scenario-reply.png";
@@ -3925,192 +3926,386 @@ function ChallengeCard({ sy, sm, sd }) {
   );
 }
 
+/* ─── NUM PAGE (生命數字 × 個人流年) — 改版 ────────────────────────
+   取代 src/App.jsx 中原本的 function NumCalc({ go }) { ... }（約 3707–3892 行）
+   需要在 App.jsx 最上方加一行：
+     import { calcPersonalYear, calcLunarYearNumber, buildYearMix } from "./personalYear.js";
+   樣式沿用 /aware 改版時已加入的 aw-fup / aw-drift / aw-drift2 / aw-ray keyframes，
+   其餘全部 inline，不需再動 Styles 區塊。
+------------------------------------------------------------------ */
 function NumCalc({ go }) {
+  useFade();
   const [sy, setSy] = useState(""); const [sm, setSm] = useState(""); const [sdy, setSdy] = useState("");
   const [sy2, setSy2] = useState(""); const [sm2, setSm2] = useState(""); const [sd2, setSd2] = useState("");
   const [result, setResult] = useState(null); const [err, setErr] = useState("");
-  const thisYear = new Date().getFullYear();
 
   const calc = () => {
     setErr(""); setResult(null);
-    if (!sy||!sm||!sdy||String(sy).length<4) { setErr("請輸入完整的出生年月日"); return; }
-    if (parseInt(sm)<1||parseInt(sm)>12||parseInt(sdy)<1||parseInt(sdy)>31) { setErr("日期格式不正確"); return; }
-    const solarLife = calcPath(sumD(sy)+sumD(sm)+sumD(sdy));
-    const solarYr   = calcPath(sumD(String(thisYear))+sumD(sm)+sumD(sdy));
-    // 農曆主命數
-    let lunarLife = null;
-    let lunarYr = null;
-    let lunarDate = null;
+    if (!sy || !sm || !sdy || String(sy).length < 4) { setErr("請輸入完整的出生年月日"); return; }
+    if (parseInt(sm) < 1 || parseInt(sm) > 12 || parseInt(sdy) < 1 || parseInt(sdy) > 31) { setErr("日期格式不正確"); return; }
+
+    // ── 個人流年（獨立函式，以生日為分界）──
+    const py = calcPersonalYear(parseInt(sm), parseInt(sdy));
+
+    // ── 生命靈數（原演算法，未更動）──
+    const solarLife = calcPath(sumD(sy) + sumD(sm) + sumD(sdy));
+    // 流年數改用流年適用年份（生日分界），與上方個人流年一致
+    const solarYr = calcPath(sumD(String(py.applied)) + sumD(sm) + sumD(sdy));
+
+    let lunarLife = null, lunarYr = null, lunarDate = null;
     try {
       const lDate = solarToLunar(parseInt(sy), parseInt(sm), parseInt(sdy));
       lunarDate = lDate;
-      lunarLife = calcPath(sumD(String(lDate.y))+sumD(String(lDate.m))+sumD(String(lDate.d)));
-      lunarYr = calcPath(sumD(String(thisYear))+sumD(String(lDate.m))+sumD(String(lDate.d)));
-    } catch(e) {}
+      lunarLife = calcPath(sumD(String(lDate.y)) + sumD(String(lDate.m)) + sumD(String(lDate.d)));
+      lunarYr = calcPath(sumD(String(py.applied)) + sumD(String(lDate.m)) + sumD(String(lDate.d)));
+    } catch (e) {}
+
     let relPath = null;
-    if (sy2&&sm2&&sd2) {
-      // 關係數用兩人農曆主命數相加
+    if (sy2 && sm2 && sd2) {
       const myLunar = lunarLife || solarLife;
-      let l2Solar = calcPath(sumD(sy2)+sumD(sm2)+sumD(sd2)).final;
+      let l2Solar = calcPath(sumD(sy2) + sumD(sm2) + sumD(sd2)).final;
       let l2Lunar = l2Solar;
       try {
         const lDate2 = solarToLunar(parseInt(sy2), parseInt(sm2), parseInt(sd2));
-        l2Lunar = calcPath(sumD(String(lDate2.y))+sumD(String(lDate2.m))+sumD(String(lDate2.d))).final;
-      } catch(e) {}
+        l2Lunar = calcPath(sumD(String(lDate2.y)) + sumD(String(lDate2.m)) + sumD(String(lDate2.d))).final;
+      } catch (e) {}
       let rn = myLunar.final + l2Lunar;
-      while (rn > 12) rn = String(rn).split("").reduce((a,x)=>a+parseInt(x),0);
+      while (rn > 12) rn = String(rn).split("").reduce((a, x) => a + parseInt(x), 0);
       if (rn < 2) rn = 2;
       relPath = { final: rn };
     }
-    setResult({
-      solarLife,
-      solarYr,
-      lunarLife,
-      lunarYr,
-      relPath,
-      solarDate:{ y:parseInt(sy), m:parseInt(sm), d:parseInt(sdy) },
-      lunarDate
-    });
+
+    setResult({ solarLife, solarYr, lunarLife, lunarYr, relPath, py,
+      solarDate: { y: parseInt(sy), m: parseInt(sm), d: parseInt(sdy) }, lunarDate });
   };
 
-  const IS = { background:"var(--cream)", border:"1px solid var(--div)", borderBottom:"2px solid var(--sandm)", padding:"13px 15px", fontSize:"15px", fontFamily:"'Noto Sans TC',sans-serif", color:"var(--text)", outline:"none", borderRadius:0, width:"100%", WebkitAppearance:"none" };
-  const LS = { fontSize:"12px", letterSpacing:"0.15em", color:"var(--wg)", display:"block", marginBottom:"7px" };
+  /* ── styles ── */
+  const S = {
+    wrap: { maxWidth: "900px", margin: "0 auto", padding: "0 clamp(24px,5vw,60px)" },
+    input: { width: "100%", padding: "14px 16px", fontSize: "16px", color: "#2A2723", background: "#FBF5EE", border: "1px solid rgba(212,200,181,.7)", borderRadius: "14px", outline: "none", fontFamily: "'Noto Sans TC',sans-serif", WebkitAppearance: "none" },
+    label: { display: "block", fontSize: "12px", letterSpacing: ".14em", color: "#9E9087", marginBottom: "8px" },
+    grid3: { display: "grid", gridTemplateColumns: "2fr 1fr 1fr", gap: "14px" },
+    kicker: { fontFamily: "'Cormorant Garamond',serif", fontSize: "11px", letterSpacing: ".22em", textTransform: "uppercase", marginBottom: "10px" },
+    secHead: { display: "flex", alignItems: "baseline", gap: "16px", marginBottom: "20px", flexWrap: "wrap" },
+    secH2: { fontFamily: "'Noto Serif TC',serif", fontSize: "clamp(21px,2.2vw,28px)", fontWeight: 300, color: "#2A2723" },
+    secEn: { fontFamily: "'Cormorant Garamond',serif", fontSize: "13px", letterSpacing: ".22em", color: "#A88763", textTransform: "uppercase" },
+    body: { fontSize: "15px", lineHeight: 2.05, color: "#5F564E", textWrap: "pretty" },
+    divider: { marginTop: "24px", paddingTop: "24px", borderTop: "1px solid rgba(212,200,181,.55)" },
+    pyField: { fontFamily: "'Cormorant Garamond',serif", fontSize: "11px", letterSpacing: ".24em", color: "#A88763", textTransform: "uppercase", marginBottom: "10px" },
+    pyBody: { fontSize: "16px", lineHeight: 2.1, color: "#4A443E", textWrap: "pretty" },
+    ctaItem: { display: "flex", gap: "12px", fontSize: "15px", lineHeight: 1.9, color: "rgba(247,239,227,.82)" },
+  };
+
+  const NumBlock = ({ life, yr, accent }) => {
+    const d = NUM_DESC[life.final];
+    if (!d) return null;
+    const yd = yr ? NUM_DESC[yr.final] : null;
+    return (
+      <div style={{ borderRadius: "22px", background: "#FFFDF8", border: `1px solid ${accent.border}`, boxShadow: accent.shadow, marginBottom: "34px", padding: "clamp(26px,3.5vw,40px)" }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "14px", marginBottom: "18px", flexWrap: "wrap" }}>
+          <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "52px", lineHeight: 1, color: accent.num }}>{life.display}</div>
+          <div>
+            <div style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "21px", color: "#2A2723" }}>{d.title}</div>
+            <div style={{ fontSize: "13px", letterSpacing: ".1em", color: "#A88763" }}>{d.sub}</div>
+          </div>
+        </div>
+        <p style={S.body}>{d.x}</p>
+        {d.note && (
+          <div style={S.divider}>
+            <div style={{ ...S.kicker, color: "#B4693F" }}>靈魂小叮嚀</div>
+            <p style={{ fontSize: "14px", lineHeight: 2, color: "#5F564E" }}>{d.note}</p>
+          </div>
+        )}
+        {yd && (
+          <div style={S.divider}>
+            <div style={{ ...S.kicker, color: "#3E7B80" }}>流年數 {yr.display}</div>
+            <p style={{ fontSize: "14px", lineHeight: 2, color: "#5F564E" }}>{yd.yr}</p>
+          </div>
+        )}
+        {d.oil && (
+          <div style={S.divider}>
+            <div style={{ ...S.kicker, color: "#A88763" }}>精油建議</div>
+            <p style={{ fontSize: "14px", lineHeight: 2, color: "#5F564E" }}>{d.oil}</p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const chalNum = (sy && sm && sdy) ? calcChallenge(parseInt(sy), parseInt(sm), parseInt(sdy)) : null;
+  const chal = chalNum !== null ? NUM_CHALLENGE[chalNum] : null;
+  const rel = result && result.relPath ? NUM_REL[result.relPath.final] : null;
+  const pyc = result ? result.py.content : null;
+  const lunarPy = result && result.lunarDate ? calcLunarYearNumber(result.lunarDate.m, result.lunarDate.d, result.py.applied) : null;
+  const mix = lunarPy ? buildYearMix(result.py.final, lunarPy.final) : null;
 
   return (
-    <div className="page">
-      <div style={{background:"var(--cream)",padding:"140px 0 80px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 55% 60% at 90% 30%,rgba(212,200,181,.26) 0%,transparent 65%)",pointerEvents:"none"}}/>
-        <div className="CN" style={{position:"relative",zIndex:1}}>
-          <div className="slb">生命數字 · Numerology</div>
-          <h1 className="htit" style={{fontSize:"clamp(28px,3.8vw,44px)"}}>認識你的生命數字</h1>
-          <p className="hbo" style={{maxWidth:"540px"}}>數字不是命運，而是一個看見自己的角度。輸入你的出生日期，了解你的主命數、流年數與挑戰數。</p>
+    <div className="page" style={{ background: "#FDFBF7", overflow: "hidden" }}>
+
+      {/* HERO */}
+      <section style={{ position: "relative", padding: "clamp(140px,17vh,196px) 0 clamp(56px,8vh,92px)", background: "linear-gradient(155deg,#FDF6EE 0%,#FAEDE6 40%,#F4EFF2 72%,#EEF3F3 100%)", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: "-18% -12%", pointerEvents: "none", animation: "aw-drift 24s ease-in-out infinite alternate", background: "radial-gradient(ellipse 44% 40% at 84% 20%,rgba(247,201,164,.58) 0%,transparent 66%),radial-gradient(ellipse 38% 42% at 10% 80%,rgba(214,203,232,.44) 0%,transparent 64%)" }} />
+        <div className="num-hero-photo" style={{ position: "absolute", top: "-4%", right: "-4%", width: "56%", height: "108%", pointerEvents: "none", opacity: .85, animation: "aw-drift2 28s ease-in-out infinite alternate", WebkitMaskImage: "linear-gradient(90deg,transparent 0%,rgba(0,0,0,.5) 26%,#000 58%),linear-gradient(to top,transparent 0%,#000 18%,#000 86%,transparent 100%)", maskImage: "linear-gradient(90deg,transparent 0%,rgba(0,0,0,.5) 26%,#000 58%),linear-gradient(to top,transparent 0%,#000 18%,#000 86%,transparent 100%)", WebkitMaskComposite: "source-in", maskComposite: "intersect" }}>
+          <img src="/num-hero.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
         </div>
-      </div>
-      <section style={{background:"var(--w)"}}>
-        <div className="CN">
-          <div className="slb">你的出生日期</div>
-          <div className="num-date-grid" style={{marginBottom:"36px"}}>
-            <div><label style={LS}>年份（西元）</label><input style={IS} type="number" placeholder="例：1990" value={sy} onChange={e=>setSy(e.target.value)} /></div>
-            <div><label style={LS}>月份</label><input style={IS} type="number" placeholder="8" value={sm} min={1} max={12} onChange={e=>setSm(e.target.value)} /></div>
-            <div><label style={LS}>日期</label><input style={IS} type="number" placeholder="15" value={sdy} min={1} max={31} onChange={e=>setSdy(e.target.value)} /></div>
-          </div>
-          <div className="num-rel-panel">
-            <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"14px",color:"var(--text)",marginBottom:"6px"}}>選填 — 計算關係數</div>
-            <div style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9,marginBottom:"20px"}}>輸入對方的出生日期，計算你們之間的關係數。</div>
-            <div className="num-date-grid">
-              <div><label style={LS}>對方年份（西元）</label><input style={IS} type="number" placeholder="例：1988" value={sy2} onChange={e=>setSy2(e.target.value)} /></div>
-              <div><label style={LS}>月份</label><input style={IS} type="number" placeholder="3" value={sm2} min={1} max={12} onChange={e=>setSm2(e.target.value)} /></div>
-              <div><label style={LS}>日期</label><input style={IS} type="number" placeholder="22" value={sd2} min={1} max={31} onChange={e=>setSd2(e.target.value)} /></div>
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "linear-gradient(125deg,transparent 34%,rgba(255,248,235,.45) 50%,transparent 66%)", backgroundSize: "200% 200%", animation: "aw-ray 12s ease-in-out infinite" }} />
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "linear-gradient(90deg,rgba(253,247,240,.96) 0%,rgba(253,247,240,.88) 32%,rgba(253,247,240,.4) 50%,transparent 70%)" }} />
+        <div style={{ position: "relative", zIndex: 2, maxWidth: "1180px", margin: "0 auto", padding: "0 clamp(24px,5vw,60px)" }}>
+          <div style={{ maxWidth: "640px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "16px", fontFamily: "'Cormorant Garamond',serif", fontSize: "12px", letterSpacing: ".3em", color: "#A88763", textTransform: "uppercase", marginBottom: "28px", animation: "aw-fup .8s ease both" }}>
+              <span style={{ display: "block", width: "44px", height: "1px", background: "linear-gradient(90deg,#F2A183,#D8CBEA)" }} />Numerology · Personal Year
             </div>
+            <h1 style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "clamp(32px,4.4vw,58px)", fontWeight: 200, lineHeight: 1.36, letterSpacing: ".03em", color: "#2A2723", marginBottom: "24px", textWrap: "balance", animation: "aw-fup .8s ease .08s both" }}>
+              認識你的生命數字<br />與<em style={{ fontStyle: "normal", background: "linear-gradient(100deg,#E2825C,#C97BA8 52%,#5A8A8E)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>今年的節奏</em>
+            </h1>
+            <p style={{ fontSize: "clamp(16px,1.15vw,18px)", lineHeight: 2.05, color: "#5F564E", maxWidth: "520px", textWrap: "pretty", animation: "aw-fup .8s ease .16s both" }}>
+              數字不是命運，而是一個看見自己的角度。輸入一次出生日期，你會看見主命數、關係數、挑戰數，以及你目前所在的個人流年。
+            </p>
           </div>
-          {err && <div style={{fontSize:"13px",color:"#B85A5A",marginBottom:"18px"}}>⚠ {err}</div>}
-          <button className="bp" onClick={calc}>計算我的數字</button>
         </div>
       </section>
-      {result && (
-        <section style={{background:"var(--cream)"}}>
-          <div className="CN">
-            <div className="num-birthday-panel">
-              <div className="num-birthday-card">
-                <div className="num-birthday-label">Solar Birthday</div>
-                <div className="num-birthday-date">
-                  國曆 {result.solarDate.y} 年 {result.solarDate.m} 月 {result.solarDate.d} 日
-                </div>
+
+      {/* FORM */}
+      <section style={{ padding: "clamp(56px,8vh,88px) 0 clamp(40px,6vh,64px)" }}>
+        <div style={S.wrap}>
+          <div style={{ borderRadius: "26px", background: "#FFFDF8", border: "1px solid rgba(233,197,168,.5)", boxShadow: "0 26px 62px rgba(122,82,52,.09)", padding: "clamp(28px,4vw,48px)" }}>
+            <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "12px", letterSpacing: ".28em", color: "#A88763", textTransform: "uppercase", marginBottom: "22px" }}>Your birth date</div>
+            <div className="num-date-grid" style={{ ...S.grid3, marginBottom: "30px" }}>
+              <div><label style={S.label}>年份（西元）</label><input style={S.input} type="number" placeholder="例：1990" value={sy} onChange={e => setSy(e.target.value)} /></div>
+              <div><label style={S.label}>月份</label><input style={S.input} type="number" placeholder="8" min={1} max={12} value={sm} onChange={e => setSm(e.target.value)} /></div>
+              <div><label style={S.label}>日期</label><input style={S.input} type="number" placeholder="15" min={1} max={31} value={sdy} onChange={e => setSdy(e.target.value)} /></div>
+            </div>
+
+            <div style={{ borderRadius: "18px", background: "linear-gradient(140deg,#FBF3EA,#F2F4F1)", padding: "clamp(20px,3vw,30px)", marginBottom: "28px" }}>
+              <div style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "16px", color: "#2A2723", marginBottom: "6px" }}>選填 — 計算關係數</div>
+              <div style={{ fontSize: "14px", color: "#8A8078", lineHeight: 1.9, marginBottom: "20px" }}>輸入對方的出生日期，計算你們之間的關係數。</div>
+              <div className="num-date-grid" style={S.grid3}>
+                <input style={S.input} type="number" placeholder="對方年份 例：1988" value={sy2} onChange={e => setSy2(e.target.value)} />
+                <input style={S.input} type="number" placeholder="月" min={1} max={12} value={sm2} onChange={e => setSm2(e.target.value)} />
+                <input style={S.input} type="number" placeholder="日" min={1} max={31} value={sd2} onChange={e => setSd2(e.target.value)} />
               </div>
-              {result.lunarDate && (
-                <div className="num-birthday-card">
-                  <div className="num-birthday-label">Lunar Birthday</div>
-                  <div className="num-birthday-date">
-                    農曆 {result.lunarDate.y} 年 {result.lunarDate.m} 月 {result.lunarDate.d} 日
+            </div>
+
+            {err && <div style={{ fontSize: "14px", color: "#B85A5A", marginBottom: "18px" }}>⚠ {err}</div>}
+
+            <button onClick={calc} style={{ display: "inline-flex", alignItems: "center", gap: "10px", padding: "16px 38px", border: "none", borderRadius: "999px", background: "linear-gradient(120deg,#E07449,#D99A6E)", color: "#FFF9F2", fontSize: "15px", letterSpacing: ".14em", cursor: "pointer", fontFamily: "'Noto Sans TC',sans-serif", boxShadow: "0 14px 32px rgba(200,110,70,.26)" }}>
+              計算我的數字<span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "17px" }}>→</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {result && (
+        <>
+          {/* A. 生命靈數結果 */}
+          <section style={{ padding: "0 0 clamp(40px,6vh,64px)" }}>
+            <div style={S.wrap}>
+              <div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginBottom: "34px" }}>
+                <div style={{ flex: "1 1 240px", padding: "20px 24px", borderRadius: "18px", background: "#FFFDF8", border: "1px solid rgba(233,197,168,.5)" }}>
+                  <div style={{ ...S.kicker, color: "#B4693F", marginBottom: "8px" }}>Solar Birthday</div>
+                  <div style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "18px", color: "#2A2723" }}>國曆 {result.solarDate.y} 年 {result.solarDate.m} 月 {result.solarDate.d} 日</div>
+                </div>
+                {result.lunarDate && (
+                  <div style={{ flex: "1 1 240px", padding: "20px 24px", borderRadius: "18px", background: "#FFFDF8", border: "1px solid rgba(160,200,205,.5)" }}>
+                    <div style={{ ...S.kicker, color: "#3E7B80", marginBottom: "8px" }}>Lunar Birthday</div>
+                    <div style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "18px", color: "#2A2723" }}>農曆 {result.lunarDate.y} 年 {result.lunarDate.m} 月 {result.lunarDate.d} 日</div>
+                  </div>
+                )}
+              </div>
+
+              <div style={{ borderRadius: "22px", background: "linear-gradient(140deg,#FBF3EA,#F1F4F2)", padding: "clamp(26px,3.5vw,40px)", marginBottom: "36px" }}>
+                <div style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "18px", color: "#2A2723", marginBottom: "22px" }}>數字怎麼看</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "26px", marginBottom: "26px" }}>
+                  <div>
+                    <div style={{ ...S.kicker, color: "#B4693F" }}>主命數</div>
+                    <p style={{ fontSize: "14px", color: "#5F564E", lineHeight: 1.95 }}>你這一生的主要能量方向，像是你天生的底色。來自你的出生日期，代表你在人生裡最核心的課題、天賦與模式。不會改變。</p>
+                  </div>
+                  <div>
+                    <div style={{ ...S.kicker, color: "#3E7B80" }}>流年數</div>
+                    <p style={{ fontSize: "14px", color: "#5F564E", lineHeight: 1.95 }}>你目前這一段生日週期特別需要面對的能量主題。它以生日為分界，每一年都不同，幫助你理解今年為什麼會對某些事特別有感。</p>
                   </div>
                 </div>
+                <div style={{ borderTop: "1px solid rgba(212,200,181,.6)", paddingTop: "24px" }}>
+                  <div style={{ ...S.kicker, color: "#A88763", marginBottom: "12px" }}>陽曆 vs 農曆</div>
+                  <p style={{ fontSize: "14px", color: "#5F564E", lineHeight: 1.95, marginBottom: "18px" }}>兩個系統反映的是不同層次的自己，都看才能有更完整的理解。有些人陽曆和農曆的數字相同，有些人不同——不同的人往往會覺得其中一個特別「準」。</p>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: "14px" }}>
+                    <div style={{ padding: "16px 20px", borderRadius: "14px", background: "rgba(255,253,248,.85)", borderLeft: "3px solid #E9C5A8" }}>
+                      <div style={{ ...S.kicker, color: "#B4693F", marginBottom: "6px" }}>陽曆</div>
+                      <p style={{ fontSize: "13px", color: "#5F564E", lineHeight: 1.85 }}>工作狀態、初次認識、起心動念——你在外部世界裡行走的節奏與樣貌。</p>
+                    </div>
+                    <div style={{ padding: "16px 20px", borderRadius: "14px", background: "rgba(255,253,248,.85)", borderLeft: "3px solid #9FC5CB" }}>
+                      <div style={{ ...S.kicker, color: "#3E7B80", marginBottom: "6px" }}>農曆</div>
+                      <p style={{ fontSize: "13px", color: "#5F564E", lineHeight: 1.85 }}>私底下的狀態、關係熟悉後、事情的結果與落實——你內在的時間感與自然韻律。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div style={S.secHead}><h2 style={S.secH2}>陽曆</h2><span style={S.secEn}>Solar</span></div>
+              <NumBlock life={result.solarLife} yr={result.solarYr} accent={{ border: "rgba(233,197,168,.5)", shadow: "0 20px 50px rgba(122,82,52,.08)", num: "#E2825C" }} />
+
+              {result.lunarLife && (
+                <>
+                  <div style={S.secHead}><h2 style={S.secH2}>農曆</h2><span style={S.secEn}>Lunar</span></div>
+                  <NumBlock life={result.lunarLife} yr={result.lunarYr} accent={{ border: "rgba(160,200,205,.5)", shadow: "0 20px 50px rgba(58,100,105,.08)", num: "#3E7B80" }} />
+                </>
+              )}
+
+              {rel && (
+                <>
+                  <div style={S.secHead}><h2 style={S.secH2}>關係數</h2><span style={S.secEn}>Relation</span></div>
+                  <div style={{ borderRadius: "22px", background: "linear-gradient(140deg,#FBF0F1,#F3F1F6)", padding: "clamp(26px,3.5vw,40px)", marginBottom: "34px" }}>
+                    <div style={{ display: "flex", alignItems: "baseline", gap: "14px", marginBottom: "16px" }}>
+                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "44px", lineHeight: 1, color: "#C97BA8" }}>{result.relPath.final}</div>
+                      <div style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "20px", color: "#2A2723" }}>{rel.title}</div>
+                    </div>
+                    <p style={{ ...S.body, marginBottom: "18px" }}>{rel.x}</p>
+                    <p style={{ fontSize: "14px", lineHeight: 2, color: "#7A7169", marginBottom: "10px" }}>{rel.note}</p>
+                    <p style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "15px", lineHeight: 2, color: "#3D5A4C" }}>{rel.lesson}</p>
+                  </div>
+                </>
+              )}
+
+              {chal && (
+                <>
+                  <div style={S.secHead}><h2 style={S.secH2}>挑戰數</h2><span style={S.secEn}>Challenge</span></div>
+                  <p style={{ fontSize: "14px", lineHeight: 2, color: "#7A7169", marginBottom: "20px", padding: "18px 22px", borderRadius: "14px", background: "#FBF5EE" }}>挑戰數代表你在人生中最容易反覆卡住的內在模式，它不是你的缺點，而是你最容易過度或失衡的那個點。當你開始看懂它，這個挑戰反而會變成你的穩定力。</p>
+                  <div style={{ borderRadius: "22px", background: "#FFFDF8", border: "1px solid rgba(212,200,181,.6)", padding: "clamp(26px,3.5vw,40px)" }}>
+                    <div style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "20px", color: "#2A2723", marginBottom: "16px" }}>{chal.title}</div>
+                    <p style={{ ...S.body, marginBottom: "18px" }}>{chal.x}</p>
+                    <p style={{ fontSize: "14px", lineHeight: 2, color: "#7A7169", marginBottom: "10px" }}>{chal.note}</p>
+                    <p style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "15px", lineHeight: 2, color: "#3D5A4C" }}>{chal.lesson}</p>
+                  </div>
+                </>
               )}
             </div>
+          </section>
 
-            {/* 說明區塊 */}
-            <div className="num-guide-panel" style={{marginBottom:"40px",padding:"36px 44px",background:"var(--w)",borderLeft:"3px solid var(--sandm)"}}>
-              <div style={{fontFamily:"'Noto Serif TC',serif",fontSize:"16px",color:"var(--text)",marginBottom:"20px"}}>數字怎麼看</div>
-              <div className="num-guide-grid">
-                <div>
-                  <div style={{fontSize:"11px",letterSpacing:"0.22em",color:"var(--forest)",marginBottom:"10px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>主命數</div>
-                  <p style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9}}>你這一生的主要能量方向，像是你天生的底色。來自你的出生日期，代表你在人生裡最核心的課題、天賦與模式。不會改變。</p>
-                </div>
-                <div>
-                  <div style={{fontSize:"11px",letterSpacing:"0.22em",color:"var(--forest)",marginBottom:"10px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>流年數</div>
-                  <p style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9}}>你今年特別需要面對的能量主題。每一年都不同，是你當下所處的周期位置，幫助你理解今年為什麼會對某些事特別有感。</p>
-                </div>
+          {/* B. 你目前的個人流年 */}
+          <section style={{ position: "relative", margin: "0 clamp(16px,3vw,40px)", borderRadius: "32px", overflow: "hidden", padding: "clamp(56px,9vh,104px) clamp(24px,5vw,68px)", background: "linear-gradient(140deg,#FBEFE6 0%,#F5EAF1 42%,#E9F1F1 100%)" }}>
+            <div style={{ position: "absolute", inset: "-12%", pointerEvents: "none", opacity: .4, mixBlendMode: "soft-light", animation: "aw-drift 30s ease-in-out infinite alternate" }}>
+              <img src="/hero-light.jpeg" alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+            </div>
+            <div style={{ position: "absolute", inset: 0, pointerEvents: "none", background: "radial-gradient(ellipse 62% 68% at 50% 6%,rgba(255,255,255,.62),transparent 64%)" }} />
+
+            <div style={{ position: "relative", zIndex: 1, maxWidth: "760px", margin: "0 auto" }}>
+              <div style={{ textAlign: "center", marginBottom: "clamp(36px,5vh,56px)" }}>
+                <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "12px", letterSpacing: ".32em", color: "#A88763", textTransform: "uppercase", marginBottom: "22px" }}>Personal Year</div>
+                <h2 style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "clamp(24px,3.2vw,38px)", fontWeight: 200, lineHeight: 1.62, color: "#33443B", marginBottom: "22px", textWrap: "balance" }}>你的數字，<br />會遇見每一年的不同節奏</h2>
+                <p style={{ fontSize: "15px", lineHeight: 2.05, color: "#5F5A52", textWrap: "pretty" }}>生命靈數讓你看見自己長期的核心特質與生命課題；個人流年則像是這一段時間的節奏，提醒你今年適合把力氣放在哪裡，以及哪些地方值得多留意一點。以下的日期與適用期間以國曆為主，同時列出你的國曆與農曆流年數。</p>
               </div>
-              <div style={{borderTop:"1px solid var(--div)",paddingTop:"20px"}}>
-                <div style={{fontSize:"11px",letterSpacing:"0.22em",color:"var(--sandm)",marginBottom:"12px",fontFamily:"'Cormorant Garamond',serif",textTransform:"uppercase"}}>陽曆 vs 農曆</div>
-                <p style={{fontSize:"13px",color:"var(--soft)",lineHeight:1.9,marginBottom:"16px"}}>兩個系統反映的是不同層次的自己，都看才能有更完整的理解。有些人陽曆和農曆的數字相同，有些人不同——不同的人往往會覺得其中一個特別「準」。</p>
-                <div className="num-lunar-grid">
-                  <div style={{padding:"14px 18px",background:"var(--cream)",borderLeft:"2px solid var(--sandm)"}}>
-                    <div style={{fontSize:"11px",letterSpacing:"0.18em",color:"var(--sandm)",marginBottom:"6px",fontFamily:"'Cormorant Garamond',serif"}}>陽曆</div>
-                    <p style={{fontSize:"12px",color:"var(--soft)",lineHeight:1.8}}>工作狀態、初次認識、起心動念——你在外部世界裡行走的節奏與樣貌。</p>
+
+              <div style={{ borderRadius: "26px", background: "rgba(255,253,248,.86)", backdropFilter: "blur(8px)", padding: "clamp(28px,4vw,46px)", boxShadow: "0 24px 60px rgba(120,100,90,.09)" }}>
+                <div style={{ textAlign: "center", paddingBottom: "28px", borderBottom: "1px solid rgba(212,200,181,.6)", marginBottom: "30px" }}>
+                  <div style={{ fontSize: "14px", letterSpacing: ".14em", color: "#8A8078", marginBottom: "12px" }}>你目前的個人流年是</div>
+                  <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: "clamp(20px,4vw,44px)", marginBottom: "16px" }}>
+                    <div>
+                      <div style={{ ...S.kicker, color: "#A88763", marginBottom: "6px" }}>國曆</div>
+                      <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "clamp(48px,7vw,80px)", lineHeight: 1, background: "linear-gradient(100deg,#E2825C,#C97BA8 60%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>{result.py.display}</div>
+                    </div>
+                    {lunarPy && <div style={{ width: "1px", alignSelf: "stretch", background: "rgba(212,200,181,.7)" }} />}
+                    {lunarPy && (
+                      <div>
+                        <div style={{ ...S.kicker, color: "#3E7B80", marginBottom: "6px" }}>農曆</div>
+                        <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "clamp(48px,7vw,80px)", lineHeight: 1, background: "linear-gradient(100deg,#7BA9AE,#5A8A8E 60%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>{lunarPy.display}</div>
+                      </div>
+                    )}
                   </div>
-                  <div style={{padding:"14px 18px",background:"var(--cream)",borderLeft:"2px solid var(--forest)"}}>
-                    <div style={{fontSize:"11px",letterSpacing:"0.18em",color:"var(--forest)",marginBottom:"6px",fontFamily:"'Cormorant Garamond',serif"}}>農曆</div>
-                    <p style={{fontSize:"12px",color:"var(--soft)",lineHeight:1.8}}>私底下的狀態、關係熟悉後、事情的結果與落實——你內在的時間感與自然韻律。</p>
+                  <div style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "clamp(20px,2.4vw,27px)", fontWeight: 300, color: "#2A2723", marginBottom: "18px" }}>{pyc.name}</div>
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center", marginBottom: "22px" }}>
+                    {pyc.keywords.map(k => (
+                      <span key={k} style={{ padding: "6px 16px", borderRadius: "999px", fontSize: "13px", letterSpacing: ".08em", color: "#B4693F", background: "rgba(247,201,164,.34)" }}>{k}</span>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: "14px", color: "#5F5A52", lineHeight: 1.9 }}>適用期間：{result.py.periodStart} － {result.py.periodEnd}</div>
+                  <div style={{ marginTop: "14px", fontSize: "13px", color: "#8A8078", lineHeight: 1.9, maxWidth: "520px", margin: "14px auto 0" }}>
+                    <strong style={{ color: "#3D5A4C", fontWeight: 400 }}>流年以生日為分界。</strong>生日之前仍沿用前一個年份；從生日當天開始，才進入以今年年份計算的新流年。因此，每個人更換流年的日期都不一樣。
+                  </div>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
+                  {mix && (
+                    <div style={{ padding: "28px 30px", borderRadius: "20px", background: "linear-gradient(135deg,#FBEFE6,#EDF1F2)" }}>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "14px", flexWrap: "wrap", marginBottom: "18px" }}>
+                        <span style={{ ...S.kicker, color: "#A88763" }}>綜合解讀</span>
+                        <span style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "17px", color: "#2A2723" }}>{mix.relLabel}</span>
+                      </div>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))", gap: "16px", marginBottom: "20px" }}>
+                        <div style={{ padding: "20px 22px", borderRadius: "16px", background: "rgba(255,253,248,.86)", borderLeft: "3px solid #E0A882" }}>
+                          <div style={{ ...S.kicker, color: "#B4693F", marginBottom: "8px" }}>國曆 · 外在的一年</div>
+                          <p style={{ fontSize: "15px", lineHeight: 2, color: "#4A443E", textWrap: "pretty" }}>{mix.outer}</p>
+                        </div>
+                        <div style={{ padding: "20px 22px", borderRadius: "16px", background: "rgba(255,253,248,.86)", borderLeft: "3px solid #7BA9AE" }}>
+                          <div style={{ ...S.kicker, color: "#3E7B80", marginBottom: "8px" }}>農曆 · 內在的一年</div>
+                          <p style={{ fontSize: "15px", lineHeight: 2, color: "#4A443E", textWrap: "pretty" }}>{mix.inner}</p>
+                        </div>
+                      </div>
+                      <p style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "16px", lineHeight: 2.1, color: "#33443B", textWrap: "pretty" }}>{mix.summary}</p>
+                    </div>
+                  )}
+                  <div>
+                    <div style={S.pyField}>整體狀態</div>
+                    <p style={S.pyBody}>{pyc.state}</p>
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))", gap: "16px" }}>
+                    <div style={{ padding: "22px 24px", borderRadius: "18px", background: "rgba(233,241,235,.7)", borderLeft: "3px solid #7FA98C" }}>
+                      <div style={{ ...S.kicker, color: "#4E7A5E" }}>順勢時</div>
+                      <p style={{ fontSize: "15px", lineHeight: 2, color: "#4A443E" }}>{pyc.inFlow}</p>
+                    </div>
+                    <div style={{ padding: "22px 24px", borderRadius: "18px", background: "rgba(250,238,230,.8)", borderLeft: "3px solid #E0A882" }}>
+                      <div style={{ ...S.kicker, color: "#B4693F" }}>需要留意</div>
+                      <p style={{ fontSize: "15px", lineHeight: 2, color: "#4A443E" }}>{pyc.watchOut}</p>
+                    </div>
+                  </div>
+                  <div>
+                    <div style={S.pyField}>工作與財富</div>
+                    <p style={S.pyBody}>{pyc.workWealth}</p>
+                  </div>
+                  <div>
+                    <div style={S.pyField}>感情與關係</div>
+                    <p style={S.pyBody}>{pyc.relationships}</p>
+                  </div>
+                  <div style={{ padding: "26px 28px", borderRadius: "18px", background: "linear-gradient(130deg,#F6EDE2,#EDF1F0)" }}>
+                    <div style={S.pyField}>今年的行動</div>
+                    <p style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "17px", lineHeight: 2, color: "#2A2723", marginBottom: "24px", textWrap: "pretty" }}>{pyc.action}</p>
                   </div>
                 </div>
               </div>
             </div>
+          </section>
 
-            {/* 陽曆主命數 + 流年數 */}
-            <div style={{marginBottom:"32px"}}>
-              <div className="num-section-title">陽曆 <span>Solar</span></div>
-              <NumCard label="主命數 · 流年數" lifePath={result.solarLife} yrPath={result.solarYr} thisYear={thisYear} />
-            </div>
-
-            {/* 農曆主命數 + 流年數 */}
-            {result.lunarLife && (
-              <div style={{marginBottom:"48px"}}>
-                <div className="num-section-title">農曆 <span>Lunar</span></div>
-                <NumCard label="主命數 · 流年數" lifePath={result.lunarLife} yrPath={result.lunarYr} thisYear={thisYear} />
+          {/* C. 服務導向 */}
+          <section style={{ position: "relative", margin: "clamp(48px,8vh,88px) 0 0", padding: "clamp(68px,11vh,120px) clamp(24px,5vw,60px)", overflow: "hidden", background: "linear-gradient(150deg,#3D5A4C 0%,#33513F 46%,#24312A 100%)" }}>
+            <div style={{ position: "absolute", inset: "-20%", pointerEvents: "none", animation: "aw-drift2 26s ease-in-out infinite alternate", background: "radial-gradient(ellipse 44% 40% at 76% 12%,rgba(247,201,164,.28) 0%,transparent 64%),radial-gradient(ellipse 40% 40% at 16% 88%,rgba(201,225,234,.18) 0%,transparent 62%)" }} />
+            <div style={{ position: "relative", zIndex: 1, maxWidth: "760px", margin: "0 auto" }}>
+              <div style={{ textAlign: "center", marginBottom: "clamp(32px,5vh,48px)" }}>
+                <div style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "12px", letterSpacing: ".32em", color: "rgba(247,224,199,.7)", textTransform: "uppercase", marginBottom: "22px" }}>Next Step</div>
+                <h2 style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "clamp(21px,2.6vw,32px)", fontWeight: 200, color: "#F7EFE3", lineHeight: 1.8, marginBottom: "22px", textWrap: "balance" }}>知道今年的方向之後，<br />下一步是把它放回你的生活裡</h2>
+                <p style={{ fontSize: "15px", lineHeight: 2.05, color: "rgba(247,239,227,.72)", textWrap: "pretty" }}>網站上的生命靈數與流年結果，提供的是你的核心特質與這段生日週期的共通方向。真正進入每個人的生活後，同一組數字可能落在工作轉換、感情關係、金錢安全、家庭責任或自我成長等不同位置。</p>
               </div>
-            )}
 
-            {/* 關係數 */}
-            {result.relPath && (
-              <div style={{marginBottom:"48px"}}>
-                <div className="num-section-title">關係數 <span>Relation</span></div>
-                <RelCard relPath={result.relPath} />
-              </div>
-            )}
-
-            {/* 挑戰數 */}
-            <div style={{marginBottom:"48px"}}>
-              <div className="num-section-title">挑戰數 <span>Challenge</span></div>
-              <div style={{fontSize:"13px",color:"var(--wg)",lineHeight:1.9,marginBottom:"20px",padding:"16px 20px",background:"var(--w)",borderLeft:"2px solid var(--sandm)"}}>挑戰數代表你在人生中最容易反覆卡住的內在模式，它不是你的缺點，而是你最容易過度或失衡的那個點。當你開始看懂它，這個挑戰反而會變成你的穩定力。</div>
-              <ChallengeCard sy={sy} sm={sm} sd={sdy} />
-              <div className="num-insight-panel">
-                <div className="num-insight-card">
-                  <div className="num-insight-mark">01</div>
-                  <p>挑戰數不是你哪裡不好，而是你這一生會反覆遇到、也有機會轉化成力量的地方。</p>
+              <div style={{ borderRadius: "24px", background: "rgba(250,247,242,.07)", border: "1px solid rgba(232,223,208,.2)", padding: "clamp(28px,4vw,44px)", marginBottom: "40px" }}>
+                <div style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "clamp(18px,2vw,22px)", fontWeight: 300, color: "#F7EFE3", lineHeight: 1.8, marginBottom: "26px", textWrap: "balance" }}>預約個人流年諮詢，贈專屬《人生導航報告書》</div>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))", gap: "12px 28px", marginBottom: "28px" }}>
+                  {["目前流年的核心主題", "工作與事業的發展方向", "財富與金錢需要留意的地方", "感情與重要關係的年度課題", "健康與身心能量的生活提醒", "目前正在經歷的人生轉換", "適合主動、整理與暫緩的事情", "接下來一年的行動重點"].map(t => (
+                    <div key={t} style={S.ctaItem}><span style={{ color: "#E8C79E" }}>—</span>{t}</div>
+                  ))}
                 </div>
-                <div className="num-insight-card">
-                  <div className="num-insight-mark">02</div>
-                  <p>當你看懂自己的挑戰，你就不會再用錯方式對待自己。</p>
-                </div>
+                <p style={{ fontSize: "14px", lineHeight: 2.05, color: "rgba(247,239,227,.62)", textWrap: "pretty" }}>諮詢後，你會收到一份專屬《人生導航報告書》，保留重要分析、年度方向與行動提醒。當你在這段生日週期遇到選擇、改變或不確定時，可以重新打開報告，確認自己的位置。</p>
               </div>
-            </div>
 
-            {/* CTA */}
-            <div className="num-result-cta">
-              <div className="num-cta-kicker">Next Step</div>
-              <p className="num-cta-text">數字是一個起點，<br/>真正的整理需要更深一層的陪伴。</p>
-              <div className="num-cta-actions">
-                <button className="bp" onClick={()=>go("apply")} style={{background:"var(--sand)",color:"var(--forest)"}}>預約初次穩定體驗</button>
-                <button className="bp num-cta-secondary" onClick={()=>go("aware")}>回到自我覺察</button>
+              <div style={{ textAlign: "center" }}>
+                <button onClick={() => go("apply")} style={{ display: "inline-flex", alignItems: "center", gap: "12px", padding: "18px 44px", border: "none", borderRadius: "999px", background: "linear-gradient(120deg,#E29E49,#EFC49C)", color: "#3A4F42", fontSize: "15px", letterSpacing: ".14em", cursor: "pointer", fontFamily: "'Noto Sans TC',sans-serif", boxShadow: "0 18px 44px rgba(0,0,0,.24)" }}>
+                  預約我的流年諮詢<span style={{ fontFamily: "'Cormorant Garamond',serif", fontSize: "17px" }}>→</span>
+                </button>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </>
       )}
     </div>
   );
 }
-
 
 function AppInner() {
   const navigate = useNavigate();
