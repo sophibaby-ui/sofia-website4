@@ -22,7 +22,7 @@ const S = {
   meta: { display: "flex", alignItems: "center", gap: "12px", fontSize: "13px", color: "#8A8078" },
   dash: { width: "16px", height: "1px", background: "#D4C8B5" },
   card: { display: "flex", flexDirection: "column", gap: "14px", cursor: "pointer" },
-  thumb: { borderRadius: "18px", overflow: "hidden", aspectRatio: "3/2", background: "#F1EAE1" },
+  thumb: { borderRadius: "18px", overflow: "hidden", aspectRatio: "1/1", background: "#F1EAE1" },
   img: { width: "100%", height: "100%", objectFit: "cover", display: "block" },
   clamp3: { display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" },
 };
@@ -82,6 +82,58 @@ function Block({ b }) {
     default:
       return <p style={{ fontSize: "17px", lineHeight: 2.2, color: "#4A443E", margin: "0 0 26px", textWrap: "pretty" }}><Rich rich={b.rich} /></p>;
   }
+}
+
+const CASES = [
+  {
+    text: "一路走來的成長，原生家庭與過往的心路歷程，讓我慢慢變成了一個連自己都不太確定的樣子。在這 90 天的陪伴裡，沒有對錯、沒有批判，只有一次次被溫柔地接住。它讓我明白——我本身的存在，就已經很美好。現在的我，做自己的女王，笑起來都很美麗。",
+    name: "S.",
+    tag: "深度陪跑 90 天",
+  },
+  {
+    text: "這 13 週，我最大的轉變是，我開始看見自己的模式，而不只是反應它。",
+    name: "鳳",
+    tag: "深度陪跑 90 天",
+    full: `以前的我，很習慣把時間排滿，覺得只要夠忙、夠努力，就可以不用面對那些不舒服的感覺。
+
+開始陪跑之後，Sofia 幫我看見——我不是不知道自己想要什麼，我只是一直在用「忙碌」來避開那個需要做選擇的時刻。
+
+這 13 週，我最大的改變不是「學到什麼技巧」，而是我開始可以在情緒來的時候，慢下來一點，問自己：這是我真正想要的嗎？
+
+我還在練習，但我知道我已經不一樣了。`,
+  },
+];
+
+function Cases() {
+  const [open, setOpen] = useState({});
+  return (
+    <section style={{ background: "#F4EFE7", padding: "clamp(52px,8vh,88px) clamp(24px,5vw,48px)" }}>
+      <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
+        <div style={{ ...S.kicker, letterSpacing: ".24em", color: "#A88763", marginBottom: "14px" }}>Real Stories</div>
+        <h2 style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "clamp(21px,2.4vw,28px)", fontWeight: 300, color: "#2A2723", marginBottom: "10px" }}>個案分享</h2>
+        <p style={{ fontSize: "14px", lineHeight: 1.95, color: "#8A8078", marginBottom: "clamp(28px,4vh,44px)" }}>以下是學員的回饋，經本人同意後分享。</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "20px" }}>
+          {CASES.map((c, i) => {
+            const isOpen = !!open[i];
+            const body = c.full && isOpen ? c.full : c.text;
+            return (
+              <article key={i} style={{ padding: "34px 34px", borderRadius: "20px", background: "rgba(255,253,248,.82)", boxShadow: "0 20px 52px rgba(86,70,50,.06)" }}>
+                <div style={{ fontSize: "13px", color: "#C9A227", letterSpacing: "3px", marginBottom: "16px" }}>★★★★★</div>
+                <p style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "16px", fontWeight: 300, lineHeight: 2, color: "#403A35", whiteSpace: "pre-line", marginBottom: "22px", textWrap: "pretty" }}>「{body}」</p>
+                {c.full && (
+                  <button onClick={() => setOpen((o) => ({ ...o, [i]: !isOpen }))} style={{ background: "none", border: "none", padding: 0, cursor: "pointer", fontSize: "12px", letterSpacing: ".15em", color: "#3D5A4C", fontFamily: "'Cormorant Garamond',serif", marginBottom: "18px", display: "block" }}>{isOpen ? "收起 ↑" : "展開全文 ↓"}</button>
+                )}
+                <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                  <span style={{ fontSize: "13px", color: "#8A8078", letterSpacing: ".12em" }}>{c.name}</span>
+                  <span style={{ fontSize: "11px", letterSpacing: ".16em", color: "#3D5A4C", border: "1px solid rgba(61,90,76,.42)", padding: "4px 10px" }}>{c.tag}</span>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 function CtaDark({ go }) {
@@ -146,7 +198,7 @@ export function Journal({ go }) {
 
         {featured && (
           <article onClick={() => navigate("/journal/" + featured.id)} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: "clamp(24px,3vw,40px)", alignItems: "center", paddingBottom: "clamp(40px,6vh,64px)", marginBottom: "clamp(40px,6vh,64px)", borderBottom: "1px solid rgba(212,200,181,.6)", cursor: "pointer" }}>
-            <div style={{ ...S.thumb, borderRadius: "22px", aspectRatio: "4/3" }}>
+            <div style={{ ...S.thumb, borderRadius: "22px" }}>
               {featured.cover && <img src={featured.cover} alt="" style={S.img} />}
             </div>
             <div>
@@ -177,6 +229,7 @@ export function Journal({ go }) {
         )}
       </section>
 
+      <Cases />
       <CtaDark go={go} />
     </div>
   );
@@ -218,7 +271,7 @@ export function JournalPost({ go }) {
           <span style={S.dash} /><span>Sofia</span>
         </div>
         {post.cover && (
-          <div style={{ borderRadius: "24px", overflow: "hidden", aspectRatio: "16/9", marginBottom: "38px", background: "#F1EAE1" }}>
+          <div style={{ borderRadius: "24px", overflow: "hidden", aspectRatio: "1/1", maxWidth: "520px", margin: "0 auto 38px", background: "#F1EAE1" }}>
             <img src={post.cover} alt="" style={S.img} />
           </div>
         )}
