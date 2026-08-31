@@ -1356,7 +1356,7 @@ const NI = [
   { l: "陪跑計畫",       p: "deep" },
   { l: "自我覺察",       p: "aware" },
   { l: "關於 Sofia",     p: "about" },
-  { l: "文章與個案分享", p: "art" },
+  { l: "文章與個案分享", p: "journal" },
 ];
 
 function Nav({ cur, go }) {
