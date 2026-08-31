@@ -16,6 +16,12 @@ const VERSION = "2022-06-28";
 
 let cachedDbId = null;
 
+/** 容錯：從任何貼法（p/xxx、完整網址、帶連字號）取出 32 碼 Notion ID */
+const cleanId = (v) => {
+  const hex = String(v || "").replace(/[^0-9a-fA-F]/g, "");
+  return hex.length >= 32 ? hex.slice(-32) : hex;
+};
+
 const nfetch = async (path, init = {}) => {
   const r = await fetch(NOTION + path, {
     ...init,
@@ -32,9 +38,9 @@ const nfetch = async (path, init = {}) => {
 
 /** 從「文章」頁面裡找出內嵌的資料庫 ID */
 const resolveDbId = async () => {
-  if (process.env.NOTION_DB_ID) return process.env.NOTION_DB_ID;
+  if (process.env.NOTION_DB_ID) return cleanId(process.env.NOTION_DB_ID);
   if (cachedDbId) return cachedDbId;
-  const pageId = process.env.NOTION_PAGE_ID;
+  const pageId = cleanId(process.env.NOTION_PAGE_ID);
   const { results } = await nfetch(`/blocks/${pageId}/children?page_size=100`);
   const db = results.find((b) => b.type === "child_database");
   if (!db) throw new Error("在該頁面找不到資料庫，請確認頁面 ID 與連線權限");
@@ -115,6 +121,7 @@ export default async function handler(req, res) {
         tokenPrefix: (process.env.NOTION_TOKEN || "").slice(0, 4),
         hasPageId: !!process.env.NOTION_PAGE_ID,
         pageIdLen: (process.env.NOTION_PAGE_ID || "").length,
+        cleanedPageId: cleanId(process.env.NOTION_PAGE_ID),
         deployedAt: new Date().toISOString(),
       },
     });
