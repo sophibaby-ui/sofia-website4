@@ -4325,9 +4325,7 @@ function AppInner() {
           <Route path="/about" element={<About go={go} />} />
           <Route path="/art" element={<Journal go={go} />} />
           <Route path="/journal" element={<Journal go={go} />} />
-          <Route path="/journal/:id" element={<JournalPost go={go} />} />
-          <Route path="/journal" element={<Journal go={go} />} />
-          <Route path="/journal/:id" element={<JournalPost go={go} />} />
+          <Route path="/journal/:id" element={<JournalPost go={go} />} 
           <Route path="/apply" element={<Apply go={go} />} />
           <Route path="/ongoing" element={<Ongoing go={go} />} />
           <Route path="/short" element={<ShortAdjust go={go} />} />
