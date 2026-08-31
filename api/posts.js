@@ -106,7 +106,18 @@ const estimateRead = (blocks) => {
 
 export default async function handler(req, res) {
   if (!process.env.NOTION_TOKEN || !process.env.NOTION_PAGE_ID) {
-    return res.status(200).json({ ok: false, posts: [], error: "尚未設定 NOTION_TOKEN / NOTION_PAGE_ID" });
+    return res.status(200).json({
+      ok: false,
+      posts: [],
+      error: "尚未設定環境變數",
+      debug: {
+        hasToken: !!process.env.NOTION_TOKEN,
+        tokenPrefix: (process.env.NOTION_TOKEN || "").slice(0, 4),
+        hasPageId: !!process.env.NOTION_PAGE_ID,
+        pageIdLen: (process.env.NOTION_PAGE_ID || "").length,
+        deployedAt: new Date().toISOString(),
+      },
+    });
   }
 
   try {
