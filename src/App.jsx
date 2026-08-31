@@ -4305,7 +4305,7 @@ function AppInner() {
   };
   const cur = {
     "/":"home", "/start":"start", "/aware":"aware", "/num":"num", "/deep":"deep",
-    "/about":"about", "/art":"art", "/apply":"apply",
+    "/about":"about", "/art":"art", "/journal":"art", "/apply":"apply",
     "/ongoing":"ongoing", "/short":"short", "/frequency":"frequency", "/subscribe":"subscribe", "/subscribe-test":"subscribeTest", "/subscribe-start":"subscribeStart", "/register":"register", "/soul-garden":"soulGarden", "/becoming":"becoming",
     "/thanks":"thanks", "/subscribe-thanks":"subscribeThanks"
   }[location.pathname] || "home";
@@ -4323,7 +4323,9 @@ function AppInner() {
           <Route path="/num" element={<NumCalc go={go} />} />
           <Route path="/deep" element={<Deep go={go} />} />
           <Route path="/about" element={<About go={go} />} />
-          <Route path="/art" element={<Art go={go} />} />
+          <Route path="/art" element={<Journal go={go} />} />
+          <Route path="/journal" element={<Journal go={go} />} />
+          <Route path="/journal/:id" element={<JournalPost go={go} />} />
           <Route path="/journal" element={<Journal go={go} />} />
           <Route path="/journal/:id" element={<JournalPost go={go} />} />
           <Route path="/apply" element={<Apply go={go} />} />
