@@ -141,8 +141,16 @@ export default async function handler(req, res) {
         cursor = data.has_more ? data.next_cursor : null;
       } while (cursor);
 
-      const content = blocks.map(mapBlock).filter(Boolean);
+      let content = blocks.map(mapBlock).filter(Boolean);
       const post = mapRow(page);
+
+      if (content.length === 0 && post.excerpt) {
+        content = post.excerpt
+          .split(/\n{1,}/)
+          .map((s) => s.trim())
+          .filter(Boolean)
+          .map((s) => ({ type: "p", rich: [{ text: s, bold: false, italic: false, href: null }] }));
+      }
       if (!post.readTime) post.readTime = estimateRead(content);
 
       res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=600");
