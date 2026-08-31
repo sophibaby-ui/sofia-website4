@@ -262,8 +262,7 @@ export function JournalPost({ go }) {
 
   return (
     <div style={S.page}>
-      <article style={{ maxWidth: "760px", margin: "0 auto", padding: "clamp(40px,7vh,72px) clamp(24px,5vw,40px) 0" }}>
-      <article style={{ maxWidth: "760px", margin: "0 auto", padding: "calc(var(--nav) + clamp(40px,7vh,72px)) clamp(24px,5vw,40px) 0" }}>
+           <article style={{ maxWidth: "760px", margin: "0 auto", padding: "calc(var(--nav) + clamp(40px,7vh,72px)) clamp(24px,5vw,40px) 0" }}>
         {post.category ? <div style={{ ...S.kicker, letterSpacing: ".24em", color: "#B4693F", marginBottom: "18px" }}>{post.category}</div> : null}
         <h1 style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "clamp(26px,3.4vw,40px)", fontWeight: 200, lineHeight: 1.62, color: "#2A2723", marginBottom: "22px", textWrap: "balance" }}>{post.title}</h1>
         <div style={{ ...S.meta, paddingBottom: "30px", borderBottom: "1px solid rgba(212,200,181,.6)", marginBottom: "34px" }}>
