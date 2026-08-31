@@ -4338,6 +4338,8 @@ function AppInner() {
           <Route path="/becoming" element={<Becoming />} />
           <Route path="/thanks" element={<Thanks go={go} />} />
           <Route path="/subscribe-thanks" element={<Thanks go={go} subscribe />} />
+          <Route path="/journal" element={<Journal go={go} />} />
+          <Route path="/journal/:id" element={<JournalPost go={go} />} />
           <Route path="*" element={<Home go={go} />} />
         </Routes>
       </main>
