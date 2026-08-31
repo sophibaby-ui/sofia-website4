@@ -152,10 +152,9 @@ export function Journal({ go }) {
             <div>
               <div style={{ ...S.kicker, color: "#A88763", marginBottom: "14px" }}>Featured{featured.category ? " · " + featured.category : ""}</div>
               <h2 style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "clamp(22px,2.6vw,30px)", fontWeight: 300, lineHeight: 1.62, color: "#2A2723", marginBottom: "16px", textWrap: "balance" }}>{featured.title}</h2>
-              <p style={{ ...S.body, marginBottom: "20px" }}>{featured.excerpt}</p>
+              <p style={{ ...S.body, marginBottom: "20px", ...S.clamp3 }}>{featured.excerpt}</p>
               <div style={S.meta}>
                 <span>{fmtDate(featured.date)}</span>
-                {featured.readTime ? <><span style={S.dash} /><span>閱讀 {featured.readTime}</span></> : null}
               </div>
             </div>
           </article>
@@ -171,7 +170,6 @@ export function Journal({ go }) {
                 <p style={{ fontSize: "14px", lineHeight: 2, color: "#5F564E", textWrap: "pretty", ...S.clamp3 }}>{p.excerpt}</p>
                 <div style={{ ...S.meta, fontSize: "12px", marginTop: "auto" }}>
                   <span>{fmtDate(p.date)}</span>
-                  {p.readTime ? <><span style={{ ...S.dash, width: "14px" }} /><span>{p.readTime}</span></> : null}
                 </div>
               </article>
             ))}
@@ -217,7 +215,6 @@ export function JournalPost({ go }) {
         <h1 style={{ fontFamily: "'Noto Serif TC',serif", fontSize: "clamp(26px,3.4vw,40px)", fontWeight: 200, lineHeight: 1.62, color: "#2A2723", marginBottom: "22px", textWrap: "balance" }}>{post.title}</h1>
         <div style={{ ...S.meta, paddingBottom: "30px", borderBottom: "1px solid rgba(212,200,181,.6)", marginBottom: "34px" }}>
           <span>{fmtDate(post.date)}</span>
-          {post.readTime ? <><span style={S.dash} /><span>閱讀 {post.readTime}</span></> : null}
           <span style={S.dash} /><span>Sofia</span>
         </div>
         {post.cover && (
