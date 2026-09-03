@@ -12,7 +12,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-const CATS = ["全部", "情緒穩定", "關係覺察", "生命數字", "內在主導權"];
+const CATS = ["全部", "情緒穩定", "關係覺察", "生命數字", "內在主導權", "親子教養"];
 
 const S = {
   page: { minHeight: "100vh", background: "#FAF7F2", fontFamily: "'Noto Sans TC',sans-serif" },
