@@ -16,6 +16,12 @@ const VERSION = "2022-06-28";
 
 let cachedDbId = null;
 
+/** 容錯：從任何貼法（p/xxx、完整網址、帶連字號）取出 32 碼 Notion ID */
+const cleanId = (v) => {
+  const hex = String(v || "").replace(/[^0-9a-fA-F]/g, "");
+  return hex.length >= 32 ? hex.slice(-32) : hex;
+};
+
 const nfetch = async (path, init = {}) => {
   const r = await fetch(NOTION + path, {
     ...init,
@@ -32,9 +38,9 @@ const nfetch = async (path, init = {}) => {
 
 /** 從「文章」頁面裡找出內嵌的資料庫 ID */
 const resolveDbId = async () => {
-  if (process.env.NOTION_DB_ID) return process.env.NOTION_DB_ID;
+  if (process.env.NOTION_DB_ID) return cleanId(process.env.NOTION_DB_ID);
   if (cachedDbId) return cachedDbId;
-  const pageId = process.env.NOTION_PAGE_ID;
+  const pageId = cleanId(process.env.NOTION_PAGE_ID);
   const { results } = await nfetch(`/blocks/${pageId}/children?page_size=100`);
   const db = results.find((b) => b.type === "child_database");
   if (!db) throw new Error("在該頁面找不到資料庫，請確認頁面 ID 與連線權限");
@@ -106,7 +112,19 @@ const estimateRead = (blocks) => {
 
 export default async function handler(req, res) {
   if (!process.env.NOTION_TOKEN || !process.env.NOTION_PAGE_ID) {
-    return res.status(200).json({ ok: false, posts: [], error: "尚未設定 NOTION_TOKEN / NOTION_PAGE_ID" });
+    return res.status(200).json({
+      ok: false,
+      posts: [],
+      error: "尚未設定環境變數",
+      debug: {
+        hasToken: !!process.env.NOTION_TOKEN,
+        tokenPrefix: (process.env.NOTION_TOKEN || "").slice(0, 4),
+        hasPageId: !!process.env.NOTION_PAGE_ID,
+        pageIdLen: (process.env.NOTION_PAGE_ID || "").length,
+        cleanedPageId: cleanId(process.env.NOTION_PAGE_ID),
+        deployedAt: new Date().toISOString(),
+      },
+    });
   }
 
   try {
@@ -123,8 +141,16 @@ export default async function handler(req, res) {
         cursor = data.has_more ? data.next_cursor : null;
       } while (cursor);
 
-      const content = blocks.map(mapBlock).filter(Boolean);
+      let content = blocks.map(mapBlock).filter(Boolean);
       const post = mapRow(page);
+
+      if (content.length === 0 && post.excerpt) {
+        content = post.excerpt
+          .split(/\n{1,}/)
+          .map((s) => s.trim())
+          .filter(Boolean)
+          .map((s) => ({ type: "p", rich: [{ text: s, bold: false, italic: false, href: null }] }));
+      }
       if (!post.readTime) post.readTime = estimateRead(content);
 
       res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=600");

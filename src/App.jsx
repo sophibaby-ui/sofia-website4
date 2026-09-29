@@ -1356,7 +1356,7 @@ const NI = [
   { l: "陪跑計畫",       p: "deep" },
   { l: "自我覺察",       p: "aware" },
   { l: "關於 Sofia",     p: "about" },
-  { l: "文章與個案分享", p: "art" },
+  { l: "文章與個案分享", p: "journal" },
 ];
 
 function Nav({ cur, go }) {
@@ -4299,13 +4299,13 @@ function AppInner() {
   const navigate = useNavigate();
   const location = useLocation();
   const go = p => {
-    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/art", apply:"/apply", ongoing:"/ongoing", short:"/short", frequency:"/frequency", subscribe:"/subscribe", subscribeTest:"/subscribe-test", subscribeStart:"/subscribe-start", register:"/register", soulGarden:"/soul-garden", becoming:"/becoming", thanks:"/thanks", subscribeThanks:"/subscribe-thanks" };
+    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/journal", journal:"/journal", apply:"/apply", ongoing:"/ongoing", short:"/short", frequency:"/frequency", subscribe:"/subscribe", subscribeTest:"/subscribe-test", subscribeStart:"/subscribe-start", register:"/register", soulGarden:"/soul-garden", becoming:"/becoming", thanks:"/thanks", subscribeThanks:"/subscribe-thanks" };
     navigate(paths[p] || "/");
     window.scrollTo({ top: 0, behavior: "instant" });
   };
   const cur = {
     "/":"home", "/start":"start", "/aware":"aware", "/num":"num", "/deep":"deep",
-    "/about":"about", "/art":"art", "/apply":"apply",
+    "/about":"about", "/art":"art", "/journal":"art", "/apply":"apply",
     "/ongoing":"ongoing", "/short":"short", "/frequency":"frequency", "/subscribe":"subscribe", "/subscribe-test":"subscribeTest", "/subscribe-start":"subscribeStart", "/register":"register", "/soul-garden":"soulGarden", "/becoming":"becoming",
     "/thanks":"thanks", "/subscribe-thanks":"subscribeThanks"
   }[location.pathname] || "home";
@@ -4323,9 +4323,9 @@ function AppInner() {
           <Route path="/num" element={<NumCalc go={go} />} />
           <Route path="/deep" element={<Deep go={go} />} />
           <Route path="/about" element={<About go={go} />} />
-          <Route path="/art" element={<Art go={go} />} />
+          <Route path="/art" element={<Journal go={go} />} />
           <Route path="/journal" element={<Journal go={go} />} />
-          <Route path="/journal/:id" element={<JournalPost go={go} />} />
+          <Route path="/journal/:id" element={<JournalPost go={go} />} /> 
           <Route path="/apply" element={<Apply go={go} />} />
           <Route path="/ongoing" element={<Ongoing go={go} />} />
           <Route path="/short" element={<ShortAdjust go={go} />} />
@@ -4338,6 +4338,8 @@ function AppInner() {
           <Route path="/becoming" element={<Becoming />} />
           <Route path="/thanks" element={<Thanks go={go} />} />
           <Route path="/subscribe-thanks" element={<Thanks go={go} subscribe />} />
+          <Route path="/journal" element={<Journal go={go} />} />
+          <Route path="/journal/:id" element={<JournalPost go={go} />} />
           <Route path="*" element={<Home go={go} />} />
         </Routes>
       </main>
