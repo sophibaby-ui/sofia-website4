@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你需要的是「創造」｜Sofia 情緒關係教練</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest:#3D5A4C; --w:#FFFDF9; --cream:#F5F0E8; --sand:#E8DFD0; --sandm:#D4C8B5; --text:#2C2825;
+    --accent:#E0954A; --accent2:#F4B23E; --accent-deep:#B5661C; --tint:#FFF6E0;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body {
+    font-family:'Noto Sans TC', sans-serif;
+    color:var(--text);
+    background:var(--w);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:6vh 6vw;
+    position:relative;
+    overflow-x:hidden;
+  }
+  .wash {
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+  }
+  .card {
+    position:relative;
+    z-index:1;
+    max-width:640px;
+    width:100%;
+    animation:rise 0.9s ease both;
+    background:color-mix(in srgb, var(--w) 80%, transparent);
+    backdrop-filter:blur(6px);
+    border-radius:28px;
+    padding:48px 44px;
+    box-shadow:0 20px 60px -25px color-mix(in srgb, var(--accent-deep) 45%, transparent);
+    border:1px solid color-mix(in srgb, white 70%, transparent);
+  }
+  @keyframes rise {
+    from { opacity:0; transform:translateY(14px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .eyebrow {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    color:var(--accent-deep);
+    margin-bottom:30px;
+    opacity:0.9;
+  }
+  .eyebrow .brand {
+    font-family:'Noto Serif TC', serif;
+    font-weight:500;
+  }
+  .eyebrow .divider {
+    width:1px; height:12px; background:var(--sandm);
+  }
+  .chip {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Noto Serif TC', serif;
+    font-weight:500;
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:white;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+    padding:6px 16px 6px 12px;
+    border-radius:999px;
+    margin-bottom:24px;
+    box-shadow:0 6px 16px -6px color-mix(in srgb, var(--accent-deep) 60%, transparent);
+  }
+  .chip .dot {
+    width:6px; height:6px; border-radius:50%; background:white;
+  }
+  h1 {
+    font-family:'Noto Serif TC', serif;
+    font-weight:600;
+    font-size:clamp(32px, 6vw, 44px);
+    line-height:1.3;
+    margin:0 0 14px;
+    background:linear-gradient(100deg, var(--accent-deep), var(--accent), var(--accent2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .subtitle {
+    font-size:16.5px;
+    line-height:1.75;
+    color:var(--accent-deep);
+    font-weight:500;
+    margin:0 0 30px;
+    max-width:520px;
+  }
+  .body p {
+    font-size:15.5px;
+    line-height:2.05;
+    color:var(--text);
+    opacity:0.92;
+    margin:0 0 18px;
+  }
+  .signs-title, .myth-label {
+    font-family:'Noto Serif TC', serif;
+    font-size:13.5px;
+    letter-spacing:0.06em;
+    color:var(--accent-deep);
+    margin:0 0 12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .signs-title::before, .myth-label::before {
+    content:'';
+    width:14px; height:1px;
+    background:var(--accent-deep);
+  }
+  .signs-section {
+    margin:8px 0 28px;
+  }
+  .signs-list {
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .signs-list li {
+    position:relative;
+    padding-left:22px;
+    font-size:15px;
+    line-height:1.9;
+    color:var(--text);
+    opacity:0.9;
+    margin-bottom:9px;
+  }
+  .signs-list li::before {
+    content:'';
+    position:absolute;
+    left:0; top:9px;
+    width:7px; height:7px;
+    border-radius:50%;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+  }
+  .myth-section {
+    margin:0 0 30px;
+    padding:20px 24px;
+    border-left:3px solid var(--accent2);
+    background:color-mix(in srgb, var(--tint) 45%, transparent);
+    border-radius:0 14px 14px 0;
+  }
+  .myth-section p {
+    margin:0;
+    font-size:15px;
+    line-height:1.95;
+    color:var(--text);
+    opacity:0.9;
+  }
+  .action-card {
+    margin:34px 0 30px;
+    padding:2px;
+    border-radius:20px;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+  }
+  .action-card-inner {
+    padding:24px 26px;
+    border-radius:18px;
+    background:color-mix(in srgb, var(--tint) 70%, var(--w));
+  }
+  .action-label {
+    font-family:'Noto Serif TC', serif;
+    font-size:13.5px;
+    letter-spacing:0.06em;
+    color:var(--accent-deep);
+    margin:0 0 10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .action-label::before {
+    content:'';
+    width:14px; height:1px;
+    background:var(--accent-deep);
+  }
+  .action-text {
+    font-size:17px;
+    line-height:1.75;
+    color:var(--text);
+    font-weight:500;
+    margin:0;
+  }
+  .action-note {
+    margin:10px 0 0;
+    font-size:13.5px;
+    line-height:1.7;
+    color:var(--accent-deep);
+    opacity:0.85;
+  }
+  hr {
+    border:none;
+    border-top:1px solid var(--sandm);
+    margin:30px 0 22px;
+    opacity:0.7;
+  }
+  .footnote {
+    font-size:13px;
+    line-height:1.9;
+    color:var(--text);
+    opacity:0.55;
+    font-style:italic;
+    margin:0 0 32px;
+  }
+  .links {
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .links a {
+    flex:1 1 200px;
+    text-align:center;
+    text-decoration:none;
+    font-family:'Noto Serif TC', serif;
+    font-size:14.5px;
+    letter-spacing:0.03em;
+    padding:14px 18px;
+    border-radius:14px;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .links a:hover {
+    transform:translateY(-2px);
+  }
+  .links a.primary {
+    color:white;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+    box-shadow:0 10px 22px -10px color-mix(in srgb, var(--accent-deep) 65%, transparent);
+  }
+  .links a.secondary {
+    color:var(--accent-deep);
+    background:color-mix(in srgb, var(--tint) 60%, var(--w));
+    border:1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  @media (max-width:480px) {
+    body { padding:8vh 7vw; }
+    .action-card-inner { padding:20px 20px; }
+    .links a { flex:1 1 100%; }
+  }
+</style>
+</head>
+<body>
+  <svg class="wash" viewBox="0 0 900 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path id="bg-74-A" d="M50 4C68 2 88 10 94 28C100 46 96 66 80 80C64 94 40 96 22 84C4 72 -2 48 6 30C13 14 32 6 50 4Z"/>
+    <path id="bg-74-B" d="M48 8C62 -2 84 4 92 22C100 40 94 62 78 76C62 90 38 92 22 78C6 64 2 42 12 26C20 12 34 18 48 8Z"/>
+    <path id="bg-74-C" d="M52 2C70 6 90 20 90 40C90 60 74 78 54 84C34 90 12 82 6 62C0 42 8 20 26 10C34 5 44 -2 52 2Z"/>
+    <filter id="wcbg-74" x="-80%" y="-80%" width="260%" height="260%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="3" seed="74" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="60" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+      <feGaussianBlur in="disp" stdDeviation="1.6"/>
+    </filter>
+    <filter id="grain-74">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="74" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.6 0 0 0 0"/>
+    </filter>
+  </defs>
+  <g transform="scale(9)">
+    <use href="#bg-74-A" transform="translate(-6,64) rotate(-8,50,50) scale(1.416)" fill="#E0954A" opacity="0.275" filter="url(#wcbg-74)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-74-A" transform="translate(-2,67) rotate(-4,50,50) scale(1.2)" fill="#E0954A" opacity="0.5" filter="url(#wcbg-74)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-74-B" transform="translate(32,18) rotate(6,50,50) scale(1.534)" fill="#F4B23E" opacity="0.275" filter="url(#wcbg-74)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-74-B" transform="translate(36,21) rotate(10,50,50) scale(1.3)" fill="#F4B23E" opacity="0.5" filter="url(#wcbg-74)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-74-C" transform="translate(58,-8) rotate(-10,50,50) scale(1.416)" fill="#E0708C" opacity="0.231" filter="url(#wcbg-74)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-74-C" transform="translate(62,-5) rotate(-6,50,50) scale(1.2)" fill="#E0708C" opacity="0.42" filter="url(#wcbg-74)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-74-A" transform="translate(6,-4) rotate(12,50,50) scale(1.003)" fill="#E0954A" opacity="0.165" filter="url(#wcbg-74)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-74-A" transform="translate(10,-1) rotate(16,50,50) scale(0.85)" fill="#E0954A" opacity="0.3" filter="url(#wcbg-74)" style="mix-blend-mode:multiply"/>
+  </g>
+  <rect width="100%" height="100%" filter="url(#grain-74)" opacity="0.045"/>
+</svg>
+  <div class="card">
+    <div class="eyebrow">
+      <span class="brand">Sofia 情緒關係教練</span>
+      <span class="divider"></span>
+      <span>人生階段測驗結果</span>
+    </div>
+    <div class="chip"><span class="dot"></span>選擇 D</div>
+    <h1>你需要的是「創造」</h1>
+    <p class="subtitle">生活過得很正確，卻少了一點喜歡，你需要重新找回想要的感覺</p>
+    <div class="body">
+      <p>你最近可能把生活過得很「正確」。該完成的事情完成了，該負責的責任也沒有逃避，甚至別人看起來可能還會覺得你過得不錯。</p>
+      <p>可是只有你自己知道，好像少了一點什麼。那個少掉的東西，很可能叫做「喜歡」。我們很容易在長大之後，把時間全部留給有用的事情——工作要有成果、學習要有目的、運動要有效率，連休息都希望自己可以「休息得很好」。</p>
+      <p>久了以後，生活會變得很完整，卻沒有生命力。你現在需要重新做一些沒有目的的事情：畫畫、做料理、換房間擺設、拍照、種植物、寫東西，甚至只是去一間從來沒去過的店。</p>
+      <p>重點不是你做得好不好，而是重新找回那個「我想要」的感覺。因為創造力回來的時候，一個人的生命感也會跟著回來。</p>
+    </div>
+    <div class="signs-section">
+      <p class="signs-title">你可能正在經歷</p>
+      <ul class="signs-list">
+        <li>生活各方面都算「正確」，卻少了活力與熱情</li>
+        <li>連休息都希望自己休息得很有效率</li>
+        <li>很久沒做過沒有目的、單純好玩的事</li>
+        <li>說不出最近有什麼事情真正讓你「想要」</li>
+      </ul>
+    </div>
+    <div class="myth-section">
+      <p class="myth-label">這個階段常見的誤解</p>
+      <p>很多人以為做事一定要有目的、有產出，才值得花時間。但真正讓生命有活力的，往往是那些「沒有用」卻讓你單純感到喜歡的小事。</p>
+    </div>
+    <div class="action-card">
+      <div class="action-card-inner">
+        <p class="action-label">給你的提醒</p>
+        <p class="action-text">做一件完全沒有目的、只是因為喜歡的事</p>
+        <p class="action-note">重點不是做得好不好，而是重新感受「我想要」的感覺。</p>
+      </div>
+    </div>
+    <hr>
+    <p class="footnote">這個結果描述的是你「此刻所需要的能量」，人生階段會隨著經歷與選擇改變，過一段時間再回來測，也許你會需要的是另一種力量。</p>
+    <div class="links">
+      <a class="secondary" href="https://www.sofiahealing.com/" target="_blank" rel="noopener">回到官方網站</a>
+      <a class="primary" href="https://www.sofiahealing.com/apply" target="_blank" rel="noopener">預約流年諮詢送個人頻率檢測</a>
+    </div>
+  </div>
+</body>
+</html>

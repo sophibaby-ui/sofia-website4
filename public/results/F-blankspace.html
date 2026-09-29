@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你需要的是「留白」｜Sofia 情緒關係教練</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest:#3D5A4C; --w:#FFFDF9; --cream:#F5F0E8; --sand:#E8DFD0; --sandm:#D4C8B5; --text:#2C2825;
+    --accent:#3FA85C; --accent2:#F4B23E; --accent-deep:#237A3E; --tint:#F7F0DE;
+  }
+  * { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body {
+    font-family:'Noto Sans TC', sans-serif;
+    color:var(--text);
+    background:var(--w);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:6vh 6vw;
+    position:relative;
+    overflow-x:hidden;
+  }
+  .wash {
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+  }
+  .card {
+    position:relative;
+    z-index:1;
+    max-width:640px;
+    width:100%;
+    animation:rise 0.9s ease both;
+    background:color-mix(in srgb, var(--w) 80%, transparent);
+    backdrop-filter:blur(6px);
+    border-radius:28px;
+    padding:48px 44px;
+    box-shadow:0 20px 60px -25px color-mix(in srgb, var(--accent-deep) 45%, transparent);
+    border:1px solid color-mix(in srgb, white 70%, transparent);
+  }
+  @keyframes rise {
+    from { opacity:0; transform:translateY(14px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .eyebrow {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    color:var(--accent-deep);
+    margin-bottom:30px;
+    opacity:0.9;
+  }
+  .eyebrow .brand {
+    font-family:'Noto Serif TC', serif;
+    font-weight:500;
+  }
+  .eyebrow .divider {
+    width:1px; height:12px; background:var(--sandm);
+  }
+  .chip {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Noto Serif TC', serif;
+    font-weight:500;
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:white;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+    padding:6px 16px 6px 12px;
+    border-radius:999px;
+    margin-bottom:24px;
+    box-shadow:0 6px 16px -6px color-mix(in srgb, var(--accent-deep) 60%, transparent);
+  }
+  .chip .dot {
+    width:6px; height:6px; border-radius:50%; background:white;
+  }
+  h1 {
+    font-family:'Noto Serif TC', serif;
+    font-weight:600;
+    font-size:clamp(32px, 6vw, 44px);
+    line-height:1.3;
+    margin:0 0 14px;
+    background:linear-gradient(100deg, var(--accent-deep), var(--accent), var(--accent2));
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .subtitle {
+    font-size:16.5px;
+    line-height:1.75;
+    color:var(--accent-deep);
+    font-weight:500;
+    margin:0 0 30px;
+    max-width:520px;
+  }
+  .body p {
+    font-size:15.5px;
+    line-height:2.05;
+    color:var(--text);
+    opacity:0.92;
+    margin:0 0 18px;
+  }
+  .signs-title, .myth-label {
+    font-family:'Noto Serif TC', serif;
+    font-size:13.5px;
+    letter-spacing:0.06em;
+    color:var(--accent-deep);
+    margin:0 0 12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .signs-title::before, .myth-label::before {
+    content:'';
+    width:14px; height:1px;
+    background:var(--accent-deep);
+  }
+  .signs-section {
+    margin:8px 0 28px;
+  }
+  .signs-list {
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .signs-list li {
+    position:relative;
+    padding-left:22px;
+    font-size:15px;
+    line-height:1.9;
+    color:var(--text);
+    opacity:0.9;
+    margin-bottom:9px;
+  }
+  .signs-list li::before {
+    content:'';
+    position:absolute;
+    left:0; top:9px;
+    width:7px; height:7px;
+    border-radius:50%;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+  }
+  .myth-section {
+    margin:0 0 30px;
+    padding:20px 24px;
+    border-left:3px solid var(--accent2);
+    background:color-mix(in srgb, var(--tint) 45%, transparent);
+    border-radius:0 14px 14px 0;
+  }
+  .myth-section p {
+    margin:0;
+    font-size:15px;
+    line-height:1.95;
+    color:var(--text);
+    opacity:0.9;
+  }
+  .action-card {
+    margin:34px 0 30px;
+    padding:2px;
+    border-radius:20px;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+  }
+  .action-card-inner {
+    padding:24px 26px;
+    border-radius:18px;
+    background:color-mix(in srgb, var(--tint) 70%, var(--w));
+  }
+  .action-label {
+    font-family:'Noto Serif TC', serif;
+    font-size:13.5px;
+    letter-spacing:0.06em;
+    color:var(--accent-deep);
+    margin:0 0 10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .action-label::before {
+    content:'';
+    width:14px; height:1px;
+    background:var(--accent-deep);
+  }
+  .action-text {
+    font-size:17px;
+    line-height:1.75;
+    color:var(--text);
+    font-weight:500;
+    margin:0;
+  }
+  .action-note {
+    margin:10px 0 0;
+    font-size:13.5px;
+    line-height:1.7;
+    color:var(--accent-deep);
+    opacity:0.85;
+  }
+  hr {
+    border:none;
+    border-top:1px solid var(--sandm);
+    margin:30px 0 22px;
+    opacity:0.7;
+  }
+  .footnote {
+    font-size:13px;
+    line-height:1.9;
+    color:var(--text);
+    opacity:0.55;
+    font-style:italic;
+    margin:0 0 32px;
+  }
+  .links {
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .links a {
+    flex:1 1 200px;
+    text-align:center;
+    text-decoration:none;
+    font-family:'Noto Serif TC', serif;
+    font-size:14.5px;
+    letter-spacing:0.03em;
+    padding:14px 18px;
+    border-radius:14px;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .links a:hover {
+    transform:translateY(-2px);
+  }
+  .links a.primary {
+    color:white;
+    background:linear-gradient(120deg, var(--accent), var(--accent2));
+    box-shadow:0 10px 22px -10px color-mix(in srgb, var(--accent-deep) 65%, transparent);
+  }
+  .links a.secondary {
+    color:var(--accent-deep);
+    background:color-mix(in srgb, var(--tint) 60%, var(--w));
+    border:1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  @media (max-width:480px) {
+    body { padding:8vh 7vw; }
+    .action-card-inner { padding:20px 20px; }
+    .links a { flex:1 1 100%; }
+  }
+</style>
+</head>
+<body>
+  <svg class="wash" viewBox="0 0 900 1100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path id="bg-76-A" d="M50 4C68 2 88 10 94 28C100 46 96 66 80 80C64 94 40 96 22 84C4 72 -2 48 6 30C13 14 32 6 50 4Z"/>
+    <path id="bg-76-B" d="M48 8C62 -2 84 4 92 22C100 40 94 62 78 76C62 90 38 92 22 78C6 64 2 42 12 26C20 12 34 18 48 8Z"/>
+    <path id="bg-76-C" d="M52 2C70 6 90 20 90 40C90 60 74 78 54 84C34 90 12 82 6 62C0 42 8 20 26 10C34 5 44 -2 52 2Z"/>
+    <filter id="wcbg-76" x="-80%" y="-80%" width="260%" height="260%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.009" numOctaves="3" seed="76" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="60" xChannelSelector="R" yChannelSelector="G" result="disp"/>
+      <feGaussianBlur in="disp" stdDeviation="1.6"/>
+    </filter>
+    <filter id="grain-76">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="76" result="g"/>
+      <feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.6 0 0 0 0"/>
+    </filter>
+  </defs>
+  <g transform="scale(9)">
+    <use href="#bg-76-A" transform="translate(20,-8) rotate(0,50,50) scale(1.77)" fill="#3FA85C" opacity="0.30250000000000005" filter="url(#wcbg-76)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-76-A" transform="translate(24,-5) rotate(4,50,50) scale(1.5)" fill="#3FA85C" opacity="0.55" filter="url(#wcbg-76)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-76-B" transform="translate(-8,42) rotate(10,50,50) scale(1.2389999999999999)" fill="#F4B23E" opacity="0.231" filter="url(#wcbg-76)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-76-B" transform="translate(-4,45) rotate(14,50,50) scale(1.05)" fill="#F4B23E" opacity="0.42" filter="url(#wcbg-76)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-76-C" transform="translate(60,-6) rotate(-10,50,50) scale(1.2389999999999999)" fill="#5B9EF0" opacity="0.22000000000000003" filter="url(#wcbg-76)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-76-C" transform="translate(64,-3) rotate(-6,50,50) scale(1.05)" fill="#5B9EF0" opacity="0.4" filter="url(#wcbg-76)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-76-B" transform="translate(10,78) rotate(5,50,50) scale(1.003)" fill="#3FA85C" opacity="0.17600000000000002" filter="url(#wcbg-76)" style="mix-blend-mode:multiply"/>
+    <use href="#bg-76-B" transform="translate(14,81) rotate(9,50,50) scale(0.85)" fill="#3FA85C" opacity="0.32" filter="url(#wcbg-76)" style="mix-blend-mode:multiply"/>
+  </g>
+  <rect width="100%" height="100%" filter="url(#grain-76)" opacity="0.045"/>
+</svg>
+  <div class="card">
+    <div class="eyebrow">
+      <span class="brand">Sofia 情緒關係教練</span>
+      <span class="divider"></span>
+      <span>人生階段測驗結果</span>
+    </div>
+    <div class="chip"><span class="dot"></span>選擇 F</div>
+    <h1>你需要的是「留白」</h1>
+    <p class="subtitle">已經走了很久，你需要的不是下一個目標，而是一段沒有目的的時間</p>
+    <div class="body">
+      <p>如果你選了這張，也許最近的你真的已經走了很久。你一直在處理問題、完成目標、安排下一步。一件事情結束，很快又會問自己：「好，那接下來呢？」你很少真正允許生命停在一個沒有答案的地方。</p>
+      <p>可是你現在需要的，可能不是下一個目標，而是一段沒有目的的時間。沒有一定要進步、沒有一定要療癒、沒有一定要變成更好的自己，只是生活。</p>
+      <p>睡飽一點、慢慢吃早餐、去散步、發呆、看一部電影，甚至安排一天什麼事情都不做。這些看起來「沒有產值」的時間，其實正在幫你的內在重新整理。有些新的想法，就是在我們不再拼命尋找答案的時候才會出現。</p>
+      <p>所以如果最近突然很想停下來，不一定代表你失去動力，也可能是你的生命正在告訴你：這一段，不用再趕了。</p>
+    </div>
+    <div class="signs-section">
+      <p class="signs-title">你可能正在經歷</p>
+      <ul class="signs-list">
+        <li>一件事結束又立刻問自己「接下來呢」</li>
+        <li>很難允許自己什麼事都不做</li>
+        <li>覺得自己應該要一直進步、一直變得更好</li>
+        <li>突然很想停下來，卻對此感到不安</li>
+      </ul>
+    </div>
+    <div class="myth-section">
+      <p class="myth-label">這個階段常見的誤解</p>
+      <p>很多人以為停下來就是失去動力、退步了。但留白不是停滯，而是內在重新整理的過程——很多新的想法，正是在不再拼命尋找答案時才會出現。</p>
+    </div>
+    <div class="action-card">
+      <div class="action-card-inner">
+        <p class="action-label">給你的提醒</p>
+        <p class="action-text">安排一天，什麼事情都不做</p>
+        <p class="action-note">不用覺得愧疚，這段留白正在替下一段生命騰出位置。</p>
+      </div>
+    </div>
+    <hr>
+    <p class="footnote">這個結果描述的是你「此刻所需要的能量」，人生階段會隨著經歷與選擇改變，過一段時間再回來測，也許你會需要的是另一種力量。</p>
+    <div class="links">
+      <a class="secondary" href="https://www.sofiahealing.com/" target="_blank" rel="noopener">回到官方網站</a>
+      <a class="primary" href="https://www.sofiahealing.com/apply" target="_blank" rel="noopener">預約流年諮詢送個人頻率檢測</a>
+    </div>
+  </div>
+</body>
+</html>
