@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/forest", "destination": "/forest/index.html" },
+    { "source": "/forest-stats", "destination": "/forest-stats/index.html" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }
