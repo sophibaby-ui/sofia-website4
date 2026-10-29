@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>森林裡的路｜Sofia 心理測驗</title>
+<meta name="description" content="用 6 個森林畫面，看見你現在在關係裡最卡的地方，以及你一直以來面對它的方式">
+<meta property="og:title" content="森林裡的路｜你現在，走在哪一條路上？">
+<meta property="og:description" content="用 6 個森林畫面，看見你現在在關係裡最卡的地方，以及你一直以來面對它的方式">
+<meta property="og:image" content="https://www.sofiahealing.com/forest/photos/q-entrance.jpg">
+<meta property="og:url" content="https://www.sofiahealing.com/forest">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600&family=Noto+Sans+TC:wght@400;500&display=swap">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SMDRR9RTGG"></script>
+</body>
+</html>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+  gtag("config", "G-SMDRR9RTGG");
+</script>
+</body>
+</html>
+<style>
+/* Layout: one photographic scene at a time, full-bleed, with a soft frosted panel low on the screen like a page of a picture book */
+:root {
+  --ink: #FBF8F2;
+  --ink-soft: rgba(251,248,242,.8);
+  --veil: rgba(22,30,26,.58);
+  --line: rgba(251,248,242,.28);
+  --forest: #3D5A4C;
+  --moss: #B5CCA6;
+  --cream: #F5F0E8;
+  --paper: #FAF7F2;
+  --paper-ink: #2C2825;
+  --paper-soft: #6B6259;
+  --paper-line: #E8DFD0;
+  --line-green: #06C755;
+  --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  --sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+body { background: #151c18; color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.75; }
+* { box-sizing: border-box; }
+
+.stage { position: relative; min-height: 100%; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; }
+.bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: opacity 1.2s ease, transform 8s ease; opacity: 0; transform: scale(1.06); }
+.bg.on { opacity: 1; transform: scale(1); }
+.bg.dusk { filter: brightness(.6) saturate(.8) hue-rotate(-8deg); }
+.bg.tangle { filter: brightness(.8) saturate(.9) contrast(1.05); }
+.bg.rain { filter: brightness(.7) saturate(.6) contrast(1.05); }
+.bg.deep { filter: brightness(.75) saturate(.85); }
+.shade { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,16,12,.05) 0%, rgba(10,16,12,.18) 40%, rgba(10,16,12,.72) 100%); pointer-events: none; }
+
+.wrap { position: relative; z-index: 2; width: 100%; max-width: 560px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 68px 28px; }
+.panel { background: var(--veil); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid var(--line); border-radius: 20px; padding: 24px 22px 22px; display: flex; flex-direction: column; gap: 16px; }
+.panel.fade { animation: rise .7s ease both; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.step { font-size: 12px; letter-spacing: .18em; color: var(--moss); }
+.prog { display: flex; gap: 5px; }
+.prog i { width: 18px; height: 3px; border-radius: 2px; background: rgba(251,248,242,.25); }
+.prog i.done { background: var(--moss); }
+h1, h2 { font-family: var(--serif); font-weight: 600; margin: 0; text-wrap: balance; line-height: 1.45; }
+h1 { font-size: 28px; }
+h2 { font-size: 20px; }
+p { margin: 0; }
+.soft { color: var(--ink-soft); font-size: 15px; }
+.chose { font-size: 13px; color: var(--moss); letter-spacing: .06em; }
+.echo { font-family: var(--serif); font-size: 19px; line-height: 1.95; }
+
+.opts { display: grid; gap: 10px; }
+.opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; font: inherit; font-size: 15.5px; line-height: 1.55; color: var(--ink); background: rgba(251,248,242,.08); border: 1px solid var(--line); border-radius: 14px; padding: 13px 16px; cursor: pointer; transition: background .2s, border-color .2s; }
+.opt:hover { background: rgba(251,248,242,.16); border-color: rgba(251,248,242,.5); }
+.opt:focus-visible, .btn:focus-visible, .ghost:focus-visible { outline: 2px solid var(--moss); outline-offset: 2px; }
+.opt .k { font-family: var(--serif); color: var(--moss); font-size: 14px; flex: none; width: 1.6em; }
+
+.paths { grid-template-columns: 1fr 1fr; }
+.path { flex-direction: column; align-items: stretch; gap: 0; padding: 0; overflow: hidden; }
+.path .ph { aspect-ratio: 4 / 3; max-width: 100%; background-size: cover; background-position: center; }
+.path .ph.dusk { filter: brightness(.6) saturate(.8); }
+.path .tx { padding: 10px 12px 12px; font-size: 14px; line-height: 1.55; }
+.path .tx b { display: block; font-family: var(--serif); font-weight: 600; font-size: 15px; color: var(--moss); }
+
+.btn { font: inherit; font-weight: 500; border: 0; border-radius: 999px; padding: 13px 22px; background: var(--cream); color: var(--forest); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: transform .2s; }
+.btn:hover { transform: translateY(-1px); }
+.btn.dark { background: var(--forest); color: var(--cream); }
+.btn.line { background: var(--line-green); color: #fff; }
+.btn.small { padding: 8px 14px; font-size: 14px; }
+.ghost { font: inherit; background: none; border: 0; color: var(--ink-soft); cursor: pointer; padding: 6px 0; text-decoration: underline; text-underline-offset: 4px; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+.loader { text-align: center; padding-block: 18px; }
+.dots span { display: inline-block; width: 7px; height: 7px; margin: 0 4px; border-radius: 50%; background: var(--moss); animation: blink 1.2s infinite; }
+.dots span:nth-child(2) { animation-delay: .2s; } .dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
+
+/* result: a light paper card under the photo */
+.result { overflow: hidden; background: var(--paper); color: var(--paper-ink); border-radius: 20px; padding: 26px 22px; display: flex; flex-direction: column; gap: 18px; animation: rise .8s ease both; }
+.result .step { color: var(--forest); }
+.result .hero { display: block; width: calc(100% + 44px); max-width: none; margin: -26px -22px 0; aspect-ratio: 4 / 5; max-height: 64vh; object-fit: cover; border-radius: 20px 20px 0 0; }
+.result h2 { font-size: 26px; color: var(--forest); }
+.result .lead { font-family: var(--serif); font-size: 17px; line-height: 1.95; }
+.practice { border-top: 1px solid var(--paper-line); border-bottom: 1px solid var(--paper-line); padding-block: 14px; display: flex; flex-direction: column; gap: 4px; }
+.lbl { font-size: 12px; letter-spacing: .14em; color: var(--paper-soft); }
+.cta { font-size: 15px; line-height: 1.85; }
+.get { background: #EEF2EC; border-radius: 16px; padding: 18px 16px; display: flex; flex-direction: column; gap: 14px; }
+.get h3 { font-family: var(--serif); font-size: 18px; margin: 0; color: var(--forest); }
+.how { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; counter-reset: s; }
+.how li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; counter-increment: s; }
+.how li::before { content: counter(s); width: 26px; height: 26px; border-radius: 50%; background: var(--forest); color: var(--cream); font-size: 13px; display: grid; place-items: center; margin-top: 1px; }
+.how li > div { min-width: 0; display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+.msg { background: #fff; border: 1px dashed var(--sandm, #D4C8B5); border-radius: 12px; padding: 12px 14px; font-size: 14px; line-height: 1.75; white-space: pre-wrap; user-select: all; }
+.lineid { font-family: var(--serif); color: var(--forest); user-select: all; }
+.ok { font-size: 13px; color: var(--forest); min-height: 1em; }
+.result .ghost { color: var(--paper-soft); }
+
+
+.home { position: absolute; z-index: 3; top: calc(14px + env(safe-area-inset-top, 0px)); left: max(16px, env(safe-area-inset-left, 0px)); font-family: var(--serif); font-size: 14px; letter-spacing: .08em; color: var(--ink); text-decoration: none; padding: 6px 12px; border-radius: 999px; background: rgba(22,30,26,.35); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.home:hover { background: rgba(22,30,26,.55); }
+.err-note { font-size: 13px; color: var(--paper-soft); }
+@media (max-width: 420px) { h1 { font-size: 24px; } .paths { gap: 8px; } .path .tx { font-size: 13px; } .echo { font-size: 18px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<main class="stage" id="stage">
+  <a class="home" href="/aware">Sofia</a>
+  <div class="bg on" id="bgA"></div>
+  <div class="bg" id="bgB"></div>
+  <div class="shade"></div>
+  <div class="wrap" id="view"></div>
+</main>
+
+<script>
+const IMG = new Proxy({}, { get: (_, k) => `/forest/photos/${k}.jpg` });
+const RIMG = {
+  "等待的人": "r01", "溪邊的守望者": "r02", "未說完的話": "r03", "獨自渡河的人": "r04",
+  "找家的旅人": "r05", "門前徘徊的人": "r06", "空白門牌的探路者": "r07", "替別人點燈的人": "r08",
+  "用力掙脫的人": "r09", "耐心的解結人": "r10", "被纏住的溫柔": "r11", "等一雙手的人": "r12",
+  "等一盞燈的人": "r13", "獨處的守夜人": "r14", "需要冬眠的熊": "r15", "想回到起點的人": "r16"
+};
+const LINE_ID = "@567avtfh";
+const LINE_ADD = "https://line.me/R/ti/p/%40567avtfh";
+const LINE_MSG = "https://line.me/R/oaMessage/%40567avtfh/?";
+const TOTAL = 6;
+
+/* Q1 + Q2: the path decides the theme, the scene on that path decides the result type */
+const PATHS = {
+  A: { name: "聽得到溪水聲的小路", short: "溪水小路", topic: "親密關係", img: "q-a-stream", fx: "",
+       echo: "你被水聲吸引了，那聲音很輕，卻一直往心裡流，會選這條路的人，心裡常藏著一份很柔軟的渴望，希望有人真的懂自己，不用解釋那麼多，也不用再假裝沒關係",
+       q: "走著走著，你看到溪邊坐著一個人，你覺得他是？",
+       opts: [
+        { t: "正在等你的人", r: "等待的人", echo: "你一直相信，關係是可以有回應的，所以你願意等，也願意付出，只是最近好像等得有點久了，久到開始懷疑，是不是自己不夠好，才沒有被好好回應" },
+        { t: "背對著你，不知道在想什麼", r: "溪邊的守望者", echo: "你很在乎他，在乎到每一個沉默都會讓你想很久，你一直在猜他在想什麼，猜他還在不在乎你，這種不確定像細細的雨，一直下在心上，其實真的很耗心力" },
+        { t: "你認識，但不太想靠近的人", r: "未說完的話", echo: "有一段關係在你心裡，還沒有真正結束，你放不下，卻也還沒準備好面對，每次想起來，心就會揪一下，這很正常，有些傷需要慢慢來，不用急著走過去" },
+        { t: "溪邊沒有人，只有你自己", r: "獨自渡河的人", echo: "溪邊沒有別人，只有你自己，你很習慣一個人面對所有事，不是不想依靠，而是曾經試著依靠過，卻沒有被好好接住，所以後來，你學會了先把自己撐住" } ] },
+  B: { name: "陽光灑進來的寬路", short: "陽光寬路", topic: "人生方向", img: "q-b-meadow", fx: "",
+       echo: "你往有光的地方走，心裡其實知道，自己值得過更好的生活，只是走著走著，常常會懷疑那條路到底在哪裡，也偷偷害怕，自己是不是永遠走不到",
+       q: "路的盡頭有一間小屋，門口掛著一塊牌子，你覺得上面寫著？",
+       opts: [
+        { t: "歡迎回家", r: "找家的旅人", echo: "看到「歡迎回家」這幾個字，你的心是不是軟了一下，你一直在找一個可以放心做自己的地方，不用證明什麼，不用表現得很好，就能被好好接住" },
+        { t: "還沒準備好，請稍候", r: "門前徘徊的人", echo: "你其實很有能力，只是心裡常有個聲音說，你還不夠好，再等等吧，於是你一直站在門外，看著別人走進去，心裡有點羨慕，也有點捨不得這樣的自己" },
+        { t: "牌子是空白的", r: "空白門牌的探路者", echo: "牌子是空白的，你可能有點慌，也有點失落，你不是沒有方向，只是還沒給自己寫下答案的空間，空白會讓人不安，但空白也代表，一切都還來得及重新開始" },
+        { t: "上面寫著別人的名字", r: "替別人點燈的人", echo: "你很會為別人著想，總是把別人的期待放在自己前面，爸媽的、伴侶的、身邊每個人的，走著走著，好像忘了自己原本想去哪裡，也忘了自己真正想要什麼" } ] },
+  C: { name: "長滿藤蔓、有點難走的路", short: "藤蔓小路", topic: "關係界線", img: "q-c-vines", fx: "",
+       echo: "你選了最不好走的那條路，也許你早就習慣在關係裡多扛一點、多讓一點，習慣到連自己都沒發現，那些吞下去的委屈，已經把你壓得好累好累",
+       q: "藤蔓纏住了你的腳，你的第一個反應是？",
+       opts: [
+        { t: "用力扯開", r: "用力掙脫的人", echo: "你忍了很久很久，直到真的受不了，才一口氣爆發出來，可是爆發完，你又常常自責，覺得是不是自己太衝動，其實你只是累積了太多沒說出口的委屈" },
+        { t: "小心地一根一根解開", r: "耐心的解結人", echo: "你連被藤蔓纏住，都捨不得用力，你很會體諒別人，就算被傷到了，也會先想對方是不是有苦衷，只是這麼溫柔的你，有沒有人，也這樣溫柔地體諒過你" },
+        { t: "停下來，覺得算了", r: "被纏住的溫柔", echo: "你停下來，輕輕說了一聲算了，你已經很習慣忍耐，習慣到覺得這就是關係本來的樣子，可是你心裡知道，那些說不出口的委屈，其實一直都還在" },
+        { t: "回頭喊人來幫忙", r: "等一雙手的人", echo: "你願意回頭喊人來幫忙，這其實很勇敢，只是你常常擔心會麻煩別人，怕被嫌棄，所以每次要開口之前，總要在心裡猶豫好久好久，最後又吞了回去" } ] },
+  D: { name: "先停在原地，不想走", short: "停在原地", topic: "身心疲憊", img: "q-d-crossroads", fx: "",
+       echo: "你選擇先停下來，這不是退縮，也不是軟弱，是你的心在很小聲地提醒你，我真的需要喘口氣了，先讓我坐一下，再決定要往哪裡走，好嗎",
+       q: "你坐在路口，天色慢慢暗了，這時候你最希望？",
+       opts: [
+        { t: "有人來陪我坐一下", r: "等一盞燈的人", echo: "你已經撐了很久，一直是那個照顧別人的人，現在的你，其實好想有人來坐在旁邊，不用說什麼，不用給建議，只要靜靜陪著，讓你知道自己不是一個人" },
+        { t: "一個人安靜就好", r: "獨處的守夜人", echo: "你習慣自己消化所有的事，安靜是你保護自己的方式，難過的時候，你寧願躲起來慢慢好，可是親愛的，習慣一個人，並不代表你不需要有人陪" },
+        { t: "不知道，只想睡一覺", r: "需要冬眠的熊", echo: "你累到連自己想要什麼，都說不出來了，只想把眼睛閉上，什麼都不要想，這不是軟弱，也不是偷懶，是你的身心在很用力地提醒你，真的該好好休息了" },
+        { t: "起身往回走", r: "想回到起點的人", echo: "你起身往回走，因為你好想念以前那個比較輕鬆、比較會笑的自己，想念過去不是倒退，而是你在努力找回，那個被生活一點一點弄丟的部分" } ] }
+};
+
+/* Q3–Q5: shared questions, each answer is also a backstage field */
+const SHARED = [
+  { key: "who", label: "想起的人", img: "q-deer", fx: "",
+    q: "森林深處，一隻小鹿慢慢走向你，牠的眼神，讓你想起生命中的誰？",
+    opts: [
+      { t: "伴侶，或曾經很親密的人", v: "伴侶／前任", echo: "那個人在你心裡佔了好大的位置，有過很深的愛，也有還沒說開的話，每次想起來，都是甜的，也是痛的" },
+      { t: "家人，像是爸媽或孩子", v: "家人", echo: "家人是最親的人，也最容易讓人受傷，你愛他們，卻也常常在他們面前，把自己的感受收得好小好小" },
+      { t: "工作或生活裡常碰面的人", v: "工作／日常的人", echo: "每天碰面的人，最容易累積小小的委屈，一次次忍住、一次次說不出口，明明不是大事，卻讓你好累" },
+      { t: "其實，牠讓我想起我自己", v: "自己", echo: "小鹿的眼神讓你想起了自己，你願意先停下來，好好看看自己，這份溫柔，很多人要繞好遠才找得到" } ] },
+  { key: "howlong", label: "卡多久", img: "q-lookback", fx: "",
+    q: "你在森林裡已經走了一段路，回頭看，你覺得自己走了多久？",
+    opts: [
+      { t: "才剛走進來不久", v: "最近才開始", echo: "有些感受是最近才冒出來的，還說不清楚是什麼，只是心裡怪怪的，而你願意早一點停下來看看它" },
+      { t: "走了好一陣子，有點累了", v: "持續一段時間", echo: "這件事已經陪你好一段時間了，你一直很努力想讓它變好，會累是很正常的，累不代表你做得不好" },
+      { t: "好像一直在同一個地方繞圈", v: "反覆出現的模式", echo: "繞圈的感覺好挫折，明明很努力往前走，卻一直回到同一個地方，那種說不出的無力，你一定很熟悉" },
+      { t: "走了很久，久到忘了起點", v: "很久以前就開始", echo: "你已經背著這份重量走了好久，久到它好像變成你的一部分，光是撐到今天，就已經很不容易了" } ] },
+  { key: "cope", label: "因應方式", img: "q-rain", fx: "",
+    q: "天空飄起雨來，你的第一個反應是？",
+    opts: [
+      { t: "找一棵大樹，自己躲好", v: "自己消化", echo: "你習慣自己照顧自己，下雨了就默默找個地方躲好，只是一個人躲雨的時候，偶爾也會覺得有點冷吧" },
+      { t: "繼續走，淋濕也沒關係", v: "硬撐往前", echo: "你是很能撐的人，淋濕了也笑著說沒關係，只是撐了這麼久，你的身體和心，其實都還記得那些冷" },
+      { t: "找人一起撐傘", v: "找人陪伴", echo: "你知道有人陪著，路會好走一點，所以你願意伸出手，也一直在找那個真的接得住你的人" },
+      { t: "站在雨裡，讓自己哭一下", v: "讓情緒流動", echo: "你讓自己站在雨裡，讓眼淚跟著雨一起落下，那些憋了好久的感受，終於有地方可以流出來了" } ] }
+];
+
+/* Q6: readiness */
+const READY = [
+  { t: "「辛苦了，先休息一下」", lv: "陪伴型", cls: "",
+    cta: "想要一點溫柔的陪伴嗎？把結果傳給 Sofia，她會回你完整解析，還有一段專屬於你的放鬆引導" },
+  { t: "「我好像不太懂自己怎麼了」", lv: "釐清型", cls: "mid",
+    cta: "完整解析會告訴你：這個模式從哪裡來、在哪些關係裡反覆出現，以及三個可以開始調整的方向" },
+  { t: "「我想找個人好好聊一聊」", lv: "傾訴型", cls: "mid",
+    cta: "你想找人聊聊，Sofia 就在這裡，把結果傳給她，收到完整解析之後，也可以直接在 LINE 上跟她說說話" },
+  { t: "「我想要開始改變了」", lv: "行動型", cls: "hi",
+    cta: "你已經準備好改變了，把結果傳給 Sofia，除了完整解析，也可以跟她預約一次一對一的深談" }
+];
+
+const RESULTS = {
+  "等待的人": ["你願意相信、願意付出，卻常把自己的快樂交給對方的回應來決定，等待久了，連自己的感受都變得很小聲", "寫下一件今天能讓自己開心、不需要等任何人的小事，然後去做"],
+  "溪邊的守望者": ["你很會感受別人，卻很少說出自己的需要，你卡住的不是愛不夠，而是一直在猜，卻沒有被好好回應", "寫下一句一直沒說出口的話，不用寄出，只是讓自己聽見"],
+  "未說完的話": ["有一段關係在你心裡還沒結束，不是放不下，是還有感受沒被好好安放，所以它一直回來敲門", "想到那個人時，先感覺身體哪裡最緊，把手放在那裡，深呼吸三次"],
+  "獨自渡河的人": ["你很能幹，也很獨立，但那份獨立裡藏著一句話：「反正也沒有人會接住我」，其實，你值得被好好依靠", "今天試著請別人幫一個小忙，留意那一刻心裡的感覺"],
+  "找家的旅人": ["你一直在找一個可以放心做自己的地方，這份渴望，常常來自很早就學會的「要乖才會被愛」", "列出三個讓你覺得自在的時刻，看看它們有什麼共同點"],
+  "門前徘徊的人": ["你的能力其實足夠，擋住你的是「我還不夠好」的聲音，它曾經保護過你，現在卻讓你停在門外", "寫下一件你最近做得不錯、卻沒有稱讚自己的事"],
+  "空白門牌的探路者": ["你正處在轉換期，舊的答案不再適用，新的還沒長出來，這種空白很不安，卻也很珍貴", "完成這句話三次：「如果不用顧慮別人，我想要⋯」"],
+  "替別人點燈的人": ["你總是照亮別人的路，自己卻站在暗處，你的善良很珍貴，但你的人生，也需要一盞屬於你自己的燈", "寫下三件「只為自己想做」的事，不管別人怎麼想"],
+  "用力掙脫的人": ["你不是脾氣不好，是界線一直被踩，直到再也忍不住，你需要的是更早、更溫和地說「不」", "回想最近一次爆發，往前找：最早覺得不舒服的是哪一刻？"],
+  "耐心的解結人": ["你總是先理解別人，委屈就一點一點吞下去，善良很珍貴，也需要留一份給自己", "寫下一件你一直在體諒對方、其實自己很受傷的事"],
+  "被纏住的溫柔": ["你習慣忍耐，習慣到以為這就是愛，其實在關係裡，你也有被好好對待的權利", "對自己說一次：「我的感受也很重要」，留意說出口時身體的感覺"],
+  "等一雙手的人": ["你知道自己需要支持，卻常怕成為別人的負擔，其實，願意被幫忙，也是在給別人愛你的機會", "對一個信任的人說一次：「我最近需要你」"],
+  "等一盞燈的人": ["你撐了太久，一直是照顧別人的那個人，現在換你需要被陪伴，這一點都不丟臉", "傳一則訊息給一個讓你安心的人，只說「最近有點累」"],
+  "獨處的守夜人": ["你習慣自己消化一切，安靜是你的保護殼，只是一個人扛久了，心也會沒電", "今晚留 10 分鐘完全不做事，只是坐著，感受自己的呼吸"],
+  "需要冬眠的熊": ["你的身心已經在發出訊號：真的太累了，現在最重要的不是想清楚，而是先讓自己好好休息", "今天提早 30 分鐘上床，睡前把手機放到房間外"],
+  "想回到起點的人": ["你想念以前那個比較輕鬆的自己，那個你沒有消失，只是被生活的重量，壓到比較深的地方", "找一張你覺得很自在時期的照片，看看當時的你擁有什麼"]
+};
+
+const S = { path: null, sub: null, ans: {}, ready: null, result: null };
+const view = document.getElementById("view");
+let bgFront = document.getElementById("bgA"), bgBack = document.getElementById("bgB");
+
+function setBg(key, fx) {
+  bgBack.style.backgroundImage = `url(${IMG[key]})`;
+  bgBack.className = "bg" + (fx ? " " + fx : "");
+  void bgBack.offsetWidth;
+  bgBack.classList.add("on");
+  bgFront.classList.remove("on");
+  [bgFront, bgBack] = [bgBack, bgFront];
+}
+function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
+function show(html, cls = "panel fade") { view.innerHTML = `<div class="${cls}">${html}</div>`; window.scrollTo({ top: 0 }); }
+function head(n) {
+  const bars = Array.from({ length: TOTAL }, (_, i) => `<i class="${i < n ? "done" : ""}"></i>`).join("");
+  return `<div class="top"><span class="step">第 ${n} 題・共 ${TOTAL} 題</span><span class="prog" aria-hidden="true">${bars}</span></div>`;
+}
+function ask(n, q, opts, onPick, extraCls = "") {
+  const list = opts.map((o, i) => `<button class="opt" data-i="${i}">${o.k ? `<span class="k">${o.k}</span>` : ""}<span>${esc(o.t)}</span></button>`).join("");
+  show(`${head(n)}<h2>${esc(q)}</h2><div class="opts ${extraCls}">${list}</div>`);
+  view.querySelectorAll(".opt").forEach(b => b.onclick = () => onPick(+b.dataset.i));
+}
+function echo(picked, text, next, label = "繼續往前走") {
+  show(`<p class="chose">你選了：${esc(picked)}</p><p class="echo">${esc(text)}</p><div class="row"><button class="btn" id="nx">${label}</button></div>`);
+  document.getElementById("nx").onclick = next;
+}
+
+/* ---------- screens ---------- */
+function intro() {
+  setBg("q-entrance");
+  show(`<div class="step">SOFIA 情緒關係教練・心理小測驗</div>
+    <h1>森林裡的路<br>你現在，走在哪一條路上？</h1>
+    <p class="echo">用 6 個森林畫面，看見你現在在關係裡最卡的地方，以及你一直以來面對它的方式</p>
+    <p class="soft">沒有對錯，跟著直覺選就好，大約 5 分鐘，走到最後，你會遇見屬於你的森林結果</p>
+    <div class="row"><button class="btn" id="go">深呼吸，走進森林</button></div>`);
+  document.getElementById("go").onclick = q1;
+}
+function q1() {
+  setBg("q-entrance");
+  const cards = Object.entries(PATHS).map(([k, p]) =>
+    `<button class="opt" data-k="${k}"><span class="k">${k}</span><span>${esc(p.name)}</span></button>`).join("");
+  show(`${head(1)}<h2>想像你走進一片安靜的森林，眼前有四條路，你直覺想走哪一條？</h2><div class="opts">${cards}</div>`);
+  view.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    S.path = b.dataset.k; const p = PATHS[S.path];
+    save({ step: "第1題" });
+    setBg(p.img, p.fx);
+    echo(p.name, p.echo, q2);
+  });
+}
+function q2() {
+  const p = PATHS[S.path];
+  ask(2, p.q, p.opts.map((o, i) => ({ t: o.t, k: S.path + (i + 1) })), i => {
+    S.sub = i; S.result = p.opts[i].r;
+    save({ step: "第2題" });
+    echo(p.opts[i].t, p.opts[i].echo, () => shared(0));
+  });
+}
+function shared(idx) {
+  const s = SHARED[idx];
+  setBg(s.img, s.fx);
+  ask(3 + idx, s.q, s.opts, i => {
+    S.ans[s.key] = s.opts[i].v;
+    save({ step: "第" + (3 + idx) + "題" });
+    echo(s.opts[i].t, s.opts[i].echo, idx < SHARED.length - 1 ? () => shared(idx + 1) : q6);
+  });
+}
+function q6() {
+  setBg("q-pool");
+  ask(6, "路的盡頭有一面清澈的水池，映著你的臉，你最想對自己說什麼？", READY, i => {
+    S.ready = i;
+    save({ step: "第6題" });
+    loading();
+  });
+}
+function loading() {
+  show(`<div class="loader"><p class="echo">森林正在為你整理答案⋯</p><div class="dots" aria-hidden="true"><span></span><span></span><span></span></div></div>`);
+  save({ step: "看到結果" });
+  setTimeout(result, 2400);
+}
+function lineMessage() {
+  const p = PATHS[S.path];
+  return `Sofia 你好，我做完森林測驗了！\n我的結果是：${S.result}\n我走的路：${p.short}\n讓我想起的人：${S.ans.who}\n最想對自己說：${READY[S.ready].t.replace(/[「」]/g, "")}\n想收到我的完整解析，謝謝你`;
+}
+function result() {
+  const p = PATHS[S.path], r = RESULTS[S.result], rd = READY[S.ready];
+  setBg(RIMG[S.result]);
+  const msg = lineMessage();
+  show(`<img class="hero" src="${IMG[RIMG[S.result]]}" alt="${esc(S.result)}的森林畫面">
+    <div class="step">你的森林結果</div>
+    <h2>${esc(S.result)}</h2>
+    <p class="lead">${esc(r[0])}</p>
+    <div class="practice"><span class="lbl">今天的小練習</span><p>${esc(r[1])}</p></div>
+    <p class="cta">${esc(rd.cta)}</p>
+    <div class="get">
+      <h3>領取你的完整解析</h3>
+      <ol class="how">
+        <li><div><span>加入 Sofia 的 LINE 官方帳號 <span class="lineid">${LINE_ID}</span></span>
+          <div class="row"><a class="btn line small" href="${LINE_ADD}" target="_blank" rel="noopener" id="add">加入好友</a></div></div></li>
+        <li><div><span>把你的結果傳給 Sofia（可以直接複製下面這段）</span>
+          <div class="msg" id="msg">${esc(msg)}</div>
+          <div class="row"><button class="btn dark small" type="button" id="copy">複製這段文字</button>
+            <a class="btn line small" href="${LINE_MSG + encodeURIComponent(msg)}" target="_blank" rel="noopener" id="send">開啟 LINE 傳給 Sofia</a></div>
+          <p class="ok" id="ok" aria-live="polite"></p></div></li>
+        <li><div><span>Sofia 會親自回覆你的「${esc(S.result)}」完整解析</span></div></li>
+      </ol>
+    </div>
+    <div class="row"><button class="ghost" type="button" id="again">重新走一次森林</button></div>`, "result");
+  document.getElementById("add").onclick = () => save({ clickedAdd: true });
+  document.getElementById("send").onclick = () => save({ clickedSend: true });
+  document.getElementById("copy").onclick = async () => {
+    save({ copied: true });
+    const ok = document.getElementById("ok");
+    try { await navigator.clipboard.writeText(msg); ok.textContent = "已複製，貼到 LINE 傳給 Sofia 就可以了"; }
+    catch (e) {
+      const sel = window.getSelection(), rg = document.createRange();
+      rg.selectNodeContents(document.getElementById("msg")); sel.removeAllRanges(); sel.addRange(rg);
+      ok.textContent = "文字已選取，長按或按 Ctrl+C 複製";
+    }
+  };
+  document.getElementById("again").onclick = () => { Object.assign(S, { path: null, sub: null, ans: {}, ready: null, result: null }); rec = {}; sent = false; intro(); };
+}
+
+/* ---------- tracking: GA events for every step, one row in Google Sheets when the result shows ---------- */
+const SOURCE = (() => {
+  try { const q = new URLSearchParams(location.search).get("src"); if (q) return q; } catch (e) {}
+  try { if (document.referrer) return new URL(document.referrer).hostname; } catch (e) {}
+  return "直接開啟";
+})();
+let rec = {}, sent = false;
+function track(name, params) { try { if (window.gtag) gtag("event", name, params || {}); } catch (e) {} }
+function save(patch) {
+  const p = S.path ? PATHS[S.path] : null;
+  Object.assign(rec, patch, {
+    path: p ? p.short : "", topic: p ? p.topic : "",
+    scene: p && S.sub != null ? p.opts[S.sub].t : "", result: S.result || "",
+    who: S.ans.who || "", howlong: S.ans.howlong || "", cope: S.ans.cope || "",
+    ready: S.ready != null ? READY[S.ready].lv : ""
+  });
+  if (patch.step) track("forest_step", { step: patch.step, result: rec.result, source: SOURCE });
+  if (patch.clickedAdd) track("forest_line_add", { result: rec.result });
+  if (patch.clickedSend) track("forest_line_send", { result: rec.result });
+  if (patch.copied) track("forest_copy", { result: rec.result });
+  if (patch.step === "看到結果" && !sent) {
+    sent = true;
+    const body = {
+      type: "森林測驗", result: rec.result, topic: rec.topic,
+      path: rec.path + "／" + rec.scene, who: rec.who, howlong: rec.howlong,
+      cope: rec.cope, ready: rec.ready, source: SOURCE
+    };
+    try {
+      fetch("/api/quiz", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), keepalive: true }).catch(() => {});
+    } catch (e) {}
+  }
+}
+
+intro();
+window.addEventListener("load", () => setTimeout(() => {
+  ["q-a-stream","q-b-meadow","q-c-vines","q-d-crossroads","q-deer","q-lookback","q-rain","q-pool"].forEach(k => { const i = new Image(); i.src = IMG[k]; });
+}, 600));
+</script>
+</body>
+</html>
