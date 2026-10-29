@@ -93,6 +93,12 @@ function doPost(e) {
   ]);
 
   var emailStatus = "skipped";
+  // 森林測驗只寫進表單，不寄通知信，避免每個人做完測驗都收到一封
+  if (data.type === "森林測驗") {
+    return ContentService
+      .createTextOutput(JSON.stringify({ ok: true, emailStatus: emailStatus }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
   try {
     emailStatus = sendNotifyEmail(data);
   } catch (err) {

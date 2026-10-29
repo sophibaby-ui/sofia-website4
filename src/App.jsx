@@ -1280,10 +1280,15 @@ const Styles = () => (
 .aw-tools-row{display:flex;gap:clamp(18px,2vw,28px);flex-wrap:wrap;align-items:stretch}
 .aw-card{min-width:290px;display:flex;flex-direction:column;border-radius:26px;overflow:hidden;background:#FFFDF8;cursor:pointer;text-decoration:none;color:inherit;transition:transform .3s ease,box-shadow .3s ease;animation:aw-fup .8s ease both}
 .aw-card:hover{transform:translateY(-6px)}
-.aw-card-num{flex:1 1 460px;border:1px solid rgba(233,197,168,.5);box-shadow:0 26px 62px rgba(122,82,52,.1)}
+.aw-card-num{flex:1 1 300px;border:1px solid rgba(233,197,168,.5);box-shadow:0 26px 62px rgba(122,82,52,.1)}
 .aw-card-num:hover{box-shadow:0 34px 76px rgba(122,82,52,.16)}
-.aw-card-balance{flex:1 1 330px;border:1px solid rgba(160,200,205,.5);box-shadow:0 26px 62px rgba(58,100,105,.1)}
+.aw-card-balance{flex:1 1 300px;border:1px solid rgba(160,200,205,.5);box-shadow:0 26px 62px rgba(58,100,105,.1)}
 .aw-card-balance:hover{box-shadow:0 34px 76px rgba(58,100,105,.16)}
+.aw-card-forest{flex:1 1 300px;border:1px solid rgba(110,150,120,.45);box-shadow:0 26px 62px rgba(45,80,60,.12)}
+.aw-card-forest:hover{box-shadow:0 34px 76px rgba(45,80,60,.18)}
+.aw-meta-forest{color:#3D5A4C}
+.aw-dot-forest{background:#8FB59A}
+.aw-cta-forest{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;padding:14px 30px;border-radius:999px;background:linear-gradient(120deg,#3D5A4C,#6E9479);color:#F5F0E8;font-size:17px;letter-spacing:.14em;box-shadow:0 12px 28px rgba(45,80,60,.24)}
 .aw-meta{display:flex;align-items:center;gap:10px;margin-bottom:28px;font-size:12px;letter-spacing:.1em;color:#3E7B80}
 .aw-dot{width:7px;height:7px;border-radius:50%;background:#8FC2C8;animation:aw-breathe 3.4s ease-in-out infinite}
 .aw-cta-warm{align-self:flex-start;display:inline-flex;align-items:center;gap:10px;padding:14px 30px;border-radius:999px;background:linear-gradient(120deg,#E07449,#D99A6E);color:#FFF9F2;font-size:17px;letter-spacing:.14em;box-shadow:0 12px 28px rgba(200,110,70,.26)}
@@ -1313,7 +1318,7 @@ const Styles = () => (
   .aw-hero-scrim{background:linear-gradient(180deg,rgba(253,247,240,.9) 0%,rgba(253,247,240,.55) 55%,rgba(253,247,240,.9) 100%)}
   .aw-scroll{display:none}
   .aw-card{flex:1 1 100%}
-  .aw-cta-warm,.aw-cta-cool{font-size:15px;padding:14px 26px;width:100%;justify-content:center}
+  .aw-cta-warm,.aw-cta-cool,.aw-cta-forest{font-size:15px;padding:14px 26px;width:100%;justify-content:center}
   .aw-cta-final{width:100%;justify-content:center;padding:18px 26px;font-size:13px}
   .aw-quote{margin:0 16px;padding:56px 24px}
 }
@@ -2037,7 +2042,7 @@ function Aware({ go }) {
             </p>
             <div className="aw-hero-actions aw-fade aw-d3">
               <a href="#aw-tools" className="aw-btn-primary">
-                兩個免費工具<span style={AW.arrow}>→</span>
+                自我檢測<span style={AW.arrow}>→</span>
               </a>
               <button type="button" className="aw-btn-ghost" onClick={() => go("apply")}>
                 預約 1 對 1
@@ -2053,7 +2058,7 @@ function Aware({ go }) {
       <section id="aw-tools" className="aw-tools">
         <div className="aw-tools-head">
           <h2>從這裡開始看見自己</h2>
-          <span>Two free tools</span>
+          <span>Self check</span>
         </div>
 
         <div className="aw-tools-row">
@@ -2114,6 +2119,32 @@ function Aware({ go }) {
                 <span className="aw-dot" />約 3 分鐘 · 另開新視窗
               </div>
               <div className="aw-cta-cool">開始檢測<span style={AW.arrow}>→</span></div>
+            </div>
+          </a>
+
+          {/* 森林心理測驗 */}
+          <a
+            className="aw-card aw-card-forest aw-fade aw-d2"
+            href="/forest"
+          >
+            <div style={{ ...AW.cover, background: "#DCE6D6" }}>
+              <img src="/forest/photos/q-entrance.jpg" alt=""
+                style={{ ...AW.coverImg, objectPosition: "center 45%" }} />
+              <div style={{
+                position: "absolute", inset: 0,
+                background: "linear-gradient(to top,rgba(255,253,248,.9) 0%,rgba(255,253,248,.14) 46%,transparent 72%)",
+              }} />
+              <div style={{ ...AW.badge, color: "#3D5A4C" }}>03 · FOREST</div>
+            </div>
+            <div style={AW.cardBody}>
+              <div style={AW.cardTitle}>森林心理測驗</div>
+              <p style={AW.cardText}>
+                用 6 個森林畫面，看見你現在在關係裡最卡的地方，以及你一直以來面對它的方式。
+              </p>
+              <div className="aw-meta aw-meta-forest">
+                <span className="aw-dot aw-dot-forest" />約 5 分鐘 · 16 種森林結果
+              </div>
+              <div className="aw-cta-forest">走進森林<span style={AW.arrow}>→</span></div>
             </div>
           </a>
 

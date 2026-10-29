@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/forest", "destination": "/forest/index.html" },
     { "source": "/(.*)", "destination": "/" }
   ]
 }
