@@ -285,7 +285,7 @@ function intro() {
     <p class="echo">用 6 個森林畫面，看見你現在在關係裡最卡的地方，以及你一直以來面對它的方式</p>
     <p class="soft">沒有對錯，跟著直覺選就好，大約 5 分鐘，走到最後，你會遇見屬於你的森林結果</p>
     <div class="row"><button class="btn" id="go">深呼吸，走進森林</button></div>`);
-  document.getElementById("go").onclick = q1;
+  document.getElementById("go").onclick = () => { save({ step: "開始" }); q1(); };
 }
 function q1() {
   setBg("q-entrance");
@@ -369,41 +369,45 @@ function result() {
       ok.textContent = "文字已選取，長按或按 Ctrl+C 複製";
     }
   };
-  document.getElementById("again").onclick = () => { Object.assign(S, { path: null, sub: null, ans: {}, ready: null, result: null }); rec = {}; sent = false; intro(); };
+  document.getElementById("again").onclick = () => { Object.assign(S, { path: null, sub: null, ans: {}, ready: null, result: null }); restart(); intro(); };
 }
 
-/* ---------- tracking: GA events for every step, one row in Google Sheets when the result shows ---------- */
+/* ---------- tracking: one row per visit in the「森林測驗」sheet, updated as the visitor moves on; GA events for every step ---------- */
 const SOURCE = (() => {
   try { const q = new URLSearchParams(location.search).get("src"); if (q) return q; } catch (e) {}
   try { if (document.referrer) return new URL(document.referrer).hostname; } catch (e) {}
   return "直接開啟";
 })();
-let rec = {}, sent = false;
+const newSid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+let rec = { sid: newSid(), step: "開場", status: "中途離開" }, dirty = true;
 function track(name, params) { try { if (window.gtag) gtag("event", name, params || {}); } catch (e) {} }
+function send() {
+  if (!dirty) return;
+  dirty = false;
+  const body = JSON.stringify({ type: "森林測驗", source: SOURCE, ...rec });
+  try { fetch("/api/quiz", { method: "POST", headers: { "Content-Type": "application/json" }, body, keepalive: true }).catch(() => {}); } catch (e) {}
+}
 function save(patch) {
   const p = S.path ? PATHS[S.path] : null;
   Object.assign(rec, patch, {
-    path: p ? p.short : "", topic: p ? p.topic : "",
-    scene: p && S.sub != null ? p.opts[S.sub].t : "", result: S.result || "",
+    topic: p ? p.topic : "",
+    path: p ? p.short + (S.sub != null ? "／" + p.opts[S.sub].t : "") : "",
+    result: S.result || "",
     who: S.ans.who || "", howlong: S.ans.howlong || "", cope: S.ans.cope || "",
     ready: S.ready != null ? READY[S.ready].lv : ""
   });
+  if (patch.step === "看到結果") rec.status = "完成";
+  dirty = true;
   if (patch.step) track("forest_step", { step: patch.step, result: rec.result, source: SOURCE });
   if (patch.clickedAdd) track("forest_line_add", { result: rec.result });
   if (patch.clickedSend) track("forest_line_send", { result: rec.result });
   if (patch.copied) track("forest_copy", { result: rec.result });
-  if (patch.step === "看到結果" && !sent) {
-    sent = true;
-    const body = {
-      type: "森林測驗", result: rec.result, topic: rec.topic,
-      path: rec.path + "／" + rec.scene, who: rec.who, howlong: rec.howlong,
-      cope: rec.cope, ready: rec.ready, source: SOURCE
-    };
-    try {
-      fetch("/api/quiz", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), keepalive: true }).catch(() => {});
-    } catch (e) {}
-  }
+  if (patch.step === "看到結果" || patch.clickedAdd || patch.clickedSend || patch.copied) send();
 }
+/* someone who closes the page or switches app halfway still leaves a row saying where they stopped */
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden") send(); });
+window.addEventListener("pagehide", send);
+function restart() { rec = { sid: newSid(), step: "開場", status: "中途離開" }; dirty = true; }
 
 intro();
 window.addEventListener("load", () => setTimeout(() => {
