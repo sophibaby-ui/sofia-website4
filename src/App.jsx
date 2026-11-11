@@ -68,6 +68,8 @@ const Styles = () => (
     .nm li::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--forest);transition:width .3s}
     .nm li:hover,.nm li.on{color:var(--forest)}
     .nm li:hover::after,.nm li.on::after{width:100%}
+    .nm li{white-space:nowrap}
+    @media(min-width:1025px) and (max-width:1200px){nav{padding:0 36px}.nm{gap:20px}.nm li{letter-spacing:.05em}}
     .nc{font-size:12px;letter-spacing:.15em;padding:9px 22px;border:1px solid var(--forest);color:var(--forest);background:transparent;cursor:pointer;transition:all .25s}
     .nc:hover{background:var(--forest);color:var(--w)}
     .hb{display:none}
@@ -1368,6 +1370,7 @@ const NI = [
   { l: "首頁",           p: "home" },
   { l: "開始這一步",     p: "start" },
   { l: "陪跑計畫",       p: "deep" },
+  { l: "2027 年度計畫",  p: "f2027" },
   { l: "自我覺察",       p: "aware" },
   { l: "關於 Sofia",     p: "about" },
   { l: "文章與個案分享", p: "journal" },
@@ -1819,7 +1822,7 @@ function Frequency({ go }) {
             <div className="frequency-annual-copy">
               <div className="frequency-label">2027 年度計畫</div>
               <h2 className="frequency-heading">為自己，養一整年的好運</h2>
-              <p>從財富、健康、關係到人生新局，自由選擇 2、3 或 5 個年度主題，全年持續頻率支持，年初收到一份專屬年度藍圖，年度內個人會談享 9 折。</p>
+              <p>從財富、健康、關係到人生新局，自由選擇 2、3 或 5 個年度主題，隨時都能開始、連續一整年頻率支持，一開始就收到專屬年度藍圖，這一年內的個人會談享 9 折。</p>
               <button className="bp" onClick={() => go("f2027")}>看 2027 年度好運頻率計畫 →</button>
             </div>
           </div>

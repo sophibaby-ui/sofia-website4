@@ -6,7 +6,7 @@ import "./frequency2027.css";
 const PREVIEW = true;
 const LINE_ID = "@567avtfh";
 const ADDON_PRICE = 1500;            // 年度中加入一個主題
-const SESSION_DISCOUNT = "9 折";     // 年度計畫期間個人會談
+const SESSION_DISCOUNT = "9 折";     // 開始後一年內的個人會談
 const PLANS = [
   { id: "focus",     count: 2, name: "年度聚焦",   price: 3000, desc: "把心力放在最重要的兩件事。" },
   { id: "abundance", count: 3, name: "年度豐盛",   price: 4200, desc: "工作、關係與生活，找到自己的節奏。", featured: true },
@@ -79,7 +79,7 @@ export default function Frequency2027({ go }) {
     setChosen(c => c.includes(t) ? c.filter(x => x !== t) : (c.length < plan.count ? [...c, t] : c));
   };
   const message = useMemo(() =>
-    `Sofia 你好，我想了解《2027 年度好運頻率計畫》。\n\n我選擇：${plan.name}（${plan.count} 項）\n參考方案價格：${money(plan.price)}\n年度主題：${chosen.join("、")}\n\n想請你提供付款方式與報名資訊，謝謝！`,
+    `Sofia 你好，我想了解《2027 年度好運頻率計畫》。\n\n我選擇：${plan.name}（${plan.count} 項）\n方案價格：${money(plan.price)}\n年度主題：${chosen.join("、")}\n\n想請你提供付款方式與報名資訊，謝謝！`,
     [plan, chosen]);
   const lineHref = "https://line.me/R/oaMessage/" + encodeURIComponent(LINE_ID) + "/?" + encodeURIComponent(message);
   const compose = () => {
@@ -99,9 +99,9 @@ export default function Frequency2027({ go }) {
 
   const faqs = [
     ["可以選擇幾個主題？", `可以依需求選擇 2、3 或 5 項主題。年度中如果想再加入新的主題，隨時都可以，每多加一項 ${money(ADDON_PRICE)}。`],
-    ["年度計畫的期間是？", "2027 年 1 月 1 日至 12 月 31 日。報名後，Sofia 會依照你選擇的主題完成年度設定，並在年初提供你的專屬年度頻率藍圖。"],
-    ["專屬年度頻率藍圖什麼時候收到？", "每位參與者會在 2027 年 1 月收到一份電子版《個人年度頻率藍圖》，內容依你所選的主題與實際分析資料整理。"],
-    ["參加年度計畫還有其他好處嗎？", `有。參加年度計畫的朋友，在年度計畫期間與 Sofia 的個人會談，每次都享 ${SESSION_DISCOUNT}優惠。`],
+    ["什麼時候可以開始？", "隨時都可以開始，不需要等到 1 月 1 日。從你開始的那一天起算，連續一整年。報名後，Sofia 會依照你選擇的主題完成年度設定，並在一開始就提供你的專屬年度頻率藍圖。"],
+    ["專屬年度頻率藍圖什麼時候收到？", "在年度計畫開始時，你就會收到一份電子版《個人年度頻率藍圖》，內容依你所選的主題與實際分析資料整理。"],
+    ["參加年度計畫還有其他好處嗎？", `有。從年度計畫開始起的一整年內，你與 Sofia 的每一次個人會談都享 ${SESSION_DISCOUNT}優惠。`],
     ["頻率調整需要我做什麼嗎？", "不需要。年度設定完成後，你不需要配戴任何設備，也不需要固定在線，照常生活即可。"],
     ["這能保證財運、感情或健康改善嗎？", "不能。TimeWaver 在這裡是自我覺察與生活狀態整理的輔助工具，不保證財務、關係、工作或健康上的特定結果，也不取代醫療、心理、法律或財務等專業協助。"],
   ];
@@ -123,7 +123,7 @@ export default function Frequency2027({ go }) {
             安排<strong>一整年的專屬頻率支持</strong>。
           </p>
           <div className="frequency-tags fi">
-            {["2 / 3 / 5 項自由選擇", "年初專屬年度藍圖", `年度會談 ${SESSION_DISCOUNT}`].map(t => <span className="frequency-tag" key={t}>{t}</span>)}
+            {["隨時開始 · 走滿一年", "2 / 3 / 5 項自由選擇", "開始即享專屬藍圖", `一年內會談 ${SESSION_DISCOUNT}`].map(t => <span className="frequency-tag" key={t}>{t}</span>)}
           </div>
           <div className="f27-hero-actions fi">
             <button className="bp f27-bp-light" onClick={scrollToChoose}>挑選我的年度主題</button>
@@ -158,9 +158,9 @@ export default function Frequency2027({ go }) {
           </div>
           <div className="f27-inc-grid">
             {[
-              ["01", "全年頻率設定", "2027 年 1 月 1 日至 12 月 31 日，你選擇的主題全年同步納入設定。"],
-              ["02", "年初專屬年度藍圖", "2027 年 1 月，收到一份屬於你的《個人年度頻率藍圖》電子報告。"],
-              ["03", `年度會談 ${SESSION_DISCOUNT}`, "年度計畫期間，與 Sofia 的每一次個人會談都享優惠。"],
+              ["01", "一整年頻率設定", "隨時都能開始，從開始那天起連續一年，你選擇的主題同步納入設定。"],
+              ["02", "專屬年度頻率藍圖", "計畫一開始，就收到一份屬於你的《個人年度頻率藍圖》電子報告。"],
+              ["03", `一年內會談 ${SESSION_DISCOUNT}`, "計畫開始後的一整年內，與 Sofia 的每一次個人會談都享優惠。"],
             ].map(([n, t, x]) => (
               <article className="f27-inc fi" key={n}><div className="f27-inc-n">{n}</div><h3>{t}</h3><p>{x}</p></article>
             ))}
@@ -216,9 +216,9 @@ export default function Frequency2027({ go }) {
                 <p className="f27-plan-desc">{p.desc}</p>
                 <ul>
                   <li>{p.count} 項年度主題設定</li>
-                  <li>2027 全年度頻率支持</li>
-                  <li>2027 年 1 月專屬年度藍圖</li>
-                  <li>年度內個人會談 {SESSION_DISCOUNT}</li>
+                  <li>隨時開始，一整年頻率支持</li>
+                  <li>開始即提供專屬年度藍圖</li>
+                  <li>一年內個人會談 {SESSION_DISCOUNT}</li>
                 </ul>
                 <button className={p.featured ? "bp" : "f27-outline"} onClick={() => pickPlan(p.id, true)} aria-label={`挑選${p.name}（${p.count} 個主題）`}>挑選這個方案</button>
               </article>
@@ -246,7 +246,7 @@ export default function Frequency2027({ go }) {
             <div className="frequency-label">A gift to begin</div>
             <h2 className="frequency-heading">一份看得見的心意，<br />陪你開啟新的一年</h2>
             <div className="frequency-rule" />
-            <p className="f27-report-lead">2027 年全新加入《個人年度頻率藍圖》電子報告。不是等到年末才回頭看，而是在年初，先替自己的方向留下一份清楚的紀錄。</p>
+            <p className="f27-report-lead">每一位參加年度計畫的朋友，都會收到一份《個人年度頻率藍圖》電子報告。不是等到一年結束才回頭看，而是在開始的時候，先替自己的方向留下一份清楚的紀錄。</p>
             <ol className="f27-checks">
               <li><span>01</span><div><strong>年度願望與主題</strong><p>整理你親自選擇的生活面向與目標。</p></div></li>
               <li><span>02</span><div><strong>分析整理與設定方向</strong><p>依實際 TimeWaver 資料進行探索性整理。</p></div></li>
