@@ -153,3 +153,89 @@
 @media(prefers-reduced-motion:reduce){.f27-theme,.f27-theme:hover{transition:none;transform:none}}
 .f27-float{transition:opacity .25s,transform .25s}
 .f27-float.is-hidden{opacity:0;pointer-events:none;transform:translate(-50%,12px)}
+
+/* ───── 水彩底色（參考 Sofia 提供的抽象水彩：蜜桃筆刷、透明葉片、金色生命之花）───── */
+.f27{
+  --wc-peach:#FBD9BC; --wc-apricot:#F6C6A4; --wc-blush:#E9BDB6; --wc-rose:#D9A39A;
+  --wc-champ:#F2DDB4; --wc-mist:#C9D2D8; --wc-mauve:#D8C3CB; --wc-sage:#CBD6C8;
+  --wc-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.f27-included,.f27-themes,.f27-plans,.f27-report,.f27-choose,.f27 .f27-intro-sec{position:relative;overflow:hidden;isolation:isolate}
+.f27-included::after,.f27-themes::after,.f27-plans::after,.f27-report::after,.f27-choose::after{content:"";position:absolute;inset:0;background:var(--wc-grain);pointer-events:none;z-index:-1;mix-blend-mode:multiply}
+
+/* 每個方案都包含：蜜桃暖光 */
+.f27-included{background:
+  radial-gradient(60% 80% at 0% 0%,rgba(251,217,188,.85),transparent 70%),
+  radial-gradient(50% 70% at 100% 100%,rgba(233,189,182,.55),transparent 70%),
+  linear-gradient(160deg,#FBF1E6,#F7EADF)}
+.f27-inc{background:rgba(255,253,249,.78);backdrop-filter:blur(2px)}
+
+/* 八大主題：極淡的玫瑰與霧藍 */
+.f27-themes{background:
+  radial-gradient(45% 40% at 92% 6%,rgba(233,189,182,.38),transparent 70%),
+  radial-gradient(40% 35% at 4% 60%,rgba(201,210,216,.35),transparent 70%),
+  radial-gradient(40% 30% at 70% 100%,rgba(242,221,180,.4),transparent 70%),
+  var(--w)}
+
+/* 方案：香檳金＋粉霧 */
+.f27-plans{background:
+  radial-gradient(55% 60% at 10% 15%,rgba(242,221,180,.7),transparent 70%),
+  radial-gradient(50% 55% at 95% 85%,rgba(216,195,203,.55),transparent 70%),
+  linear-gradient(170deg,#F7EEE2,#EFE4D8)}
+.f27-plan{background:rgba(255,253,249,.86)}
+.f27-plan.is-featured{background:linear-gradient(180deg,#FFFBF5,#FBF0E6)}
+
+/* ── 年度藍圖：主視覺水彩區塊 ── */
+.f27-report{background:
+  radial-gradient(42% 55% at 18% 30%,rgba(246,198,164,.9),transparent 68%),
+  radial-gradient(38% 50% at 6% 85%,rgba(217,163,154,.75),transparent 70%),
+  radial-gradient(35% 45% at 40% 70%,rgba(242,221,180,.85),transparent 70%),
+  radial-gradient(40% 55% at 92% 18%,rgba(201,210,216,.7),transparent 70%),
+  radial-gradient(45% 50% at 85% 92%,rgba(216,195,203,.6),transparent 70%),
+  linear-gradient(120deg,#FBE6D4 0%,#F8ECE1 45%,#F3EEEA 100%)}
+/* 透明花瓣（左側，參考粉色葉片圖） */
+.f27-report::before{content:"";position:absolute;z-index:-1;pointer-events:none;left:-60px;top:-30px;width:560px;height:118%;opacity:.75;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 600'%3E%3Cg fill-opacity='.32' stroke='%23B48468' stroke-opacity='.35' stroke-width='.8'%3E%3Cpath fill='%23E8A99A' d='M200 600C150 470 90 330 120 120 175 300 215 430 200 600Z'/%3E%3Cpath fill='%23F4C7A6' d='M205 600C230 440 270 280 330 90 330 300 280 460 205 600Z'/%3E%3Cpath fill='%23D9A39A' d='M198 600C120 500 40 400 10 230 120 360 175 470 198 600Z'/%3E%3Cpath fill='%23F2DDB4' d='M202 600C215 420 210 230 190 20 250 220 250 430 202 600Z'/%3E%3Cpath fill='%23E9BDB6' d='M206 600C290 500 360 420 395 300 330 450 270 530 206 600Z'/%3E%3C/g%3E%3Cg fill='none' stroke='%23B08A55' stroke-opacity='.45' stroke-width='.7'%3E%3Cpath d='M200 600C185 450 150 300 122 125'/%3E%3Cpath d='M203 600C230 430 280 260 328 95'/%3E%3Cpath d='M201 600C205 400 200 220 191 25'/%3E%3C/g%3E%3C/svg%3E") left bottom/contain no-repeat}
+/* 金色生命之花（紙張後方） */
+.f27-paper-wrap::before{content:"";position:absolute;left:50%;top:50%;width:470px;height:470px;transform:translate(-50%,-50%);pointer-events:none;opacity:.55;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-60 -60 120 120' fill='none' stroke='%23B08A4E' stroke-width='.55'%3E%3Ccircle r='20'/%3E%3Ccircle cx='20' r='20'/%3E%3Ccircle cx='-20' r='20'/%3E%3Ccircle cx='10' cy='17.32' r='20'/%3E%3Ccircle cx='-10' cy='17.32' r='20'/%3E%3Ccircle cx='10' cy='-17.32' r='20'/%3E%3Ccircle cx='-10' cy='-17.32' r='20'/%3E%3Ccircle r='40' stroke-width='.5'/%3E%3Ccircle r='43' stroke-width='.25'/%3E%3C/svg%3E") center/contain no-repeat}
+/* 金色光點 */
+.f27-paper-wrap::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+   radial-gradient(circle at 18% 22%,rgba(214,176,108,.85) 0 2.5px,transparent 3.5px),
+   radial-gradient(circle at 82% 16%,rgba(214,176,108,.7) 0 2px,transparent 3px),
+   radial-gradient(circle at 12% 70%,rgba(214,176,108,.6) 0 1.5px,transparent 2.5px),
+   radial-gradient(circle at 88% 78%,rgba(214,176,108,.8) 0 3px,transparent 4px),
+   radial-gradient(circle at 70% 92%,rgba(214,176,108,.55) 0 1.5px,transparent 2.5px),
+   radial-gradient(circle at 30% 8%,rgba(214,176,108,.5) 0 1.5px,transparent 2.5px)}
+.f27-paper{z-index:1}
+.f27-paper.back{background:linear-gradient(160deg,#EBC2B4,#E3B2A6)}
+.f27-paper.mid{background:linear-gradient(160deg,#F6DCC2,#F1D2B4)}
+.f27-paper.front{background:
+  radial-gradient(90% 55% at 50% 0%,rgba(251,217,188,.65),transparent 70%),
+  radial-gradient(70% 40% at 50% 100%,rgba(233,189,182,.45),transparent 70%),
+  #FFFBF5;border-color:#EAD8C4}
+.f27-report-grid>div:last-child{background:rgba(255,251,246,.62);backdrop-filter:blur(3px);padding:40px 38px;border:1px solid rgba(234,216,196,.8)}
+.f27-checks li{border-top-color:rgba(184,151,94,.3)}
+
+/* 選擇器：鼠尾草＋粉霧 */
+.f27-choose{background:
+  radial-gradient(50% 55% at 0% 100%,rgba(203,214,200,.75),transparent 70%),
+  radial-gradient(45% 50% at 100% 0%,rgba(233,189,182,.45),transparent 70%),
+  radial-gradient(35% 40% at 30% 10%,rgba(242,221,180,.45),transparent 70%),
+  var(--cream)}
+
+@media(max-width:1024px){
+  .f27-report::before{width:420px;opacity:.55}
+}
+@media(max-width:768px){
+  .f27-report::before{width:300px;left:-90px;opacity:.45}
+  .f27-paper-wrap::before{width:340px;height:340px}
+  .f27-report-grid>div:last-child{padding:28px 20px}
+}
+/* 生命之花與花瓣加強 */
+.f27-paper-wrap::before{width:560px;height:560px;opacity:.85;filter:drop-shadow(0 0 .5px rgba(184,151,94,.4))}
+@media(max-width:768px){
+  .f27-paper-wrap::before{width:400px;height:400px}
+  .f27-report::before{width:360px;opacity:.65}
+}
