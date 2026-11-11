@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-ro
 import { Solar } from "lunar-javascript";
 import SoulGarden from "./SoulGarden.jsx";
 import Becoming from "./Becoming.jsx";
+import Frequency2027 from "./Frequency2027.jsx";
 import { calcPersonalYear, calcLunarYearNumber, buildYearMix } from "./personalYear.js";
 import { Journal, JournalPost } from "./Journal.jsx";
 
@@ -627,6 +628,13 @@ const Styles = () => (
     .frequency-faq-answer{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .35s ease;font-size:14px;line-height:2;color:var(--soft)}
     .frequency-faq-item.is-open .frequency-faq-answer{max-height:520px;padding-bottom:24px}
     .frequency-note{margin-top:32px;padding:24px 28px;border-left:2px solid var(--forest);background:var(--cream);font-size:13px;line-height:2;color:var(--soft)}
+    .frequency-annual{background:var(--cream)}
+    .frequency-annual-card{display:grid;grid-template-columns:.85fr 1.15fr;background:#FFFDF9;border:1px solid var(--div);overflow:hidden}
+    .frequency-annual-img img{width:100%;height:100%;min-height:300px;object-fit:cover;object-position:center 60%;display:block}
+    .frequency-annual-copy{padding:48px 46px;display:flex;flex-direction:column;justify-content:center}
+    .frequency-annual-copy p{font-size:15px;line-height:2.05;color:var(--soft);margin:18px 0 28px}
+    .frequency-annual-copy .bp{align-self:flex-start}
+    @media(max-width:768px){.frequency-annual-card{grid-template-columns:1fr}.frequency-annual-img img{min-height:0;aspect-ratio:16/10}.frequency-annual-copy{padding:30px 22px}.frequency-annual-copy p{font-size:16px}.frequency-annual-copy .bp{align-self:stretch}}
     .frequency-cta{position:relative;overflow:hidden;text-align:center;background:var(--forest)}
     .frequency-cta-bg{position:absolute;inset:0;background:url('/frequency/cta-bg.jpg') center 30%/cover no-repeat;opacity:.16}
     .frequency-cta-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(61,90,76,.96),rgba(38,43,39,.9))}
@@ -850,6 +858,7 @@ const Styles = () => (
       .page .slb{font-size:16px !important;letter-spacing:.16em !important;color:#4A433D !important;margin-bottom:34px !important;line-height:1.7 !important}
       .page .slb::before{width:46px !important;background:#B8A882 !important}
       p,.cx,.ptx,.tier-tx,.art-x,.fsx,.fqa,.chkt,.testi-text{font-size:16px !important;color:#4E4741 !important;line-height:2 !important}
+      .frequency-hero p,.frequency-cta p{color:rgba(250,247,242,.84) !important}
       .tier-tit,.art-t,.fst,.ct,.dt{color:#2C2825 !important}
       .px,.bx,.fd,.ful2 li,.fc{color:rgba(250,247,242,.72) !important}
       .home-compare-label{font-size:16px !important;letter-spacing:.16em !important}
@@ -1375,7 +1384,7 @@ function Nav({ cur, go }) {
   const nav = p => { go(p); setMob(false); };
   return (
     <>
-      <nav className={[sc || mob ? "sc" : "", !sc && !mob && ["subscribe","subscribeTest","subscribeStart","register","thanks","subscribeThanks","deep","apply","about","short","frequency"].includes(cur) ? "dk" : ""].filter(Boolean).join(" ")}>
+      <nav className={[sc || mob ? "sc" : "", !sc && !mob && ["subscribe","subscribeTest","subscribeStart","register","thanks","subscribeThanks","deep","apply","about","short","frequency","f2027"].includes(cur) ? "dk" : ""].filter(Boolean).join(" ")}>
         <div className="nl" onClick={() => nav("home")}>
           Sofia
           <span>情緒穩定 × 關係覺察 × 內在主導權</span>
@@ -1799,6 +1808,20 @@ function Frequency({ go }) {
                 </div>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="frequency-section frequency-annual">
+        <div className="frequency-inner">
+          <div className="frequency-annual-card fi">
+            <div className="frequency-annual-img"><img src="/2027/img/new-chapter.webp" alt="" loading="lazy"/></div>
+            <div className="frequency-annual-copy">
+              <div className="frequency-label">2027 年度計畫</div>
+              <h2 className="frequency-heading">為自己，養一整年的好運</h2>
+              <p>從財富、健康、關係到人生新局，自由選擇 2、3 或 5 個年度主題，全年持續頻率支持，年初收到一份專屬年度藍圖，年度內個人會談享 9 折。</p>
+              <button className="bp" onClick={() => go("f2027")}>看 2027 年度好運頻率計畫 →</button>
+            </div>
           </div>
         </div>
       </section>
@@ -4330,14 +4353,14 @@ function AppInner() {
   const navigate = useNavigate();
   const location = useLocation();
   const go = p => {
-    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/journal", journal:"/journal", apply:"/apply", ongoing:"/ongoing", short:"/short", frequency:"/frequency", subscribe:"/subscribe", subscribeTest:"/subscribe-test", subscribeStart:"/subscribe-start", register:"/register", soulGarden:"/soul-garden", becoming:"/becoming", thanks:"/thanks", subscribeThanks:"/subscribe-thanks" };
+    const paths = { home:"/", start:"/start", aware:"/aware", num:"/num", deep:"/deep", about:"/about", art:"/journal", journal:"/journal", apply:"/apply", ongoing:"/ongoing", short:"/short", frequency:"/frequency", f2027:"/2027", subscribe:"/subscribe", subscribeTest:"/subscribe-test", subscribeStart:"/subscribe-start", register:"/register", soulGarden:"/soul-garden", becoming:"/becoming", thanks:"/thanks", subscribeThanks:"/subscribe-thanks" };
     navigate(paths[p] || "/");
     window.scrollTo({ top: 0, behavior: "instant" });
   };
   const cur = {
     "/":"home", "/start":"start", "/aware":"aware", "/num":"num", "/deep":"deep",
     "/about":"about", "/art":"art", "/journal":"art", "/apply":"apply",
-    "/ongoing":"ongoing", "/short":"short", "/frequency":"frequency", "/subscribe":"subscribe", "/subscribe-test":"subscribeTest", "/subscribe-start":"subscribeStart", "/register":"register", "/soul-garden":"soulGarden", "/becoming":"becoming",
+    "/ongoing":"ongoing", "/short":"short", "/frequency":"frequency", "/2027":"f2027", "/subscribe":"subscribe", "/subscribe-test":"subscribeTest", "/subscribe-start":"subscribeStart", "/register":"register", "/soul-garden":"soulGarden", "/becoming":"becoming",
     "/thanks":"thanks", "/subscribe-thanks":"subscribeThanks"
   }[location.pathname] || "home";
   const isExperiencePage = ["/soul-garden", "/becoming"].includes(location.pathname);
@@ -4361,6 +4384,7 @@ function AppInner() {
           <Route path="/ongoing" element={<Ongoing go={go} />} />
           <Route path="/short" element={<ShortAdjust go={go} />} />
           <Route path="/frequency" element={<Frequency go={go} />} />
+          <Route path="/2027" element={<Frequency2027 go={go} />} />
           <Route path="/subscribe" element={<Subscribe go={go} />} />
           <Route path="/subscribe-test" element={<SubscribeTest />} />
           <Route path="/subscribe-start" element={<SubscribeStart go={go} />} />
