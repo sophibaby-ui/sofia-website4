@@ -3,7 +3,7 @@ import "./frequency2027.css";
 
 /* ─── 2027 年度好運頻率計畫（/2027）──────────────────────────────
    價格、加購與優惠集中在這裡。正式公開前：PREVIEW 改為 false。          */
-const PREVIEW = true;
+const PREVIEW = false;
 const LINE_ID = "@567avtfh";
 const ADDON_PRICE = 1500;            // 年度中加入一個主題
 const SESSION_DISCOUNT = "9 折";     // 開始後一年內的個人會談
