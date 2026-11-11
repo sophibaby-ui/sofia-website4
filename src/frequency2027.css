@@ -239,3 +239,21 @@
   .f27-paper-wrap::before{width:400px;height:400px}
   .f27-report::before{width:360px;opacity:.65}
 }
+
+/* 手機版：抵銷主站對 h3／p 的全域 !important 放大，避免示意紙與卡片擠破 */
+.f27{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media(max-width:768px){
+  .f27 .f27-paper{width:min(250px,66vw);height:auto;aspect-ratio:5/7}
+  .f27 .f27-paper.front{padding:20px 16px;justify-content:flex-start}
+  .f27 .f27-paper-orn{font-size:44px;margin:26px 0 8px}
+  .f27 .f27-paper small{font-size:10px;letter-spacing:.18em;line-height:1.6}
+  .f27 .f27-paper h3{font-size:21px !important;line-height:1.45 !important;margin:10px 0 8px;white-space:nowrap}
+  .f27 .f27-paper p{font-size:12px !important;line-height:1.6 !important;letter-spacing:.14em;white-space:nowrap;color:var(--soft) !important}
+  .f27 .f27-paper-top{font-size:11px}
+  .f27 .f27-theme h3{font-size:18px !important;line-height:1.5 !important}
+  .f27 .f27-theme p{font-size:13px !important;line-height:1.85 !important}
+  .f27 .f27-plan h3{font-size:24px !important}
+  .f27 .f27-inc h3{font-size:19px !important}
+  .f27 .f27-step h3{font-size:17px !important;line-height:1.5 !important}
+  .f27 .f27-checks strong{font-size:16px}
+}

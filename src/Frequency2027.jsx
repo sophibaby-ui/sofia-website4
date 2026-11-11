@@ -326,7 +326,7 @@ export default function Frequency2027({ go }) {
                 <div className="frequency-faq-answer">{a}</div>
               </div>
             ))}
-            <div className="frequency-note">本頁「好運」「頻率」等用語用於個人意圖與探索性描述。TimeWaver 與頻率調整屬於自我覺察及生活狀態整理的輔助工具，不進行疾病診斷或治療，不保證財運、健康、感情、事業或人際關係改善，也不取代醫療、心理治療或其他專業服務。</div>
+            <div className="frequency-note">本頁「好運」「頻率」等用語用於個人意圖與探索性描述。TimeWaver 與頻率調整屬於自我覺察及生活狀態整理的輔助工具，不進行疾病診斷或治療。</div>
           </div>
         </div>
       </section>
