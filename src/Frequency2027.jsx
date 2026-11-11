@@ -37,7 +37,7 @@ function useFade27() {
 function usePageMeta() {
   useEffect(() => {
     const prevTitle = document.title;
-    document.title = "2027 年度好運頻率計畫｜Sofia 蘇菲療癒轉化";
+    document.title = "2027 年度好運頻率計畫 — Sofia | 情緒關係教練";
     const metas = [];
     const add = (attrs) => { const m = document.createElement("meta"); Object.entries(attrs).forEach(([k, v]) => m.setAttribute(k, v)); document.head.appendChild(m); metas.push(m); };
     if (PREVIEW) add({ name: "robots", content: "noindex, nofollow" });

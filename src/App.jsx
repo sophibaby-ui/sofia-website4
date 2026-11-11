@@ -1404,7 +1404,7 @@ function Nav({ cur, go }) {
         <ul>
           {NI.map(i => <li key={i.p} onClick={() => nav(i.p)}>{i.l}</li>)}
         </ul>
-        <div className="mo-ft">Sofia — 蘇菲療癒轉化</div>
+        <div className="mo-ft">Sofia | 情緒關係教練</div>
       </div>
     </>
   );
@@ -2470,7 +2470,7 @@ function Footer({ go }) {
           </div>
         </div>
         <div className="footer-bottom" style={{borderTop:"1px solid rgba(232,223,208,.1)",paddingTop:"32px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"12px"}}>
-          <div style={{fontSize:"12px",color:"rgba(232,223,208,.25)",letterSpacing:"0.08em"}}>© 2025 Sofia 蘇菲療癒轉化 All rights reserved</div>
+          <div style={{fontSize:"12px",color:"rgba(232,223,208,.25)",letterSpacing:"0.08em"}}>© 2025 Sofia | 情緒關係教練 All rights reserved</div>
           <div style={{fontSize:"12px",color:"rgba(232,223,208,.25)",letterSpacing:"0.08em"}}>以陪伴取代建議，以覺察取代答案</div>
         </div>
       </div>
