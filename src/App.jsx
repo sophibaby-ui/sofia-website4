@@ -4352,6 +4352,14 @@ function NumCalc({ go }) {
   );
 }
 
+const PAGE_NAMES = {
+  "/":"首頁", "/start":"開始這一步", "/aware":"自我覺察", "/num":"生命靈數", "/deep":"陪跑計畫",
+  "/about":"關於 Sofia", "/art":"文章與個案分享", "/journal":"文章與個案分享", "/apply":"預約申請",
+  "/ongoing":"持續陪伴", "/short":"短期調整", "/frequency":"關於 TimeWaver", "/2027":"2027 年度計畫",
+  "/subscribe":"訂閱", "/subscribe-test":"訂閱・節奏測驗", "/subscribe-start":"訂閱・開始", "/register":"報名",
+  "/soul-garden":"Soul Garden", "/becoming":"Becoming", "/thanks":"感謝頁", "/subscribe-thanks":"訂閱感謝頁",
+};
+
 function AppInner() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -4367,6 +4375,43 @@ function AppInner() {
     "/thanks":"thanks", "/subscribe-thanks":"subscribeThanks"
   }[location.pathname] || "home";
   const isExperiencePage = ["/soul-garden", "/becoming"].includes(location.pathname);
+
+  /* ── Google Analytics：每一頁的瀏覽次數 ── */
+  useEffect(() => {
+    const t = setTimeout(() => {
+      try {
+        if (!window.gtag) return;
+        window.gtag("event", "page_view", {
+          page_title: PAGE_NAMES[location.pathname] || location.pathname,
+          page_location: window.location.href,
+          page_path: location.pathname,
+        });
+      } catch (_) {}
+    }, 0);
+    return () => clearTimeout(t);
+  }, [location.pathname]);
+
+  /* ── Google Analytics：按鈕、選單與 LINE／社群連結的點擊 ── */
+  useEffect(() => {
+    const onClick = e => {
+      try {
+        if (!window.gtag) return;
+        const el = e.target.closest("a, button, .nm li, .mo li");
+        if (!el || el.closest("[class*='faq']")) return;
+        const label = (el.getAttribute("aria-label") || el.textContent || "").replace(/\s+/g, " ").trim().slice(0, 60);
+        const href = el.getAttribute("href") || "";
+        const page = PAGE_NAMES[window.location.pathname] || window.location.pathname;
+        let name = "button_click";
+        if (/line\.me|lin\.ee/.test(href)) name = "line_click";
+        else if (/instagram\.com|facebook\.com|threads\.net|youtube\.com/.test(href)) name = "social_click";
+        else if (href.startsWith("mailto:")) name = "email_click";
+        else if (el.closest(".nm, .mo")) name = "nav_click";
+        window.gtag("event", name, { click_label: label, page_name: page, link_url: href ? href.split("?")[0].slice(0, 100) : undefined });
+      } catch (_) {}
+    };
+    document.addEventListener("click", onClick, true);
+    return () => document.removeEventListener("click", onClick, true);
+  }, []);
 
   return (
     <>
